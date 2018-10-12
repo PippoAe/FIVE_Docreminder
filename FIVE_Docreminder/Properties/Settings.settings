@@ -1,0 +1,222 @@
+﻿<?xml version='1.0' encoding='utf-8'?>
+<SettingsFile xmlns="http://schemas.microsoft.com/VisualStudio/2004/01/settings" CurrentProfile="(Default)" GeneratedClassNamespace="docreminder.Properties" GeneratedClassName="Settings">
+  <Profiles />
+  <Settings>
+    <Setting Name="KendoxWebserviceURL" Provider="docreminder.PortableSettingsProvider" Roaming="true" Type="(Web Service URL)" Scope="User">
+      <Value Profile="(Default)">http://kx5be01/KendoxWebService</Value>
+    </Setting>
+    <Setting Name="KendoxServerAdress" Provider="docreminder.PortableSettingsProvider" Roaming="true" Type="System.String" Scope="User">
+      <Value Profile="(Default)">db5be03t</Value>
+    </Setting>
+    <Setting Name="KendoxUsername" Provider="docreminder.PortableSettingsProvider" Roaming="true" Type="System.String" Scope="User">
+      <Value Profile="(Default)">dciadmin</Value>
+    </Setting>
+    <Setting Name="KendoxPassword" Provider="docreminder.PortableSettingsProvider" Roaming="true" Type="System.String" Scope="User">
+      <Value Profile="(Default)" />
+    </Setting>
+    <Setting Name="SMTPServerAdress" Provider="docreminder.PortableSettingsProvider" Roaming="true" Type="System.String" Scope="User">
+      <Value Profile="(Default)">mx5be01.intra.fiveinfo.ch</Value>
+    </Setting>
+    <Setting Name="SMTPSender" Provider="docreminder.PortableSettingsProvider" Roaming="true" Type="System.String" Scope="User">
+      <Value Profile="(Default)">docreminder@fiveinfo.ch</Value>
+    </Setting>
+    <Setting Name="SMTPUsername" Provider="docreminder.PortableSettingsProvider" Roaming="true" Type="System.String" Scope="User">
+      <Value Profile="(Default)">AEPH</Value>
+    </Setting>
+    <Setting Name="SMPTPassword" Provider="docreminder.PortableSettingsProvider" Roaming="true" Type="System.String" Scope="User">
+      <Value Profile="(Default)" />
+    </Setting>
+    <Setting Name="KendoxPort" Provider="docreminder.PortableSettingsProvider" Roaming="true" Type="System.String" Scope="User">
+      <Value Profile="(Default)">23450</Value>
+    </Setting>
+    <Setting Name="SMTPPort" Provider="docreminder.PortableSettingsProvider" Roaming="true" Type="System.String" Scope="User">
+      <Value Profile="(Default)">25</Value>
+    </Setting>
+    <Setting Name="EBillSendTo" Provider="docreminder.PortableSettingsProvider" Roaming="true" Type="System.String" Scope="User">
+      <Value Profile="(Default)">IDX('ebillmail')</Value>
+    </Setting>
+    <Setting Name="EBillSubject" Provider="docreminder.PortableSettingsProvider" Roaming="true" Type="System.String" Scope="User">
+      <Value Profile="(Default)">'E-Rechnung zur Verarbeitung: '+IDX('Rechnungsnummer')</Value>
+    </Setting>
+    <Setting Name="ErrorMailSendTo" Provider="docreminder.PortableSettingsProvider" Roaming="true" Type="System.String" Scope="User">
+      <Value Profile="(Default)">p.aeberhard@fiveinfo.ch</Value>
+    </Setting>
+    <Setting Name="ErrorMailSubject" Provider="docreminder.PortableSettingsProvider" Roaming="true" Type="System.String" Scope="User">
+      <Value Profile="(Default)">Beim Verarbeiten ist ein Fehler aufgetreten.</Value>
+    </Setting>
+    <Setting Name="ErrorMailIncludeLog" Provider="docreminder.PortableSettingsProvider" Roaming="true" Type="System.Boolean" Scope="User">
+      <Value Profile="(Default)">False</Value>
+    </Setting>
+    <Setting Name="SendErrorMail" Provider="docreminder.PortableSettingsProvider" Roaming="true" Type="System.Boolean" Scope="User">
+      <Value Profile="(Default)">False</Value>
+    </Setting>
+    <Setting Name="IsLogActive" Provider="docreminder.PortableSettingsProvider" Roaming="true" Type="System.Boolean" Scope="User">
+      <Value Profile="(Default)">True</Value>
+    </Setting>
+    <Setting Name="LogPath" Provider="docreminder.PortableSettingsProvider" Roaming="true" Type="System.String" Scope="User">
+      <Value Profile="(Default)" />
+    </Setting>
+    <Setting Name="E_Bill_Uploader_KXWS_KXWebService40" Provider="docreminder.PortableSettingsProvider" Roaming="true" Type="(Web Service URL)" Scope="User">
+      <Value Profile="(Default)">http://db5be03/KxWebService/KxWebService40.asmx</Value>
+    </Setting>
+    <Setting Name="KendoxSearchProperties" Provider="docreminder.PortableSettingsProvider" Roaming="true" Type="System.String" Scope="User">
+      <Value Profile="(Default)" />
+    </Setting>
+    <Setting Name="AttachDocument" Provider="docreminder.PortableSettingsProvider" Roaming="true" Type="System.Boolean" Scope="User">
+      <Value Profile="(Default)">False</Value>
+    </Setting>
+    <Setting Name="AttachLnkFile" Provider="docreminder.PortableSettingsProvider" Roaming="true" Type="System.Boolean" Scope="User">
+      <Value Profile="(Default)">False</Value>
+    </Setting>
+    <Setting Name="KendoxInfoStores" Provider="docreminder.PortableSettingsProvider" Roaming="true" Type="System.String" Scope="User">
+      <Value Profile="(Default)">All</Value>
+    </Setting>
+    <Setting Name="EmailTemplatePath" Provider="docreminder.PortableSettingsProvider" Roaming="true" Type="System.String" Scope="User">
+      <Value Profile="(Default)" />
+    </Setting>
+    <Setting Name="AddCpIdisActive" Provider="docreminder.PortableSettingsProvider" Roaming="true" Type="System.Boolean" Scope="User">
+      <Value Profile="(Default)">False</Value>
+    </Setting>
+    <Setting Name="KendoxMarkerProperties" Provider="docreminder.PortableSettingsProvider" Roaming="true" Type="System.String" Scope="User">
+      <Value Profile="(Default)" />
+    </Setting>
+    <Setting Name="SendMailActive" Provider="docreminder.PortableSettingsProvider" Roaming="true" Type="System.Boolean" Scope="User">
+      <Value Profile="(Default)">False</Value>
+    </Setting>
+    <Setting Name="AdditionalComputedIdentifier" Provider="docreminder.PortableSettingsProvider" Roaming="true" Type="System.String" Scope="User">
+      <Value Profile="(Default)" />
+    </Setting>
+    <Setting Name="LnkFilePath" Provider="docreminder.PortableSettingsProvider" Type="System.String" Scope="User">
+      <Value Profile="(Default)" />
+    </Setting>
+    <Setting Name="IsReportActive" Provider="docreminder.PortableSettingsProvider" Type="System.Boolean" Scope="User">
+      <Value Profile="(Default)">False</Value>
+    </Setting>
+    <Setting Name="ReportRecipient" Provider="docreminder.PortableSettingsProvider" Type="System.String" Scope="User">
+      <Value Profile="(Default)" />
+    </Setting>
+    <Setting Name="ReportSubject" Provider="docreminder.PortableSettingsProvider" Type="System.String" Scope="User">
+      <Value Profile="(Default)" />
+    </Setting>
+    <Setting Name="ReportTemplatePath" Provider="docreminder.PortableSettingsProvider" Type="System.String" Scope="User">
+      <Value Profile="(Default)" />
+    </Setting>
+    <Setting Name="Culture" Provider="docreminder.PortableSettingsProvider" Type="System.String" Scope="User">
+      <Value Profile="(Default)">de-CH</Value>
+    </Setting>
+    <Setting Name="SQLConnectionString" Provider="docreminder.PortableSettingsProvider" Type="System.String" Scope="User">
+      <Value Profile="(Default)" />
+    </Setting>
+    <Setting Name="ExpressionVariables" Provider="docreminder.PortableSettingsProvider" Type="System.String" Scope="User">
+      <Value Profile="(Default)" />
+    </Setting>
+    <Setting Name="SearchQuantity" Provider="docreminder.PortableSettingsProvider" Type="System.Int32" Scope="User">
+      <Value Profile="(Default)">1000</Value>
+    </Setting>
+    <Setting Name="LoopIfHasMore" Provider="docreminder.PortableSettingsProvider" Type="System.Boolean" Scope="User">
+      <Value Profile="(Default)">False</Value>
+    </Setting>
+    <Setting Name="StopSchedule" Provider="docreminder.PortableSettingsProvider" Type="System.String" Scope="User">
+      <Value Profile="(Default)" />
+    </Setting>
+    <Setting Name="ProcessName" Provider="docreminder.PortableSettingsProvider" Type="System.String" Scope="User">
+      <Value Profile="(Default)" />
+    </Setting>
+    <Setting Name="StartProcessActive" Provider="docreminder.PortableSettingsProvider" Type="System.Boolean" Scope="User">
+      <Value Profile="(Default)">False</Value>
+    </Setting>
+    <Setting Name="ProcessRecipient" Provider="docreminder.PortableSettingsProvider" Type="System.String" Scope="User">
+      <Value Profile="(Default)" />
+    </Setting>
+    <Setting Name="CustomWSFunctions" Provider="docreminder.PortableSettingsProvider" Type="System.String" Scope="User">
+      <Value Profile="(Default)" />
+    </Setting>
+    <Setting Name="CustomWSFunctionsActive" Provider="docreminder.PortableSettingsProvider" Type="System.Boolean" Scope="User">
+      <Value Profile="(Default)">False</Value>
+    </Setting>
+    <Setting Name="kxpwentropy" Type="System.String" Scope="User">
+      <Value Profile="(Default)" />
+    </Setting>
+    <Setting Name="isKXPWEncrypted" Provider="docreminder.PortableSettingsProvider" Type="System.Boolean" Scope="User">
+      <Value Profile="(Default)" />
+    </Setting>
+    <Setting Name="dsRestClientURL" Provider="docreminder.PortableSettingsProvider" Type="System.String" Scope="User">
+      <Value Profile="(Default)">https://test.docsafe.ch:7443/test2/api/v2/</Value>
+    </Setting>
+    <Setting Name="dsRestRequest" Provider="docreminder.PortableSettingsProvider" Type="System.String" Scope="User">
+      <Value Profile="(Default)">documents/envelope</Value>
+    </Setting>
+    <Setting Name="dsSenderBUID" Provider="docreminder.PortableSettingsProvider" Type="System.String" Scope="User">
+      <Value Profile="(Default)">SANAKK</Value>
+    </Setting>
+    <Setting Name="dsCertFileName" Provider="docreminder.PortableSettingsProvider" Type="System.String" Scope="User">
+      <Value Profile="(Default)">sanaKK@test.docsafe.ch.p12</Value>
+    </Setting>
+    <Setting Name="dsSendersObjectID" Provider="docreminder.PortableSettingsProvider" Type="System.String" Scope="User">
+      <Value Profile="(Default)">9798987987</Value>
+    </Setting>
+    <Setting Name="dsSendersObjectAlias" Provider="docreminder.PortableSettingsProvider" Type="System.String" Scope="User">
+      <Value Profile="(Default)">Arbeitsvertrag - 9798987987</Value>
+    </Setting>
+    <Setting Name="dsDocSafeID" Provider="docreminder.PortableSettingsProvider" Type="System.String" Scope="User">
+      <Value Profile="(Default)">L47N-WJ54-Q3JU-VMJC</Value>
+    </Setting>
+    <Setting Name="dsSendersDocumentID" Provider="docreminder.PortableSettingsProvider" Type="System.String" Scope="User">
+      <Value Profile="(Default)">docguid</Value>
+    </Setting>
+    <Setting Name="dsSendersFlowRef" Provider="docreminder.PortableSettingsProvider" Type="System.String" Scope="User">
+      <Value Profile="(Default)">Info</Value>
+    </Setting>
+    <Setting Name="dsSendersFlowAlias" Provider="docreminder.PortableSettingsProvider" Type="System.String" Scope="User">
+      <Value Profile="(Default)">Informationen</Value>
+    </Setting>
+    <Setting Name="dsSenderName" Provider="docreminder.PortableSettingsProvider" Type="System.String" Scope="User">
+      <Value Profile="(Default)">PhäntäsieAG</Value>
+    </Setting>
+    <Setting Name="dsAnnotation" Provider="docreminder.PortableSettingsProvider" Type="System.String" Scope="User">
+      <Value Profile="(Default)">Lohnabrechnung</Value>
+    </Setting>
+    <Setting Name="dsLinktext" Provider="docreminder.PortableSettingsProvider" Type="System.String" Scope="User">
+      <Value Profile="(Default)">Info-Center</Value>
+    </Setting>
+    <Setting Name="dsLinkURL" Provider="docreminder.PortableSettingsProvider" Type="System.String" Scope="User">
+      <Value Profile="(Default)">http://www.phantasie-ag.ch</Value>
+    </Setting>
+    <Setting Name="dsFileName" Provider="docreminder.PortableSettingsProvider" Type="System.String" Scope="User">
+      <Value Profile="(Default)">dsFileName</Value>
+    </Setting>
+    <Setting Name="DocSafeActive" Provider="docreminder.PortableSettingsProvider" Type="System.Boolean" Scope="User">
+      <Value Profile="(Default)">False</Value>
+    </Setting>
+    <Setting Name="dsDocumentTitle" Provider="docreminder.PortableSettingsProvider" Type="System.String" Scope="User">
+      <Value Profile="(Default)">'Lohnabrechnung'</Value>
+    </Setting>
+    <Setting Name="GroupingZipped" Provider="docreminder.PortableSettingsProvider" Type="System.Boolean" Scope="User">
+      <Value Profile="(Default)">True</Value>
+    </Setting>
+    <Setting Name="GroupingZipName" Provider="docreminder.PortableSettingsProvider" Type="System.String" Scope="User">
+      <Value Profile="(Default)" />
+    </Setting>
+    <Setting Name="GroupingAddParent" Provider="docreminder.PortableSettingsProvider" Type="System.Boolean" Scope="User">
+      <Value Profile="(Default)">False</Value>
+    </Setting>
+    <Setting Name="GroupingSearchProperties" Provider="docreminder.PortableSettingsProvider" Type="System.String" Scope="User">
+      <Value Profile="(Default)" />
+    </Setting>
+    <Setting Name="GroupingActive" Provider="docreminder.PortableSettingsProvider" Type="System.Boolean" Scope="User">
+      <Value Profile="(Default)" />
+    </Setting>
+    <Setting Name="MultiLanguageTemplateProperty" Provider="docreminder.PortableSettingsProvider" Type="System.String" Scope="User">
+      <Value Profile="(Default)" />
+    </Setting>
+    <Setting Name="SMTPUseSSL" Provider="docreminder.PortableSettingsProvider" Type="System.Boolean" Scope="User">
+      <Value Profile="(Default)">False</Value>
+    </Setting>
+    <Setting Name="GroupingSendWithoutChild" Provider="docreminder.PortableSettingsProvider" Type="System.Boolean" Scope="User">
+      <Value Profile="(Default)">False</Value>
+    </Setting>
+    <Setting Name="AttachmentRenameProperty" Provider="docreminder.PortableSettingsProvider" Type="System.String" Scope="User">
+      <Value Profile="(Default)" />
+    </Setting>
+  </Settings>
+</SettingsFile>

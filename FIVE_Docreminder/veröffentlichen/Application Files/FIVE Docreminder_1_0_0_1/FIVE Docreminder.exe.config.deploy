@@ -1,0 +1,108 @@
+﻿<?xml version="1.0" encoding="utf-8" ?>
+<configuration>
+    <configSections>
+        <sectionGroup name="userSettings" type="System.Configuration.UserSettingsGroup, System, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089" >
+            <section name="docreminder.Properties.Settings" type="System.Configuration.ClientSettingsSection, System, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089" allowExeDefinition="MachineToLocalUser" requirePermission="false" />
+        </sectionGroup>
+    </configSections>
+    <startup> 
+        <supportedRuntime version="v4.0" sku=".NETFramework,Version=v4.5.1" />
+    </startup>
+    <userSettings>
+        <docreminder.Properties.Settings>
+            <setting name="KendoxWebserviceURL" serializeAs="String">
+                <value>http://kx5be01/KendoxWebService</value>
+            </setting>
+            <setting name="KendoxServerAdress" serializeAs="String">
+                <value>db5be03t</value>
+            </setting>
+            <setting name="KendoxUsername" serializeAs="String">
+                <value>dciadmin</value>
+            </setting>
+            <setting name="KendoxPassword" serializeAs="String">
+                <value />
+            </setting>
+            <setting name="SMTPServerAdress" serializeAs="String">
+                <value>mx5be01.intra.fiveinfo.ch</value>
+            </setting>
+            <setting name="SMTPSender" serializeAs="String">
+                <value>ebilluploader@fiveinfo.ch</value>
+            </setting>
+            <setting name="SMTPUsername" serializeAs="String">
+                <value>AEPH</value>
+            </setting>
+            <setting name="SMPTPassword" serializeAs="String">
+                <value />
+            </setting>
+            <setting name="KendoxPort" serializeAs="String">
+                <value>23480</value>
+            </setting>
+            <setting name="SMTPPort" serializeAs="String">
+                <value>25</value>
+            </setting>
+            <setting name="EBillSendTo" serializeAs="String">
+                <value>p.aeberhard@fiveinfo.ch</value>
+            </setting>
+            <setting name="EBillSubject" serializeAs="String">
+                <value>E-Rechnung zur Verarbeitung</value>
+            </setting>
+            <setting name="ErrorMailSendTo" serializeAs="String">
+                <value>p.aeberhard@fiveinfo.ch</value>
+            </setting>
+            <setting name="ErrorMailSubject" serializeAs="String">
+                <value>Beim E-Rechnungsupload ist ein Fehler aufgetreten.</value>
+            </setting>
+            <setting name="ErrorMailIncludeLog" serializeAs="String">
+                <value>False</value>
+            </setting>
+            <setting name="SendErrorMail" serializeAs="String">
+                <value>False</value>
+            </setting>
+            <setting name="IsLogActive" serializeAs="String">
+                <value>True</value>
+            </setting>
+            <setting name="LogPath" serializeAs="String">
+                <value />
+            </setting>
+            <setting name="E_Bill_Uploader_KXWS_KXWebService40" serializeAs="String">
+                <value>http://db5be03/KxWebService/KxWebService40.asmx</value>
+            </setting>
+            <setting name="KendoxSearchProperties" serializeAs="String">
+                <value />
+            </setting>
+            <setting name="AttachDocument" serializeAs="String">
+                <value>False</value>
+            </setting>
+            <setting name="AttachLnkFile" serializeAs="String">
+                <value>False</value>
+            </setting>
+            <setting name="KendoxInfoStores" serializeAs="String">
+                <value>All</value>
+            </setting>
+            <setting name="EbillBody" serializeAs="String">
+                <value />
+            </setting>
+            <setting name="AddCpIdisActive" serializeAs="String">
+                <value>False</value>
+            </setting>
+            <setting name="KendoxMarkerProperties" serializeAs="String">
+                <value />
+            </setting>
+            <setting name="SendMailActive" serializeAs="String">
+                <value>False</value>
+            </setting>
+            <setting name="EmailIndex" serializeAs="String">
+                <value>0</value>
+            </setting>
+            <setting name="SentDateIndex" serializeAs="String">
+                <value>1</value>
+            </setting>
+            <setting name="AdditionalComputedIdentifier" serializeAs="String">
+                <value />
+            </setting>
+            <setting name="LnkFilePath" serializeAs="String">
+                <value />
+            </setting>
+        </docreminder.Properties.Settings>
+    </userSettings>
+</configuration>

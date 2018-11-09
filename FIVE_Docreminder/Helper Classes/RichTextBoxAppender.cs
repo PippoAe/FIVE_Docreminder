@@ -1,10 +1,11 @@
-﻿using System;
-using System.Drawing;
+﻿using System.Drawing;
 using System.Windows.Forms;
 using log4net.Core;
 using log4net.Util;
+using log4net.Appender;
+using log4net;
 
-namespace log4net.Appender
+namespace docreminder
 {
     public class RichTextBoxAppender : AppenderSkeleton
     {

@@ -31,7 +31,7 @@ namespace docreminder
         public MainForm()
         {
             InitializeComponent();
-            log4net.Appender.RichTextBoxAppender.SetRichTextBox(rTextBoxLog, "RichTextBoxAppender");
+            //RichTextBoxAppender.SetRichTextBox(rTextBoxLog, "RichTextBoxAppender");
 
             ColumnHeader header = new ColumnHeader();
             header.Text = "";

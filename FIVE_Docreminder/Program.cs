@@ -58,10 +58,7 @@ namespace docreminder
         static void CurrentDomain_UnhandledException(object sender, UnhandledExceptionEventArgs e)
         {
             MessageBox.Show((e.ExceptionObject as Exception).Message, "Unhandled UI Exception");
-
-
             // here you can log the exception 
-
         }
     }
 }

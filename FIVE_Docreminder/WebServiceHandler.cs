@@ -698,12 +698,6 @@ namespace docreminder
             foreach (KXWS.SPropertyTypeExt prop in Properties)
             {
 
-                //Test
-                if (prop.name.ToLower().Contains("intern"))
-                {
-                    string test = "";
-                }
-
                 if (!prop.isObsolete && prop.isActive)
                 {
                     if (all)
@@ -1028,28 +1022,5 @@ namespace docreminder
                 }
             }
         }
-
-        //public List<KXWS.SDocumentPropertyUpdate> EvaluatePropertyValuesSearchPropertiesOnly(List<KXWS.SDocumentPropertyUpdate> markerProperties, DataGridViewRow row)
-        //{
-        //    ExpressionsEvaluator expVal = new ExpressionsEvaluator();
-
-        //    //Go trough all markerProperties.
-        //    foreach (KXWS.SDocumentPropertyUpdate prop in markerProperties)
-        //    {
-        //            string[] sNewValues = new string[prop.propertyValues.Count()];
-        //            int i = 0;
-        //            foreach (string sValue in prop.propertyValues)
-        //            {
-        //                string sEvaluatedValue = expVal.Evaluate(sValue, row);
-        //                sNewValues[i] = sEvaluatedValue;
-        //                i++;
-        //            }
-        //            prop.propertyValues = sNewValues;
-        //    }
-        //    return markerProperties;
-        //}
-
-        //For fast ReIndexing.
-
     }
 }

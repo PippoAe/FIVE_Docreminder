@@ -146,7 +146,6 @@
 
         private System.Windows.Forms.Button bOK;
         private System.Windows.Forms.Button bSave;
-        private KXWS.KXWebService40 kxWebService401;
         private System.Windows.Forms.DataGridView dataGridView1;
         private System.Windows.Forms.Label label1;
         private System.Windows.Forms.Button button1;

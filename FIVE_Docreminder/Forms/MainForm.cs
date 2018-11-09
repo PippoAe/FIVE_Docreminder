@@ -12,9 +12,10 @@ using System.Xml.Serialization;
 
 namespace docreminder
 {
-    public partial class Form1 : Form
+    public partial class MainForm : Form
     {
         ConsoleWriter log = ConsoleWriter.GetInstance;
+        private static readonly log4net.ILog log4 = log4net.LogManager.GetLogger(System.Reflection.MethodBase.GetCurrentMethod().DeclaringType);
         
         private WebServiceHandler _webServiceHandler;
         public DateTime starttime;
@@ -27,13 +28,10 @@ namespace docreminder
             set { _webServiceHandler = value; }
         }
 
-        public Form1()
+        public MainForm()
         {
             InitializeComponent();
-            if (Program.customConfigFile != "")
-                toolStripStatusConfig.Text = "Loaded Config: '" + Path.GetFileName(Program.customConfigFile) + "'";
-            else
-                toolStripStatusConfig.Text = "Loaded Config: 'Default'";
+            log4net.Appender.RichTextBoxAppender.SetRichTextBox(rTextBoxLog, "RichTextBoxAppender");
 
             ColumnHeader header = new ColumnHeader();
             header.Text = "";
@@ -48,21 +46,10 @@ namespace docreminder
             //Set Starttime
             starttime = DateTime.Now;
             //CheckSchedule
-            CheckSchedule();
+            CheckSchedule();            
 
-            
-
-            this.Shown += new System.EventHandler(this.Form1_Shown);
         }
 
-        private void Form1_Shown(object sender, EventArgs e)
-        {
-            if (Program.automode)
-            {
-                log.WriteInfo("Application started in Automode.");
-                CheckForEBills();
-            }
-        }
 
         private void Form1_Load(object sender, EventArgs e)
         {
@@ -105,6 +92,7 @@ namespace docreminder
 
         private void bCheckForEBills_Click(object sender, EventArgs e)
         {
+            log4.Info("TEEEST!");
             //New Search. Remove Resumepoint
             if (_webServiceHandler != null && _webServiceHandler.resumePoint != "")
                 _webServiceHandler.resumePoint = "";
@@ -539,6 +527,22 @@ namespace docreminder
             }
         }
 
+        private void MainForm_Shown(object sender, EventArgs e)
+        {
+            var mess = "";
+            if (Program.customConfigFile != "")
+                mess = string.Format("Loaded Config: '{0}'", Path.GetFileName(Program.customConfigFile));
+            else
+                mess = "Loaded Config: 'Default'";
+            toolStripStatusConfig.Text = mess;
+            log4.Info(mess);
+
+            if (Program.automode)
+            {
+                log.WriteInfo("Application started in Automode.");
+                CheckForEBills();
+            }
+        }
     }
 }
 

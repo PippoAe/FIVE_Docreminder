@@ -16,7 +16,7 @@ namespace docreminder
     public partial class FormSettings : Form
     {
 
-        Form1 mainform;
+        MainForm mainform;
 
         ConsoleWriter log = ConsoleWriter.GetInstance;
 
@@ -24,7 +24,7 @@ namespace docreminder
         List<string> lWsFunctions = null;
 
 
-        public FormSettings(Form1 mainform)
+        public FormSettings(MainForm mainform)
         {
             this.mainform = mainform;
             InitializeComponent();

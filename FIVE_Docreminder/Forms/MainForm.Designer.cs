@@ -1,6 +1,6 @@
 ﻿namespace docreminder
 {
-    partial class Form1
+    partial class MainForm
     {
         /// <summary>
         /// Erforderliche Designervariable.
@@ -29,7 +29,7 @@
         private void InitializeComponent()
         {
             this.components = new System.ComponentModel.Container();
-            System.ComponentModel.ComponentResourceManager resources = new System.ComponentModel.ComponentResourceManager(typeof(Form1));
+            System.ComponentModel.ComponentResourceManager resources = new System.ComponentModel.ComponentResourceManager(typeof(MainForm));
             this.menuStrip1 = new System.Windows.Forms.MenuStrip();
             this.dateiToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.optionenToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
@@ -38,10 +38,10 @@
             this.sQLVariabelnToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.bCheckForEBills = new System.Windows.Forms.Button();
             this.bSendEbills = new System.Windows.Forms.Button();
-            this.splitContainer1 = new System.Windows.Forms.SplitContainer();
             this.groupBox2 = new System.Windows.Forms.GroupBox();
             this.dgwEbills = new System.Windows.Forms.DataGridView();
             this.groupBox1 = new System.Windows.Forms.GroupBox();
+            this.rTextBoxLog = new System.Windows.Forms.RichTextBox();
             this.lBLog = new System.Windows.Forms.ListView();
             this.statusStrip1 = new System.Windows.Forms.StatusStrip();
             this.toolStripStatusConfig = new System.Windows.Forms.ToolStripStatusLabel();
@@ -55,10 +55,6 @@
             this.timerShutDown = new System.Windows.Forms.Timer(this.components);
             this.progressBar1 = new System.Windows.Forms.ProgressBar();
             this.menuStrip1.SuspendLayout();
-            ((System.ComponentModel.ISupportInitialize)(this.splitContainer1)).BeginInit();
-            this.splitContainer1.Panel1.SuspendLayout();
-            this.splitContainer1.Panel2.SuspendLayout();
-            this.splitContainer1.SuspendLayout();
             this.groupBox2.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.dgwEbills)).BeginInit();
             this.groupBox1.SuspendLayout();
@@ -72,7 +68,7 @@
             this.sQLVariabelnToolStripMenuItem});
             this.menuStrip1.Location = new System.Drawing.Point(0, 0);
             this.menuStrip1.Name = "menuStrip1";
-            this.menuStrip1.Size = new System.Drawing.Size(913, 24);
+            this.menuStrip1.Size = new System.Drawing.Size(866, 24);
             this.menuStrip1.TabIndex = 0;
             this.menuStrip1.Text = "menuStrip1";
             // 
@@ -117,7 +113,7 @@
             // bCheckForEBills
             // 
             this.bCheckForEBills.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Left)));
-            this.bCheckForEBills.Location = new System.Drawing.Point(8, 336);
+            this.bCheckForEBills.Location = new System.Drawing.Point(13, 334);
             this.bCheckForEBills.Name = "bCheckForEBills";
             this.bCheckForEBills.Size = new System.Drawing.Size(194, 23);
             this.bCheckForEBills.TabIndex = 2;
@@ -128,7 +124,7 @@
             // bSendEbills
             // 
             this.bSendEbills.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Left)));
-            this.bSendEbills.Location = new System.Drawing.Point(216, 336);
+            this.bSendEbills.Location = new System.Drawing.Point(221, 334);
             this.bSendEbills.Name = "bSendEbills";
             this.bSendEbills.Size = new System.Drawing.Size(209, 23);
             this.bSendEbills.TabIndex = 6;
@@ -136,34 +132,15 @@
             this.bSendEbills.UseVisualStyleBackColor = true;
             this.bSendEbills.Click += new System.EventHandler(this.bSendEbill_Click);
             // 
-            // splitContainer1
-            // 
-            this.splitContainer1.Anchor = ((System.Windows.Forms.AnchorStyles)((((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Bottom) 
-            | System.Windows.Forms.AnchorStyles.Left) 
-            | System.Windows.Forms.AnchorStyles.Right)));
-            this.splitContainer1.Location = new System.Drawing.Point(8, 24);
-            this.splitContainer1.Name = "splitContainer1";
-            // 
-            // splitContainer1.Panel1
-            // 
-            this.splitContainer1.Panel1.Controls.Add(this.groupBox2);
-            // 
-            // splitContainer1.Panel2
-            // 
-            this.splitContainer1.Panel2.Controls.Add(this.groupBox1);
-            this.splitContainer1.Size = new System.Drawing.Size(904, 305);
-            this.splitContainer1.SplitterDistance = 456;
-            this.splitContainer1.TabIndex = 10;
-            // 
             // groupBox2
             // 
             this.groupBox2.Anchor = ((System.Windows.Forms.AnchorStyles)((((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Bottom) 
             | System.Windows.Forms.AnchorStyles.Left) 
             | System.Windows.Forms.AnchorStyles.Right)));
             this.groupBox2.Controls.Add(this.dgwEbills);
-            this.groupBox2.Location = new System.Drawing.Point(0, 0);
+            this.groupBox2.Location = new System.Drawing.Point(8, 27);
             this.groupBox2.Name = "groupBox2";
-            this.groupBox2.Size = new System.Drawing.Size(453, 302);
+            this.groupBox2.Size = new System.Drawing.Size(855, 301);
             this.groupBox2.TabIndex = 10;
             this.groupBox2.TabStop = false;
             this.groupBox2.Text = "Gefundene Dokumente:";
@@ -177,31 +154,42 @@
             this.dgwEbills.Location = new System.Drawing.Point(6, 16);
             this.dgwEbills.Name = "dgwEbills";
             this.dgwEbills.ReadOnly = true;
-            this.dgwEbills.Size = new System.Drawing.Size(442, 283);
+            this.dgwEbills.Size = new System.Drawing.Size(843, 282);
             this.dgwEbills.TabIndex = 5;
             // 
             // groupBox1
             // 
-            this.groupBox1.Anchor = ((System.Windows.Forms.AnchorStyles)((((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Bottom) 
-            | System.Windows.Forms.AnchorStyles.Left) 
+            this.groupBox1.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Left) 
             | System.Windows.Forms.AnchorStyles.Right)));
+            this.groupBox1.Controls.Add(this.rTextBoxLog);
             this.groupBox1.Controls.Add(this.lBLog);
-            this.groupBox1.Location = new System.Drawing.Point(3, 0);
+            this.groupBox1.Location = new System.Drawing.Point(14, 363);
             this.groupBox1.Name = "groupBox1";
-            this.groupBox1.Size = new System.Drawing.Size(438, 302);
+            this.groupBox1.Size = new System.Drawing.Size(849, 115);
             this.groupBox1.TabIndex = 4;
             this.groupBox1.TabStop = false;
             this.groupBox1.Text = "LiveLog";
+            // 
+            // rTextBoxLog
+            // 
+            this.rTextBoxLog.BackColor = System.Drawing.SystemColors.MenuText;
+            this.rTextBoxLog.ForeColor = System.Drawing.SystemColors.Menu;
+            this.rTextBoxLog.Location = new System.Drawing.Point(6, 20);
+            this.rTextBoxLog.Name = "rTextBoxLog";
+            this.rTextBoxLog.ReadOnly = true;
+            this.rTextBoxLog.Size = new System.Drawing.Size(837, 62);
+            this.rTextBoxLog.TabIndex = 4;
+            this.rTextBoxLog.Text = "";
             // 
             // lBLog
             // 
             this.lBLog.Anchor = ((System.Windows.Forms.AnchorStyles)((((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Bottom) 
             | System.Windows.Forms.AnchorStyles.Left) 
             | System.Windows.Forms.AnchorStyles.Right)));
-            this.lBLog.Location = new System.Drawing.Point(6, 16);
+            this.lBLog.Location = new System.Drawing.Point(6, 88);
             this.lBLog.Name = "lBLog";
             this.lBLog.ShowItemToolTips = true;
-            this.lBLog.Size = new System.Drawing.Size(426, 283);
+            this.lBLog.Size = new System.Drawing.Size(837, 24);
             this.lBLog.TabIndex = 3;
             this.lBLog.UseCompatibleStateImageBehavior = false;
             this.lBLog.View = System.Windows.Forms.View.List;
@@ -214,9 +202,9 @@
             this.toolStripStatusPlatzHalter,
             this.toolStripStatusLabel2,
             this.toolStripStatusCountdown});
-            this.statusStrip1.Location = new System.Drawing.Point(0, 398);
+            this.statusStrip1.Location = new System.Drawing.Point(0, 487);
             this.statusStrip1.Name = "statusStrip1";
-            this.statusStrip1.Size = new System.Drawing.Size(913, 22);
+            this.statusStrip1.Size = new System.Drawing.Size(866, 22);
             this.statusStrip1.TabIndex = 11;
             this.statusStrip1.Text = "statusStrip1";
             // 
@@ -235,7 +223,7 @@
             // toolStripStatusPlatzHalter
             // 
             this.toolStripStatusPlatzHalter.Name = "toolStripStatusPlatzHalter";
-            this.toolStripStatusPlatzHalter.Size = new System.Drawing.Size(669, 17);
+            this.toolStripStatusPlatzHalter.Size = new System.Drawing.Size(622, 17);
             this.toolStripStatusPlatzHalter.Spring = true;
             // 
             // toolStripStatusLabel2
@@ -267,7 +255,7 @@
             // 
             this.btnSearchMore.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Left)));
             this.btnSearchMore.Enabled = false;
-            this.btnSearchMore.Location = new System.Drawing.Point(8, 368);
+            this.btnSearchMore.Location = new System.Drawing.Point(436, 334);
             this.btnSearchMore.Name = "btnSearchMore";
             this.btnSearchMore.Size = new System.Drawing.Size(194, 23);
             this.btnSearchMore.TabIndex = 12;
@@ -284,36 +272,33 @@
             // 
             this.progressBar1.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Left) 
             | System.Windows.Forms.AnchorStyles.Right)));
-            this.progressBar1.Location = new System.Drawing.Point(-1, 395);
+            this.progressBar1.Location = new System.Drawing.Point(-1, 484);
             this.progressBar1.Name = "progressBar1";
-            this.progressBar1.Size = new System.Drawing.Size(915, 3);
+            this.progressBar1.Size = new System.Drawing.Size(868, 3);
             this.progressBar1.Style = System.Windows.Forms.ProgressBarStyle.Continuous;
             this.progressBar1.TabIndex = 13;
             // 
-            // Form1
+            // MainForm
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
-            this.ClientSize = new System.Drawing.Size(913, 420);
+            this.ClientSize = new System.Drawing.Size(866, 509);
+            this.Controls.Add(this.groupBox2);
+            this.Controls.Add(this.groupBox1);
             this.Controls.Add(this.progressBar1);
             this.Controls.Add(this.btnSearchMore);
             this.Controls.Add(this.statusStrip1);
-            this.Controls.Add(this.splitContainer1);
             this.Controls.Add(this.bSendEbills);
             this.Controls.Add(this.bCheckForEBills);
             this.Controls.Add(this.menuStrip1);
             this.Icon = ((System.Drawing.Icon)(resources.GetObject("$this.Icon")));
             this.MainMenuStrip = this.menuStrip1;
-            this.MinimumSize = new System.Drawing.Size(925, 459);
-            this.Name = "Form1";
+            this.Name = "MainForm";
             this.Text = "Five Informatik AG - Document Reminder";
             this.Load += new System.EventHandler(this.Form1_Load);
+            this.Shown += new System.EventHandler(this.MainForm_Shown);
             this.menuStrip1.ResumeLayout(false);
             this.menuStrip1.PerformLayout();
-            this.splitContainer1.Panel1.ResumeLayout(false);
-            this.splitContainer1.Panel2.ResumeLayout(false);
-            ((System.ComponentModel.ISupportInitialize)(this.splitContainer1)).EndInit();
-            this.splitContainer1.ResumeLayout(false);
             this.groupBox2.ResumeLayout(false);
             ((System.ComponentModel.ISupportInitialize)(this.dgwEbills)).EndInit();
             this.groupBox1.ResumeLayout(false);
@@ -332,7 +317,6 @@
         private System.Windows.Forms.Button bCheckForEBills;
         private System.Windows.Forms.Button bSendEbills;
         private System.Windows.Forms.ToolStripMenuItem aboutToolStripMenuItem;
-        private System.Windows.Forms.SplitContainer splitContainer1;
         private System.Windows.Forms.GroupBox groupBox2;
         private System.Windows.Forms.DataGridView dgwEbills;
         private System.Windows.Forms.GroupBox groupBox1;
@@ -350,6 +334,7 @@
         private System.Windows.Forms.ToolStripStatusLabel toolStripStatusCountdown;
         private System.Windows.Forms.ToolStripMenuItem sQLVariabelnToolStripMenuItem;
         private System.Windows.Forms.ProgressBar progressBar1;
+        private System.Windows.Forms.RichTextBox rTextBoxLog;
     }
 }
 

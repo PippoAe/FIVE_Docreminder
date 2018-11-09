@@ -13,9 +13,9 @@ namespace docreminder.Forms
     public partial class FormGrouping : Form
     {
 
-        Form1 mainform;
+        MainForm mainform;
 
-        public FormGrouping(Form1 mainform)
+        public FormGrouping(MainForm mainform)
         { 
             this.mainform = mainform;
             InitializeComponent();

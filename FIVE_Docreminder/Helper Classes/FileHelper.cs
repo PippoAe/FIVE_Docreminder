@@ -1,26 +1,22 @@
 ﻿using System;
 using System.Collections.Generic;
-using System.Globalization;
 using System.IO;
 using System.Linq;
 using System.Net.Mail;
-using System.Runtime.Serialization;
-using System.Runtime.Serialization.Formatters.Binary;
 using System.Security.Cryptography;
 using System.Text;
 using System.Text.RegularExpressions;
-using System.Threading.Tasks;
-using System.Xml;
 using System.Xml.Serialization;
 using System.Runtime.InteropServices;
 using System.IO.Compression;
-using System.Web.Mvc;
 
 namespace docreminder
 {
     //This Class handles Tasks wich need access to the file-system. (Loading File, Directory-Crawling etc.)
     static class FileHelper
     {
+        private static readonly log4net.ILog log4 = log4net.LogManager.GetLogger(System.Reflection.MethodBase.GetCurrentMethod().DeclaringType);
+
         //Adds the current executing directory to a given Filename.
         public static string GetFullFileDir(string filename)
         {
@@ -55,7 +51,7 @@ namespace docreminder
             }
             catch (Exception e)
             {
-                log.WriteError("Couldn't find File '" + filename + "' in application directory.\n\n" + e.ToString());
+                log4.Error("Couldn't find File '" + filename + "' in application directory.\n\n" + e.ToString());
             }
             return contents;
         }

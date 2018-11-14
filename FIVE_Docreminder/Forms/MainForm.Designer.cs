@@ -42,7 +42,6 @@
             this.dgwEbills = new System.Windows.Forms.DataGridView();
             this.groupBox1 = new System.Windows.Forms.GroupBox();
             this.rTextBoxLog = new System.Windows.Forms.RichTextBox();
-            this.lBLog = new System.Windows.Forms.ListView();
             this.statusStrip1 = new System.Windows.Forms.StatusStrip();
             this.toolStripStatusConfig = new System.Windows.Forms.ToolStripStatusLabel();
             this.toolStripProgressBar1 = new System.Windows.Forms.ToolStripProgressBar();
@@ -54,6 +53,7 @@
             this.btnSearchMore = new System.Windows.Forms.Button();
             this.timerShutDown = new System.Windows.Forms.Timer(this.components);
             this.progressBar1 = new System.Windows.Forms.ProgressBar();
+            this.lBLog = new System.Windows.Forms.ListView();
             this.menuStrip1.SuspendLayout();
             this.groupBox2.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.dgwEbills)).BeginInit();
@@ -172,27 +172,16 @@
             // 
             // rTextBoxLog
             // 
+            this.rTextBoxLog.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Left) 
+            | System.Windows.Forms.AnchorStyles.Right)));
             this.rTextBoxLog.BackColor = System.Drawing.SystemColors.MenuText;
             this.rTextBoxLog.ForeColor = System.Drawing.SystemColors.Menu;
             this.rTextBoxLog.Location = new System.Drawing.Point(6, 20);
             this.rTextBoxLog.Name = "rTextBoxLog";
             this.rTextBoxLog.ReadOnly = true;
-            this.rTextBoxLog.Size = new System.Drawing.Size(837, 62);
+            this.rTextBoxLog.Size = new System.Drawing.Size(837, 78);
             this.rTextBoxLog.TabIndex = 4;
             this.rTextBoxLog.Text = "";
-            // 
-            // lBLog
-            // 
-            this.lBLog.Anchor = ((System.Windows.Forms.AnchorStyles)((((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Bottom) 
-            | System.Windows.Forms.AnchorStyles.Left) 
-            | System.Windows.Forms.AnchorStyles.Right)));
-            this.lBLog.Location = new System.Drawing.Point(6, 88);
-            this.lBLog.Name = "lBLog";
-            this.lBLog.ShowItemToolTips = true;
-            this.lBLog.Size = new System.Drawing.Size(837, 24);
-            this.lBLog.TabIndex = 3;
-            this.lBLog.UseCompatibleStateImageBehavior = false;
-            this.lBLog.View = System.Windows.Forms.View.List;
             // 
             // statusStrip1
             // 
@@ -278,6 +267,19 @@
             this.progressBar1.Style = System.Windows.Forms.ProgressBarStyle.Continuous;
             this.progressBar1.TabIndex = 13;
             // 
+            // lBLog
+            // 
+            this.lBLog.Anchor = ((System.Windows.Forms.AnchorStyles)((((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Bottom) 
+            | System.Windows.Forms.AnchorStyles.Left) 
+            | System.Windows.Forms.AnchorStyles.Right)));
+            this.lBLog.Location = new System.Drawing.Point(6, 88);
+            this.lBLog.Name = "lBLog";
+            this.lBLog.ShowItemToolTips = true;
+            this.lBLog.Size = new System.Drawing.Size(837, 24);
+            this.lBLog.TabIndex = 3;
+            this.lBLog.UseCompatibleStateImageBehavior = false;
+            this.lBLog.View = System.Windows.Forms.View.List;
+            // 
             // MainForm
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
@@ -320,7 +322,6 @@
         private System.Windows.Forms.GroupBox groupBox2;
         private System.Windows.Forms.DataGridView dgwEbills;
         private System.Windows.Forms.GroupBox groupBox1;
-        private System.Windows.Forms.ListView lBLog;
         private System.Windows.Forms.StatusStrip statusStrip1;
         private System.Windows.Forms.ToolStripStatusLabel toolStripStatusConfig;
         private System.Windows.Forms.ToolStripProgressBar toolStripProgressBar1;
@@ -335,6 +336,7 @@
         private System.Windows.Forms.ToolStripMenuItem sQLVariabelnToolStripMenuItem;
         private System.Windows.Forms.ProgressBar progressBar1;
         private System.Windows.Forms.RichTextBox rTextBoxLog;
+        private System.Windows.Forms.ListView lBLog;
     }
 }
 

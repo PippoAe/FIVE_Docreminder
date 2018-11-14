@@ -19,6 +19,7 @@ namespace docreminder.DocSafe
     class DocSafeHandler
     {
         ConsoleWriter log = ConsoleWriter.GetInstance;
+        private static readonly log4net.ILog log4 = log4net.LogManager.GetLogger(System.Reflection.MethodBase.GetCurrentMethod().DeclaringType);
 
 
         //TODO DocSafe
@@ -145,20 +146,20 @@ namespace docreminder.DocSafe
 
                 if (response.StatusCode == HttpStatusCode.OK)
                 {
-                    //log.WriteInfo(String.Format("File uploaded without errors. Server Response:'{0}'", response.Content));
+                    //log4.Info(String.Format("File uploaded without errors. Server Response:'{0}'", response.Content));
                     var descripton = response.StatusDescription;
                     var content = response.Content; // raw content as string
                     //MessageBox.Show(response.StatusDescription + "\n" + response.Content);
-                    log.WriteInfo(response.StatusDescription + "\n" + response.Content);
+                    log4.Info(response.StatusDescription + "\n" + response.Content);
                     return true;
                 }
                 else
                 {
-                    //log.WriteInfo(String.Format("File uploaded with errors. Server Response:'{0}'", response.Content));
+                    //log4.Info(String.Format("File uploaded with errors. Server Response:'{0}'", response.Content));
                     var descripton = response.StatusDescription;
                     var content = response.Content; // raw content as string
                     //MessageBox.Show(response.StatusDescription + "\n" + response.Content);
-                    log.WriteInfo(response.StatusDescription + "\n" + response.Content);
+                    log4.Info(response.StatusDescription + "\n" + response.Content);
                     //return false;
                     throw new Exception(String.Format("An error happened during File Upload. Server Response: '{0}'",response.Content));
                 }

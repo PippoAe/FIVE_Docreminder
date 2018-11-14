@@ -31,7 +31,7 @@ namespace docreminder
         public MainForm()
         {
             InitializeComponent();
-            //RichTextBoxAppender.SetRichTextBox(rTextBoxLog, "RichTextBoxAppender");
+            log4net.Appender.RichTextBoxAppender.SetRichTextBox(rTextBoxLog, "RichTextBoxAppender");
 
             ColumnHeader header = new ColumnHeader();
             header.Text = "";
@@ -135,7 +135,8 @@ namespace docreminder
         {
             string info = String.Format("Found {0} documents matching the searchproperties. HasMore:{1}",
                 documents.Count(), _webServiceHandler.hasMore);
-            log.WriteInfo(info);
+            log4.Info(info);
+            log4.Info(info);
 
             //dgwEbills.Columns.Clear();
             //dgwEbills.Rows.Clear();
@@ -194,7 +195,7 @@ namespace docreminder
                 //Validate with Additional Computed Identifiers before sending.
                 if (Properties.Settings.Default.AddCpIdisActive)
                 {
-                    log.WriteInfo("Additional computed identifier is active! Validating each document...");
+                    log4.Info("Additional computed identifier is active! Validating each document...");
 
 
                         int greenlighted = 0;
@@ -214,12 +215,12 @@ namespace docreminder
                                 }
                             catch (Exception e)
                             {
-                                log.WriteInfo("An Error happened while validating the documents with the additional computed identifier!" + e.Message);
+                                log4.Info("An Error happened while validating the documents with the additional computed identifier!" + e.Message);
                                 row.DefaultCellStyle.BackColor = Color.Red;
                             }
                         }
 
-                   log.WriteInfo("Found " + greenlighted + " documents matching the additional computed identifier.");
+                   log4.Info("Found " + greenlighted + " documents matching the additional computed identifier.");
                 }
             }
             
@@ -289,7 +290,7 @@ namespace docreminder
 
             if (dgwEbills.Rows.Count > 0)
             {
-                log.WriteInfo("Document processing initiated. Now trying to process each document.");
+                log4.Info("Document processing initiated. Now trying to process each document.");
                 List<KXWS.SSearchCondition> searchConList = new List<KXWS.SSearchCondition>();
                 searchConList = (List<KXWS.SSearchCondition>)(FileHelper.XmlDeserializeFromString(Properties.Settings.Default.KendoxSearchProperties, searchConList.GetType()));
 
@@ -326,7 +327,7 @@ namespace docreminder
                                     if (childGuids.Count == 0 || (childGuids.Count == 1 && childGuids.Contains(documentId)))
                                     {
                                         row.HeaderCell.Style.BackColor = Color.LightGreen;
-                                        log.WriteInfo("Parentdocument ignored, no child documents available. ObjectID:"+documentId);
+                                        log4.Info("Parentdocument ignored, no child documents available. ObjectID:"+documentId);
                                     }
                                     else
                                     {
@@ -340,7 +341,7 @@ namespace docreminder
 
 
 
-                log.WriteInfo("Waiting for all asynchronus documentprocessing to finish...");
+                log4.Info("Waiting for all asynchronus documentprocessing to finish...");
                 bool allfinished = false;
                 
                 processDocumentsWorker.ReportProgress(0);
@@ -387,7 +388,7 @@ namespace docreminder
                     string error = "Documents processed without errors.";
                     if (errorHappened)
                         error = "Documents processed with errors!";
-                    log.WriteInfo(error);
+                    log4.Info(error);
                 }
                 else
                 {
@@ -400,15 +401,15 @@ namespace docreminder
 
                     //Check if Error Happened
                     if (errorHappened)
-                        log.WriteError("An Error occured in atleast one of the processed documents.");
+                        log4.Error("An Error occured in atleast one of the processed documents.");
                     else
-                        log.WriteInfo("All Documents have been processed.");
+                        log4.Info("All Documents have been processed.");
                 }
 
             }
             else
             {
-                log.WriteInfo("There are no documents to be processed.");
+                log4.Info("There are no documents to be processed.");
             }
         }
 
@@ -452,7 +453,7 @@ namespace docreminder
             getDocumentsWorker.ReportProgress(10);
             if (_webServiceHandler == null)
             {
-                log.WriteInfo("Logging in into Archive via WebService...");
+                log4.Info("Logging in into Archive via WebService...");
                 getDocumentsWorker.ReportProgress(40);
                 _webServiceHandler = new WebServiceHandler();
                 
@@ -515,7 +516,7 @@ namespace docreminder
             //Scheduled time reached
             if(scheduledTimeLeft.TotalSeconds > 4 & scheduledTimeLeft.TotalSeconds < 5 )
             {
-                log.WriteInfo(String.Format("Todays scheduled endtime is almost reached. Shutting down ASAP."));
+                log4.Info(String.Format("Todays scheduled endtime is almost reached. Shutting down ASAP."));
             }
             if (scheduledTimeLeft.TotalSeconds < 0)
             {
@@ -539,7 +540,8 @@ namespace docreminder
 
             if (Program.automode)
             {
-                log.WriteInfo("Application started in Automode.");
+                log4.Info("Application started in Automode.");
+                log4.Info("Application started in Automode.");
                 CheckForEBills();
             }
         }

@@ -14,6 +14,7 @@ namespace docreminder.Forms
     public partial class FormSchedule : Form
     {
         private ConsoleWriter log;
+        private static readonly log4net.ILog log4 = log4net.LogManager.GetLogger(System.Reflection.MethodBase.GetCurrentMethod().DeclaringType);
 
         public FormSchedule()
         {
@@ -32,7 +33,7 @@ namespace docreminder.Forms
                 }
                 catch
                 {
-                    log.WriteInfo("Error while loading Schedule from settings, loading blank instead.");
+                    log4.Info("Error while loading Schedule from settings, loading blank instead.");
                 }
             }
             

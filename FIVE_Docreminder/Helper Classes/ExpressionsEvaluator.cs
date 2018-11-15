@@ -211,7 +211,7 @@ namespace docreminder
 
                     SqlConnection sqlCon = (sqlConnections.Find(item => item.name == connection.ToString())).connection;
                     if (sqlCon == null)
-                        throw new System.ArgumentException(String.Format("SQL-Connection '{0}' not defined.", connection));
+                        throw new System.ArgumentException(string.Format("SQL-Connection '{0}' not defined.", connection));
 
 
                     if (sqlCon != null && sqlCon.State == ConnectionState.Closed)
@@ -439,7 +439,7 @@ namespace docreminder
 
         //            SqlConnection sqlCon = (sqlConnections.Find(item => item.name == connection.ToString())).connection;
         //            if (sqlCon == null)
-        //                throw new System.ArgumentException(String.Format("SQL-Connection '{0}' not defined.", connection));
+        //                throw new System.ArgumentException(string.Format("SQL-Connection '{0}' not defined.", connection));
 
 
         //            if (sqlCon != null && sqlCon.State == ConnectionState.Closed)
@@ -592,7 +592,7 @@ namespace docreminder
 
         //            SqlConnection sqlCon = (sqlConnections.Find(item => item.name == connection.ToString())).connection;
         //            if (sqlCon == null)
-        //                throw new System.ArgumentException(String.Format("SQL-Connection '{0}' not defined.", connection));
+        //                throw new System.ArgumentException(string.Format("SQL-Connection '{0}' not defined.", connection));
 
 
         //            if (sqlCon != null && sqlCon.State == ConnectionState.Closed)
@@ -752,7 +752,7 @@ namespace docreminder
 
         //            SqlConnection sqlCon = (sqlConnections.Find(item => item.name == connection.ToString())).connection;
         //            if (sqlCon == null)
-        //                throw new System.ArgumentException(String.Format("SQL-Connection '{0}' not defined.", connection));
+        //                throw new System.ArgumentException(string.Format("SQL-Connection '{0}' not defined.", connection));
 
 
         //            if (sqlCon != null && sqlCon.State == ConnectionState.Closed)

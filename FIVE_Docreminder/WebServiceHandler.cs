@@ -21,7 +21,9 @@ namespace docreminder
     {
         KXWS.KXWebService40 WebService = new KXWS.KXWebService40();
         string sSessionGuid = "";
-        ConsoleWriter log = ConsoleWriter.GetInstance;
+        
+        private static readonly log4net.ILog log4 = log4net.LogManager.GetLogger(System.Reflection.MethodBase.GetCurrentMethod().DeclaringType);
+
         private bool _hasMore = false;
         private string _resumePoint = null;
         List<KXWS.SUserInfoExt> lUsers;
@@ -56,7 +58,7 @@ namespace docreminder
                     {
                         encrypted = "Password is encrypted, did you maybe change user?";
                     }
-                    log.WriteError(e.Message + " " +encrypted);
+                    log4.Error(e.Message + " " +encrypted);
                     ret = e.Message+" "+encrypted;
                     errorOccured = true;
                 }
@@ -64,7 +66,7 @@ namespace docreminder
                 {
                     sSessionGuid = ret;
                     ret = "Sucessfully logged in to '" + Properties.Settings.Default.KendoxServerAdress + ":" + Properties.Settings.Default.KendoxPort + "'. SessionGUID: '" + sSessionGuid + "'";
-                    log.WriteInfo(ret);
+                    log4.Info(ret);
                 }
             }
 
@@ -122,13 +124,13 @@ namespace docreminder
             try
             {
                 if (_resumePoint == null)
-                    log.WriteInfo("Searching for documents...");
+                    log4.Info("Searching for documents...");
 
                 documents = (KXWS.SDocument[])(WebService.Search(sSessionGuid, Properties.Settings.Default.Culture, Properties.Settings.Default.Culture, Properties.Settings.Default.Culture, searchConditions, kxInfoStores, listproperties, null, KXWS.FulltextWordRelations.AND, Properties.Settings.Default.SearchQuantity, false, ref _resumePoint, out _hasMore));
             }
             catch (Exception e)
             {
-                log.WriteError(e.Message);
+                log4.Error(e.Message);
                 errorOccured = true;
                 documents = new KXWS.SDocument[0];
             }
@@ -178,7 +180,7 @@ namespace docreminder
             try
             {
                 if (_resumePoint == null)
-                    log.WriteInfo("Searching for documents...");
+                    log4.Info("Searching for documents...");
                 //TODO Maybe make search quantity a setting in grouping.
                 string resume = "";
                 bool hasmore;
@@ -186,7 +188,7 @@ namespace docreminder
             }
             catch (Exception e)
             {
-                log.WriteError(e.Message);
+                log4.Error(e.Message);
                 errorOccured = true;
                 documents = new KXWS.SDocument[0];
             }
@@ -202,7 +204,7 @@ namespace docreminder
         }
         public async Task<bool> ProcessDocument(string docGuid, DataGridViewRow row, List<string> childGuids = null)
         {
-            log.WriteInfo(String.Format("TaskID {0} processing DocGuid {1}",Task.CurrentId,docGuid));
+            log4.Info(string.Format("TaskID {0} processing DocGuid {1}",Task.CurrentId,docGuid));
 
             List<KXWS.SDocumentPropertyUpdate> markerProperties = new List<KXWS.SDocumentPropertyUpdate>();
             markerProperties = (List<KXWS.SDocumentPropertyUpdate>)(FileHelper.XmlDeserializeFromString(Properties.Settings.Default.KendoxMarkerProperties, markerProperties.GetType()));
@@ -217,8 +219,8 @@ namespace docreminder
             }
             catch (Exception e)
             {
-                log.WriteInfo(String.Format("An Error happened while evaluating the Marker-Properties. Check them! ID[{0}]",Task.CurrentId));
-                log.WriteInfo(e.Message);
+                log4.Info(string.Format("An Error happened while evaluating the Marker-Properties. Check them! ID[{0}]",Task.CurrentId));
+                log4.Info(e.Message);
                 row.HeaderCell.Style.BackColor = Color.Red;
                 row.HeaderCell.ToolTipText = e.Message;
                 return false;
@@ -239,11 +241,12 @@ namespace docreminder
             }
             catch (Exception e)
             {
-                log.WriteInfo(String.Format("Error while trying to undo checkout on document. ID[{0}] {1}", Task.CurrentId, e.Message));
+                log4.Info(string.Format("Error while trying to undo checkout on document. ID[{0}] {1}", Task.CurrentId, e.Message));
                 row.HeaderCell.Style.BackColor = Color.Red;
                 row.HeaderCell.ToolTipText = e.Message;
                 return false;
             }
+
             //SendEmail
             bool processed = false;
             KXWS.SDocument docinfo = new KXWS.SDocument();
@@ -359,7 +362,7 @@ namespace docreminder
                                         }
                                     }
                                     DateTime downloading = DateTime.Now;
-                                    log.WriteInfo(String.Format("Downloading child documents took {0} seconds. ID[{1}]", (downloading - start).Seconds.ToString(),Task.CurrentId));
+                                    log4.Info(string.Format("Downloading child documents took {0} seconds. ID[{1}]", (downloading - start).Seconds.ToString(),Task.CurrentId));
 
                                     if (Properties.Settings.Default.GroupingZipped)
                                     {
@@ -374,7 +377,7 @@ namespace docreminder
                                         docinfo.fileName = Properties.Settings.Default.GroupingZipName + ".zip";
 
                                         DateTime zipping = DateTime.Now;
-                                        log.WriteInfo(String.Format("Zipping took {0} seconds.ID[{1}]", (zipping - downloading).Seconds.ToString(), Task.CurrentId));
+                                        log4.Info(string.Format("Zipping took {0} seconds.ID[{1}]", (zipping - downloading).Seconds.ToString(), Task.CurrentId));
                                     }
                                     else
                                     {
@@ -390,7 +393,7 @@ namespace docreminder
                         if (lUsers == null)
                             lUsers = getAllUsers();
 
-                        using (Task<bool> AsyncTaskSendMail = log.SendDocumentMail(document, docinfo, row, lUsers, attachmentDirectory))
+                        using (Task<bool> AsyncTaskSendMail = MailHandler.GetInstance.SendDocumentMail(document, docinfo, row, lUsers, attachmentDirectory))
                         {
                             processed = AsyncTaskSendMail.Result;
                         }
@@ -433,11 +436,11 @@ namespace docreminder
                             {
                                 Forms.ExpressionVariablesForm.KeyValuePair<string, string> kvpEvaluated = kvp;
                                 //AEPH: 05.02.2016
-                                // kvpEvaluated.Value = String.Format("'{0}';'{1}';'{2}';{3}", sSessionGuid, row.Cells[1].Value, null, kvpEvaluated.Value);
+                                // kvpEvaluated.Value = string.Format("'{0}';'{1}';'{2}';{3}", sSessionGuid, row.Cells[1].Value, null, kvpEvaluated.Value);
                                 //"'string:userGuid;string:documentID;string:storeID;'TEST'"
-                                kvpEvaluated.Value = kvpEvaluated.Value.Replace("string:userGuid",String.Format("'{0}'",sSessionGuid));
-                                kvpEvaluated.Value = kvpEvaluated.Value.Replace("string:documentID", String.Format("'{0}'",row.Cells[1].Value.ToString()));
-                                kvpEvaluated.Value = kvpEvaluated.Value.Replace("string:storeID", String.Format("'{0}'",row.Cells["storeID"].Value.ToString()));
+                                kvpEvaluated.Value = kvpEvaluated.Value.Replace("string:userGuid",string.Format("'{0}'",sSessionGuid));
+                                kvpEvaluated.Value = kvpEvaluated.Value.Replace("string:documentID", string.Format("'{0}'",row.Cells[1].Value.ToString()));
+                                kvpEvaluated.Value = kvpEvaluated.Value.Replace("string:storeID", string.Format("'{0}'",row.Cells["storeID"].Value.ToString()));
 
 
                                 string[] sValuesSplitted = kvpEvaluated.Value.Split(new[] { ";" }, StringSplitOptions.RemoveEmptyEntries);
@@ -454,7 +457,7 @@ namespace docreminder
 
                                 MethodInfo theMethod = WebService.GetType().GetMethod(kvpEvaluated.Key);
                                 if (theMethod == null)
-                                    throw new Exception(String.Format("Method '{0}' not available on Webservice!", kvpEvaluated.Key));
+                                    throw new Exception(string.Format("Method '{0}' not available on Webservice!", kvpEvaluated.Key));
                                 bool answer = false;
                                 answer = (bool)theMethod.Invoke(WebService, sValuesSplitted);
                                 processed = true;
@@ -468,7 +471,7 @@ namespace docreminder
             }
             catch (Exception e)
             {
-                log.WriteInfo(String.Format("Error happened while trying to process document. ID[{0}]",Task.CurrentId) + e.Message + e.InnerException);
+                log4.Info(string.Format("Error happened while trying to process document. ID[{0}]",Task.CurrentId) + e.Message + e.InnerException);
                 row.HeaderCell.Style.BackColor = Color.Red;
                 row.HeaderCell.ToolTipText = e.Message + "Inner Message:" + e.InnerException.Message;
                 return false;
@@ -484,8 +487,8 @@ namespace docreminder
 
                 catch (Exception e)
                 {
-                    log.WriteInfo(String.Format("An Error happened while evaluating the Marker-Properties. Check them! ID[{0}]",Task.CurrentId));
-                    log.WriteInfo(e.Message);
+                    log4.Info(string.Format("An Error happened while evaluating the Marker-Properties. Check them! ID[{0}]",Task.CurrentId));
+                    log4.Info(e.Message);
                     row.HeaderCell.Style.BackColor = Color.Red;
                     row.HeaderCell.ToolTipText = e.Message;
                     return false;
@@ -493,6 +496,8 @@ namespace docreminder
 
                 try
                 {
+                    if(updatePropList.Count() > 1)
+                    { 
                     DateTime starttime = DateTime.Now;
                     if (!Properties.Settings.Default.GroupingActive)
                         WebService.UpdateDocumentProperties(sSessionGuid, Properties.Settings.Default.Culture, Properties.Settings.Default.Culture, docGuid, null, updatePropList, null, null, null, null);
@@ -504,13 +509,13 @@ namespace docreminder
                             WebService.UpdateDocumentProperties(sSessionGuid, Properties.Settings.Default.Culture, Properties.Settings.Default.Culture, childGuid, null, updatePropList, null, null, null, null);
                         }
                     }
-                    log.WriteInfo(String.Format("Updating documentproperties took {0} seconds. ID[{1}]", (DateTime.Now - starttime).Seconds.ToString(), Task.CurrentId));
+                    log4.Info(string.Format("Updating documentproperties took {0} seconds. ID[{1}]", (DateTime.Now - starttime).Seconds.ToString(), Task.CurrentId));
+                    }
 
                 }
                 catch (Exception e)
                 {
-                    log.WriteInfo(String.Format("Something went wrong while updating the documentproperty!! Maybe the property is unchangeable!! ID[{0}]",Task.CurrentId));
-                    log.WriteInfo(e.Message);
+                    log4.Error(string.Format("Something went wrong while updating the documentproperty!! Maybe the property is unchangeable!! ID[{0}] Message: {1}",Task.CurrentId, e.Message));
                     row.HeaderCell.Style.BackColor = Color.Red;
                     row.HeaderCell.ToolTipText = e.Message;
                     return false;
@@ -550,7 +555,7 @@ namespace docreminder
                 }
                 catch (Exception e)
                 {
-                    log.WriteError("Could not evaluate process name from expression " + processTemplateItem.ProcessName);
+                    log4.Error("Could not evaluate process name from expression " + processTemplateItem.ProcessName);
                     throw e;
                 }
 
@@ -609,8 +614,8 @@ namespace docreminder
             }
             catch (Exception e)
             {
-                log.WriteInfo(String.Format("An error occured while starting the process with the document. ID[{0}]",Task.CurrentId));
-                log.WriteInfo(e.Message);
+                log4.Info(string.Format("An error occured while starting the process with the document. ID[{0}]",Task.CurrentId));
+                log4.Info(e.Message);
                 throw e;
             }
             return true;
@@ -624,7 +629,7 @@ namespace docreminder
             DateTime starttime = DateTime.Now;
             KXWS.SUserInfoExt[] aUsers = WebService.GetAllUsers(sSessionGuid, Properties.Settings.Default.Culture, Properties.Settings.Default.Culture, false);
             List<KXWS.SUserInfoExt> lSUsers = aUsers.ToList<KXWS.SUserInfoExt>();
-            log.WriteInfo(String.Format("Getting user took {0} seconds. ID[{1}]", (DateTime.Now - starttime).Seconds.ToString(), Task.CurrentId));
+            log4.Info(string.Format("Getting user took {0} seconds. ID[{1}]", (DateTime.Now - starttime).Seconds.ToString(), Task.CurrentId));
             return lSUsers;
         }
 
@@ -658,7 +663,7 @@ namespace docreminder
             if (lProcessTemplates != null)
             {
                 miliseconds = DateTime.Now.Subtract(now).Milliseconds;
-                //log.WriteInfo(String.Format("Getting all processtemplates took {0} miliseconds.", miliseconds));
+                //log4.Info(string.Format("Getting all processtemplates took {0} miliseconds.", miliseconds));
                 return lProcessTemplates;
             }
 
@@ -684,7 +689,7 @@ namespace docreminder
                 lSProcessTemplates.Add(pTitem);
             }
             miliseconds = DateTime.Now.Subtract(now).Milliseconds;
-            log.WriteInfo(String.Format("Getting all processtemplates took {0} miliseconds.", miliseconds));
+            log4.Info(string.Format("Getting all processtemplates took {0} miliseconds.", miliseconds));
             lProcessTemplates = lSProcessTemplates;
             return lSProcessTemplates;
         }
@@ -807,7 +812,7 @@ namespace docreminder
                 if (schemaElement != null)
                 {
                     //Console.Out.WriteLine("Schema Element: {0}", schemaElement.Name);
-                    infoString = String.Format("{0}(", schemaElement.Name);
+                    infoString = string.Format("{0}(", schemaElement.Name);
 
                     XmlSchemaType schemaType = schemaElement.SchemaType;
                     XmlSchemaComplexType schemaComplexType = schemaType as XmlSchemaComplexType;
@@ -834,7 +839,7 @@ namespace docreminder
                                 {
                                     //Console.Out.WriteLine("    Element/Type: {0}:{1}", childElement.Name,
                                     //                      childElement.SchemaTypeName.Name);
-                                    infoString += String.Format("{0}:{1},", childElement.SchemaTypeName.Name, childElement.Name);
+                                    infoString += string.Format("{0}:{1},", childElement.SchemaTypeName.Name, childElement.Name);
                                     string test = childElement.ToString();
                                 }
 
@@ -981,7 +986,7 @@ namespace docreminder
                 }
                 catch (Exception e)
                 {
-                    log.WriteError("An Error happened while evaluating the SearchProperties." + e.Message);
+                    log4.Error("An Error happened while evaluating the SearchProperties." + e.Message);
                     throw e;
                 }
             }

@@ -13,11 +13,10 @@ namespace docreminder.Forms
 {
     public partial class FormSchedule : Form
     {
-        private ConsoleWriter log;
+        private static readonly log4net.ILog log4 = log4net.LogManager.GetLogger(System.Reflection.MethodBase.GetCurrentMethod().DeclaringType);
 
         public FormSchedule()
         {
-            log = ConsoleWriter.GetInstance;
             InitializeComponent();
         }
 
@@ -32,7 +31,7 @@ namespace docreminder.Forms
                 }
                 catch
                 {
-                    log.WriteInfo("Error while loading Schedule from settings, loading blank instead.");
+                    log4.Info("Error while loading Schedule from settings, loading blank instead.");
                 }
             }
             
@@ -92,13 +91,13 @@ namespace docreminder.Forms
                     TimeSpan stopTime = sd.time.TimeOfDay;
                     if (stopTime <= timeNow)
                     {
-                        MessageBox.Show(String.Format("Wir schalten jetzt aus! stopTime:{0}, timeNow:{1}", stopTime.ToString(), timeNow.ToString()));
+                        MessageBox.Show(string.Format("Wir schalten jetzt aus! stopTime:{0}, timeNow:{1}", stopTime.ToString(), timeNow.ToString()));
                     }
                     else
                     {
                         TimeSpan ts = (stopTime - timeNow);
                         string wann = ts.ToString(@"hh\:mm\:ss");
-                        MessageBox.Show(String.Format("Wir schalten in {0} aus! stopTime:{1}, timeNow:{2}",wann, stopTime.ToString(), timeNow.ToString()));
+                        MessageBox.Show(string.Format("Wir schalten in {0} aus! stopTime:{1}, timeNow:{2}",wann, stopTime.ToString(), timeNow.ToString()));
                     }
                 }
             }

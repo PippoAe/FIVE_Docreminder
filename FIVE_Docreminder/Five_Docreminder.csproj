@@ -5,7 +5,7 @@
     <Configuration Condition=" '$(Configuration)' == '' ">Debug</Configuration>
     <Platform Condition=" '$(Platform)' == '' ">AnyCPU</Platform>
     <ProjectGuid>{690E9E0E-9D40-4156-9315-C589861D9D76}</ProjectGuid>
-    <OutputType>WinExe</OutputType>
+    <OutputType>Exe</OutputType>
     <AppDesignerFolder>Properties</AppDesignerFolder>
     <RootNamespace>docreminder</RootNamespace>
     <AssemblyName>FIVE Docreminder</AssemblyName>
@@ -78,11 +78,17 @@
     <StartupObject />
   </PropertyGroup>
   <ItemGroup>
+    <Reference Include="log4net, Version=2.0.8.0, Culture=neutral, PublicKeyToken=669e0ddf0bb1aa2a, processorArchitecture=MSIL">
+      <HintPath>..\packages\log4net.2.0.8\lib\net45-full\log4net.dll</HintPath>
+    </Reference>
     <Reference Include="NCalc, Version=1.3.8.0, Culture=neutral, PublicKeyToken=973cde3f1cafed03, processorArchitecture=MSIL">
       <HintPath>..\packages\ncalc.1.3.8\lib\NCalc.dll</HintPath>
     </Reference>
     <Reference Include="RestSharp">
       <HintPath>..\packages\RestSharp.105.2.3\lib\net451\RestSharp.dll</HintPath>
+    </Reference>
+    <Reference Include="RichTextBoxAppender">
+      <HintPath>.\RichTextBoxAppender.dll</HintPath>
     </Reference>
     <Reference Include="System" />
     <Reference Include="System.configuration" />
@@ -129,7 +135,6 @@
     <Compile Include="Forms\FormSchedule.Designer.cs">
       <DependentUpon>FormSchedule.cs</DependentUpon>
     </Compile>
-    <Compile Include="Helper Classes\ConsoleWriter.cs" />
     <Compile Include="Helper Classes\ExpressionsEvaluator.cs" />
     <Compile Include="Helper Classes\FileHelper.cs" />
     <Compile Include="Forms\MainForm.cs">
@@ -158,6 +163,7 @@
     </Compile>
     <Compile Include="Helper Classes\FileModel.cs" />
     <Compile Include="Helper Classes\PortableSettingsProvider.cs" />
+    <Compile Include="Helper Classes\MailHandler.cs" />
     <Compile Include="Program.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="Forms\FormSettings.cs">
@@ -215,6 +221,10 @@
       <SubType>Designer</SubType>
     </EmbeddedResource>
     <None Include="docreminder.pfx" />
+    <None Include="log4net.config">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+      <SubType>Designer</SubType>
+    </None>
     <None Include="packages.config" />
     <None Include="Properties\app.manifest">
       <SubType>Designer</SubType>

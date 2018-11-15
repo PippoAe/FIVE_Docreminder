@@ -12,9 +12,10 @@ using System.Xml.Serialization;
 
 namespace docreminder
 {
-    public partial class Form1 : Form
+    public partial class MainForm : Form
     {
-        ConsoleWriter log = ConsoleWriter.GetInstance;
+        
+        private static readonly log4net.ILog log4 = log4net.LogManager.GetLogger(System.Reflection.MethodBase.GetCurrentMethod().DeclaringType);
         
         private WebServiceHandler _webServiceHandler;
         public DateTime starttime;
@@ -27,46 +28,26 @@ namespace docreminder
             set { _webServiceHandler = value; }
         }
 
-        public Form1()
+        public MainForm()
         {
             InitializeComponent();
-            if (Program.customConfigFile != "")
-                toolStripStatusConfig.Text = "Loaded Config: '" + Path.GetFileName(Program.customConfigFile) + "'";
-            else
-                toolStripStatusConfig.Text = "Loaded Config: 'Default'";
+            log4net.Appender.RichTextBoxAppender.SetRichTextBox(rTextBoxLog, "RichTextBoxAppender");
 
             ColumnHeader header = new ColumnHeader();
             header.Text = "";
             header.Name = "col1";
-            lBLog.HeaderStyle = ColumnHeaderStyle.None;
-            lBLog.AutoResizeColumns(ColumnHeaderAutoResizeStyle.ColumnContent);
-            lBLog.Columns.Add(header);
-
-            lBLog.Scrollable = true;
-            lBLog.View = View.Details;
 
             //Set Starttime
             starttime = DateTime.Now;
             //CheckSchedule
-            CheckSchedule();
+            CheckSchedule();            
 
-            
-
-            this.Shown += new System.EventHandler(this.Form1_Shown);
         }
 
-        private void Form1_Shown(object sender, EventArgs e)
-        {
-            if (Program.automode)
-            {
-                log.WriteInfo("Application started in Automode.");
-                CheckForEBills();
-            }
-        }
 
         private void Form1_Load(object sender, EventArgs e)
         {
-            log.lWLog = this.lBLog;
+            
         }
         
 
@@ -145,18 +126,12 @@ namespace docreminder
 
         public void displayFoundEBills(KXWS.SDocument[] documents)
         {
-            string info = String.Format("Found {0} documents matching the searchproperties. HasMore:{1}",
-                documents.Count(), _webServiceHandler.hasMore);
-            log.WriteInfo(info);
+            log4.Info(string.Format("Found {0} documents matching the searchproperties. HasMore:{1}", documents.Count(), _webServiceHandler.hasMore));
 
-            //dgwEbills.Columns.Clear();
-            //dgwEbills.Rows.Clear();
-            //dgwEbills.Refresh();
             dgwEbills.Columns.Clear();
             dgwEbills.DataSource = null;
 
             dgwEbills.DataSource = documents;
-            //dgwEbills.
 
             if (documents.Count() > 0)
             {
@@ -206,7 +181,7 @@ namespace docreminder
                 //Validate with Additional Computed Identifiers before sending.
                 if (Properties.Settings.Default.AddCpIdisActive)
                 {
-                    log.WriteInfo("Additional computed identifier is active! Validating each document...");
+                    log4.Info("Additional computed identifier is active! Validating each document...");
 
 
                         int greenlighted = 0;
@@ -226,22 +201,17 @@ namespace docreminder
                                 }
                             catch (Exception e)
                             {
-                                log.WriteInfo("An Error happened while validating the documents with the additional computed identifier!" + e.Message);
+                                log4.Info("An Error happened while validating the documents with the additional computed identifier!" + e.Message);
                                 row.DefaultCellStyle.BackColor = Color.Red;
                             }
                         }
 
-                   log.WriteInfo("Found " + greenlighted + " documents matching the additional computed identifier.");
+                   log4.Info("Found " + greenlighted + " documents matching the additional computed identifier.");
                 }
             }
             
         }
 
-
-        private string GetAllUpdateProperties()
-        {
-            return "";
-        }
 
         private void CheckSchedule()
         {
@@ -279,7 +249,7 @@ namespace docreminder
                 scheduledTimeLeft = shortest;
                 timerShutDown.Start();
 
-                toolStripStatusLabel2.Text = String.Format("Scheduled shutdown: {0}, {1}", usedStopDay.dayofweek, usedStopDay.time.ToString("HH:mm"));
+                toolStripStatusLabel2.Text = string.Format("Scheduled shutdown: {0}, {1}", usedStopDay.dayofweek, usedStopDay.time.ToString("HH:mm"));
             }
             else
             {
@@ -301,7 +271,7 @@ namespace docreminder
 
             if (dgwEbills.Rows.Count > 0)
             {
-                log.WriteInfo("Document processing initiated. Now trying to process each document.");
+                log4.Info("Document processing initiated. Now trying to process each document.");
                 List<KXWS.SSearchCondition> searchConList = new List<KXWS.SSearchCondition>();
                 searchConList = (List<KXWS.SSearchCondition>)(FileHelper.XmlDeserializeFromString(Properties.Settings.Default.KendoxSearchProperties, searchConList.GetType()));
 
@@ -338,7 +308,7 @@ namespace docreminder
                                     if (childGuids.Count == 0 || (childGuids.Count == 1 && childGuids.Contains(documentId)))
                                     {
                                         row.HeaderCell.Style.BackColor = Color.LightGreen;
-                                        log.WriteInfo("Parentdocument ignored, no child documents available. ObjectID:"+documentId);
+                                        log4.Info("Parentdocument ignored, no child documents available. ObjectID:"+documentId);
                                     }
                                     else
                                     {
@@ -352,7 +322,7 @@ namespace docreminder
 
 
 
-                log.WriteInfo("Waiting for all asynchronus documentprocessing to finish...");
+                log4.Info("Waiting for all asynchronus documentprocessing to finish...");
                 bool allfinished = false;
                 
                 processDocumentsWorker.ReportProgress(0);
@@ -399,28 +369,28 @@ namespace docreminder
                     string error = "Documents processed without errors.";
                     if (errorHappened)
                         error = "Documents processed with errors!";
-                    log.WriteInfo(error);
+                    log4.Info(error);
                 }
                 else
                 {
                     //Send report if needed
                     if (Properties.Settings.Default.IsReportActive)
                     {
-                        log.SendReportMail(sucessfullySent, DateTime.Now - starttime);
+                        //log.SendReportMail(sucessfullySent, DateTime.Now - starttime);
                         sucessfullySent = 0;
                     }
 
                     //Check if Error Happened
                     if (errorHappened)
-                        log.WriteError("An Error occured in atleast one of the processed documents.");
+                        log4.Error("An Error occured in atleast one of the processed documents.");
                     else
-                        log.WriteInfo("All Documents have been processed.");
+                        log4.Info("All Documents have been processed.");
                 }
 
             }
             else
             {
-                log.WriteInfo("There are no documents to be processed.");
+                log4.Info("There are no documents to be processed.");
             }
         }
 
@@ -464,7 +434,7 @@ namespace docreminder
             getDocumentsWorker.ReportProgress(10);
             if (_webServiceHandler == null)
             {
-                log.WriteInfo("Logging in into Archive via WebService...");
+                log4.Info("Logging in into Archive via WebService...");
                 getDocumentsWorker.ReportProgress(40);
                 _webServiceHandler = new WebServiceHandler();
                 
@@ -500,7 +470,7 @@ namespace docreminder
             if (webserviceHandler.hasMore)
             {
                 btnSearchMore.Enabled = true;
-                btnSearchMore.Text = String.Format("Nächste {0}", Properties.Settings.Default.SearchQuantity.ToString());
+                btnSearchMore.Text = string.Format("Nächste {0}", Properties.Settings.Default.SearchQuantity.ToString());
             }
             else
             {
@@ -527,7 +497,7 @@ namespace docreminder
             //Scheduled time reached
             if(scheduledTimeLeft.TotalSeconds > 4 & scheduledTimeLeft.TotalSeconds < 5 )
             {
-                log.WriteInfo(String.Format("Todays scheduled endtime is almost reached. Shutting down ASAP."));
+                log4.Info(string.Format("Todays scheduled endtime is almost reached. Shutting down ASAP."));
             }
             if (scheduledTimeLeft.TotalSeconds < 0)
             {
@@ -539,6 +509,23 @@ namespace docreminder
             }
         }
 
+        private void MainForm_Shown(object sender, EventArgs e)
+        {
+            var mess = "";
+            if (Program.customConfigFile != "")
+                mess = string.Format("Loaded Config: '{0}'", Path.GetFileName(Program.customConfigFile));
+            else
+                mess = "Loaded Config: 'Default'";
+            toolStripStatusConfig.Text = mess;
+            log4.Info(mess);
+
+            if (Program.automode)
+            {
+                log4.Info("Application started in Automode.");
+                log4.Info("Application started in Automode.");
+                CheckForEBills();
+            }
+        }
     }
 }
 

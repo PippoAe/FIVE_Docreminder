@@ -43,7 +43,7 @@ namespace docreminder
                 }
             }
 
-            Application.Run(new Form1());
+            Application.Run(new MainForm());
 
             return (int)ExitCode.Success;
         }

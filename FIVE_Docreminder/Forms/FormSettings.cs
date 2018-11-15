@@ -16,15 +16,15 @@ namespace docreminder
     public partial class FormSettings : Form
     {
 
-        Form1 mainform;
+        MainForm mainform;
 
-        ConsoleWriter log = ConsoleWriter.GetInstance;
+        
 
         List<KeyValuePair<string, bool>> lInfoStores = new List<KeyValuePair<string, bool>>();
         List<string> lWsFunctions = null;
 
 
-        public FormSettings(Form1 mainform)
+        public FormSettings(MainForm mainform)
         {
             this.mainform = mainform;
             InitializeComponent();
@@ -188,7 +188,7 @@ namespace docreminder
             {
                 //DataRow test = new DataRow();
                 string[] row = { searchcon.propertyTypeName, searchcon.operation, string.Join(";", searchcon.propertyValueArray), searchcon.relation.ToString() };
-                //row.HeaderCell.Value = String.Format("{0}", row.Index + 1)
+                //row.HeaderCell.Value = string.Format("{0}", row.Index + 1)
                 dgwSearchProperties.Rows.Add(row);
             }
 
@@ -530,7 +530,7 @@ namespace docreminder
             if (inputDialog.ShowDialog(this) == DialogResult.OK)
             {
                 recipient = inputDialog.txtBxInput.Text;
-                log.SendTestMail(recipient);
+                MailHandler.GetInstance.SendTestMail(recipient);
                 inputDialog.Dispose();
             }
         }
@@ -964,11 +964,11 @@ namespace docreminder
                 bool isBool = Boolean.TryParse(ret, out value);
                 if (isBool)
                 {
-                    MessageBox.Show(String.Format("Sucessful!\nResult is: '{0}'. ", ret));
+                    MessageBox.Show(string.Format("Sucessful!\nResult is: '{0}'. ", ret));
                 }
                 else
                 {
-                    MessageBox.Show(String.Format("Result is not a boolean!\nResult is: '{0}'. ", ret));
+                    MessageBox.Show(string.Format("Result is not a boolean!\nResult is: '{0}'. ", ret));
                 }
             }
             catch (Exception exc)

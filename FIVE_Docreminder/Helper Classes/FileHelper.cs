@@ -33,7 +33,7 @@ namespace docreminder
         //Returns a text-based file as string with removed special characters (such as \n \r \t)
         public static string GetFileAsString(string filename)
         {
-            ConsoleWriter log = ConsoleWriter.GetInstance;
+            
 
             //Add Appdir if path is relative.
             string sFilePath = "";

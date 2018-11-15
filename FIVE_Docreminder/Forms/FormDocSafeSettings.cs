@@ -94,11 +94,11 @@ namespace docreminder.Forms
             DocSafe.DocSafeHandler dsHandler = new DocSafe.DocSafeHandler();
             try
             {
-                MessageBox.Show(String.Format("Version information was successfully retrieved!\n {0}",dsHandler.GetVersion(txtBxClientURL.Text, txtBxCertificateFilePath.Text)),"Success!",MessageBoxButtons.OK,MessageBoxIcon.Information);
+                MessageBox.Show(string.Format("Version information was successfully retrieved!\n {0}",dsHandler.GetVersion(txtBxClientURL.Text, txtBxCertificateFilePath.Text)),"Success!",MessageBoxButtons.OK,MessageBoxIcon.Information);
             }
             catch(Exception ex)
             {
-                MessageBox.Show(String.Format("Sommething went wrong while trying to get the version info!\n {0} \n {1}",ex.Message,ex.StackTrace), "Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
+                MessageBox.Show(string.Format("Sommething went wrong while trying to get the version info!\n {0} \n {1}",ex.Message,ex.StackTrace), "Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
             }
         }
 

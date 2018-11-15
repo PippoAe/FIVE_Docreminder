@@ -14,7 +14,7 @@ namespace docreminder
 {
     public partial class MainForm : Form
     {
-        ConsoleWriter log = ConsoleWriter.GetInstance;
+        
         private static readonly log4net.ILog log4 = log4net.LogManager.GetLogger(System.Reflection.MethodBase.GetCurrentMethod().DeclaringType);
         
         private WebServiceHandler _webServiceHandler;
@@ -36,12 +36,6 @@ namespace docreminder
             ColumnHeader header = new ColumnHeader();
             header.Text = "";
             header.Name = "col1";
-            lBLog.HeaderStyle = ColumnHeaderStyle.None;
-            lBLog.AutoResizeColumns(ColumnHeaderAutoResizeStyle.ColumnContent);
-            lBLog.Columns.Add(header);
-
-            lBLog.Scrollable = true;
-            lBLog.View = View.Details;
 
             //Set Starttime
             starttime = DateTime.Now;
@@ -53,7 +47,7 @@ namespace docreminder
 
         private void Form1_Load(object sender, EventArgs e)
         {
-            log.lWLog = this.lBLog;
+            
         }
         
 
@@ -92,7 +86,6 @@ namespace docreminder
 
         private void bCheckForEBills_Click(object sender, EventArgs e)
         {
-            log4.Info("TEEEST!");
             //New Search. Remove Resumepoint
             if (_webServiceHandler != null && _webServiceHandler.resumePoint != "")
                 _webServiceHandler.resumePoint = "";
@@ -133,19 +126,12 @@ namespace docreminder
 
         public void displayFoundEBills(KXWS.SDocument[] documents)
         {
-            string info = String.Format("Found {0} documents matching the searchproperties. HasMore:{1}",
-                documents.Count(), _webServiceHandler.hasMore);
-            log4.Info(info);
-            log4.Info(info);
+            log4.Info(string.Format("Found {0} documents matching the searchproperties. HasMore:{1}", documents.Count(), _webServiceHandler.hasMore));
 
-            //dgwEbills.Columns.Clear();
-            //dgwEbills.Rows.Clear();
-            //dgwEbills.Refresh();
             dgwEbills.Columns.Clear();
             dgwEbills.DataSource = null;
 
             dgwEbills.DataSource = documents;
-            //dgwEbills.
 
             if (documents.Count() > 0)
             {
@@ -227,11 +213,6 @@ namespace docreminder
         }
 
 
-        private string GetAllUpdateProperties()
-        {
-            return "";
-        }
-
         private void CheckSchedule()
         {
             List<Forms.StopDay> stopDays = new List<Forms.StopDay>();
@@ -268,7 +249,7 @@ namespace docreminder
                 scheduledTimeLeft = shortest;
                 timerShutDown.Start();
 
-                toolStripStatusLabel2.Text = String.Format("Scheduled shutdown: {0}, {1}", usedStopDay.dayofweek, usedStopDay.time.ToString("HH:mm"));
+                toolStripStatusLabel2.Text = string.Format("Scheduled shutdown: {0}, {1}", usedStopDay.dayofweek, usedStopDay.time.ToString("HH:mm"));
             }
             else
             {
@@ -395,7 +376,7 @@ namespace docreminder
                     //Send report if needed
                     if (Properties.Settings.Default.IsReportActive)
                     {
-                        log.SendReportMail(sucessfullySent, DateTime.Now - starttime);
+                        //log.SendReportMail(sucessfullySent, DateTime.Now - starttime);
                         sucessfullySent = 0;
                     }
 
@@ -489,7 +470,7 @@ namespace docreminder
             if (webserviceHandler.hasMore)
             {
                 btnSearchMore.Enabled = true;
-                btnSearchMore.Text = String.Format("Nächste {0}", Properties.Settings.Default.SearchQuantity.ToString());
+                btnSearchMore.Text = string.Format("Nächste {0}", Properties.Settings.Default.SearchQuantity.ToString());
             }
             else
             {
@@ -516,7 +497,7 @@ namespace docreminder
             //Scheduled time reached
             if(scheduledTimeLeft.TotalSeconds > 4 & scheduledTimeLeft.TotalSeconds < 5 )
             {
-                log4.Info(String.Format("Todays scheduled endtime is almost reached. Shutting down ASAP."));
+                log4.Info(string.Format("Todays scheduled endtime is almost reached. Shutting down ASAP."));
             }
             if (scheduledTimeLeft.TotalSeconds < 0)
             {

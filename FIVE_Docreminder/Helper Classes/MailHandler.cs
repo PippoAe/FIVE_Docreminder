@@ -1,213 +1,53 @@
-﻿using System;
+﻿using log4net;
+using log4net.Appender;
+using log4net.Repository.Hierarchy;
+using System;
 using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 using System.IO;
-using System.Net.Mail;
+using System.Linq;
 using System.Net;
-using System.Windows.Forms;
-using System.Drawing;
+using System.Net.Mail;
 using System.Net.NetworkInformation;
 using System.Net.Sockets;
+using System.Text;
 using System.Text.RegularExpressions;
+using System.Threading.Tasks;
+using System.Windows.Forms;
 using System.Xml;
-using System.Reflection;
-using System.Web;
 
 namespace docreminder
 {
-    class ConsoleWriter
+    class MailHandler
     {
-        private static ConsoleWriter instance;
+        private static MailHandler instance;
 
-        public ListView lWLog { get; set; }
+        private static readonly log4net.ILog log4 = log4net.LogManager.GetLogger(System.Reflection.MethodBase.GetCurrentMethod().DeclaringType);
 
-        string logfile = "";
+        string logfile = GetLogFileName("RollingFileAppender");
 
-        //SmtpClient client;
-
-        private ConsoleWriter()
+        private MailHandler()
         {
-            string today = DateTime.Today.Day.ToString();
-            //AEPH 15.02.2017
-            //Check if Logpath Exists, else we're on a new machine.
-            if(Properties.Settings.Default.IsLogActive && Directory.Exists(Properties.Settings.Default.LogPath))
-            {
-                 logfile = Properties.Settings.Default.LogPath + ("\\" + today + ".txt");
-
-                 if (File.Exists(logfile))
-                 {
-                     FileInfo fiInfo = new FileInfo(logfile);
-                     string test = DateTime.Today.Subtract(System.TimeSpan.FromDays(2)).Day.ToString();
-
-                     if (fiInfo.LastWriteTime.Day == DateTime.Today.Subtract(System.TimeSpan.FromDays(2)).Day)
-                     {
-                         File.Delete(logfile);
-                     }
-                 }
-
-                 if (!File.Exists(logfile))
-                 {
-                     using (System.IO.FileStream fs = System.IO.File.Create(logfile));
-                 }
-
-                //25.01.2017 - LogFile get's deleted if too big.
-                // FileInfo f = new FileInfo(logfile);
-                //if (f.Length > 1000 * 500)
-                //   File.Delete(logfile);
-            }
         }
 
-
-
-
-        public static ConsoleWriter GetInstance
+        public static MailHandler GetInstance
         {
             get
             {
                 if (instance == null)
-                    instance = new ConsoleWriter();
+                    instance = new MailHandler();
                 return instance;
             }
         }
 
-        public void WriteClean(string msg)
+        public static string GetLogFileName(string name)
         {
-            WriteToLog(msg);
-            Console.WriteLine(msg);
+            var rootAppender = LogManager.GetRepository()
+                                         .GetAppenders()
+                                         .OfType<FileAppender>()
+                                         .FirstOrDefault(fa => fa.Name == name);
+
+            return rootAppender != null ? rootAppender.File : string.Empty;
         }
-
-        public void WriteInfo(string msg)
-        {
-            string sInfo = "*Info* ";
-            SendToConsole(sInfo + msg, false);
-        }
-
-        public void WriteError(string msg)
-        {
-            string sError = "*Error* ";
-            SendToConsole(sError + msg, true, true);
-        }
-
-
-        public void WriteEnd(string msg)
-        {
-            string sInfo = "*Info* ";
-            SendToConsole(sInfo + msg, true);
-        }
-
-        public void WriteToLog(string line)
-        {
-            try
-            {
-                using (System.IO.StreamWriter file = new System.IO.StreamWriter(@logfile, true))
-
-                    file.WriteLine(line);
-            }
-            catch (Exception e)
-            {
-            }
-
-        }
-
-        private void SendToListView(string line)
-        {
-            lWLog.Invoke((MethodInvoker)delegate() 
-            {
-                ListViewItem lWitem = new ListViewItem(line);
-                lWitem.ToolTipText = line;
-                lWLog.Items.Add(lWitem);
-                lWLog.AutoResizeColumns(ColumnHeaderAutoResizeStyle.ColumnContent);
-                lWLog.Items[lWLog.Items.Count - 1].EnsureVisible();
-            });
-        }
-
-        private void SendToListView(ListViewItem listviewitem)
-        {
-            lWLog.Invoke((MethodInvoker)delegate()
-            {
-                lWLog.Items.Add(listviewitem);
-                lWLog.AutoResizeColumns(ColumnHeaderAutoResizeStyle.ColumnContent);
-                lWLog.Items[lWLog.Items.Count - 1].EnsureVisible();
-            });
-        }
-
-
-
-        private void SendToConsole(string msg, bool stop)
-        {
-            string sTimeStamp = DateTime.Now.ToString("HH:mm:ss.ff");
-            //string sAppName = System.IO.Path.GetFileName(System.Reflection.Assembly.GetExecutingAssembly().Location);
-            string sAppName = "";
-            string line = sAppName + "[" + sTimeStamp + "]: " + msg;
-            WriteToLog(line);
-            
-            //lWLog.Invoke((MethodInvoker)delegate() { lWLog.Items.Add(line);} );
-            SendToListView(line);
-
-            //lWLog.Items.Add(line);
-
-            if (stop)
-            {
-                string eline = sAppName + "[" + sTimeStamp + "]: " + "Job stopped. Check config and try again.";
-                WriteToLog(eline);
-                //lWLog.Items.Add(eline);
-                SendToListView(eline);
-                //Environment.Exit(0);
-            }
-            //lWLog.AutoResizeColumns(ColumnHeaderAutoResizeStyle.ColumnContent);
-            //lWLog.Items[lWLog.Items.Count - 1].EnsureVisible();
-        }
-
-        private void SendToConsole(string msg, bool stop, bool error)
-        {
-            string sTimeStamp = DateTime.Now.ToString("HH:mm:ss.ff");
-            //string sAppName = System.IO.Path.GetFileName(System.Reflection.Assembly.GetExecutingAssembly().Location);
-            string sAppName = "";
-            string line = sAppName + "[" + sTimeStamp + "]: " + msg;
-            WriteToLog(line);
-            
-            ListViewItem li = new ListViewItem();
-            if (error)
-                li.ForeColor = Color.Red;
-            li.Text = line;
-
-            SendToListView(li);
-            
-
-            if (stop)
-            {
-                string eline = sAppName + "[" + sTimeStamp + "]: " + "Job stopped. Check config and try again.";
-                WriteToLog(eline);
-                ListViewItem li2 = new ListViewItem();
-                li2.ForeColor = Color.Red;
-                li2.Text = eline;
-                
-                SendToListView(li2);
-
-                if (error)
-                {
-                    if (Properties.Settings.Default.SendErrorMail)
-                    {
-                        SendErrorMail();
-                    }
-                    else
-                    {
-                        if (Program.automode)
-                        {
-                            Application.Exit();
-                        }
-                    }
-                }
-                if (Program.automode)
-                {
-                    Application.Exit();
-                }
-            }
-        }
-
-
 
         private void SendErrorMail()
         {
@@ -222,127 +62,7 @@ namespace docreminder
                 mail.To.Add(address);
             }
 
-            //client = new SmtpClient();
-
-            //if (Properties.Settings.Default.SMTPUsername != "")
-            //{
-            //    client.UseDefaultCredentials = false;
-            //    System.Net.NetworkCredential creds = new System.Net.NetworkCredential(Properties.Settings.Default.SMTPUsername, Properties.Settings.Default.SMPTPassword);
-            //    client.Credentials = creds;
-            //}
-            //else
-            //{
-            //    client.UseDefaultCredentials = true;
-            //}
-
-            //if (Properties.Settings.Default.SMTPPort == "")
-            //    client.Port = 25;
-            //else
-            //    client.Port = Convert.ToInt32(Properties.Settings.Default.SMTPPort);
-
-            //client.DeliveryMethod = SmtpDeliveryMethod.Network;
-
-
-            //client.Host = Properties.Settings.Default.SMTPServerAdress;
-
             mail.Subject = Properties.Settings.Default.ErrorMailSubject;
-
-            try
-            {
-                string strClientIPAddress = GetLocalIPv4(NetworkInterfaceType.Ethernet);             
-                string strClientMachineName = Environment.MachineName.ToString().Trim();
-                string strClientUserName = Environment.UserName.ToString().Trim();
-                string strClientDomainName = Environment.UserDomainName.ToString().Trim();
-                string strClientOSVersion = Environment.OSVersion.ToString().Trim();
-
-                mail.Body =
-                    "IP Address: " + strClientIPAddress + "\r\n" +
-                    "Machine Name: " + strClientMachineName + "\r\n" +
-                    "Client Username: " + strClientUserName + "\r\n" +
-                    "Client Domain: " + strClientDomainName + "\r\n" +
-                    "Client OSVersion: " + strClientOSVersion + "\r\n";
-            }
-            catch(Exception e)
-            {
-                WriteInfo("There was a problem while gathering system-information."+e.Message);
-            }
-
-
-            if (Properties.Settings.Default.ErrorMailIncludeLog)
-            {
-                mail.Attachments.Add(new Attachment(logfile));
-            }
-
-            try
-            {
-                SendEmail(mail);
-                //client.Send(mail);
-                WriteInfo("Error-Mail was sent successfully.\n Job stopped. Check config and try again.");
-                if (Program.automode)
-                {
-                    Application.Exit();
-                }
-            }
-            catch (Exception e)
-            {
-                String innerMessage = (e.InnerException != null)
-                  ? e.InnerException.Message
-                  : "";
-
-                WriteInfo("Problem with sending mail: " + e.Message +"\r\n" + innerMessage);
-                if (Program.automode)
-                {
-                    Application.Exit();
-                }
-            }
-        }
-
-
-        public SmtpClient PrepareSMTPClient()
-        {
-                SmtpClient client = new SmtpClient();
-
-                if (Properties.Settings.Default.SMTPUsername != "")
-                {
-                    client.UseDefaultCredentials = false;
-                    System.Net.NetworkCredential creds = new System.Net.NetworkCredential(Properties.Settings.Default.SMTPUsername, Properties.Settings.Default.SMPTPassword);
-                    client.Credentials = creds;
-                }
-                else
-                {
-                    client.UseDefaultCredentials = true;
-                }
-
-                //AEPH 22.12.2016
-                if (Properties.Settings.Default.SMTPUseSSL)
-                {
-                    client.EnableSsl = true;
-                    ServicePointManager.SecurityProtocol = SecurityProtocolType.Tls;
-                }
-
-                if (Properties.Settings.Default.SMTPPort == "")
-                    client.Port = 25;
-                else
-                    client.Port = Convert.ToInt32(Properties.Settings.Default.SMTPPort);
-
-                client.DeliveryMethod = SmtpDeliveryMethod.Network;
-
-                client.Host = Properties.Settings.Default.SMTPServerAdress;
-
-
-
-                return client;
-        }
-
-
-
-        public bool SendTestMail(string recipient)
-        {
-            MailMessage mail = new MailMessage(Properties.Settings.Default.SMTPSender, recipient);
-            //mail.From = new MailAddress(Properties.Settings.Default.SMTPSender, "FIVE Informatik AG");
-
-            mail.Subject = "FIVE Docreminder - SMTP Test";
-
 
             try
             {
@@ -361,7 +81,106 @@ namespace docreminder
             }
             catch (Exception e)
             {
-                WriteInfo("There was a problem while gathering system-information." + e.Message);
+                log4.Info("There was a problem while gathering system-information." + e.Message);
+            }
+
+
+            if (Properties.Settings.Default.ErrorMailIncludeLog)
+            {
+                mail.Attachments.Add(new Attachment(logfile));
+            }
+
+            try
+            {
+                SendEmail(mail);
+                //client.Send(mail);
+                log4.Info("Error-Mail was sent successfully.\n Job stopped. Check config and try again.");
+                if (Program.automode)
+                {
+                    Application.Exit();
+                }
+            }
+            catch (Exception e)
+            {
+                String innerMessage = (e.InnerException != null)
+                  ? e.InnerException.Message
+                  : "";
+
+                log4.Info("Problem with sending mail: " + e.Message + "\r\n" + innerMessage);
+                if (Program.automode)
+                {
+                    Application.Exit();
+                }
+            }
+        }
+
+
+        public SmtpClient PrepareSMTPClient()
+        {
+            SmtpClient client = new SmtpClient();
+
+            if (Properties.Settings.Default.SMTPUsername != "")
+            {
+                client.UseDefaultCredentials = false;
+                System.Net.NetworkCredential creds = new System.Net.NetworkCredential(Properties.Settings.Default.SMTPUsername, Properties.Settings.Default.SMPTPassword);
+                client.Credentials = creds;
+            }
+            else
+            {
+                client.UseDefaultCredentials = true;
+            }
+
+            //AEPH 22.12.2016
+            if (Properties.Settings.Default.SMTPUseSSL)
+            {
+                client.EnableSsl = true;
+                ServicePointManager.SecurityProtocol = SecurityProtocolType.Tls;
+            }
+
+            if (Properties.Settings.Default.SMTPPort == "")
+                client.Port = 25;
+            else
+                client.Port = Convert.ToInt32(Properties.Settings.Default.SMTPPort);
+
+            client.DeliveryMethod = SmtpDeliveryMethod.Network;
+
+            client.Host = Properties.Settings.Default.SMTPServerAdress;
+
+
+
+            return client;
+        }
+
+
+
+        public bool SendTestMail(string recipient)
+        {
+            TestConnection();
+
+            log4.Info(string.Format("Trying to send test-mail to recipient '{0}'", recipient));
+            MailMessage mail = new MailMessage(Properties.Settings.Default.SMTPSender, recipient);
+            
+            
+
+            mail.Subject = "FIVE Docreminder - SMTP Test";
+            try
+            {
+                string strClientIPAddress = GetLocalIPv4(NetworkInterfaceType.Ethernet);
+                string strClientMachineName = Environment.MachineName.ToString().Trim();
+                string strClientUserName = Environment.UserName.ToString().Trim();
+                string strClientDomainName = Environment.UserDomainName.ToString().Trim();
+                string strClientOSVersion = Environment.OSVersion.ToString().Trim();
+
+                mail.Body =
+                    "IP Address: " + strClientIPAddress + "\r\n" +
+                    "Machine Name: " + strClientMachineName + "\r\n" +
+                    "Client Username: " + strClientUserName + "\r\n" +
+                    "Client Domain: " + strClientDomainName + "\r\n" +
+                    "Client OSVersion: " + strClientOSVersion + "\r\n";
+            }
+            catch (Exception e)
+            {
+                log4.Info("There was a problem while gathering system-information." + e.Message);
                 mail.Body = "There was a problem while gathering system-information.";
             }
 
@@ -383,7 +202,7 @@ namespace docreminder
             {
                 //client.Send(mail);
                 SendEmail(mail);
-                WriteInfo("SMTP Test-Mail was sent successfully.");
+                log4.Info("SMTP Test-Mail was sent successfully.");
                 return true;
             }
             catch (Exception e)
@@ -391,7 +210,7 @@ namespace docreminder
                 String innerMessage = (e.InnerException != null)
                     ? e.InnerException.Message
                     : "";
-                WriteInfo("Problem with sending SMTP-Mail: " + e.Message + "\r\n" + innerMessage);
+                log4.Info("Problem with sending SMTP-Mail: " + e.Message + "\r\n" + innerMessage);
                 return false;
             }
         }
@@ -416,7 +235,7 @@ namespace docreminder
                     recipientsInput[i] = expVal.Evaluate(recipientsInput[i], row);
                 }
 
-                
+
 
                 for (int i = 0; i < recipientsInput.Length; i++)
                 {
@@ -439,29 +258,29 @@ namespace docreminder
                                     }
                                 }
                                 else
-                                    WriteInfo(String.Format("No valid E-Mail could be resolved for recipient: '{0}'.", evaluatedRecipient));
+                                    log4.Info(string.Format("No valid E-Mail could be resolved for recipient: '{0}'.", evaluatedRecipient));
                             }
                         }
                     }
 
                 }
-                 
+
             }
-            catch(Exception e)
+            catch (Exception e)
             {
-                throw new Exception("An Error happened during preparation of the e-mail recipients."+e.Message);
+                throw new Exception("An Error happened during preparation of the e-mail recipients." + e.Message);
             }
 
 
             //Add Recipients to mail.
             foreach (string address in validRecipients)
             {
-                if(address != null)
+                if (address != null)
                     mail.To.Add(address);
             }
 
             if (mail.To.Count == 0)
-                throw new Exception("No valid E-mail could be extracted from configured recipients:"+String.Join(";",recipientsInput));
+                throw new Exception("No valid E-mail could be extracted from configured recipients:" + String.Join(";", recipientsInput));
 
             //Evaluate  MailSubject
             string mailSubject = Properties.Settings.Default.EBillSubject;
@@ -471,7 +290,7 @@ namespace docreminder
             }
             catch (Exception e)
             {
-                WriteInfo("Ignoring expression in Subject-line. Error: " + e.Message);
+                log4.Info("Ignoring expression in Subject-line. Error: " + e.Message);
             }
             mail.Subject = mailSubject;
 
@@ -494,10 +313,10 @@ namespace docreminder
             {
                 string usedTemplatePath = Properties.Settings.Default.EmailTemplatePath;
                 string sMultiLangPropVal = expVal.Evaluate(Properties.Settings.Default.MultiLanguageTemplateProperty, row);
-                string sMLPath = Properties.Settings.Default.EmailTemplatePath+"."+sMultiLangPropVal;
+                string sMLPath = Properties.Settings.Default.EmailTemplatePath + "." + sMultiLangPropVal;
 
                 if (sMultiLangPropVal == "" || !File.Exists(sMLPath))
-                    WriteInfo("MultiLanguage prop not on document, or template not found! Using standard template instead.");
+                    log4.Info("MultiLanguage prop not on document, or template not found! Using standard template instead.");
                 else
                     usedTemplatePath = sMLPath;
 
@@ -525,9 +344,9 @@ namespace docreminder
                 {
                     with = expVal.Evaluate(expressionNewLineEscaped, row);
                 }
-                catch(Exception e)
+                catch (Exception e)
                 {
-                    WriteInfo("Ignoring expression in Template. Expression:'"+rep+"'. Error: "+e.Message);
+                    log4.Info("Ignoring expression in Template. Expression:'" + rep + "'. Error: " + e.Message);
                 }
 
                 with = WebUtility.HtmlEncode(with);
@@ -558,7 +377,7 @@ namespace docreminder
                     var files = Directory.GetFiles(tempDirectory, "*", SearchOption.AllDirectories).OrderBy(f => f);
                     foreach (string file in files)
                     {
-                       mail.Attachments.Add(new Attachment(file));
+                        mail.Attachments.Add(new Attachment(file));
                     }
                     //Dont delete Directory yet or attachements will not be sent.
                     //Directory.Delete(tempDirectory,true);
@@ -584,7 +403,7 @@ namespace docreminder
                 string docID = "";
                 string storeID = "";
                 string docname = "";
-                
+
                 //AEPH 09.02.2016
                 if (docinfo.documentID != null)
                 {
@@ -598,7 +417,7 @@ namespace docreminder
                     docID = row.Cells[1].Value.ToString();
                     storeID = row.Cells["storeID"].Value.ToString();
                 }
-                
+
 
                 if (Properties.Settings.Default.LnkFilePath != "")
                 {
@@ -609,7 +428,7 @@ namespace docreminder
                     string progPath = System.IO.Path.GetDirectoryName(System.Reflection.Assembly.GetExecutingAssembly().Location);
                     templateFilePath = Path.Combine(progPath, "standard_linkfile_template.dlk");
                 }
-                
+
 
                 if (File.Exists(templateFilePath))
                 {
@@ -625,9 +444,9 @@ namespace docreminder
 
                         sFileContent = doc.InnerXml;
                     }
-                    catch(Exception e)
+                    catch (Exception e)
                     {
-                        WriteInfo("Error happened during preparation of the linkfile. Ignoring template." + e.Message);
+                        log4.Info("Error happened during preparation of the linkfile. Ignoring template." + e.Message);
                         //AEPH 09.02.2016
                         sFileContent = "<InfoShareLink><InfoShareFiles><InfoShareFile><InfoObjectID>" + docID + "</InfoObjectID><InfoStoreID>" + storeID + "</InfoStoreID></InfoShareFile></InfoShareFiles><InfoShareFolderConfiguration><GroupedListViewColumns /></InfoShareFolderConfiguration></InfoShareLink>";
                     }
@@ -635,7 +454,7 @@ namespace docreminder
                 else
                 {
                     //AEPH 09.02.2016
-                    WriteInfo("No template path for linkfile defined, using standard link-file template instead.");
+                    log4.Info("No template path for linkfile defined, using standard link-file template instead.");
                     sFileContent = "<InfoShareLink><InfoShareFiles><InfoShareFile><InfoObjectID>" + docID + "</InfoObjectID><InfoStoreID>" + storeID + "</InfoStoreID></InfoShareFile></InfoShareFiles><InfoShareFolderConfiguration><GroupedListViewColumns /></InfoShareFolderConfiguration></InfoShareLink>";
                 }
 
@@ -649,24 +468,23 @@ namespace docreminder
                 //create the attachment from a stream. Be sure to name the data 
                 //with a file and 
                 //media type that is respective of the data
-                mail.Attachments.Add(new Attachment(ms, docname+".dlk", "text/plain"));
+                mail.Attachments.Add(new Attachment(ms, docname + ".dlk", "text/plain"));
             }
 
 
             //AEPH 25.01.2017
             bool result = false;
-            WriteInfo(String.Format("Trying to send Mail. Recipient:'{0}'",mail.To.ToString()));
+            log4.Info(string.Format("Trying to send Mail. Recipient:'{0}'", mail.To.ToString()));
             try
             {
                 Task<bool> AsyncTaskSendMail = SendEmailAsync(mail, row);
                 await AsyncTaskSendMail;
                 result = AsyncTaskSendMail.Result;
-                WriteInfo(String.Format("Positive answer from mail server. Recipient:'{0}'", mail.To.ToString()));
+                log4.Info(string.Format("Positive answer from mail server. Recipient:'{0}'", mail.To.ToString()));
             }
-            catch(Exception exp)
+            catch (Exception exp)
             {
-                throw new Exception(String.Format("Error happened while sending mail! Recipient:'{0}', Message:{1}",mail.To.ToString(),exp.ToString()));
-                    //throw new Exception("Error happened while sending mail! Message:" + exp.ToString());   
+                throw new Exception(string.Format("Error happened while sending mail! Recipient:'{0}', Message:{1}", mail.To.ToString(), exp.ToString()));
             }
 
             mail.Dispose();
@@ -674,7 +492,7 @@ namespace docreminder
             return result;
         }
 
-        public bool SendReportMail(int iSentDocuments,TimeSpan timeused)
+        public bool SendReportMail(int iSentDocuments, TimeSpan timeused)
         {
 
             //Prepare Recipient.
@@ -683,8 +501,8 @@ namespace docreminder
             mail.From = new MailAddress(Properties.Settings.Default.SMTPSender);
 
             string mailSubject = Properties.Settings.Default.ReportSubject;
-           
-            
+
+
             mail.Subject = mailSubject;
 
 
@@ -701,7 +519,7 @@ namespace docreminder
             string strClientDomainName = "";
             string strClientOSVersion = "";
 
-            string mailBody = File.ReadAllText(Properties.Settings.Default.ReportTemplatePath,enc);
+            string mailBody = File.ReadAllText(Properties.Settings.Default.ReportTemplatePath, enc);
             try
             {
                 strClientIPAddress = WebUtility.HtmlEncode(GetLocalIPv4(NetworkInterfaceType.Ethernet));
@@ -710,9 +528,9 @@ namespace docreminder
                 strClientDomainName = WebUtility.HtmlEncode(Environment.UserDomainName.ToString().Trim());
                 strClientOSVersion = WebUtility.HtmlEncode(Environment.OSVersion.ToString().Trim());
             }
-            catch(Exception e)
+            catch (Exception e)
             {
-                WriteInfo("There happened an error while extracting the system-variables used for the report." + e.Message);
+                log4.Info("There happened an error while extracting the system-variables used for the report." + e.Message);
             }
 
             mailBody = mailBody.Replace("*datetoday*", DateTime.Now.Date.ToString("D"));
@@ -726,8 +544,8 @@ namespace docreminder
             mailBody = mailBody.Replace("*timeused*", test);
             mailBody = mailBody.Replace("*nofdocuments*", iSentDocuments.ToString());
             //ReplaceValues
-            
-             
+
+
 
 
             //Check for HTML
@@ -736,7 +554,7 @@ namespace docreminder
             {
                 mail.IsBodyHtml = true;
             }
-    
+
             mail.Body = mailBody;
 
 
@@ -750,7 +568,7 @@ namespace docreminder
                     SendEmail(mail);
                 }
 
-                WriteInfo("Report(s) sucessfully sent to:'"+mailRecipients+"'");
+                log4.Info("Report(s) sucessfully sent to:'" + mailRecipients + "'");
                 return true;
             }
             catch (Exception e)
@@ -758,8 +576,7 @@ namespace docreminder
                 String innerMessage = (e.InnerException != null)
                   ? e.InnerException.Message
                   : "";
-                WriteInfo("Problem occured while sending report: " + e.Message + "\r\n"+ innerMessage);
-                //WriteInfo(e.InnerException.ToString());
+                log4.Info("Problem occured while sending report: " + e.Message + "\r\n" + innerMessage);
                 return false;
             }
         }
@@ -783,8 +600,15 @@ namespace docreminder
             return output;
         }
 
-        public static bool TestConnection(string smtpServerAddress, int port)
-        {
+        public static bool TestConnection(string smtpServerAddress = null, int port = 0)
+        {          
+            if (smtpServerAddress == null)
+            {
+                smtpServerAddress = Properties.Settings.Default.SMTPServerAdress;
+                port = Convert.ToInt16(Properties.Settings.Default.SMTPPort);
+            }
+            log4.Info(string.Format("Testing connection to SMTP '{0}' Port '{1}'", smtpServerAddress, port));
+            try { 
             IPHostEntry hostEntry = Dns.GetHostEntry(smtpServerAddress);
             IPEndPoint endPoint = new IPEndPoint(hostEntry.AddressList[0], port);
             using (Socket tcpSocket = new Socket(endPoint.AddressFamily, SocketType.Stream, ProtocolType.Tcp))
@@ -793,6 +617,7 @@ namespace docreminder
                 tcpSocket.Connect(endPoint);
                 if (!CheckResponse(tcpSocket, 220))
                 {
+                    log4.Error("SMTP didn't answer with 220 to connection probing!");
                     return false;
                 }
 
@@ -800,11 +625,19 @@ namespace docreminder
                 SendData(tcpSocket, string.Format("HELO {0}\r\n", Dns.GetHostName()));
                 if (!CheckResponse(tcpSocket, 250))
                 {
+                    log4.Error("SMTP didn't answer with 250 to send-data probing!");
                     return false;
                 }
 
                 // if we got here it's that we can connect to the smtp server
+                log4.Debug("Connection- and SendData-Probing to SMTP sucessful.");
                 return true;
+            }
+            }
+            catch (Exception e)
+            {
+                log4.Error(string.Format("No connection could be established. Message: {0}",e.Message));
+                return false;
             }
         }
 
@@ -832,36 +665,27 @@ namespace docreminder
         }
 
 
-        public async Task<bool> SendEmailAsync(MailMessage message,DataGridViewRow row)
+        public async Task<bool> SendEmailAsync(MailMessage message, DataGridViewRow row)
         {
             using (var smtpClient = PrepareSMTPClient())
             {
-                    //09.02.2016 AEPH (AsyncSending)
-                    //25.01.2017 AEPH TODO: Possible positive answer if mail not sent/CHECK
-                    await smtpClient.SendMailAsync(message);
- 
-                    return true;
+                //09.02.2016 AEPH (AsyncSending)
+                //25.01.2017 AEPH TODO: Possible positive answer if mail not sent/CHECK
+                await smtpClient.SendMailAsync(message);
+
+                return true;
             }
         }
 
-        //Decapped.
+        
         public bool SendEmail(MailMessage message)
         {
             DateTime now = DateTime.Now;
-
             using (var smtpClient = PrepareSMTPClient())
             {
-                //try
-               // {
-                    smtpClient.Send(message);
-                    WriteInfo(String.Format("We waited {0} for the SMTP Server.", (DateTime.Now - now).TotalSeconds));
-                    return true;
-                //}
-                //catch(Exception e)
-                //{
-                //    throw (Exception e);
-                //    return false;
-                //}
+                smtpClient.Send(message);
+                log4.Debug(string.Format("We waited {0} for the SMTP Server.", (DateTime.Now - now).TotalSeconds));
+                return true;
             }
         }
 

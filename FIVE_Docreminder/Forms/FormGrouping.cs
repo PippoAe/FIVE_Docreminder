@@ -41,7 +41,7 @@ namespace docreminder.Forms
             {
                 //DataRow test = new DataRow();
                 string[] row = { searchcon.propertyTypeName, searchcon.operation, string.Join(";", searchcon.propertyValueArray), searchcon.relation.ToString() };
-                //row.HeaderCell.Value = String.Format("{0}", row.Index + 1)
+                //row.HeaderCell.Value = string.Format("{0}", row.Index + 1)
                 dgwSearchProperties.Rows.Add(row);
             }
 

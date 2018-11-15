@@ -135,7 +135,6 @@
     <Compile Include="Forms\FormSchedule.Designer.cs">
       <DependentUpon>FormSchedule.cs</DependentUpon>
     </Compile>
-    <Compile Include="Helper Classes\ConsoleWriter.cs" />
     <Compile Include="Helper Classes\ExpressionsEvaluator.cs" />
     <Compile Include="Helper Classes\FileHelper.cs" />
     <Compile Include="Forms\MainForm.cs">
@@ -164,6 +163,7 @@
     </Compile>
     <Compile Include="Helper Classes\FileModel.cs" />
     <Compile Include="Helper Classes\PortableSettingsProvider.cs" />
+    <Compile Include="Helper Classes\MailHandler.cs" />
     <Compile Include="Program.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="Forms\FormSettings.cs">

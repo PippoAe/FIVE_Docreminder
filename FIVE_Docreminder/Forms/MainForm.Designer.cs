@@ -32,10 +32,10 @@
             System.ComponentModel.ComponentResourceManager resources = new System.ComponentModel.ComponentResourceManager(typeof(MainForm));
             this.menuStrip1 = new System.Windows.Forms.MenuStrip();
             this.dateiToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
-            this.optionenToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
+            this.optionsToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.ScheduleStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.aboutToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
-            this.sQLVariabelnToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
+            this.EvaluatorToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.bCheckForEBills = new System.Windows.Forms.Button();
             this.bSendEbills = new System.Windows.Forms.Button();
             this.statusStrip1 = new System.Windows.Forms.StatusStrip();
@@ -62,7 +62,7 @@
             // 
             this.menuStrip1.Items.AddRange(new System.Windows.Forms.ToolStripItem[] {
             this.dateiToolStripMenuItem,
-            this.sQLVariabelnToolStripMenuItem});
+            this.EvaluatorToolStripMenuItem});
             this.menuStrip1.Location = new System.Drawing.Point(0, 0);
             this.menuStrip1.Name = "menuStrip1";
             this.menuStrip1.Size = new System.Drawing.Size(831, 24);
@@ -72,19 +72,19 @@
             // dateiToolStripMenuItem
             // 
             this.dateiToolStripMenuItem.DropDownItems.AddRange(new System.Windows.Forms.ToolStripItem[] {
-            this.optionenToolStripMenuItem,
+            this.optionsToolStripMenuItem,
             this.ScheduleStripMenuItem,
             this.aboutToolStripMenuItem});
             this.dateiToolStripMenuItem.Name = "dateiToolStripMenuItem";
             this.dateiToolStripMenuItem.Size = new System.Drawing.Size(46, 20);
             this.dateiToolStripMenuItem.Text = "Datei";
             // 
-            // optionenToolStripMenuItem
+            // optionsToolStripMenuItem
             // 
-            this.optionenToolStripMenuItem.Name = "optionenToolStripMenuItem";
-            this.optionenToolStripMenuItem.Size = new System.Drawing.Size(180, 22);
-            this.optionenToolStripMenuItem.Text = "Optionen";
-            this.optionenToolStripMenuItem.Click += new System.EventHandler(this.optionenToolStripMenuItem_Click);
+            this.optionsToolStripMenuItem.Name = "optionsToolStripMenuItem";
+            this.optionsToolStripMenuItem.Size = new System.Drawing.Size(180, 22);
+            this.optionsToolStripMenuItem.Text = "Options";
+            this.optionsToolStripMenuItem.Click += new System.EventHandler(this.optionsToolStripMenuItem_Click);
             // 
             // ScheduleStripMenuItem
             // 
@@ -100,12 +100,12 @@
             this.aboutToolStripMenuItem.Text = "About...";
             this.aboutToolStripMenuItem.Click += new System.EventHandler(this.aboutToolStripMenuItem_Click);
             // 
-            // sQLVariabelnToolStripMenuItem
+            // EvaluatorToolStripMenuItem
             // 
-            this.sQLVariabelnToolStripMenuItem.Name = "sQLVariabelnToolStripMenuItem";
-            this.sQLVariabelnToolStripMenuItem.Size = new System.Drawing.Size(77, 20);
-            this.sQLVariabelnToolStripMenuItem.Text = "Evaluator...";
-            this.sQLVariabelnToolStripMenuItem.Click += new System.EventHandler(this.sQLVariabelnToolStripMenuItem_Click);
+            this.EvaluatorToolStripMenuItem.Name = "EvaluatorToolStripMenuItem";
+            this.EvaluatorToolStripMenuItem.Size = new System.Drawing.Size(77, 20);
+            this.EvaluatorToolStripMenuItem.Text = "Evaluator...";
+            this.EvaluatorToolStripMenuItem.Click += new System.EventHandler(this.evaluatorToolStripMenuItem_Click);
             // 
             // bCheckForEBills
             // 
@@ -176,15 +176,15 @@
             // 
             this.processDocumentsWorker.WorkerReportsProgress = true;
             this.processDocumentsWorker.DoWork += new System.ComponentModel.DoWorkEventHandler(this.processDocumentsWorker_DoWork);
-            this.processDocumentsWorker.ProgressChanged += new System.ComponentModel.ProgressChangedEventHandler(this.backgroundWorker1_ProgressChanged);
-            this.processDocumentsWorker.RunWorkerCompleted += new System.ComponentModel.RunWorkerCompletedEventHandler(this.backgroundWorker1_RunWorkerCompleted);
+            this.processDocumentsWorker.ProgressChanged += new System.ComponentModel.ProgressChangedEventHandler(this.processDocumentsWorker_ProgressChanged);
+            this.processDocumentsWorker.RunWorkerCompleted += new System.ComponentModel.RunWorkerCompletedEventHandler(this.processDocumentsWorker_RunWorkerCompleted);
             // 
             // getDocumentsWorker
             // 
             this.getDocumentsWorker.WorkerReportsProgress = true;
             this.getDocumentsWorker.DoWork += new System.ComponentModel.DoWorkEventHandler(this.getDocumentsWorker_DoWork);
-            this.getDocumentsWorker.ProgressChanged += new System.ComponentModel.ProgressChangedEventHandler(this.backgroundWorker2_ProgressChanged);
-            this.getDocumentsWorker.RunWorkerCompleted += new System.ComponentModel.RunWorkerCompletedEventHandler(this.backgroundWorker2_RunWorkerCompleted);
+            this.getDocumentsWorker.ProgressChanged += new System.ComponentModel.ProgressChangedEventHandler(this.getDocumentsWorker_ProgressChanged);
+            this.getDocumentsWorker.RunWorkerCompleted += new System.ComponentModel.RunWorkerCompletedEventHandler(this.getDocumentsWorker_RunWorkerCompleted);
             // 
             // btnSearchMore
             // 
@@ -265,7 +265,6 @@
             this.MainMenuStrip = this.menuStrip1;
             this.Name = "MainForm";
             this.Text = "Five Informatik AG - Document Reminder";
-            this.Load += new System.EventHandler(this.Form1_Load);
             this.Shown += new System.EventHandler(this.MainForm_Shown);
             this.menuStrip1.ResumeLayout(false);
             this.menuStrip1.PerformLayout();
@@ -282,7 +281,7 @@
 
         private System.Windows.Forms.MenuStrip menuStrip1;
         private System.Windows.Forms.ToolStripMenuItem dateiToolStripMenuItem;
-        private System.Windows.Forms.ToolStripMenuItem optionenToolStripMenuItem;
+        private System.Windows.Forms.ToolStripMenuItem optionsToolStripMenuItem;
         private System.Windows.Forms.Button bCheckForEBills;
         private System.Windows.Forms.Button bSendEbills;
         private System.Windows.Forms.ToolStripMenuItem aboutToolStripMenuItem;
@@ -297,7 +296,7 @@
         private System.Windows.Forms.ToolStripStatusLabel toolStripStatusPlatzHalter;
         private System.Windows.Forms.Timer timerShutDown;
         private System.Windows.Forms.ToolStripStatusLabel toolStripStatusCountdown;
-        private System.Windows.Forms.ToolStripMenuItem sQLVariabelnToolStripMenuItem;
+        private System.Windows.Forms.ToolStripMenuItem EvaluatorToolStripMenuItem;
         private System.Windows.Forms.ProgressBar progressBar1;
         private System.Windows.Forms.Button button1;
         private System.Windows.Forms.GroupBox groupBox2;

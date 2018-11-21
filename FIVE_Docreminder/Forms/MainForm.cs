@@ -11,8 +11,7 @@ using System.Windows.Forms;
 namespace docreminder
 {
     public partial class MainForm : Form
-    {
-        
+    {   
         private static readonly log4net.ILog log4 = log4net.LogManager.GetLogger(System.Reflection.MethodBase.GetCurrentMethod().DeclaringType);
         
         private WebServiceHandler _webServiceHandler;
@@ -30,7 +29,6 @@ namespace docreminder
         public MainForm()
         {
             InitializeComponent();
-            //log4net.Appender.RichTextBoxAppender.SetRichTextBox(rTextBoxLog, "RichTextBoxAppender");
 
             ColumnHeader header = new ColumnHeader();
             header.Text = "";
@@ -41,23 +39,15 @@ namespace docreminder
             //CheckSchedule
             CheckSchedule();
         }
-
-
-        private void Form1_Load(object sender, EventArgs e)
-        {
-            
-        }
         
-
         //Toolstrip
-
-        private void optionenToolStripMenuItem_Click(object sender, EventArgs e)
+        private void optionsToolStripMenuItem_Click(object sender, EventArgs e)
         {
             FormSettings settingsForm = new FormSettings(this);
             settingsForm.Show();
         }
 
-        private void sQLVariabelnToolStripMenuItem_Click(object sender, EventArgs e)
+        private void evaluatorToolStripMenuItem_Click(object sender, EventArgs e)
         {
             Form ExpVarForm = new Forms.ExpressionVariablesForm();
             ExpVarForm.Show();
@@ -81,7 +71,6 @@ namespace docreminder
  
 
         //Buttons
-
         private void bCheckForEBills_Click(object sender, EventArgs e)
         {
             //New Search. Remove Resumepoint
@@ -108,7 +97,6 @@ namespace docreminder
 
 
         //Santas little helpers.
-
         public void CheckForEBills()
         {
             bSendEbills.Enabled = false;
@@ -125,10 +113,8 @@ namespace docreminder
         public void displayFoundEBills(KXWS.SDocument[] documents)
         {
             log4.Info(string.Format("Found {0} documents matching the searchproperties. HasMore:{1}", documents.Count(), _webServiceHandler.hasMore));
-
             dgwEbills.Columns.Clear();
             dgwEbills.DataSource = null;
-
             dgwEbills.DataSource = documents;
 
             if (documents.Count() > 0)
@@ -206,10 +192,8 @@ namespace docreminder
 
                    log4.Info("Found " + greenlighted + " documents matching the additional computed identifier.");
                 }
-            }
-            
+            }           
         }
-
 
         private void CheckSchedule()
         {
@@ -258,7 +242,7 @@ namespace docreminder
 
 
         //Workers
-
+        #region processDocumentsWorker
         /// <summary>
         /// Process Documents Worker
         /// </summary>
@@ -397,13 +381,13 @@ namespace docreminder
         /// </summary>
         /// <param name="sender"></param>
         /// <param name="e"></param>
-        private void backgroundWorker1_ProgressChanged(object sender, ProgressChangedEventArgs e)
+        private void processDocumentsWorker_ProgressChanged(object sender, ProgressChangedEventArgs e)
         {
             progressBar1.Value = e.ProgressPercentage;
             this.Text = e.ProgressPercentage.ToString() + "%";
         }
 
-        private void backgroundWorker1_RunWorkerCompleted(object sender, RunWorkerCompletedEventArgs e)
+        private void processDocumentsWorker_RunWorkerCompleted(object sender, RunWorkerCompletedEventArgs e)
         {
             this.Text = "Five Informatik AG - Document Reminder";
             progressBar1.Value = 0;
@@ -421,6 +405,9 @@ namespace docreminder
             }
         }
 
+        #endregion 
+
+        #region GetDocumentsWorker
 
         /// <summary>
         /// Get Documents Worker
@@ -453,13 +440,13 @@ namespace docreminder
             e.Result = documents;
         }
 
-        private void backgroundWorker2_ProgressChanged(object sender, ProgressChangedEventArgs e)
+        private void getDocumentsWorker_ProgressChanged(object sender, ProgressChangedEventArgs e)
         {
             progressBar1.Value = e.ProgressPercentage;
             //this.Text = e.ProgressPercentage.ToString() + "%";
         }
 
-        private void backgroundWorker2_RunWorkerCompleted(object sender, RunWorkerCompletedEventArgs e)
+        private void getDocumentsWorker_RunWorkerCompleted(object sender, RunWorkerCompletedEventArgs e)
         {
             displayFoundEBills((KXWS.SDocument[])e.Result);
             progressBar1.Value = 0;
@@ -482,6 +469,7 @@ namespace docreminder
             
         }
 
+        #endregion 
 
         private void timerShutDown_Tick(object sender, EventArgs e)
         {

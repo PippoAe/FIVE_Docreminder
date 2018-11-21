@@ -1,6 +1,5 @@
 ﻿using log4net;
 using log4net.Appender;
-using log4net.Repository.Hierarchy;
 using System;
 using System.Collections.Generic;
 using System.IO;
@@ -21,8 +20,7 @@ namespace docreminder
     {
         private static MailHandler instance;
 
-        private static readonly log4net.ILog log4 = log4net.LogManager.GetLogger(System.Reflection.MethodBase.GetCurrentMethod().DeclaringType);
-
+        private static readonly ILog log4 = LogManager.GetLogger(System.Reflection.MethodBase.GetCurrentMethod().DeclaringType);
         string logfile = GetLogFileName("RollingFileAppender");
 
         private MailHandler()

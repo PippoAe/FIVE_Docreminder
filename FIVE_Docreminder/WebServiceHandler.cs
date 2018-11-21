@@ -6,12 +6,9 @@ using System.IO.Compression;
 using System.Linq;
 using System.Net;
 using System.Reflection;
-using System.Text;
 using System.Threading.Tasks;
-using System.Web.Services;
 using System.Web.Services.Description;
 using System.Windows.Forms;
-using System.Xml;
 using System.Xml.Schema;
 
 

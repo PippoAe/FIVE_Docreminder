@@ -1,14 +1,12 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.ComponentModel;
-using System.Data;
 using System.Drawing;
 using System.IO;
 using System.Linq;
-using System.Text;
+using System.Threading;
 using System.Threading.Tasks;
 using System.Windows.Forms;
-using System.Xml.Serialization;
 
 namespace docreminder
 {
@@ -18,6 +16,7 @@ namespace docreminder
         private static readonly log4net.ILog log4 = log4net.LogManager.GetLogger(System.Reflection.MethodBase.GetCurrentMethod().DeclaringType);
         
         private WebServiceHandler _webServiceHandler;
+        private WCFHandler wcfHandler;
         public DateTime starttime;
         public TimeSpan scheduledTimeLeft;
         public int sucessfullySent = 0;
@@ -31,7 +30,7 @@ namespace docreminder
         public MainForm()
         {
             InitializeComponent();
-            log4net.Appender.RichTextBoxAppender.SetRichTextBox(rTextBoxLog, "RichTextBoxAppender");
+            //log4net.Appender.RichTextBoxAppender.SetRichTextBox(rTextBoxLog, "RichTextBoxAppender");
 
             ColumnHeader header = new ColumnHeader();
             header.Text = "";
@@ -40,8 +39,7 @@ namespace docreminder
             //Set Starttime
             starttime = DateTime.Now;
             //CheckSchedule
-            CheckSchedule();            
-
+            CheckSchedule();
         }
 
 
@@ -266,7 +264,7 @@ namespace docreminder
         /// </summary>
         /// <param name="sender"></param>
         /// <param name="e"></param>
-        private void backgroundWorker1_DoWork(object sender, DoWorkEventArgs e)
+        private void processDocumentsWorker_DoWork(object sender, DoWorkEventArgs e)
         {
 
             if (dgwEbills.Rows.Count > 0)
@@ -429,7 +427,7 @@ namespace docreminder
         /// </summary>
         /// <param name="sender"></param>
         /// <param name="e"></param>
-        private void backgroundWorker2_DoWork(object sender, DoWorkEventArgs e)
+        private void getDocumentsWorker_DoWork(object sender, DoWorkEventArgs e)
         {
             getDocumentsWorker.ReportProgress(10);
             if (_webServiceHandler == null)
@@ -522,9 +520,65 @@ namespace docreminder
             if (Program.automode)
             {
                 log4.Info("Application started in Automode.");
-                log4.Info("Application started in Automode.");
                 CheckForEBills();
             }
+        }
+
+        private void button1_Click(object sender, EventArgs e)
+        {
+
+            wcfHandler = new WCFHandler();
+
+            for(int i = 0; i < 100;i++)
+            {
+                List<BO.WorkObject> workObjects = new List<BO.WorkObject>();
+
+                for (int y = 0; y < 1000; y++)
+                {
+                    workObjects.Add(new BO.WorkObject("e1c756f3-9732-e811-83a6-0050569362e9", wcfHandler));
+                }
+
+                BackgroundWorker bw = new BackgroundWorker();
+
+                // this allows our worker to report progress during work
+                bw.WorkerReportsProgress = true;
+
+                // what to do in the background thread
+                bw.DoWork += new DoWorkEventHandler(
+                delegate (object o, DoWorkEventArgs args)
+                {
+                    BackgroundWorker b = o as BackgroundWorker;
+
+
+                    int z = 0;
+                    workObjects.ForEach(x =>
+                    {
+                        x.Process();
+                        b.ReportProgress(z);
+                        z++;
+                    });
+
+
+                });
+
+                // what to do when progress changed (update the progress bar for example)
+                bw.ProgressChanged += new ProgressChangedEventHandler(
+                delegate (object o, ProgressChangedEventArgs args)
+                {
+                    log4.Info(string.Format("{0}% Completed", args.ProgressPercentage));
+                });
+
+                // what to do when worker completes its task (notify the user)
+                bw.RunWorkerCompleted += new RunWorkerCompletedEventHandler(
+                delegate (object o, RunWorkerCompletedEventArgs args)
+                {
+                    log4.Info("Finished!");
+                });
+
+                bw.RunWorkerAsync();
+            }
+
+ 
         }
     }
 }

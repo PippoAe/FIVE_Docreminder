@@ -96,7 +96,9 @@
     <Reference Include="System.EnterpriseServices" />
     <Reference Include="System.IO.Compression" />
     <Reference Include="System.IO.Compression.FileSystem" />
+    <Reference Include="System.Runtime.Serialization" />
     <Reference Include="System.Security" />
+    <Reference Include="System.ServiceModel" />
     <Reference Include="System.Web.Mvc, Version=4.0.0.1, Culture=neutral, PublicKeyToken=31bf3856ad364e35, processorArchitecture=MSIL" />
     <Reference Include="System.Web.Services" />
     <Reference Include="System.Xml.Linq" />
@@ -109,6 +111,13 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="BO\AuthenticationService.cs" />
+    <Compile Include="BO\CommonService.cs" />
+    <Compile Include="BO\DocumentService.cs" />
+    <Compile Include="BO\FileService.cs" />
+    <Compile Include="BO\NotFoundException.cs" />
+    <Compile Include="BO\SearchService.cs" />
+    <Compile Include="BO\Utility.cs" />
     <Compile Include="DocSafe\DocSafeHandler.cs" />
     <Compile Include="DocSafe\DocumentEnvelope.cs" />
     <Compile Include="Forms\ExpressionVariablesForm.cs">
@@ -135,6 +144,7 @@
     <Compile Include="Forms\FormSchedule.Designer.cs">
       <DependentUpon>FormSchedule.cs</DependentUpon>
     </Compile>
+    <Compile Include="Helper Classes\NEW_ExpressionsEvaluator.cs" />
     <Compile Include="Helper Classes\ExpressionsEvaluator.cs" />
     <Compile Include="Helper Classes\FileHelper.cs" />
     <Compile Include="Forms\MainForm.cs">
@@ -164,6 +174,7 @@
     <Compile Include="Helper Classes\FileModel.cs" />
     <Compile Include="Helper Classes\PortableSettingsProvider.cs" />
     <Compile Include="Helper Classes\MailHandler.cs" />
+    <Compile Include="Helper Classes\WCFHandler.cs" />
     <Compile Include="Program.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="Forms\FormSettings.cs">
@@ -172,12 +183,18 @@
     <Compile Include="Forms\FormSettings.Designer.cs">
       <DependentUpon>FormSettings.cs</DependentUpon>
     </Compile>
+    <Compile Include="Service References\InfoShareService\Reference.cs">
+      <AutoGen>True</AutoGen>
+      <DesignTime>True</DesignTime>
+      <DependentUpon>Reference.svcmap</DependentUpon>
+    </Compile>
     <Compile Include="Web References\KXWS\Reference.cs">
       <AutoGen>True</AutoGen>
       <DesignTime>True</DesignTime>
       <DependentUpon>Reference.map</DependentUpon>
     </Compile>
     <Compile Include="WebServiceHandler.cs" />
+    <Compile Include="BO\WorkObject.cs" />
     <EmbeddedResource Include="Forms\MainForm.resx">
       <DependentUpon>MainForm.cs</DependentUpon>
       <SubType>Designer</SubType>
@@ -239,6 +256,163 @@
       <DependentUpon>Settings.settings</DependentUpon>
       <DesignTimeSharedInput>True</DesignTimeSharedInput>
     </Compile>
+    <None Include="Service References\InfoShareService\docreminder.InfoShareService.AccessLogItemContract.datasource">
+      <DependentUpon>Reference.svcmap</DependentUpon>
+    </None>
+    <None Include="Service References\InfoShareService\docreminder.InfoShareService.AnalyzerDocumentCountContract.datasource">
+      <DependentUpon>Reference.svcmap</DependentUpon>
+    </None>
+    <None Include="Service References\InfoShareService\docreminder.InfoShareService.AnnotationSettingsContract.datasource">
+      <DependentUpon>Reference.svcmap</DependentUpon>
+    </None>
+    <None Include="Service References\InfoShareService\docreminder.InfoShareService.AuditAdministrationContract.datasource">
+      <DependentUpon>Reference.svcmap</DependentUpon>
+    </None>
+    <None Include="Service References\InfoShareService\docreminder.InfoShareService.AuditConfigurationContract.datasource">
+      <DependentUpon>Reference.svcmap</DependentUpon>
+    </None>
+    <None Include="Service References\InfoShareService\docreminder.InfoShareService.AuditLogonContract.datasource">
+      <DependentUpon>Reference.svcmap</DependentUpon>
+    </None>
+    <None Include="Service References\InfoShareService\docreminder.InfoShareService.BlobStoreProviderContract.datasource">
+      <DependentUpon>Reference.svcmap</DependentUpon>
+    </None>
+    <None Include="Service References\InfoShareService\docreminder.InfoShareService.ChangeLogItemContract.datasource">
+      <DependentUpon>Reference.svcmap</DependentUpon>
+    </None>
+    <None Include="Service References\InfoShareService\docreminder.InfoShareService.CloudSchemaStoreContract.datasource">
+      <DependentUpon>Reference.svcmap</DependentUpon>
+    </None>
+    <None Include="Service References\InfoShareService\docreminder.InfoShareService.DatabaseInfoContract.datasource">
+      <DependentUpon>Reference.svcmap</DependentUpon>
+    </None>
+    <None Include="Service References\InfoShareService\docreminder.InfoShareService.DocumentContract.datasource">
+      <DependentUpon>Reference.svcmap</DependentUpon>
+    </None>
+    <None Include="Service References\InfoShareService\docreminder.InfoShareService.DocumentShareContract.datasource">
+      <DependentUpon>Reference.svcmap</DependentUpon>
+    </None>
+    <None Include="Service References\InfoShareService\docreminder.InfoShareService.FolderContract.datasource">
+      <DependentUpon>Reference.svcmap</DependentUpon>
+    </None>
+    <None Include="Service References\InfoShareService\docreminder.InfoShareService.FolderPathContract.datasource">
+      <DependentUpon>Reference.svcmap</DependentUpon>
+    </None>
+    <None Include="Service References\InfoShareService\docreminder.InfoShareService.FolderSystemContract.datasource">
+      <DependentUpon>Reference.svcmap</DependentUpon>
+    </None>
+    <None Include="Service References\InfoShareService\docreminder.InfoShareService.GlobalSettingsContract.datasource">
+      <DependentUpon>Reference.svcmap</DependentUpon>
+    </None>
+    <None Include="Service References\InfoShareService\docreminder.InfoShareService.InfoStoreContract.datasource">
+      <DependentUpon>Reference.svcmap</DependentUpon>
+    </None>
+    <None Include="Service References\InfoShareService\docreminder.InfoShareService.InfoStoreDocumentCountContract.datasource">
+      <DependentUpon>Reference.svcmap</DependentUpon>
+    </None>
+    <None Include="Service References\InfoShareService\docreminder.InfoShareService.LicenceContract.datasource">
+      <DependentUpon>Reference.svcmap</DependentUpon>
+    </None>
+    <None Include="Service References\InfoShareService\docreminder.InfoShareService.LicenceInfoContract.datasource">
+      <DependentUpon>Reference.svcmap</DependentUpon>
+    </None>
+    <None Include="Service References\InfoShareService\docreminder.InfoShareService.LinkInfoContract.datasource">
+      <DependentUpon>Reference.svcmap</DependentUpon>
+    </None>
+    <None Include="Service References\InfoShareService\docreminder.InfoShareService.LogEntryContract.datasource">
+      <DependentUpon>Reference.svcmap</DependentUpon>
+    </None>
+    <None Include="Service References\InfoShareService\docreminder.InfoShareService.LogFileInfoContract.datasource">
+      <DependentUpon>Reference.svcmap</DependentUpon>
+    </None>
+    <None Include="Service References\InfoShareService\docreminder.InfoShareService.LogonResultContract.datasource">
+      <DependentUpon>Reference.svcmap</DependentUpon>
+    </None>
+    <None Include="Service References\InfoShareService\docreminder.InfoShareService.ProcessContract.datasource">
+      <DependentUpon>Reference.svcmap</DependentUpon>
+    </None>
+    <None Include="Service References\InfoShareService\docreminder.InfoShareService.ProcessUserTaskParameterContract.datasource">
+      <DependentUpon>Reference.svcmap</DependentUpon>
+    </None>
+    <None Include="Service References\InfoShareService\docreminder.InfoShareService.RemoteConnectionContract.datasource">
+      <DependentUpon>Reference.svcmap</DependentUpon>
+    </None>
+    <None Include="Service References\InfoShareService\docreminder.InfoShareService.RemoteFolderContract.datasource">
+      <DependentUpon>Reference.svcmap</DependentUpon>
+    </None>
+    <None Include="Service References\InfoShareService\docreminder.InfoShareService.RemoteFolderSystemContract.datasource">
+      <DependentUpon>Reference.svcmap</DependentUpon>
+    </None>
+    <None Include="Service References\InfoShareService\docreminder.InfoShareService.SAPConfigContract.datasource">
+      <DependentUpon>Reference.svcmap</DependentUpon>
+    </None>
+    <None Include="Service References\InfoShareService\docreminder.InfoShareService.SchemaStoreContract.datasource">
+      <DependentUpon>Reference.svcmap</DependentUpon>
+    </None>
+    <None Include="Service References\InfoShareService\docreminder.InfoShareService.SearchFolderContract.datasource">
+      <DependentUpon>Reference.svcmap</DependentUpon>
+    </None>
+    <None Include="Service References\InfoShareService\docreminder.InfoShareService.SearchResultContract.datasource">
+      <DependentUpon>Reference.svcmap</DependentUpon>
+    </None>
+    <None Include="Service References\InfoShareService\docreminder.InfoShareService.SearchResultIdsContract.datasource">
+      <DependentUpon>Reference.svcmap</DependentUpon>
+    </None>
+    <None Include="Service References\InfoShareService\docreminder.InfoShareService.SecurityConfigDefinitionContract.datasource">
+      <DependentUpon>Reference.svcmap</DependentUpon>
+    </None>
+    <None Include="Service References\InfoShareService\docreminder.InfoShareService.SecurityStoreContract.datasource">
+      <DependentUpon>Reference.svcmap</DependentUpon>
+    </None>
+    <None Include="Service References\InfoShareService\docreminder.InfoShareService.ServerInfoContract.datasource">
+      <DependentUpon>Reference.svcmap</DependentUpon>
+    </None>
+    <None Include="Service References\InfoShareService\docreminder.InfoShareService.SMTPSettingsContract.datasource">
+      <DependentUpon>Reference.svcmap</DependentUpon>
+    </None>
+    <None Include="Service References\InfoShareService\docreminder.InfoShareService.StatisticCounterConfigurationContract.datasource">
+      <DependentUpon>Reference.svcmap</DependentUpon>
+    </None>
+    <None Include="Service References\InfoShareService\docreminder.InfoShareService.StatisticCounterDescriptionContract.datasource">
+      <DependentUpon>Reference.svcmap</DependentUpon>
+    </None>
+    <None Include="Service References\InfoShareService\docreminder.InfoShareService.StatisticCounterItemContract.datasource">
+      <DependentUpon>Reference.svcmap</DependentUpon>
+    </None>
+    <None Include="Service References\InfoShareService\docreminder.InfoShareService.UserLogEntryContract.datasource">
+      <DependentUpon>Reference.svcmap</DependentUpon>
+    </None>
+    <None Include="Service References\InfoShareService\docreminder.InfoShareService.UserSettingsContract.datasource">
+      <DependentUpon>Reference.svcmap</DependentUpon>
+    </None>
+    <None Include="Service References\InfoShareService\docreminder.InfoShareService.UserStoreContract.datasource">
+      <DependentUpon>Reference.svcmap</DependentUpon>
+    </None>
+    <None Include="Service References\InfoShareService\docreminder.InfoShareService.VersionItemContract.datasource">
+      <DependentUpon>Reference.svcmap</DependentUpon>
+    </None>
+    <None Include="Service References\InfoShareService\InfoShare.wsdl" />
+    <None Include="Service References\InfoShareService\item.xsd">
+      <SubType>Designer</SubType>
+    </None>
+    <None Include="Service References\InfoShareService\item1.xsd">
+      <SubType>Designer</SubType>
+    </None>
+    <None Include="Service References\InfoShareService\item2.xsd">
+      <SubType>Designer</SubType>
+    </None>
+    <None Include="Service References\InfoShareService\item3.xsd">
+      <SubType>Designer</SubType>
+    </None>
+    <None Include="Service References\InfoShareService\item4.xsd">
+      <SubType>Designer</SubType>
+    </None>
+    <None Include="Service References\InfoShareService\item5.xsd">
+      <SubType>Designer</SubType>
+    </None>
+    <None Include="Service References\InfoShareService\item6.xsd">
+      <SubType>Designer</SubType>
+    </None>
     <None Include="Web References\KXWS\CheckOutStateEnum.datasource">
       <DependentUpon>Reference.map</DependentUpon>
     </None>
@@ -444,6 +618,15 @@
   </ItemGroup>
   <ItemGroup>
     <Content Include="fiveinfo.ico" />
+    <None Include="Service References\InfoShareService\Reference.svcmap">
+      <Generator>WCF Proxy Generator</Generator>
+      <LastGenOutput>Reference.cs</LastGenOutput>
+    </None>
+    <None Include="Service References\InfoShareService\configuration.svcinfo" />
+    <None Include="Service References\InfoShareService\configuration91.svcinfo" />
+  </ItemGroup>
+  <ItemGroup>
+    <WCFMetadataStorage Include="Service References\InfoShareService\" />
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 

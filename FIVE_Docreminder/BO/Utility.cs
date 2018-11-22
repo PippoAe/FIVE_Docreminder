@@ -7,9 +7,9 @@ namespace docreminder.BO
     /// <summary>
     /// Defines utility methods.
     /// </summary>
-    class Utility
+    static class Utility
     {
-        public enum SearchComparisonEnum
+        public  enum SearchComparisonEnum
         {
             Equals = 0,
             NotEqual = 1,
@@ -72,7 +72,7 @@ namespace docreminder.BO
             return false;
         }
 
-        public static String GetValue(StringGlobalContract stringGlobal, string schemaCulture)
+        public static string GetValue(StringGlobalContract stringGlobal, string schemaCulture)
         {
             foreach (StringGlobalEntry strGlobalEntry in stringGlobal.Values)
             {

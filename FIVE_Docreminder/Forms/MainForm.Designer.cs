@@ -52,6 +52,7 @@
             this.button1 = new System.Windows.Forms.Button();
             this.groupBox2 = new System.Windows.Forms.GroupBox();
             this.dgwEbills = new System.Windows.Forms.DataGridView();
+            this.NEWGetDocumentsWorker = new System.ComponentModel.BackgroundWorker();
             this.menuStrip1.SuspendLayout();
             this.statusStrip1.SuspendLayout();
             this.groupBox2.SuspendLayout();
@@ -248,6 +249,14 @@
             this.dgwEbills.Size = new System.Drawing.Size(810, 254);
             this.dgwEbills.TabIndex = 5;
             // 
+            // NEWGetDocumentsWorker
+            // 
+            this.NEWGetDocumentsWorker.WorkerReportsProgress = true;
+            this.NEWGetDocumentsWorker.WorkerSupportsCancellation = true;
+            this.NEWGetDocumentsWorker.DoWork += new System.ComponentModel.DoWorkEventHandler(this.NEWGetDocumentsWorker_DoWork);
+            this.NEWGetDocumentsWorker.ProgressChanged += new System.ComponentModel.ProgressChangedEventHandler(this.NEWGetDocumentsWorker_ProgressChanged);
+            this.NEWGetDocumentsWorker.RunWorkerCompleted += new System.ComponentModel.RunWorkerCompletedEventHandler(this.NEWGetDocumentsWorker_RunWorkerCompleted);
+            // 
             // MainForm
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
@@ -301,6 +310,7 @@
         private System.Windows.Forms.Button button1;
         private System.Windows.Forms.GroupBox groupBox2;
         private System.Windows.Forms.DataGridView dgwEbills;
+        private System.ComponentModel.BackgroundWorker NEWGetDocumentsWorker;
     }
 }
 

@@ -26,7 +26,7 @@ namespace docreminder
 
         private void Settings_Load(object sender, EventArgs e)
         {
-            string sProgramPath = System.IO.Path.GetDirectoryName(System.Reflection.Assembly.GetExecutingAssembly().Location);
+            string sProgramPath = Path.GetDirectoryName(System.Reflection.Assembly.GetExecutingAssembly().Location);
 
 
             // Create the ToolTip and associate with the Form container.
@@ -732,8 +732,6 @@ namespace docreminder
                     if (asc.Count != 0)
                     {
                         //AEPH - 05.02.2016
-                        //asc[0] = asc[0].Replace("string:userGuid,string:documentID,string:storeID,", "");
-                        //asc[0] = asc[0].Replace("string:userGuid", "");
                         asc[0] = asc[0].Replace(",", ";");
 
                         dgwCustomWSFunction[1, e.RowIndex].Value = asc[0];
@@ -928,24 +926,6 @@ namespace docreminder
                 txtBxSMTPSubject.Focus();
             }
         }
-
-        //private void btnInsertIndexMailBody_Click(object sender, EventArgs e)
-        //{
-        //    FormPickDialog pickDialog = new FormPickDialog(mainform.webserviceHandler.getAllPropertyTypes("DE"), sender);
-        //    if (pickDialog.ShowDialog(this) == DialogResult.OK)
-        //    {
-        //        rtxtBxHTMLBody.Text = rtxtBxHTMLBody.Text.Insert(rtxtBxHTMLBody.SelectionStart, "*IDX[" + pickDialog.comboBox1.Text + "]");
-        //        //Prevent Textbox from selecting all on Focus.
-        //        rtxtBxHTMLBody.GotFocus += delegate { rtxtBxHTMLBody.Select(rtxtBxHTMLBody.TextLength, 0); };
-        //        rtxtBxHTMLBody.Focus();
-        //        pickDialog.Dispose();
-        //    }
-        //    else
-        //    {
-        //        pickDialog.Dispose();
-        //        rtxtBxHTMLBody.Focus();
-        //    }
-        //}
 
         private void btnTest_Click(object sender, EventArgs e)
         {

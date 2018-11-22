@@ -55,7 +55,7 @@ namespace docreminder
 
         private void aboutToolStripMenuItem_Click(object sender, EventArgs e)
         {
-            Form2 aboutForm = new Form2();
+            FormAbout aboutForm = new FormAbout();
             aboutForm.Show();
         }
 
@@ -242,6 +242,74 @@ namespace docreminder
 
 
         //Workers
+
+
+
+
+        #region GetDocumentsWorker
+
+        /// <summary>
+        /// Get Documents Worker
+        /// </summary>
+        /// <param name="sender"></param>
+        /// <param name="e"></param>
+        private void getDocumentsWorker_DoWork(object sender, DoWorkEventArgs e)
+        {
+            getDocumentsWorker.ReportProgress(10);
+            if (_webServiceHandler == null)
+            {
+                log4.Info("Logging in into Archive via WebService...");
+                getDocumentsWorker.ReportProgress(40);
+                _webServiceHandler = new WebServiceHandler();
+
+            }
+
+            KXWS.SDocument[] documents;
+            if (_webServiceHandler.Login())
+            {
+                getDocumentsWorker.ReportProgress(60);
+                documents = _webServiceHandler.searchforEbills(null);
+            }
+            else
+            {
+                getDocumentsWorker.ReportProgress(100);
+                documents = new KXWS.SDocument[0];
+            }
+            getDocumentsWorker.ReportProgress(100);
+            e.Result = documents;
+        }
+
+        private void getDocumentsWorker_ProgressChanged(object sender, ProgressChangedEventArgs e)
+        {
+            progressBar1.Value = e.ProgressPercentage;
+            //this.Text = e.ProgressPercentage.ToString() + "%";
+        }
+
+        private void getDocumentsWorker_RunWorkerCompleted(object sender, RunWorkerCompletedEventArgs e)
+        {
+            displayFoundEBills((KXWS.SDocument[])e.Result);
+            progressBar1.Value = 0;
+            bSendEbills.Enabled = true;
+            bCheckForEBills.Enabled = true;
+            if (webserviceHandler.hasMore)
+            {
+                btnSearchMore.Enabled = true;
+                btnSearchMore.Text = string.Format("Nächste {0}", Properties.Settings.Default.SearchQuantity.ToString());
+            }
+            else
+            {
+                btnSearchMore.Text = "Nächste";
+                btnSearchMore.Enabled = false;
+            }
+
+            //IF Automode, send Ebills
+            if (Program.automode)
+                bSendEbill_Click(this, new EventArgs());
+
+        }
+
+        #endregion 
+
         #region processDocumentsWorker
         /// <summary>
         /// Process Documents Worker
@@ -407,70 +475,6 @@ namespace docreminder
 
         #endregion 
 
-        #region GetDocumentsWorker
-
-        /// <summary>
-        /// Get Documents Worker
-        /// </summary>
-        /// <param name="sender"></param>
-        /// <param name="e"></param>
-        private void getDocumentsWorker_DoWork(object sender, DoWorkEventArgs e)
-        {
-            getDocumentsWorker.ReportProgress(10);
-            if (_webServiceHandler == null)
-            {
-                log4.Info("Logging in into Archive via WebService...");
-                getDocumentsWorker.ReportProgress(40);
-                _webServiceHandler = new WebServiceHandler();
-                
-            }
-
-            KXWS.SDocument[] documents;
-            if (_webServiceHandler.Login())
-            {
-                getDocumentsWorker.ReportProgress(60);
-                documents = _webServiceHandler.searchforEbills(null);
-            }
-            else
-            {
-                getDocumentsWorker.ReportProgress(100);
-                documents = new KXWS.SDocument[0];
-            }
-            getDocumentsWorker.ReportProgress(100);
-            e.Result = documents;
-        }
-
-        private void getDocumentsWorker_ProgressChanged(object sender, ProgressChangedEventArgs e)
-        {
-            progressBar1.Value = e.ProgressPercentage;
-            //this.Text = e.ProgressPercentage.ToString() + "%";
-        }
-
-        private void getDocumentsWorker_RunWorkerCompleted(object sender, RunWorkerCompletedEventArgs e)
-        {
-            displayFoundEBills((KXWS.SDocument[])e.Result);
-            progressBar1.Value = 0;
-            bSendEbills.Enabled = true;
-            bCheckForEBills.Enabled = true;
-            if (webserviceHandler.hasMore)
-            {
-                btnSearchMore.Enabled = true;
-                btnSearchMore.Text = string.Format("Nächste {0}", Properties.Settings.Default.SearchQuantity.ToString());
-            }
-            else
-            {
-                btnSearchMore.Text = "Nächste";
-                btnSearchMore.Enabled = false;
-            }
-
-            //IF Automode, send Ebills
-            if(Program.automode)
-                bSendEbill_Click(this, new EventArgs());
-            
-        }
-
-        #endregion 
-
         private void timerShutDown_Tick(object sender, EventArgs e)
         {
             scheduledTimeLeft = scheduledTimeLeft.Subtract(new TimeSpan(0, 0, 1));
@@ -515,59 +519,101 @@ namespace docreminder
         private void button1_Click(object sender, EventArgs e)
         {
 
-            wcfHandler = new WCFHandler();
+            //wcfHandler = new WCFHandler();
 
-            for(int i = 0; i < 100;i++)
-            {
-                List<BO.WorkObject> workObjects = new List<BO.WorkObject>();
+            //for(int i = 0; i < 100;i++)
+            //{
+            //    List<BO.WorkObject> workObjects = new List<BO.WorkObject>();
 
-                for (int y = 0; y < 1000; y++)
-                {
-                    workObjects.Add(new BO.WorkObject("e1c756f3-9732-e811-83a6-0050569362e9", wcfHandler));
-                }
+            //    for (int y = 0; y < 1000; y++)
+            //    {
+            //        workObjects.Add(new BO.WorkObject("e1c756f3-9732-e811-83a6-0050569362e9", wcfHandler));
+            //    }
 
-                BackgroundWorker bw = new BackgroundWorker();
+            //    BackgroundWorker bw = new BackgroundWorker();
 
-                // this allows our worker to report progress during work
-                bw.WorkerReportsProgress = true;
+            //    // this allows our worker to report progress during work
+            //    bw.WorkerReportsProgress = true;
 
-                // what to do in the background thread
-                bw.DoWork += new DoWorkEventHandler(
-                delegate (object o, DoWorkEventArgs args)
-                {
-                    BackgroundWorker b = o as BackgroundWorker;
-
-
-                    int z = 0;
-                    workObjects.ForEach(x =>
-                    {
-                        x.Process();
-                        b.ReportProgress(z);
-                        z++;
-                    });
+            //    // what to do in the background thread
+            //    bw.DoWork += new DoWorkEventHandler(
+            //    delegate (object o, DoWorkEventArgs args)
+            //    {
+            //        BackgroundWorker b = o as BackgroundWorker;
 
 
-                });
+            //        int z = 0;
+            //        workObjects.ForEach(x =>
+            //        {
+            //            x.Process();
+            //            b.ReportProgress(z);
+            //            z++;
+            //        });
 
-                // what to do when progress changed (update the progress bar for example)
-                bw.ProgressChanged += new ProgressChangedEventHandler(
-                delegate (object o, ProgressChangedEventArgs args)
-                {
-                    log4.Info(string.Format("{0}% Completed", args.ProgressPercentage));
-                });
 
-                // what to do when worker completes its task (notify the user)
-                bw.RunWorkerCompleted += new RunWorkerCompletedEventHandler(
-                delegate (object o, RunWorkerCompletedEventArgs args)
-                {
-                    log4.Info("Finished!");
-                });
+            //    });
 
-                bw.RunWorkerAsync();
-            }
+            //    // what to do when progress changed (update the progress bar for example)
+            //    bw.ProgressChanged += new ProgressChangedEventHandler(
+            //    delegate (object o, ProgressChangedEventArgs args)
+            //    {
+            //        log4.Info(string.Format("{0}% Completed", args.ProgressPercentage));
+            //    });
+
+            //    // what to do when worker completes its task (notify the user)
+            //    bw.RunWorkerCompleted += new RunWorkerCompletedEventHandler(
+            //    delegate (object o, RunWorkerCompletedEventArgs args)
+            //    {
+            //        log4.Info("Finished!");
+            //    });
+
+            //    bw.RunWorkerAsync();
+            //}
+
+            NEWGetDocumentsWorker.RunWorkerAsync();
 
  
         }
+
+
+
+        #region NewGetDocumentsWorker
+        private void NEWGetDocumentsWorker_DoWork(object sender, DoWorkEventArgs e)
+        {
+            NEWGetDocumentsWorker.ReportProgress(10);
+            if (wcfHandler == null)
+            {
+                NEWGetDocumentsWorker.ReportProgress(40);
+                wcfHandler = new WCFHandler();
+            }
+
+            InfoShareService.DocumentSimpleContract[] documents;
+
+            NEWGetDocumentsWorker.ReportProgress(60);
+            documents = wcfHandler.SearchForDocuments();
+
+            List<BO.WorkObject> workObjects = new List<BO.WorkObject>();
+            foreach (InfoShareService.DocumentSimpleContract siCo in documents)
+            {
+               workObjects.Add(new BO.WorkObject(siCo.Id,wcfHandler));
+            }
+
+            NEWGetDocumentsWorker.ReportProgress(100);
+
+            e.Result = workObjects;
+        }
+
+        private void NEWGetDocumentsWorker_ProgressChanged(object sender, ProgressChangedEventArgs e)
+        {
+
+        }
+
+        private void NEWGetDocumentsWorker_RunWorkerCompleted(object sender, RunWorkerCompletedEventArgs e)
+        {
+            dgwEbills.DataSource = e.Result;
+        }
+
+        #endregion EndRegion
     }
 }
 

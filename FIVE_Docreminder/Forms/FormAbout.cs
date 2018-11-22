@@ -3,16 +3,14 @@ using System.Reflection;
 
 namespace docreminder
 {
-    public partial class Form2 : Form
+    public partial class FormAbout : Form
     {
-        public Form2()
+        public FormAbout()
         {
             InitializeComponent();
             label1.Text = Application.ProductName +" Version: " + Application.ProductVersion;
             label2.Text = Application.CompanyName;
             label3.Text = GetCopyright();
-            //label2.Text = Application.
-
         }
 
         private void linkLabel1_LinkClicked(object sender, LinkLabelLinkClickedEventArgs e)

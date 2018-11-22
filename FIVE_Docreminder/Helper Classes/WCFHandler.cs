@@ -1,6 +1,7 @@
 ﻿using docreminder.BO;
 using docreminder.InfoShareService;
 using System;
+using System.Collections.Generic;
 
 namespace docreminder
 {
@@ -81,6 +82,26 @@ namespace docreminder
                 log4.Info(string.Format("Successfully logged on with '{0}' connID '{1}'", Properties.Settings.Default.KendoxUsername, connID));
                 ConnectionID = connID;
             }          
-        }  
+        }
+
+        internal DocumentSimpleContract[] SearchForDocuments()
+        {
+            List<DocumentContract> documents = new List<DocumentContract>();
+
+            List<SearchConditionContract> searchConContractList = new List<SearchConditionContract>();
+            var sContract = new SearchConditionContract();
+            sContract.ComparisonEnum = Utility.SearchComparisonEnum.Equals.ToString();
+            sContract.PropertyTypeId = commonService.GetPropertyTypeID("Objekt Id", Properties.Settings.Default.Culture);
+
+            //"01000003-d596-485b-ace6-d64647a94277";
+            string[] vals = new string[1];
+            vals[0] = NEWExpressionsEvaluator.Evaluate("'704472fb-54cd-e811-aa69-0050569362e9'").ToString();
+            sContract.Values = vals;
+            searchConContractList.Add(sContract);
+
+            var resultContract = searchService.SearchDocument(commonService, ConnectionID, searchConContractList.ToArray());
+
+            return resultContract.Documents;
+        }
     }
 }

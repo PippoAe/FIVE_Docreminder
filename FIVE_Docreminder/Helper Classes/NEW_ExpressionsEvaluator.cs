@@ -9,6 +9,7 @@ using System.Xml.Serialization;
 using System.Data.SqlClient;
 using System.Data;
 using System.Text.RegularExpressions;
+using docreminder.InfoShareService;
 
 namespace docreminder
 {
@@ -38,6 +39,8 @@ namespace docreminder
 
         private static List<KeyValuePair<string, string>> variables;
         private static List<KeyValuePair<string, string>> sqlConnectionsList;
+        private static List<KeyValuePair<string, string>> propertyTypeIDs;
+
         private static List<sqlItem<string, SqlConnection>> sqlConnections = new List<sqlItem<string, SqlConnection>>();
 
 
@@ -46,7 +49,6 @@ namespace docreminder
             variables = new List<KeyValuePair<string, string>>();
             if(Properties.Settings.Default.ExpressionVariables != "")
                 variables = (List<KeyValuePair<string, string>>)(FileHelper.XmlDeserializeFromString(Properties.Settings.Default.ExpressionVariables, variables.GetType()));
-
 
             if (Properties.Settings.Default.SQLConnectionString != "")
             {
@@ -57,14 +59,11 @@ namespace docreminder
                     foreach (KeyValuePair<string, string> kvp in sqlConnectionsList)
                     {
                         sqlItem<string, SqlConnection> con = new sqlItem<string, SqlConnection>();
-
                         SqlConnection sqlConnection = new SqlConnection(kvp.Value);
                         con.connection = sqlConnection;
                         con.name = kvp.Key;
                         sqlConnections.Add(con);
-
                     }
-                    //sqlCon = new SqlConnection(Properties.Settings.Default.SQLConnectionString);
                 }
                 catch (Exception exp)
                 {
@@ -74,7 +73,7 @@ namespace docreminder
 
         }
 
-        public static string Evaluate(string input, DataGridViewRow row = null, KXWS.SDocument docinfo = null,bool testmode = false)
+        public static string Evaluate(string input, DocumentContract doc = null,bool testmode = false)
         {
             Hashtable hTenteredIDX = new Hashtable();
 
@@ -130,44 +129,38 @@ namespace docreminder
                 if (name == "IDX")
                 {
                     string index = args.Parameters[0].Evaluate().ToString();
+
                     string idxvalue = "";
 
                     //Get IDX Value from Docinfo if available.
-                    if (docinfo != null)
+                    if (doc != null)
                     {
-                        foreach (KXWS.SDocumentProperty prop in docinfo.documentProperties)
-                        {
-                            if (prop.name == index){
-                                if(prop.propertyValues.Count() > 0)
-                                    idxvalue = prop.propertyValues[0];
-                            }
-                        }
+
+                        
+                        //foreach (PropertyContract prop in doc.Properties)
+                        //{
+                        //    if (prop.PropertyTypeId == index){
+                        //        if(prop.Values.Count() > 0)
+                        //            idxvalue = prop.Values[0];
+                        //    }
+                        //}
+                        
                     }
 
-                    //Else get it from the row.
+                    if (hTenteredIDX.ContainsKey(index))
+                    {
+                        idxvalue = hTenteredIDX[index].ToString();
+                    }
                     else
                     {
-                        if(row != null)
-                            idxvalue = row.Cells[index].Value.ToString();
-                        //If nothing helps, let user pick it.
-                        else
-                        {
-                            if (hTenteredIDX.ContainsKey(index))
-                            {
-                                idxvalue = hTenteredIDX[index].ToString();
-                            }
-                            else
-                            {
 
-                                FormInputDialog inputDialog = new FormInputDialog("IDX Value", "Set Value for '" + index.ToString() + "':", "OK");
-                                if (inputDialog.ShowDialog(null) == DialogResult.OK)
-                                {
-                                    //recipient = inputDialog.txtBxInput.Text;
-                                    idxvalue = inputDialog.txtBxInput.Text;
-                                    hTenteredIDX.Add(index.ToString(), idxvalue);
-                                    inputDialog.Dispose();
-                                }
-                            }
+                        FormInputDialog inputDialog = new FormInputDialog("IDX Value", "Set Value for '" + index.ToString() + "':", "OK");
+                        if (inputDialog.ShowDialog(null) == DialogResult.OK)
+                        {
+                            //recipient = inputDialog.txtBxInput.Text;
+                            idxvalue = inputDialog.txtBxInput.Text;
+                            hTenteredIDX.Add(index.ToString(), idxvalue);
+                            inputDialog.Dispose();
                         }
                     }
 
@@ -287,10 +280,6 @@ namespace docreminder
                 try
                 {
                     var output = e.Evaluate();
-                    //AEPH 04.02.2016
-                    //decimal dec;
-                    //Decimal.TryParse(output.ToString(),out dec);
-                    //returnvalue = FileHelper.ToInvariantString(output);
                     //AEPH 05.02.2016
                     //Decimal sign is used based on system settings.
                     returnvalue = output.ToString();

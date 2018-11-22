@@ -9,8 +9,6 @@
 //------------------------------------------------------------------------------
 
 namespace docreminder.InfoShareService {
-    using System.Runtime.Serialization;
-    using System;
     
     
     [System.Diagnostics.DebuggerStepThroughAttribute()]

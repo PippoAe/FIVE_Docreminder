@@ -659,8 +659,6 @@ namespace docreminder
 
             if (lProcessTemplates != null)
             {
-                miliseconds = DateTime.Now.Subtract(now).Milliseconds;
-                //log4.Info(string.Format("Getting all processtemplates took {0} miliseconds.", miliseconds));
                 return lProcessTemplates;
             }
 
@@ -682,7 +680,6 @@ namespace docreminder
                     }
                 }
 
-                //pTitem.ProcessName = template.processName.cultureStrings[0].text;
                 lSProcessTemplates.Add(pTitem);
             }
             miliseconds = DateTime.Now.Subtract(now).Milliseconds;
@@ -693,7 +690,6 @@ namespace docreminder
 
         public List<string> getAllPropertyTypes(string Language, bool all, bool onlyChangeable)
         {
-            //KXWS.SPropertyTypeLanguages[] Properties = WebService.GetAllPropertyTypeLanguages(sSessionGuid);
             KXWS.SPropertyTypeExt[] Properties = WebService.GetPropertyTypes(sSessionGuid, Language, Language, KXWS.PropertyTypeEditEnum.ALL);
             List<string> lSPropertys = new List<string>();
 
@@ -754,8 +750,6 @@ namespace docreminder
                 }
             }
 
-            //Loop through the port types in the service description and list all of the 
-            //web service's operations and each operations input/output
             pbar.Value = 30;
 
             pbar.Refresh();

@@ -11,13 +11,14 @@ namespace docreminder.BO
 
         public DocumentContract document;
         public WCFHandler _wcfHandler;
+        public string objectID { get; private set; }
+        public bool isValid { get; private set; }
         public bool finished { get; private set; }
         public string error { get; private set; }
-        public string objectID { get;  private set; }
+        
 
         public WorkObject(string InfoShareObjectID, WCFHandler wcfHandler)
-        {
-            
+        { 
             objectID = InfoShareObjectID;
             _wcfHandler = wcfHandler;
 
@@ -27,10 +28,32 @@ namespace docreminder.BO
             }
             catch(Exception e)
             {
-                log4.Error(string.Format("Couldn't retrieve documentcontract for doucment '{0}' Message: {1}", objectID,e.Message));
+                log4.Error(string.Format("Couldn't retrieve documentcontract for document '{0}' Message: {1}", objectID,e.Message));
+                error = string.Format("Couldn't retrieve documentcontract for document");
+                isValid = false;
+                finished = true;
             }
-            
+
+            if (Properties.Settings.Default.AddCpIdisActive)
+                PrepareForProcessing();
         }
+
+        public string GetPropertyValueFromName(string propertyTypeName)
+        {
+            string propId = _wcfHandler.commonService.GetPropertyTypeID(propertyTypeName, Properties.Settings.Default.Culture);
+            foreach(PropertyContract prop in document.Properties)
+            {
+                if (prop.PropertyTypeId == propId)
+                    return prop.Values[0];
+            }
+            return "";
+        }
+
+        public string GetPropertyValueFromID(string propertyID)
+        {
+            return "";
+        }
+
 
         public void Process()
         {
@@ -43,15 +66,41 @@ namespace docreminder.BO
 
         private void Evaluate()
         {
-            Random rndG = new Random();
-            int rnd1 = rndG.Next(0, 1000);
-            int rnd2 = rndG.Next(0, 1000);
-            string evalInput = rnd1.ToString() +"+"+rnd2.ToString();
+            //Random rndG = new Random();
+            //int rnd1 = rndG.Next(0, 1000);
+            //int rnd2 = rndG.Next(0, 1000);
+            //string evalInput = rnd1.ToString() +"+"+rnd2.ToString();
 
-            log4.Debug(string.Format("Evaluating expression '{0}' for document '{1}'.", evalInput, objectID));
-            var evalOutput = NEWExpressionsEvaluator.Evaluate(evalInput);
-            log4.Debug(string.Format("Evaluated '{0}' to '{1}'.", evalInput, evalOutput));
+            //log4.Debug(string.Format("Evaluating expression '{0}' for document '{1}'.", evalInput, objectID));
+            //var evalOutput = NEWExpressionsEvaluator.Evaluate(evalInput);
+            //log4.Debug(string.Format("Evaluated '{0}' to '{1}'.", evalInput, evalOutput));
         }
+
+        private void PrepareForProcessing()
+        {
+            try
+            {
+                if (Convert.ToBoolean(NEWExpressionsEvaluator.Evaluate(Properties.Settings.Default.AdditionalComputedIdentifier, document)))
+                {
+                    isValid = true;
+                }
+                else
+                {
+                    isValid = false;
+                    finished = true;
+                }
+            }
+            catch (Exception e)
+            {
+                string message = "An Error happened while validating additional computed identifier!" + e.Message;
+                error = message;
+                log4.Info(message);
+                finished = true;
+                isValid = false;
+            }
+        }
+
+
         private void Update()
         {
 

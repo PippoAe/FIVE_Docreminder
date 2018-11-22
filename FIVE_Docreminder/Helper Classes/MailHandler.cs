@@ -278,7 +278,7 @@ namespace docreminder
             }
 
             if (mail.To.Count == 0)
-                throw new Exception("No valid E-mail could be extracted from configured recipients:" + String.Join(";", recipientsInput));
+                throw new Exception("No valid E-mail could be extracted from configured recipients:" + string.Join(";", recipientsInput));
 
             //Evaluate  MailSubject
             string mailSubject = Properties.Settings.Default.EBillSubject;
@@ -329,7 +329,6 @@ namespace docreminder
 
             //AEPH 10.02.2016 Multiline Support for Regex Match.
             //But replace new-line char.
-            //string[] IndexHits = Regex.Matches(mailBody, @"(?<=\$\[)(.)*?(?=\]\$)").Cast<Match>().Select(m => m.Value).ToArray();
             string[] IndexHits = Regex.Matches(mailBody, @"(?<=\$\[)(.|\s)*?(?=\]\$)").Cast<Match>().Select(m => m.Value).ToArray();
 
             foreach (string expression in IndexHits)

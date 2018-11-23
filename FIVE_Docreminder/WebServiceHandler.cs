@@ -44,7 +44,7 @@ namespace docreminder
                     else 
                         kendoxpassword = Properties.Settings.Default.KendoxPassword;
 
-                    ret = WebService.Logon(Properties.Settings.Default.KendoxServerAdress, Convert.ToInt32(Properties.Settings.Default.KendoxPort), "", Properties.Settings.Default.KendoxUsername, kendoxpassword, "", Properties.Settings.Default.Culture, Properties.Settings.Default.Culture);
+                    ret = WebService.Logon("LAWL", 1234, "", Properties.Settings.Default.KendoxUsername, kendoxpassword, "", Properties.Settings.Default.Culture, Properties.Settings.Default.Culture);
                     
                     kendoxpassword = null;
                 }
@@ -62,7 +62,7 @@ namespace docreminder
                 if (!errorOccured)
                 {
                     sSessionGuid = ret;
-                    ret = "Sucessfully logged in to '" + Properties.Settings.Default.KendoxServerAdress + ":" + Properties.Settings.Default.KendoxPort + "'. SessionGUID: '" + sSessionGuid + "'";
+                    ret = "Sucessfully logged in to '" + "LAWL" + ":" + 12345 + "'. SessionGUID: '" + sSessionGuid + "'";
                     log4.Info(ret);
                 }
             }
@@ -732,7 +732,7 @@ namespace docreminder
             List<string> lSFunctions = new List<string>();
             pbar.Value = 10;
             //Build the URL request string
-            UriBuilder uriBuilder = new UriBuilder(Properties.Settings.Default.E_Bill_Uploader_KXWS_KXWebService40);
+            UriBuilder uriBuilder = new UriBuilder("LAWL");
             uriBuilder.Query = "WSDL";
 
             HttpWebRequest webRequest = (HttpWebRequest)WebRequest.Create(uriBuilder.Uri);

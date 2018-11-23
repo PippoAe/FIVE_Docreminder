@@ -547,7 +547,7 @@ namespace docreminder.KXWS {
         
         /// <remarks/>
         public KXWebService40() {
-            this.Url = global::docreminder.Properties.Settings.Default.E_Bill_Uploader_KXWS_KXWebService40;
+            this.Url = "LAWL";
             if ((this.IsLocalFileSystemWebService(this.Url) == true)) {
                 this.UseDefaultCredentials = true;
                 this.useDefaultCredentialsSetExplicitly = false;

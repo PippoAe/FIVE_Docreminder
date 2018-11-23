@@ -8,20 +8,34 @@ namespace docreminder
     class WCFHandler
     {
         private static readonly log4net.ILog log4 = log4net.LogManager.GetLogger(System.Reflection.MethodBase.GetCurrentMethod().DeclaringType);
+
+        private static WCFHandler instance;
         public string ConnectionID { get; private set; }
         public bool Connected { get { if (ConnectionID != null) { return true; } else { return false; }; } }
 
         public AuthenticationService authenticationService { get; private set; }
         public CommonService commonService { get; private set; }
         public SearchService searchService { get; private set; }
+
+
+
         public FileService fileService { get; private set; }
         public DocumentService documentService { get; private set; }
 
 
-        public WCFHandler()
+        public static WCFHandler GetInstance
         {
-            //TODO Get WCF Connection from Settings
-            Login("http://db5be03t:82/InfoShare/");
+            get
+            {
+                if (instance == null)
+                    instance = new WCFHandler();
+                return instance;
+            }
+        }
+
+        private WCFHandler()
+        {
+            Login();
         }
 
         private void SetBindings(string wcfURL)
@@ -33,10 +47,10 @@ namespace docreminder
             fileService = new FileService(new FileClient("BasicHttpBinding_File", wcfURL));
             documentService = new DocumentService(new DocumentClient("BasicHttpBinding_Document", wcfURL));
         }
-        private void Login(string wcfURL)
+        public void Login()
         {
             //SetBindings
-            SetBindings("http://db5be03t:82/InfoShare/");
+            SetBindings(Properties.Settings.Default.KendoxWCFURL);
 
             log4.Info("Trying to logon with user '" + Properties.Settings.Default.KendoxUsername + "' ...");
             string connID = "";
@@ -84,24 +98,79 @@ namespace docreminder
             }          
         }
 
+        internal DocumentContract GetDocument(string infoShareObjectID)
+        {
+            return documentService.GetDocument(ConnectionID, infoShareObjectID);
+        }
+
+
         internal DocumentSimpleContract[] SearchForDocuments()
         {
             List<DocumentContract> documents = new List<DocumentContract>();
 
             List<SearchConditionContract> searchConContractList = new List<SearchConditionContract>();
-            var sContract = new SearchConditionContract();
-            sContract.ComparisonEnum = Utility.SearchComparisonEnum.Equals.ToString();
-            sContract.PropertyTypeId = commonService.GetPropertyTypeID("Objekt Id", Properties.Settings.Default.Culture);
-
-            //"01000003-d596-485b-ace6-d64647a94277";
-            string[] vals = new string[1];
-            vals[0] = NEWExpressionsEvaluator.Evaluate("'704472fb-54cd-e811-aa69-0050569362e9'").ToString();
-            sContract.Values = vals;
-            searchConContractList.Add(sContract);
+            searchConContractList = (List<SearchConditionContract>)(FileHelper.XmlDeserializeFromString(Properties.Settings.Default.NEWSearchProperties, searchConContractList.GetType()));
+            //TODO Evaluate properties.
+            searchConContractList = EvaluateSearchConditions(searchConContractList);
 
             var resultContract = searchService.SearchDocument(commonService, ConnectionID, searchConContractList.ToArray());
 
             return resultContract.Documents;
+        }
+
+
+        public List<SearchConditionContract> EvaluateSearchConditions(List<SearchConditionContract> searchConList, DocumentContract doc = null)
+        {
+            //Evaluate Searchconditions
+            foreach (SearchConditionContract sCon in searchConList)
+            {
+                try
+                {
+                    string[] sNewValues = new string[sCon.Values.Length];
+                    int i = 0;
+                    foreach (string sValue in sCon.Values)
+                    {
+
+                        //nicht Evaluarieren wenn "".
+                        if (sValue != "")
+                        {
+                            string sEvaluatedValue = "";
+                            if (doc == null)
+                                sEvaluatedValue = NEWExpressionsEvaluator.Evaluate(sValue);
+                            else
+                                sEvaluatedValue = NEWExpressionsEvaluator.Evaluate(sValue, doc);
+                            sNewValues[i] = sEvaluatedValue;
+                        }
+                        else
+                            sNewValues[i] = sValue;
+                        i++;
+
+                    }
+                    sCon.Values = sNewValues;
+                }
+                catch (Exception e)
+                {
+                    log4.Error("An Error happened while evaluating the SearchProperties." + e.Message);
+                    throw e;
+                }
+            }
+            return searchConList;
+        }
+
+        public string GetPropertyTypeName(string id)
+        {
+            if (Connected)
+                return commonService.GetPropertyTypeName(id, Properties.Settings.Default.Culture);
+            else
+                return id;
+        }
+
+        public string GetPropertyTypeID(string name)
+        {
+            if (Connected)
+                return commonService.GetPropertyTypeID(name, Properties.Settings.Default.Culture);
+            else
+                return name;
         }
     }
 }

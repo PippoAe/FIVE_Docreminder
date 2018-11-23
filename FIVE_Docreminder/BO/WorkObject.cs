@@ -10,21 +10,19 @@ namespace docreminder.BO
 
 
         public DocumentContract document;
-        public WCFHandler _wcfHandler;
         public string objectID { get; private set; }
         public bool isValid { get; private set; }
         public bool finished { get; private set; }
         public string error { get; private set; }
         
 
-        public WorkObject(string InfoShareObjectID, WCFHandler wcfHandler)
+        public WorkObject(string InfoShareObjectID)
         { 
             objectID = InfoShareObjectID;
-            _wcfHandler = wcfHandler;
 
             try
             {
-                document = _wcfHandler.documentService.GetDocument(wcfHandler.ConnectionID, InfoShareObjectID);
+                document = WCFHandler.GetInstance.GetDocument(InfoShareObjectID);
             }
             catch(Exception e)
             {
@@ -40,7 +38,7 @@ namespace docreminder.BO
 
         public string GetPropertyValueFromName(string propertyTypeName)
         {
-            string propId = _wcfHandler.commonService.GetPropertyTypeID(propertyTypeName, Properties.Settings.Default.Culture);
+            string propId = WCFHandler.GetInstance.GetPropertyTypeID(propertyTypeName);
             foreach(PropertyContract prop in document.Properties)
             {
                 if (prop.PropertyTypeId == propId)

@@ -132,42 +132,41 @@ namespace docreminder
 
                     string idxvalue = "";
 
-                    //Get IDX Value from Docinfo if available.
+                    //Get IDX Value from DocumentContract if available.
                     if (doc != null)
                     {
-
-                        
-                        //foreach (PropertyContract prop in doc.Properties)
-                        //{
-                        //    if (prop.PropertyTypeId == index){
-                        //        if(prop.Values.Count() > 0)
-                        //            idxvalue = prop.Values[0];
-                        //    }
-                        //}
-                        
-                    }
-
-                    if (hTenteredIDX.ContainsKey(index))
-                    {
-                        idxvalue = hTenteredIDX[index].ToString();
-                    }
-                    else
-                    {
-
-                        FormInputDialog inputDialog = new FormInputDialog("IDX Value", "Set Value for '" + index.ToString() + "':", "OK");
-                        if (inputDialog.ShowDialog(null) == DialogResult.OK)
+                        var propID = WCFHandler.GetInstance.GetPropertyTypeID(index);
+                        string[] values = doc.Properties.Where(x => x.PropertyTypeId == propID).Select(x => x.Values).First();
+                        if (values.Count() > 0)
                         {
-                            //recipient = inputDialog.txtBxInput.Text;
-                            idxvalue = inputDialog.txtBxInput.Text;
-                            hTenteredIDX.Add(index.ToString(), idxvalue);
-                            inputDialog.Dispose();
+                            idxvalue = values.First();
+                        }
+
+                    }
+
+                    if(testmode)
+                    { 
+                        if (hTenteredIDX.ContainsKey(index))
+                        {
+                            idxvalue = hTenteredIDX[index].ToString();
+                        }
+                        else
+                        {
+                            FormInputDialog inputDialog = new FormInputDialog("IDX Value", "Set Value for '" + index.ToString() + "':", "OK");
+                            if (inputDialog.ShowDialog(null) == DialogResult.OK)
+                            {
+                                //recipient = inputDialog.txtBxInput.Text;
+                                idxvalue = inputDialog.txtBxInput.Text;
+                                hTenteredIDX.Add(index.ToString(), idxvalue);
+                                inputDialog.Dispose();
+                            }
                         }
                     }
 
                     //Check if its a Date
                     DateTime idxValueDate;
-                    string[] formats = { "dd.MM.yyyy", "dd.MM.yyyy HH:mm", "dd.MM.yyyy HH:mm:ss" };
-                    if (DateTime.TryParseExact(idxvalue, formats, new CultureInfo(Properties.Settings.Default.Culture), System.Globalization.DateTimeStyles.None, out idxValueDate))
+                    string[] formats = { "dd.MM.yyyy", "dd.MM.yyyy HH:mm", "dd.MM.yyyy HH:mm:ss","yyyy-MM-ddTHH:mm:ss"};
+                    if (DateTime.TryParseExact(idxvalue, formats, new CultureInfo(Properties.Settings.Default.Culture), DateTimeStyles.None, out idxValueDate))
                     {
                         args.Result = idxValueDate;
                         return;
@@ -217,8 +216,7 @@ namespace docreminder
                     {
                         command.CommandType = CommandType.Text;
                         command.CommandText = "SET NOEXEC ON;";
-                        //command.Connection.Open();
-                        //command.ExecuteNonQuery();
+
                     }
 
                     using (SqlDataReader reader = command.ExecuteReader())
@@ -271,7 +269,6 @@ namespace docreminder
 
             if (e.HasErrors())
             {
-                //MessageBox.Show(e.Error);
                 throw new Exception(e.Error);
             }
 
@@ -279,10 +276,20 @@ namespace docreminder
             {
                 try
                 {
-                    var output = e.Evaluate();
+                    var output = e.Evaluate().ToString();
                     //AEPH 05.02.2016
                     //Decimal sign is used based on system settings.
-                    returnvalue = output.ToString();
+                    //AEPH 23.11.2018
+                    //Check if ReturnValue is a DateTime
+                    DateTime idxValueDate;
+                    string[] formats = { "dd.MM.yyyy", "dd.MM.yyyy HH:mm", "dd.MM.yyyy HH:mm:ss"};
+                    IFormatProvider culture = CultureInfo.InvariantCulture;
+                    if (DateTime.TryParseExact(output, formats, culture, DateTimeStyles.None, out idxValueDate))
+                    {
+                        output = idxValueDate.ToString("yyyy-MM-ddTHH:mm:ss");
+                    }
+
+                    returnvalue = output;
                 }
 
                 catch (Exception ex)

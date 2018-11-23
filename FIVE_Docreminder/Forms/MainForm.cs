@@ -15,7 +15,6 @@ namespace docreminder
         private static readonly log4net.ILog log4 = log4net.LogManager.GetLogger(System.Reflection.MethodBase.GetCurrentMethod().DeclaringType);
         
         private WebServiceHandler _webServiceHandler;
-        private WCFHandler wcfHandler;
         public DateTime starttime;
         public TimeSpan scheduledTimeLeft;
         public int sucessfullySent = 0;
@@ -426,7 +425,7 @@ namespace docreminder
                     //Send report if needed
                     if (Properties.Settings.Default.IsReportActive)
                     {
-                        //log.SendReportMail(sucessfullySent, DateTime.Now - starttime);
+                        MailHandler.GetInstance.SendReportMail(sucessfullySent, DateTime.Now - starttime);
                         sucessfullySent = 0;
                     }
 
@@ -518,61 +517,7 @@ namespace docreminder
 
         private void button1_Click(object sender, EventArgs e)
         {
-
-            //wcfHandler = new WCFHandler();
-
-            //for(int i = 0; i < 100;i++)
-            //{
-            //    List<BO.WorkObject> workObjects = new List<BO.WorkObject>();
-
-            //    for (int y = 0; y < 1000; y++)
-            //    {
-            //        workObjects.Add(new BO.WorkObject("e1c756f3-9732-e811-83a6-0050569362e9", wcfHandler));
-            //    }
-
-            //    BackgroundWorker bw = new BackgroundWorker();
-
-            //    // this allows our worker to report progress during work
-            //    bw.WorkerReportsProgress = true;
-
-            //    // what to do in the background thread
-            //    bw.DoWork += new DoWorkEventHandler(
-            //    delegate (object o, DoWorkEventArgs args)
-            //    {
-            //        BackgroundWorker b = o as BackgroundWorker;
-
-
-            //        int z = 0;
-            //        workObjects.ForEach(x =>
-            //        {
-            //            x.Process();
-            //            b.ReportProgress(z);
-            //            z++;
-            //        });
-
-
-            //    });
-
-            //    // what to do when progress changed (update the progress bar for example)
-            //    bw.ProgressChanged += new ProgressChangedEventHandler(
-            //    delegate (object o, ProgressChangedEventArgs args)
-            //    {
-            //        log4.Info(string.Format("{0}% Completed", args.ProgressPercentage));
-            //    });
-
-            //    // what to do when worker completes its task (notify the user)
-            //    bw.RunWorkerCompleted += new RunWorkerCompletedEventHandler(
-            //    delegate (object o, RunWorkerCompletedEventArgs args)
-            //    {
-            //        log4.Info("Finished!");
-            //    });
-
-            //    bw.RunWorkerAsync();
-            //}
-
-            NEWGetDocumentsWorker.RunWorkerAsync();
-
- 
+            NEWGetDocumentsWorker.RunWorkerAsync(); 
         }
 
 
@@ -581,21 +526,16 @@ namespace docreminder
         private void NEWGetDocumentsWorker_DoWork(object sender, DoWorkEventArgs e)
         {
             NEWGetDocumentsWorker.ReportProgress(10);
-            if (wcfHandler == null)
-            {
-                NEWGetDocumentsWorker.ReportProgress(40);
-                wcfHandler = new WCFHandler();
-            }
 
             InfoShareService.DocumentSimpleContract[] documents;
 
             NEWGetDocumentsWorker.ReportProgress(60);
-            documents = wcfHandler.SearchForDocuments();
+            documents = WCFHandler.GetInstance.SearchForDocuments();
 
             List<BO.WorkObject> workObjects = new List<BO.WorkObject>();
             foreach (InfoShareService.DocumentSimpleContract siCo in documents)
             {
-               workObjects.Add(new BO.WorkObject(siCo.Id,wcfHandler));
+               workObjects.Add(new BO.WorkObject(siCo.Id));
             }
 
             NEWGetDocumentsWorker.ReportProgress(100);

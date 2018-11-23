@@ -85,9 +85,7 @@ namespace docreminder
 
             cBDocSafeActive.Checked = Properties.Settings.Default.DocSafeActive;
 
-            txtBxKendoxWebserviceURL.Text = Properties.Settings.Default.E_Bill_Uploader_KXWS_KXWebService40;
-            txtBxKendoxServer.Text = Properties.Settings.Default.KendoxServerAdress;
-            txtBxKendoxPort.Text = Properties.Settings.Default.KendoxPort;
+            txtBxKendoxWebserviceURL.Text = Properties.Settings.Default.KendoxWCFURL;
             txtBxKendoxUsername.Text = Properties.Settings.Default.KendoxUsername;
             cbEncodePW.Checked = Properties.Settings.Default.isKXPWEncrypted;
             txtBxKendoxPassword.Text = Properties.Settings.Default.KendoxPassword;
@@ -172,15 +170,17 @@ namespace docreminder
             nUdSearchQuantity.Value = Properties.Settings.Default.SearchQuantity;
 
             //SearchConditions
-            List<KXWS.SSearchCondition> searchonlist = new List<KXWS.SSearchCondition>();
+            List<InfoShareService.SearchConditionContract> searchonlist = new List<InfoShareService.SearchConditionContract>();
             if (Properties.Settings.Default.KendoxSearchProperties != "")
-                searchonlist = (List<KXWS.SSearchCondition>)(FileHelper.XmlDeserializeFromString(Properties.Settings.Default.KendoxSearchProperties, searchonlist.GetType()));
+                searchonlist = (List<InfoShareService.SearchConditionContract>)(FileHelper.XmlDeserializeFromString(Properties.Settings.Default.NEWSearchProperties, searchonlist.GetType()));
 
             //Fill SearchProperties
-            foreach (KXWS.SSearchCondition searchcon in searchonlist)
+            foreach (InfoShareService.SearchConditionContract searchcon in searchonlist)
             {
-                //DataRow test = new DataRow();
-                string[] row = { searchcon.propertyTypeName, searchcon.operation, string.Join(";", searchcon.propertyValueArray), searchcon.relation.ToString() };
+                string comparisonEnum = Enum.GetName(typeof(BO.Utility.SearchComparisonEnum), Convert.ToInt16(searchcon.ComparisonEnum));
+                string relationEnum = Enum.GetName(typeof(BO.Utility.SearchRelationEnum), Convert.ToInt16(searchcon.RelationEnum));
+
+                string[] row = { WCFHandler.GetInstance.GetPropertyTypeName(searchcon.PropertyTypeId),comparisonEnum, string.Join(";", searchcon.Values), relationEnum };
                 //row.HeaderCell.Value = string.Format("{0}", row.Index + 1)
                 dgwSearchProperties.Rows.Add(row);
             }
@@ -333,9 +333,7 @@ namespace docreminder
             Properties.Settings.Default["ProcessRecipient"] = txtBxProcessRecipient.Text;
 
             //Kendox Server
-            Properties.Settings.Default["E_Bill_Uploader_KXWS_KXWebService40"] = txtBxKendoxWebserviceURL.Text;
-            Properties.Settings.Default["KendoxServerAdress"] = txtBxKendoxServer.Text;
-            Properties.Settings.Default["KendoxPort"] = txtBxKendoxPort.Text;
+            Properties.Settings.Default["KendoxWCFURL"] = txtBxKendoxWebserviceURL.Text;
             Properties.Settings.Default["KendoxUsername"] = txtBxKendoxUsername.Text;
             Properties.Settings.Default["isKXPWEncrypted"] = cbEncodePW.Checked;
             //AEPH 12.02.2016 Encrypt Password
@@ -379,8 +377,7 @@ namespace docreminder
             Properties.Settings.Default["AddCpIdisActive"] = cBAddCpIdisActive.Checked;
 
 
-            //Searchconditions
-            List<KXWS.SSearchCondition> searchonlist = new List<KXWS.SSearchCondition>();
+
 
             //MarkerProperties
             List<KXWS.SDocumentPropertyUpdate> markerProperties = new List<KXWS.SDocumentPropertyUpdate>();
@@ -400,6 +397,7 @@ namespace docreminder
             Properties.Settings.Default["SearchQuantity"] = Convert.ToInt32(nUdSearchQuantity.Value);
 
             //Searchproperties
+            List<KXWS.SSearchCondition> searchonlist = new List<KXWS.SSearchCondition>();
             foreach (DataGridViewRow row in dgwSearchProperties.Rows)
             {
                 if (row.Cells.Count > 0 && row.Cells[0].Value != null)
@@ -431,6 +429,43 @@ namespace docreminder
                 }
             }
             Properties.Settings.Default["KendoxSearchProperties"] = FileHelper.XmlSerializeToString(searchonlist);
+
+
+            //New SearchProperties
+            List<InfoShareService.SearchConditionContract> newSearchCons = new List<InfoShareService.SearchConditionContract>();
+            foreach (DataGridViewRow row in dgwSearchProperties.Rows)
+            {
+                if (row.Cells.Count > 0 && row.Cells[0].Value != null)
+                {
+                    InfoShareService.SearchConditionContract condition = new InfoShareService.SearchConditionContract();
+                    //Translate propertyname to ID
+                    condition.PropertyTypeId = WCFHandler.GetInstance.GetPropertyTypeID(row.Cells[0].Value.ToString());
+
+                    if (row.Cells[1].Value != null)
+                    {
+                        //BO.Utility.SearchComparisonEnum sce;
+                        Enum.TryParse(row.Cells[1].Value.ToString(), out BO.Utility.SearchComparisonEnum sce);
+                        condition.ComparisonEnum = ((int)sce).ToString();
+                    }
+                    else
+                        condition.ComparisonEnum = ((int)BO.Utility.SearchComparisonEnum.None).ToString();
+
+                    if (row.Cells[3].Value != null && row.Cells[3].Value.ToString() == "OR")
+                        condition.RelationEnum = ((int)BO.Utility.SearchRelationEnum.OR).ToString();
+                    else
+                        condition.RelationEnum = ((int)BO.Utility.SearchRelationEnum.AND).ToString();
+
+                    if (row.Cells[2].Value != null)
+                    {
+                        condition.Values = row.Cells[2].Value.ToString().Split(new[] { ";" }, StringSplitOptions.RemoveEmptyEntries);
+                    }
+                    else
+                        condition.Values = new string[] { "" };
+
+                    newSearchCons.Add(condition);
+                }
+            }
+            Properties.Settings.Default["NewSearchProperties"] = FileHelper.XmlSerializeToString(newSearchCons);
 
 
             //KendoxMarkerProperties
@@ -541,18 +576,15 @@ namespace docreminder
             //Connect Button Action & Label
             lblKXConTest.Text = "Trying to log in...";
             this.Refresh();
+            WCFHandler wcfHandler = WCFHandler.GetInstance;
+            if (!wcfHandler.Connected)
+                wcfHandler.Login();
 
-            if (mainform.webserviceHandler == null)
-            {
-                mainform.webserviceHandler = new WebServiceHandler();
-            }
-
-            if (mainform.webserviceHandler.Login())
+            if (wcfHandler.Connected)
             {
                 lblKXConTest.Text = "Logged in sucessfully!";
                 btnTestKendoxConnection.Enabled = false;
                 loggedin = true;
-
             }
             else
             {
@@ -929,10 +961,9 @@ namespace docreminder
 
         private void btnTest_Click(object sender, EventArgs e)
         {
-            ExpressionsEvaluator expVal = new ExpressionsEvaluator();
             try
             {
-                string ret = expVal.Evaluate(txtBxAdditionalComputedIdentifier.Text).ToString();
+                string ret = NEWExpressionsEvaluator.Evaluate(txtBxAdditionalComputedIdentifier.Text,null,true).ToString();
                 bool value;
                 bool isBool = Boolean.TryParse(ret, out value);
                 if (isBool)
@@ -1074,5 +1105,9 @@ namespace docreminder
             }
         }
 
+        private void dgwSearchProperties_DataError(object sender, DataGridViewDataErrorEventArgs e)
+        {
+            //DO NOTHING
+        }
     }
 }

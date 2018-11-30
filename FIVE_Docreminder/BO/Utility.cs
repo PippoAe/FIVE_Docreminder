@@ -24,7 +24,6 @@ namespace docreminder.BO
             None = 10,
             Soundex = 11,
             NotIn = 12
-
         }
 
         public enum SearchRelationEnum

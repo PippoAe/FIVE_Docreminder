@@ -36,41 +36,48 @@ namespace docreminder.DocSafe
             //Evaluate Recipients
             ExpressionsEvaluator expVal = new ExpressionsEvaluator();
 
-                DocumentEnvelope docenvelope = new DocumentEnvelope();
+            DocumentEnvelope docenvelope = new DocumentEnvelope
+            {
+                Registration = new Registration
+                {
+                    SenderBUID = docreminder.Properties.Settings.Default.dsSenderBUID,
+                    SendersObjectID = expVal.Evaluate(docreminder.Properties.Settings.Default.dsSendersObjectID, null, docinfo, false),
+                    SendersObjectAlias = expVal.Evaluate(docreminder.Properties.Settings.Default.dsSendersObjectAlias, null, docinfo, false),
+                    SendersFlowRef = expVal.Evaluate(docreminder.Properties.Settings.Default.dsSendersFlowRef, null, docinfo, false),
+                    SendersFlowAlias = expVal.Evaluate(docreminder.Properties.Settings.Default.dsSendersFlowAlias, null, docinfo, false),
 
-                docenvelope.Registration = new Registration();
-                docenvelope.Registration.SenderBUID = docreminder.Properties.Settings.Default.dsSenderBUID;
-                docenvelope.Registration.SendersObjectID = expVal.Evaluate(docreminder.Properties.Settings.Default.dsSendersObjectID, null, docinfo, false);
-                docenvelope.Registration.SendersObjectAlias = expVal.Evaluate(docreminder.Properties.Settings.Default.dsSendersObjectAlias, null, docinfo, false);
-                docenvelope.Registration.SendersFlowRef = expVal.Evaluate(docreminder.Properties.Settings.Default.dsSendersFlowRef, null, docinfo, false);
-                docenvelope.Registration.SendersFlowAlias = expVal.Evaluate(docreminder.Properties.Settings.Default.dsSendersFlowAlias, null, docinfo, false);
-
-                docenvelope.Registration.SafeIDAlias = new SafeIDAliasType();
-                docenvelope.Registration.SafeIDAlias.AliasScope = "DocSafeID";
-                docenvelope.Registration.SafeIDAlias.Value = expVal.Evaluate(docreminder.Properties.Settings.Default.dsDocSafeID, null, docinfo, false);
-
-
-                docenvelope.Properties = new Properties();
-                docenvelope.Properties.SendersDocumentID = docinfo.documentID; //<- DOC ID!
-                //TODO Configure Title
-                docenvelope.Properties.Title = expVal.Evaluate(docreminder.Properties.Settings.Default.dsDocumentTitle, null, docinfo, false);
-
-                docenvelope.Properties.SenderName = docreminder.Properties.Settings.Default.dsSenderName;
-
-                docenvelope.Properties.Annotation = expVal.Evaluate(docreminder.Properties.Settings.Default.dsAnnotation, null, docinfo, false);
-                docenvelope.Properties.LinkText = docreminder.Properties.Settings.Default.dsLinktext;
-                docenvelope.Properties.LinkURL = docreminder.Properties.Settings.Default.dsLinkURL;
-                docenvelope.Properties.CreationTS = System.DateTime.Now;
-                docenvelope.Properties.AllowsForward = true;
+                    SafeIDAlias = new SafeIDAliasType
+                    {
+                        AliasScope = "DocSafeID",
+                        Value = expVal.Evaluate(docreminder.Properties.Settings.Default.dsDocSafeID, null, docinfo, false)
+                    }
+                },
 
 
-                docenvelope.XMLMetaData = new XMLMetaData();
+                Properties = new Properties
+                {
+                    SendersDocumentID = docinfo.documentID, //<- DOC ID!
+                                                            //TODO Configure Title
+                    Title = expVal.Evaluate(docreminder.Properties.Settings.Default.dsDocumentTitle, null, docinfo, false),
+
+                    SenderName = docreminder.Properties.Settings.Default.dsSenderName,
+
+                    Annotation = expVal.Evaluate(docreminder.Properties.Settings.Default.dsAnnotation, null, docinfo, false),
+                    LinkText = docreminder.Properties.Settings.Default.dsLinktext,
+                    LinkURL = docreminder.Properties.Settings.Default.dsLinkURL,
+                    CreationTS = System.DateTime.Now,
+                    AllowsForward = true
+                },
+
+
+                XMLMetaData = new XMLMetaData(),
 
                 //ADD DOCUMENT AS BYTEARRAY
-                docenvelope.DocumentBytes = document;
-                docenvelope.MIMEType = "application/pdf";
+                DocumentBytes = document,
+                MIMEType = "application/pdf"
+            };
 
-                return docenvelope;
+            return docenvelope;
         }
 
 

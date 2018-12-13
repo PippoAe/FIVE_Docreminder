@@ -78,7 +78,7 @@ namespace docreminder.BO
         {
             try
             {
-                if (Convert.ToBoolean(NEWExpressionsEvaluator.Evaluate(Properties.Settings.Default.AdditionalComputedIdentifier, document)))
+                if (Convert.ToBoolean(NEWExpressionsEvaluator.GetInstance.Evaluate(Properties.Settings.Default.AdditionalComputedIdentifier, document)))
                 {
                     isValid = true;
                 }

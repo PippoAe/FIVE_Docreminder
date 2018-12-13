@@ -29,9 +29,11 @@ namespace docreminder
         {
             InitializeComponent();
 
-            ColumnHeader header = new ColumnHeader();
-            header.Text = "";
-            header.Name = "col1";
+            ColumnHeader header = new ColumnHeader
+            {
+                Text = "",
+                Name = "col1"
+            };
 
             //Set Starttime
             starttime = DateTime.Now;
@@ -70,17 +72,15 @@ namespace docreminder
  
 
         //Buttons
-        private void bCheckForEBills_Click(object sender, EventArgs e)
+        private void bCheckForDocuments_Click(object sender, EventArgs e)
         {
-            //New Search. Remove Resumepoint
-            if (_webServiceHandler != null && _webServiceHandler.resumePoint != "")
-                _webServiceHandler.resumePoint = "";
-            CheckForEBills();   
+            WCFHandler.GetInstance.resumePoint = null;
+            CheckForDocuments();
         }
 
         private void bSendEbill_Click(object sender, EventArgs e)
         {
-            bCheckForEBills.Enabled = false;
+            bCheckForDocuments.Enabled = false;
             bSendEbills.Enabled = false;
             btnSearchMore.Enabled = false;
             processDocumentsWorker.RunWorkerAsync();
@@ -89,25 +89,26 @@ namespace docreminder
 
         private void btnSearchMore_Click(object sender, EventArgs e)
         {
-            CheckForEBills();
+            CheckForDocuments();
             btnSearchMore.Enabled = false;
         }
 
-
-
         //Santas little helpers.
-        public void CheckForEBills()
+        public void CheckForDocuments()
         {
             bSendEbills.Enabled = false;
-            bCheckForEBills.Enabled = false;
+            bCheckForDocuments.Enabled = false;
 
             progressBar1.Minimum = 0;
             progressBar1.Maximum = 100;
             progressBar1.Value = 0;
-
-            getDocumentsWorker.RunWorkerAsync();  
-            
+            NEWGetDocumentsWorker.RunWorkerAsync();
         }
+
+
+
+
+
 
         public void displayFoundEBills(KXWS.SDocument[] documents)
         {
@@ -243,54 +244,47 @@ namespace docreminder
         //Workers
 
 
-
-
-        #region GetDocumentsWorker
-
-        /// <summary>
-        /// Get Documents Worker
-        /// </summary>
-        /// <param name="sender"></param>
-        /// <param name="e"></param>
-        private void getDocumentsWorker_DoWork(object sender, DoWorkEventArgs e)
+        #region NewGetDocumentsWorker
+        private void NEWGetDocumentsWorker_DoWork(object sender, DoWorkEventArgs e)
         {
-            getDocumentsWorker.ReportProgress(10);
-            if (_webServiceHandler == null)
+            NEWGetDocumentsWorker.ReportProgress(10);
+            try
             {
-                log4.Info("Logging in into Archive via WebService...");
-                getDocumentsWorker.ReportProgress(40);
-                _webServiceHandler = new WebServiceHandler();
+                InfoShareService.DocumentSimpleContract[] documents;
+                if (WCFHandler.GetInstance.isConnected())
+                {
+                    documents = WCFHandler.GetInstance.SearchForDocuments();
+                    NEWGetDocumentsWorker.ReportProgress(50);
 
-            }
+                    List<BO.WorkObject> workObjects = new List<BO.WorkObject>();
+                    foreach (InfoShareService.DocumentSimpleContract siCo in documents)
+                    {
+                        workObjects.Add(new BO.WorkObject(siCo.Id));
+                    }
+                    NEWGetDocumentsWorker.ReportProgress(100);
 
-            KXWS.SDocument[] documents;
-            if (_webServiceHandler.Login())
-            {
-                getDocumentsWorker.ReportProgress(60);
-                documents = _webServiceHandler.searchforEbills(null);
+                    e.Result = workObjects;
+
+                }
             }
-            else
+            catch (Exception ex)
             {
-                getDocumentsWorker.ReportProgress(100);
-                documents = new KXWS.SDocument[0];
+                log4.Error(string.Format("An error happened while searching for documents. Message: {0}", ex.Message));
             }
-            getDocumentsWorker.ReportProgress(100);
-            e.Result = documents;
         }
 
-        private void getDocumentsWorker_ProgressChanged(object sender, ProgressChangedEventArgs e)
+        private void NEWGetDocumentsWorker_ProgressChanged(object sender, ProgressChangedEventArgs e)
         {
             progressBar1.Value = e.ProgressPercentage;
-            //this.Text = e.ProgressPercentage.ToString() + "%";
         }
 
-        private void getDocumentsWorker_RunWorkerCompleted(object sender, RunWorkerCompletedEventArgs e)
+        private void NEWGetDocumentsWorker_RunWorkerCompleted(object sender, RunWorkerCompletedEventArgs e)
         {
-            displayFoundEBills((KXWS.SDocument[])e.Result);
+            dgwEbills.DataSource = e.Result;
             progressBar1.Value = 0;
             bSendEbills.Enabled = true;
-            bCheckForEBills.Enabled = true;
-            if (webserviceHandler.hasMore)
+            bCheckForDocuments.Enabled = true;
+            if (WCFHandler.GetInstance.hasMore)
             {
                 btnSearchMore.Enabled = true;
                 btnSearchMore.Text = string.Format("Nächste {0}", Properties.Settings.Default.SearchQuantity.ToString());
@@ -302,12 +296,11 @@ namespace docreminder
             }
 
             //IF Automode, send Ebills
-            if (Program.automode)
-                bSendEbill_Click(this, new EventArgs());
-
+            //if (Program.automode)
+            //    bSendEbill_Click(this, new EventArgs());
         }
 
-        #endregion 
+        #endregion EndRegion
 
         #region processDocumentsWorker
         /// <summary>
@@ -458,7 +451,7 @@ namespace docreminder
         {
             this.Text = "Five Informatik AG - Document Reminder";
             progressBar1.Value = 0;
-            bCheckForEBills.Enabled = true;
+            bCheckForDocuments.Enabled = true;
             if (_webServiceHandler.hasMore)
                 btnSearchMore.Enabled = true;
             bSendEbills.Enabled = false;
@@ -511,49 +504,10 @@ namespace docreminder
             if (Program.automode)
             {
                 log4.Info("Application started in Automode.");
-                CheckForEBills();
+                CheckForDocuments();
             }
         }
 
-        private void button1_Click(object sender, EventArgs e)
-        {
-            NEWGetDocumentsWorker.RunWorkerAsync(); 
-        }
-
-
-
-        #region NewGetDocumentsWorker
-        private void NEWGetDocumentsWorker_DoWork(object sender, DoWorkEventArgs e)
-        {
-            NEWGetDocumentsWorker.ReportProgress(10);
-
-            InfoShareService.DocumentSimpleContract[] documents;
-
-            NEWGetDocumentsWorker.ReportProgress(60);
-            documents = WCFHandler.GetInstance.SearchForDocuments();
-
-            List<BO.WorkObject> workObjects = new List<BO.WorkObject>();
-            foreach (InfoShareService.DocumentSimpleContract siCo in documents)
-            {
-               workObjects.Add(new BO.WorkObject(siCo.Id));
-            }
-
-            NEWGetDocumentsWorker.ReportProgress(100);
-
-            e.Result = workObjects;
-        }
-
-        private void NEWGetDocumentsWorker_ProgressChanged(object sender, ProgressChangedEventArgs e)
-        {
-
-        }
-
-        private void NEWGetDocumentsWorker_RunWorkerCompleted(object sender, RunWorkerCompletedEventArgs e)
-        {
-            dgwEbills.DataSource = e.Result;
-        }
-
-        #endregion EndRegion
     }
 }
 

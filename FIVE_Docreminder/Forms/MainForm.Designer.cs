@@ -36,7 +36,7 @@
             this.ScheduleStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.aboutToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.EvaluatorToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
-            this.bCheckForEBills = new System.Windows.Forms.Button();
+            this.bCheckForDocuments = new System.Windows.Forms.Button();
             this.bSendEbills = new System.Windows.Forms.Button();
             this.statusStrip1 = new System.Windows.Forms.StatusStrip();
             this.toolStripStatusConfig = new System.Windows.Forms.ToolStripStatusLabel();
@@ -49,7 +49,6 @@
             this.btnSearchMore = new System.Windows.Forms.Button();
             this.timerShutDown = new System.Windows.Forms.Timer(this.components);
             this.progressBar1 = new System.Windows.Forms.ProgressBar();
-            this.button1 = new System.Windows.Forms.Button();
             this.groupBox2 = new System.Windows.Forms.GroupBox();
             this.dgwEbills = new System.Windows.Forms.DataGridView();
             this.NEWGetDocumentsWorker = new System.ComponentModel.BackgroundWorker();
@@ -83,21 +82,21 @@
             // optionsToolStripMenuItem
             // 
             this.optionsToolStripMenuItem.Name = "optionsToolStripMenuItem";
-            this.optionsToolStripMenuItem.Size = new System.Drawing.Size(180, 22);
+            this.optionsToolStripMenuItem.Size = new System.Drawing.Size(122, 22);
             this.optionsToolStripMenuItem.Text = "Options";
             this.optionsToolStripMenuItem.Click += new System.EventHandler(this.optionsToolStripMenuItem_Click);
             // 
             // ScheduleStripMenuItem
             // 
             this.ScheduleStripMenuItem.Name = "ScheduleStripMenuItem";
-            this.ScheduleStripMenuItem.Size = new System.Drawing.Size(180, 22);
+            this.ScheduleStripMenuItem.Size = new System.Drawing.Size(122, 22);
             this.ScheduleStripMenuItem.Text = "Schedule";
             this.ScheduleStripMenuItem.Click += new System.EventHandler(this.ScheduleStripMenuItem_Click);
             // 
             // aboutToolStripMenuItem
             // 
             this.aboutToolStripMenuItem.Name = "aboutToolStripMenuItem";
-            this.aboutToolStripMenuItem.Size = new System.Drawing.Size(180, 22);
+            this.aboutToolStripMenuItem.Size = new System.Drawing.Size(122, 22);
             this.aboutToolStripMenuItem.Text = "About...";
             this.aboutToolStripMenuItem.Click += new System.EventHandler(this.aboutToolStripMenuItem_Click);
             // 
@@ -108,16 +107,16 @@
             this.EvaluatorToolStripMenuItem.Text = "Evaluator...";
             this.EvaluatorToolStripMenuItem.Click += new System.EventHandler(this.evaluatorToolStripMenuItem_Click);
             // 
-            // bCheckForEBills
+            // bCheckForDocuments
             // 
-            this.bCheckForEBills.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Left)));
-            this.bCheckForEBills.Location = new System.Drawing.Point(208, 312);
-            this.bCheckForEBills.Name = "bCheckForEBills";
-            this.bCheckForEBills.Size = new System.Drawing.Size(194, 23);
-            this.bCheckForEBills.TabIndex = 2;
-            this.bCheckForEBills.Text = "Dokumente suchen";
-            this.bCheckForEBills.UseVisualStyleBackColor = true;
-            this.bCheckForEBills.Click += new System.EventHandler(this.bCheckForEBills_Click);
+            this.bCheckForDocuments.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Left)));
+            this.bCheckForDocuments.Location = new System.Drawing.Point(208, 312);
+            this.bCheckForDocuments.Name = "bCheckForDocuments";
+            this.bCheckForDocuments.Size = new System.Drawing.Size(194, 23);
+            this.bCheckForDocuments.TabIndex = 2;
+            this.bCheckForDocuments.Text = "Dokumente suchen";
+            this.bCheckForDocuments.UseVisualStyleBackColor = true;
+            this.bCheckForDocuments.Click += new System.EventHandler(this.bCheckForDocuments_Click);
             // 
             // bSendEbills
             // 
@@ -180,13 +179,6 @@
             this.processDocumentsWorker.ProgressChanged += new System.ComponentModel.ProgressChangedEventHandler(this.processDocumentsWorker_ProgressChanged);
             this.processDocumentsWorker.RunWorkerCompleted += new System.ComponentModel.RunWorkerCompletedEventHandler(this.processDocumentsWorker_RunWorkerCompleted);
             // 
-            // getDocumentsWorker
-            // 
-            this.getDocumentsWorker.WorkerReportsProgress = true;
-            this.getDocumentsWorker.DoWork += new System.ComponentModel.DoWorkEventHandler(this.getDocumentsWorker_DoWork);
-            this.getDocumentsWorker.ProgressChanged += new System.ComponentModel.ProgressChangedEventHandler(this.getDocumentsWorker_ProgressChanged);
-            this.getDocumentsWorker.RunWorkerCompleted += new System.ComponentModel.RunWorkerCompletedEventHandler(this.getDocumentsWorker_RunWorkerCompleted);
-            // 
             // btnSearchMore
             // 
             this.btnSearchMore.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Left)));
@@ -214,16 +206,6 @@
             this.progressBar1.Style = System.Windows.Forms.ProgressBarStyle.Continuous;
             this.progressBar1.TabIndex = 13;
             // 
-            // button1
-            // 
-            this.button1.Location = new System.Drawing.Point(94, 312);
-            this.button1.Name = "button1";
-            this.button1.Size = new System.Drawing.Size(75, 23);
-            this.button1.TabIndex = 15;
-            this.button1.Text = "button1";
-            this.button1.UseVisualStyleBackColor = true;
-            this.button1.Click += new System.EventHandler(this.button1_Click);
-            // 
             // groupBox2
             // 
             this.groupBox2.Anchor = ((System.Windows.Forms.AnchorStyles)((((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Bottom) 
@@ -246,6 +228,7 @@
             this.dgwEbills.Location = new System.Drawing.Point(6, 16);
             this.dgwEbills.Name = "dgwEbills";
             this.dgwEbills.ReadOnly = true;
+            this.dgwEbills.RowHeadersVisible = false;
             this.dgwEbills.Size = new System.Drawing.Size(810, 254);
             this.dgwEbills.TabIndex = 5;
             // 
@@ -263,12 +246,11 @@
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.ClientSize = new System.Drawing.Size(831, 366);
             this.Controls.Add(this.groupBox2);
-            this.Controls.Add(this.button1);
             this.Controls.Add(this.progressBar1);
             this.Controls.Add(this.btnSearchMore);
             this.Controls.Add(this.statusStrip1);
             this.Controls.Add(this.bSendEbills);
-            this.Controls.Add(this.bCheckForEBills);
+            this.Controls.Add(this.bCheckForDocuments);
             this.Controls.Add(this.menuStrip1);
             this.Icon = ((System.Drawing.Icon)(resources.GetObject("$this.Icon")));
             this.MainMenuStrip = this.menuStrip1;
@@ -291,7 +273,7 @@
         private System.Windows.Forms.MenuStrip menuStrip1;
         private System.Windows.Forms.ToolStripMenuItem dateiToolStripMenuItem;
         private System.Windows.Forms.ToolStripMenuItem optionsToolStripMenuItem;
-        private System.Windows.Forms.Button bCheckForEBills;
+        private System.Windows.Forms.Button bCheckForDocuments;
         private System.Windows.Forms.Button bSendEbills;
         private System.Windows.Forms.ToolStripMenuItem aboutToolStripMenuItem;
         private System.Windows.Forms.StatusStrip statusStrip1;
@@ -307,7 +289,6 @@
         private System.Windows.Forms.ToolStripStatusLabel toolStripStatusCountdown;
         private System.Windows.Forms.ToolStripMenuItem EvaluatorToolStripMenuItem;
         private System.Windows.Forms.ProgressBar progressBar1;
-        private System.Windows.Forms.Button button1;
         private System.Windows.Forms.GroupBox groupBox2;
         private System.Windows.Forms.DataGridView dgwEbills;
         private System.ComponentModel.BackgroundWorker NEWGetDocumentsWorker;

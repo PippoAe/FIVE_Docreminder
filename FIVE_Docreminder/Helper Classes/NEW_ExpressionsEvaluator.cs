@@ -13,8 +13,12 @@ using docreminder.InfoShareService;
 
 namespace docreminder
 {
-    public static class NEWExpressionsEvaluator
+    public class NEWExpressionsEvaluator
     {
+        private static readonly log4net.ILog log4 = log4net.LogManager.GetLogger(System.Reflection.MethodBase.GetCurrentMethod().DeclaringType);
+
+        private static NEWExpressionsEvaluator instance;
+
         [Serializable]
         [XmlType(TypeName = "CustomKeyValuePair")]
         public struct KeyValuePair<K, V>
@@ -39,15 +43,29 @@ namespace docreminder
 
         private static List<KeyValuePair<string, string>> variables;
         private static List<KeyValuePair<string, string>> sqlConnectionsList;
-        private static List<KeyValuePair<string, string>> propertyTypeIDs;
+        //private static List<KeyValuePair<string, string>> propertyTypeIDs;
 
         private static List<sqlItem<string, SqlConnection>> sqlConnections = new List<sqlItem<string, SqlConnection>>();
 
 
-        static NEWExpressionsEvaluator()
+
+        public static NEWExpressionsEvaluator GetInstance
         {
+            get
+            {
+                if (instance == null)
+                    instance = new NEWExpressionsEvaluator();
+                return instance;
+            }
+        }
+
+
+        public void UpdateVariables()
+        {
+            var start = DateTime.Now;
+
             variables = new List<KeyValuePair<string, string>>();
-            if(Properties.Settings.Default.ExpressionVariables != "")
+            if (Properties.Settings.Default.ExpressionVariables != "")
                 variables = (List<KeyValuePair<string, string>>)(FileHelper.XmlDeserializeFromString(Properties.Settings.Default.ExpressionVariables, variables.GetType()));
 
             if (Properties.Settings.Default.SQLConnectionString != "")
@@ -71,10 +89,19 @@ namespace docreminder
                 }
             }
 
+            var end = DateTime.Now - start;
+            log4.Debug(string.Format("Initialisiation of Variables took {0} milliseconds.", end.TotalMilliseconds.ToString()));
         }
 
-        public static string Evaluate(string input, DocumentContract doc = null,bool testmode = false)
+        private NEWExpressionsEvaluator()
         {
+            //variables = new List<KeyValuePair<string, string>>();
+            UpdateVariables();
+        }
+
+        public string Evaluate(string input, DocumentContract doc = null,bool testmode = false)
+        {
+            var start = DateTime.Now;
             Hashtable hTenteredIDX = new Hashtable();
 
             string returnvalue = "";
@@ -205,8 +232,10 @@ namespace docreminder
 
                     if (sqlCon != null && sqlCon.State == ConnectionState.Closed)
                         sqlCon.Open();
-                    SqlCommand command = new SqlCommand(selectstatement.ToString());
-                    command.Connection = sqlCon;
+                    SqlCommand command = new SqlCommand(selectstatement.ToString())
+                    {
+                        Connection = sqlCon
+                    };
 
 
                     //AEPH 03.02.2016 
@@ -297,6 +326,9 @@ namespace docreminder
                     throw new Exception(ex.Message);
                 }
             }
+
+            var end = DateTime.Now - start;
+            log4.Debug(string.Format("Evaluation expression took {0} milliseconds. in:'{1}' out:'{2}'", end.TotalMilliseconds.ToString(),input,returnvalue));
 
             return returnvalue;
         }

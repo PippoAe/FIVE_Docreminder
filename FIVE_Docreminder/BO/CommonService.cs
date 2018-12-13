@@ -1,5 +1,6 @@
 using System;
 using System.Collections;
+using System.Linq;
 using docreminder.InfoShareService;
 
 namespace docreminder.BO
@@ -87,19 +88,21 @@ namespace docreminder.BO
         /// <param name="userPassword">the user password</param>
         /// <returns>the user id of the created user</returns>
         public string CreateUser(string connAdminUserID, string user, string displayName, bool userActive, string userPassword)
-        {            
-            UserContract userContract = new UserContract();
+        {
+            UserContract userContract = new UserContract
+            {
 
-            // Sets mandatory fields
-            userContract.DisplayName = displayName; 
-            userContract.LoginName = user;
-            userContract.Active = userActive;
+                // Sets mandatory fields
+                DisplayName = displayName,
+                LoginName = user,
+                Active = userActive,
 
-            // Sets optional fields
-            userContract.LoginWithInternalPassword = true;
-            userContract.CanChangeLanguage = true;
-            userContract.CanChangeOptions = true;
-            userContract.CanExecuteDefaultSearch = true; 
+                // Sets optional fields
+                LoginWithInternalPassword = true,
+                CanChangeLanguage = true,
+                CanChangeOptions = true,
+                CanExecuteDefaultSearch = true
+            };
 
             string userID = this.CommonClient.CreateUser(connAdminUserID, userContract, userPassword); // optional: userPassword
             this.RefreshUserStore(connAdminUserID);
@@ -121,12 +124,14 @@ namespace docreminder.BO
         /// <returns>the group id of the created group</returns>
         public string CreateUserGroup(string connAdminUserID, string userGroupName, string userGroupDisplayName)
         {
-            
-            GroupContract groupContract = new GroupContract();
 
-            // Sets mandatory fields
-            groupContract.Name = userGroupName;
-            groupContract.DisplayName = userGroupDisplayName;
+            GroupContract groupContract = new GroupContract
+            {
+
+                // Sets mandatory fields
+                Name = userGroupName,
+                DisplayName = userGroupDisplayName
+            };
 
             string groupID = this.CommonClient.CreateGroup(connAdminUserID, groupContract);
             this.RefreshUserStore(connAdminUserID);
@@ -156,6 +161,9 @@ namespace docreminder.BO
 
             this.RefreshUserStore(connAdminUserID);
         }
+
+
+
 
         /// <summary>
         /// Gets the group contract for the specified group id.
@@ -206,10 +214,12 @@ namespace docreminder.BO
         public string CreateRole(string connAdminUserID, string roleName)
         {
 
-            RoleContract roleContract = new RoleContract();
+            RoleContract roleContract = new RoleContract
+            {
 
-            // Sets mandatory field
-            roleContract.Name = roleName;
+                // Sets mandatory field
+                Name = roleName
+            };
 
             string roleID = CommonClient.CreateRole(connAdminUserID, roleContract);
             this.RefreshSecurityStore(connAdminUserID);
@@ -371,9 +381,11 @@ namespace docreminder.BO
         {            
             StringGlobalContract strGlobalContract = Utility.ConvertStringToStringGlobalContract(protectionDomainName, schemaCulture);
 
-            ProtectionDomainContract protDomainContract = new ProtectionDomainContract();
-            // Sets mandatory field
-            protDomainContract.Name = strGlobalContract;
+            ProtectionDomainContract protDomainContract = new ProtectionDomainContract
+            {
+                // Sets mandatory field
+                Name = strGlobalContract
+            };
 
             string protectionDomainID = CommonClient.CreateProtectionDomain(connAdminUserID, protDomainContract);
             this.RefreshSecurityStore(connAdminUserID);
@@ -487,19 +499,23 @@ namespace docreminder.BO
 		
 		    StringGlobalContract strGlobalContract = Utility.ConvertStringToStringGlobalContract(propertyName, schemaCulture);
 
-            PropertyTypeConfigurationContract propertyTypeConf = new PropertyTypeConfigurationContract();
-		    propertyTypeConf.StringMaximumLength = 100; // mandatory
+            PropertyTypeConfigurationContract propertyTypeConf = new PropertyTypeConfigurationContract
+            {
+                StringMaximumLength = 100 // mandatory
+            };
 
-            PropertyTypeContract propertyTypeContract = new PropertyTypeContract();
-		    // Set mandatory fields
-		    propertyTypeContract.Name = strGlobalContract;
-		    propertyTypeContract.PropertyTypePluginTypeEnum = fieldType; 
-		    propertyTypeContract.Configuration = propertyTypeConf;
-            propertyTypeContract.Searchable = true; // Makes properties searchable in document search
+            PropertyTypeContract propertyTypeContract = new PropertyTypeContract
+            {
+                // Set mandatory fields
+                Name = strGlobalContract,
+                PropertyTypePluginTypeEnum = fieldType,
+                Configuration = propertyTypeConf,
+                Searchable = true, // Makes properties searchable in document search
 
-            // Sets optional fields
-		    propertyTypeContract.Active = true;
-		    propertyTypeContract.Multikey = multiKey;
+                // Sets optional fields
+                Active = true,
+                Multikey = multiKey
+            };
 
             string propertyTypeID = CommonClient.CreatePropertyType(connAdminUserID, propertyTypeContract);
             this.RefreshSchemaStore(connAdminUserID);
@@ -525,8 +541,10 @@ namespace docreminder.BO
 		
 		    StringGlobalContract strGlobalContract = Utility.ConvertStringToStringGlobalContract(propertyPageTemplateName, schemaCulture);
 
-            PropertyPageTemplateContract propertyPageTemplateContract = new PropertyPageTemplateContract();
-            propertyPageTemplateContract.Name = strGlobalContract;
+            PropertyPageTemplateContract propertyPageTemplateContract = new PropertyPageTemplateContract
+            {
+                Name = strGlobalContract
+            };
 
             string propertyPageTemplateID = CommonClient.CreatePropertyPageTemplate(connAdminUserID, propertyPageTemplateContract);
             this.RefreshSchemaStore(connAdminUserID);
@@ -560,13 +578,15 @@ namespace docreminder.BO
 		    PropertyTemplateContract[] arrayOfPropertyTemplateContract = new PropertyTemplateContract[arrayOfPropertyTypeIDs.Length];
             for(int counter = 0; counter < arrayOfPropertyTypeIDs.Length; counter++)
             {
-                PropertyTemplateContract propertyTemplateContract = new PropertyTemplateContract();
-			    propertyTemplateContract.Required = true;
-			    propertyTemplateContract.Visible = true;
-			    propertyTemplateContract.CanEditDefaultValue = true;
-			    propertyTemplateContract.PropertyTypeId = arrayOfPropertyTypeIDs[counter];
+                PropertyTemplateContract propertyTemplateContract = new PropertyTemplateContract
+                {
+                    Required = true,
+                    Visible = true,
+                    CanEditDefaultValue = true,
+                    PropertyTypeId = arrayOfPropertyTypeIDs[counter]
+                };
 
-			    arrayOfPropertyTemplateContract[counter] = propertyTemplateContract; // adds to array
+                arrayOfPropertyTemplateContract[counter] = propertyTemplateContract; // adds to array
             
             }
 
@@ -624,20 +644,22 @@ namespace docreminder.BO
         {
             
 		    StringGlobalContract strGlobalContract = Utility.ConvertStringToStringGlobalContract(importTemplateName, schemaCulture);
-		
-		    ImportTemplateContract importTemplateContract = new ImportTemplateContract();
-            // Sets mandatory field
-		    importTemplateContract.Name = strGlobalContract;
 
-            // Sets optional fields
-		    importTemplateContract.CanChangeFolders = true;
-		    importTemplateContract.CanChangeInfoStore = true;
-		    importTemplateContract.CanChangeLifeCycle = true;
-		    importTemplateContract.CanChangeLinks = true;
-		    importTemplateContract.CanChangeProcessTemplate = true;
-		    importTemplateContract.CanChangeSignatureProfile = true;
-		    importTemplateContract.CanChangeProtectionDomain = true;
-		    importTemplateContract.CanChangeProperties = true;
+            ImportTemplateContract importTemplateContract = new ImportTemplateContract
+            {
+                // Sets mandatory field
+                Name = strGlobalContract,
+
+                // Sets optional fields
+                CanChangeFolders = true,
+                CanChangeInfoStore = true,
+                CanChangeLifeCycle = true,
+                CanChangeLinks = true,
+                CanChangeProcessTemplate = true,
+                CanChangeSignatureProfile = true,
+                CanChangeProtectionDomain = true,
+                CanChangeProperties = true
+            };
 
             string importTemplateID = CommonClient.CreateImportTemplate(connAdminUserID, importTemplateContract);
             this.RefreshSchemaStore(connAdminUserID);
@@ -680,6 +702,22 @@ namespace docreminder.BO
 		
 		    return infoStoreID;
 	    }
+
+        public InfoStoreContract[] GetAllInfoStores(string connAdminUserID)
+        {
+            InfoStoreContract[] arrayOfInfoStore = CommonClient.GetInfoStores(connAdminUserID);
+            return arrayOfInfoStore;   
+        }
+
+        public PropertyTypeContract[] GetAllPropertyTypes()
+        {
+            return this.SchemaStore.PropertyTypes;
+        }
+
+        public LanguageCodeContract[] GetLanguageCodes()
+        {
+            return this.SchemaStore.LanguageCodes;
+        }
 
         /// <summary>
         /// Gets the import template contract for the specified import template id
@@ -830,8 +868,7 @@ namespace docreminder.BO
         public string GetPropertyTypeID(string propertyTypeName, string schemaCulture)
         {
             string propertyTypeID = null;
-		
-		    foreach (PropertyTypeContract propertyType in this.SchemaStore.PropertyTypes)
+            foreach (PropertyTypeContract propertyType in this.SchemaStore.PropertyTypes)
             {
                 if(Utility.StringGlobalContains(propertyType.Name, propertyTypeName, schemaCulture))
                 {

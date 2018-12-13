@@ -57,8 +57,10 @@ namespace docreminder.Forms
             {
                 if (row.Cells.Count > 0 && row.Cells[0].Value != null)
                 {
-                    KXWS.SSearchCondition condition = new KXWS.SSearchCondition();
-                    condition.propertyTypeName = row.Cells[0].Value.ToString();
+                    KXWS.SSearchCondition condition = new KXWS.SSearchCondition
+                    {
+                        propertyTypeName = row.Cells[0].Value.ToString()
+                    };
 
                     if (row.Cells[1].Value != null)
                         condition.operation = row.Cells[1].Value.ToString();
@@ -113,9 +115,8 @@ namespace docreminder.Forms
                 if (prodCode != null)
                 {
                     prodCode.AutoCompleteMode = AutoCompleteMode.SuggestAppend;
-                    prodCode.AutoCompleteCustomSource = ClientListDropDown(false, false);
+                    prodCode.AutoCompleteCustomSource = PropertyListDropDown();
                     prodCode.AutoCompleteSource = AutoCompleteSource.CustomSource;
-
                 }
             }
             else
@@ -133,12 +134,13 @@ namespace docreminder.Forms
         /// Get String Collection for Documenttype-Properties
         /// </summary>
         /// <returns></returns>
-        public AutoCompleteStringCollection ClientListDropDown(bool all, bool onlyChangeable)
+        public AutoCompleteStringCollection PropertyListDropDown(bool onlyEditable = false)
         {
             AutoCompleteStringCollection asc = new AutoCompleteStringCollection();
             try
             {
-                foreach (string sPropName in mainform.webserviceHandler.getAllPropertyTypes(Properties.Settings.Default.Culture, all, onlyChangeable))
+                //foreach (string sPropName in mainform.webserviceHandler.getAllPropertyTypes(Properties.Settings.Default.Culture, all, onlyChangeable))
+                foreach (string sPropName in WCFHandler.GetInstance.GetAllPropertyTypes(onlyEditable))
                 {
                     asc.Add(sPropName);
                 }

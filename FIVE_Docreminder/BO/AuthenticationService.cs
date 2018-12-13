@@ -31,14 +31,10 @@ namespace docreminder.BO
         /// <param name="user">the user</param>
         /// <param name="password">the password</param>
         /// <returns>the connection id of the user who logs on</returns>
-        public string Logon(string user, string password)
+        public LogonResultContract Logon(string user, string password)
         {
             // last argument: the offset of the client time zone to UTC in minutes
-            LogonResultContract logonResult = this.AuthenticationClient.Logon(null, user, password, null, 0);
-            string connUserID = logonResult.ConnectionId;
-
-            return connUserID;
-
+            return this.AuthenticationClient.Logon(null, user, password, null, 0);
         }
 
         internal string LogonWithSSO()

@@ -1,6 +1,7 @@
 ﻿using docreminder.InfoShareService;
 using System;
 using System.Collections.Generic;
+using System.Linq;
 using System.Text.RegularExpressions;
 
 namespace docreminder.BO
@@ -56,19 +57,23 @@ namespace docreminder.BO
             if (propertyTypeID != null)
             {
                 // Sets values on SearchConditionContract
-                SearchConditionContract searchConditionContract = new SearchConditionContract();
-                searchConditionContract.PropertyTypeId = propertyTypeID;
-                searchConditionContract.Values = new String[] { propertyTypeIDValue };
-                searchConditionContract.ComparisonEnum = comparisonOperator;
+                SearchConditionContract searchConditionContract = new SearchConditionContract
+                {
+                    PropertyTypeId = propertyTypeID,
+                    Values = new String[] { propertyTypeIDValue },
+                    ComparisonEnum = comparisonOperator
+                };
 
                 // Adds SearchConditionContract object to an array
                 SearchConditionContract[] arrayOfSearchConditionContract = new SearchConditionContract[1];
                 arrayOfSearchConditionContract[0] = searchConditionContract;
 
                 // Sets values on SearchDefinitionContract
-                SearchDefinitionContract searchDefinitionContract = new SearchDefinitionContract();
-                searchDefinitionContract.Conditions = arrayOfSearchConditionContract;
-                searchDefinitionContract.PageSize = 100;
+                SearchDefinitionContract searchDefinitionContract = new SearchDefinitionContract
+                {
+                    Conditions = arrayOfSearchConditionContract,
+                    PageSize = 100
+                };
 
                 // Searches for document
                 searchResultContract = this.SearchClient.Search(connectionID, searchDefinitionContract, arrayOfResultPropertyIDs /* resultProperties */,
@@ -108,8 +113,10 @@ namespace docreminder.BO
                 if (propertyTypeID != null)
                 {
                     // Sets values on SearchConditionContract
-                    SearchConditionContract searchConditionContract = new SearchConditionContract();
-                    searchConditionContract.PropertyTypeId = propertyTypeID;
+                    SearchConditionContract searchConditionContract = new SearchConditionContract
+                    {
+                        PropertyTypeId = propertyTypeID
+                    };
                     string[] values = split[1].Split(';'); //Split multikey-search values by ";"-symbol.
 
                     //Special variables
@@ -161,9 +168,11 @@ namespace docreminder.BO
             }
 
             // Sets values on SearchDefinitionContract
-            SearchDefinitionContract searchDefinitionContract = new SearchDefinitionContract();
-            searchDefinitionContract.Conditions = lSearchConditionContract.ToArray();
-            searchDefinitionContract.PageSize = 100000;
+            SearchDefinitionContract searchDefinitionContract = new SearchDefinitionContract
+            {
+                Conditions = lSearchConditionContract.ToArray(),
+                PageSize = 100000
+            };
 
             log.Info("Resultproperties:");
             // Assembles an array of property type IDs to be returned from the document search
@@ -196,26 +205,22 @@ namespace docreminder.BO
         /// <param name="connectionID">Connection ID to we</param>
         /// <param name="searchConditions">Array of searchconditions to search for.</param>
         /// <returns></returns>
-        public SearchResultContract SearchDocument(CommonService commonService, string connectionID, SearchConditionContract[] searchConditions)
+        public SearchResultContract SearchDocument(CommonService commonService, string connectionID, SearchDefinitionContract searchDefinitionContract,string resumePoint)
         {
-            SearchResultContract searchResultContract = new SearchResultContract();
+            SearchResultContract firstSearchResultContract = new SearchResultContract();
             try
             {
+                //First search
+                firstSearchResultContract = this.SearchClient.Search(connectionID, searchDefinitionContract,null,
+                                        resumePoint, customSecurityToken: null);
 
-                SearchDefinitionContract searchDefinitionContract = new SearchDefinitionContract();
-                searchDefinitionContract.Conditions = searchConditions;
-                
-
-                searchResultContract = this.SearchClient.Search(connectionID, searchDefinitionContract, null,
-                                        null /* resume point */, customSecurityToken: null);
+                return firstSearchResultContract;
             }
             catch (Exception e)
             {
-                log.Error(String.Format("An error happened while trying to search for documents. Message: {0}", e.Message));
+                log.Error(string.Format("An error happened while trying to search for documents. Message: {0}", e.Message));
                 throw e;
             }
-
-            return searchResultContract;
         }
     }
 }

@@ -11,8 +11,6 @@ namespace docreminder
 
         MainForm mainform;
 
-        
-
         List<KeyValuePair<string, bool>> lInfoStores = new List<KeyValuePair<string, bool>>();
         List<string> lWsFunctions = null;
 
@@ -30,14 +28,16 @@ namespace docreminder
 
 
             // Create the ToolTip and associate with the Form container.
-            ToolTip toolTip1 = new ToolTip();
+            ToolTip toolTip1 = new ToolTip
+            {
 
-            // Set up the delays for the ToolTip.
-            toolTip1.AutoPopDelay = 20000;
-            toolTip1.InitialDelay = 500;
-            toolTip1.ReshowDelay = 500;
-            // Force the ToolTip text to be displayed whether or not the form is active.
-            toolTip1.ShowAlways = true;
+                // Set up the delays for the ToolTip.
+                AutoPopDelay = 20000,
+                InitialDelay = 500,
+                ReshowDelay = 500,
+                // Force the ToolTip text to be displayed whether or not the form is active.
+                ShowAlways = true
+            };
 
             // Set up the ToolTip text for the Button and Checkbox.
             toolTip1.SetToolTip(this.btnInsertIndexMailSubject, "Add a documentproperty");
@@ -90,8 +90,6 @@ namespace docreminder
             cbEncodePW.Checked = Properties.Settings.Default.isKXPWEncrypted;
             txtBxKendoxPassword.Text = Properties.Settings.Default.KendoxPassword;
             cBCulture.SelectedText = Properties.Settings.Default.Culture;
-            cBIsLogActive.Checked = Properties.Settings.Default.IsLogActive;
-            txtBxLogPath.Text = Properties.Settings.Default.LogPath;
 
             cBSendErrorMail.Checked = Properties.Settings.Default.SendErrorMail;
             tbErrorMailSendTo.Text = Properties.Settings.Default.ErrorMailSendTo;
@@ -101,10 +99,12 @@ namespace docreminder
             cBStartProcessActive.Checked = Properties.Settings.Default.StartProcessActive;
             txtBxProcessRecipient.Text = Properties.Settings.Default.ProcessRecipient;
 
-            WebServiceHandler.ProcessTemplateItem processTemplateItem = new WebServiceHandler.ProcessTemplateItem();
-     
-            //If ProcessTemplate is a string, it has to be evaluated. Else its fixed.
-            processTemplateItem.ProcessName = "Template auswählen...";
+            WebServiceHandler.ProcessTemplateItem processTemplateItem = new WebServiceHandler.ProcessTemplateItem
+            {
+
+                //If ProcessTemplate is a string, it has to be evaluated. Else its fixed.
+                ProcessName = "Template auswählen..."
+            };
             if (Properties.Settings.Default.ProcessName != "")
             {
                 try
@@ -181,7 +181,6 @@ namespace docreminder
                 string relationEnum = Enum.GetName(typeof(BO.Utility.SearchRelationEnum), Convert.ToInt16(searchcon.RelationEnum));
 
                 string[] row = { WCFHandler.GetInstance.GetPropertyTypeName(searchcon.PropertyTypeId),comparisonEnum, string.Join(";", searchcon.Values), relationEnum };
-                //row.HeaderCell.Value = string.Format("{0}", row.Index + 1)
                 dgwSearchProperties.Rows.Add(row);
             }
 
@@ -218,28 +217,20 @@ namespace docreminder
 
 
             //Custom WS Functions
-            cBCustomWSFunction.Checked = Properties.Settings.Default.CustomWSFunctionsActive;
-            List<Forms.ExpressionVariablesForm.KeyValuePair<string, string>> customFunctionsList = new List<Forms.ExpressionVariablesForm.KeyValuePair<string, string>>();
-            if (Properties.Settings.Default.CustomWSFunctions != "")
-                customFunctionsList = (List<Forms.ExpressionVariablesForm.KeyValuePair<string, string>>)(FileHelper.XmlDeserializeFromString(Properties.Settings.Default.CustomWSFunctions, customFunctionsList.GetType()));
+            //Decapped
+            //cBCustomWSFunction.Checked = Properties.Settings.Default.CustomWSFunctionsActive;
+            //List<Forms.ExpressionVariablesForm.KeyValuePair<string, string>> customFunctionsList = new List<Forms.ExpressionVariablesForm.KeyValuePair<string, string>>();
+            //if (Properties.Settings.Default.CustomWSFunctions != "")
+            //    customFunctionsList = (List<Forms.ExpressionVariablesForm.KeyValuePair<string, string>>)(FileHelper.XmlDeserializeFromString(Properties.Settings.Default.CustomWSFunctions, customFunctionsList.GetType()));
 
-            foreach (Forms.ExpressionVariablesForm.KeyValuePair<string, string> kvp in customFunctionsList)
-            {
-                string[] row = { kvp.Key, kvp.Value };
-                dgwCustomWSFunction.Rows.Add(row);
-            }
-
-
+            //foreach (Forms.ExpressionVariablesForm.KeyValuePair<string, string> kvp in customFunctionsList)
+            //{
+            //    string[] row = { kvp.Key, kvp.Value };
+            //    dgwCustomWSFunction.Rows.Add(row);
+            //}
 
             //Preload with Serverdata if connection has been made.
-            if (mainform.webserviceHandler != null)
-            {
-                if (mainform.webserviceHandler.Login())
-                {
-                    preLoadSettingsData();
-                }
-            }
-
+            preLoadSettingsData();
         }
 
 
@@ -264,22 +255,6 @@ namespace docreminder
                 cLbInfoStores.Items.Add(kvp.Key, kvp.Value);
             }
             cLbInfoStores.Refresh();
-        }
-
-        private void bSelectPath_Click(object sender, EventArgs e)
-        {
-            FolderBrowserDialog folderBrowserDialog1 = new FolderBrowserDialog();
-            if (txtBxLogPath.Text == "")
-            {
-                string standardLogPath = Environment.GetFolderPath(Environment.SpecialFolder.ApplicationData) + "\\Five_DocReminder\\Log";
-                System.IO.Directory.CreateDirectory(standardLogPath);
-                folderBrowserDialog1.SelectedPath = standardLogPath;
-            }
-            else
-                folderBrowserDialog1.SelectedPath = @txtBxLogPath.Text;
-            DialogResult result = folderBrowserDialog1.ShowDialog();
-            if (result == DialogResult.OK)
-                txtBxLogPath.Text = folderBrowserDialog1.SelectedPath;
         }
 
 
@@ -349,14 +324,11 @@ namespace docreminder
                 Properties.Settings.Default["KendoxPassword"] = txtBxKendoxPassword.Text;
             }
 
+            
+            if ((string)Properties.Settings.Default["Culture"] != cBCulture.Text)
+                MessageBox.Show("Einige Änderungen (insbesondere an der Culture) setzten einen Neustart der Applikation voraus.", "Achtung!",
+MessageBoxButtons.OK, MessageBoxIcon.Information);
             Properties.Settings.Default["Culture"] = cBCulture.Text;
-
-            if ((string)Properties.Settings.Default["LogPath"] != txtBxLogPath.Text)
-                MessageBox.Show("Einige Änderungen (insbesondere am Logpfad) setzten einen Neustart der Applikation voraus.", "Achtung!",
-    MessageBoxButtons.OK, MessageBoxIcon.Information);
-
-            Properties.Settings.Default["IsLogActive"] = cBIsLogActive.Checked;
-            Properties.Settings.Default["LogPath"] = txtBxLogPath.Text;
 
 
             //ErrorMail
@@ -382,7 +354,6 @@ namespace docreminder
             //MarkerProperties
             List<KXWS.SDocumentPropertyUpdate> markerProperties = new List<KXWS.SDocumentPropertyUpdate>();
 
-            // DataGridViewRowCollection rows = dgwSearchProperties.Rows;
 
             //InfoStores
             string selectedStores = "";
@@ -396,40 +367,6 @@ namespace docreminder
             //SearchQuantity
             Properties.Settings.Default["SearchQuantity"] = Convert.ToInt32(nUdSearchQuantity.Value);
 
-            //Searchproperties
-            List<KXWS.SSearchCondition> searchonlist = new List<KXWS.SSearchCondition>();
-            foreach (DataGridViewRow row in dgwSearchProperties.Rows)
-            {
-                if (row.Cells.Count > 0 && row.Cells[0].Value != null)
-                {
-                    KXWS.SSearchCondition condition = new KXWS.SSearchCondition();
-                    condition.propertyTypeName = row.Cells[0].Value.ToString();
-
-                    if (row.Cells[1].Value != null)
-                        condition.operation = row.Cells[1].Value.ToString();
-                    else
-                        condition.operation = "NONE";
-
-                    if (row.Cells[3].Value != null && row.Cells[3].Value.ToString() == "OR")
-                        condition.relation = KXWS.Relations.OR;
-                    else
-                        condition.relation = KXWS.Relations.AND;
-
-
-                    //condition.relation = row.Cells[2].Value.ToString();
-                    if (row.Cells[2].Value != null)
-                    {
-                        condition.propertyValueArray = row.Cells[2].Value.ToString().Split(new[] { ";" }, StringSplitOptions.RemoveEmptyEntries);
-                        //condition.propertyValueArray = new string[] { row.Cells[2].Value.ToString() };
-                    }
-                    else
-                        condition.propertyValueArray = new string[] { "" };
-
-                    searchonlist.Add(condition);
-                }
-            }
-            Properties.Settings.Default["KendoxSearchProperties"] = FileHelper.XmlSerializeToString(searchonlist);
-
 
             //New SearchProperties
             List<InfoShareService.SearchConditionContract> newSearchCons = new List<InfoShareService.SearchConditionContract>();
@@ -437,9 +374,11 @@ namespace docreminder
             {
                 if (row.Cells.Count > 0 && row.Cells[0].Value != null)
                 {
-                    InfoShareService.SearchConditionContract condition = new InfoShareService.SearchConditionContract();
-                    //Translate propertyname to ID
-                    condition.PropertyTypeId = WCFHandler.GetInstance.GetPropertyTypeID(row.Cells[0].Value.ToString());
+                    InfoShareService.SearchConditionContract condition = new InfoShareService.SearchConditionContract
+                    {
+                        //Translate propertyname to ID
+                        PropertyTypeId = WCFHandler.GetInstance.GetPropertyTypeID(row.Cells[0].Value.ToString())
+                    };
 
                     if (row.Cells[1].Value != null)
                     {
@@ -474,8 +413,10 @@ namespace docreminder
                 if (row.Cells.Count > 0 && row.Cells[0].Value != null)
                 {
 
-                    KXWS.SDocumentPropertyUpdate markerProp = new KXWS.SDocumentPropertyUpdate();
-                    markerProp.propertyTypeName = row.Cells[0].Value.ToString();
+                    KXWS.SDocumentPropertyUpdate markerProp = new KXWS.SDocumentPropertyUpdate
+                    {
+                        propertyTypeName = row.Cells[0].Value.ToString()
+                    };
 
                     if (row.Cells[1].Value != null)
                         markerProp.propertyValues = row.Cells[1].Value.ToString().Split(new[] { ";" }, StringSplitOptions.RemoveEmptyEntries);
@@ -508,24 +449,25 @@ namespace docreminder
 
             Properties.Settings.Default["KendoxMarkerProperties"] = FileHelper.XmlSerializeToString(markerProperties);
 
-            Properties.Settings.Default["CustomWSFunctionsActive"] = cBCustomWSFunction.Checked;
-            //Custom WS Functions
-            List<Forms.ExpressionVariablesForm.KeyValuePair<string, string>> variables = new List<Forms.ExpressionVariablesForm.KeyValuePair<string, string>>();
+            //Decapped
+            //Properties.Settings.Default["CustomWSFunctionsActive"] = cBCustomWSFunction.Checked;
+            ////Custom WS Functions
+            //List<Forms.ExpressionVariablesForm.KeyValuePair<string, string>> variables = new List<Forms.ExpressionVariablesForm.KeyValuePair<string, string>>();
 
-            foreach (DataGridViewRow row in dgwCustomWSFunction.Rows)
-            {
-                if (row.Cells.Count > 0 && row.Cells[0].Value != null && row.Cells[1].Value != null)
-                {
-                    Forms.ExpressionVariablesForm.KeyValuePair<string, string> kvp = new Forms.ExpressionVariablesForm.KeyValuePair<string, string>();
-                    kvp.Key = row.Cells[0].Value.ToString();
-                    kvp.Value = row.Cells[1].Value.ToString();
-                    variables.Add(kvp);
-                }
-            }
+            //foreach (DataGridViewRow row in dgwCustomWSFunction.Rows)
+            //{
+            //    if (row.Cells.Count > 0 && row.Cells[0].Value != null && row.Cells[1].Value != null)
+            //    {
+            //        Forms.ExpressionVariablesForm.KeyValuePair<string, string> kvp = new Forms.ExpressionVariablesForm.KeyValuePair<string, string>();
+            //        kvp.Key = row.Cells[0].Value.ToString();
+            //        kvp.Value = row.Cells[1].Value.ToString();
+            //        variables.Add(kvp);
+            //    }
+            //}
 
-            Properties.Settings.Default["CustomWSFunctions"] = FileHelper.XmlSerializeToString(variables);
-            if (variables.Count <= 0)
-                Properties.Settings.Default["CustomWSFunctionsActive"] = false;
+            //Properties.Settings.Default["CustomWSFunctions"] = FileHelper.XmlSerializeToString(variables);
+            //if (variables.Count <= 0)
+            //    Properties.Settings.Default["CustomWSFunctionsActive"] = false;
 
             
 
@@ -535,10 +477,12 @@ namespace docreminder
         private void SearchPropertiesSerialization()
         {
             KXWS.SSearchCondition[] sSearchConditions = new KXWS.SSearchCondition[1];
-            KXWS.SSearchCondition sSearchCondition = new KXWS.SSearchCondition();
-            sSearchCondition.propertyTypeName = "ebillmail";
-            sSearchCondition.operation = "GT";
-            sSearchCondition.propertyValueArray = new string[] { "1" };
+            KXWS.SSearchCondition sSearchCondition = new KXWS.SSearchCondition
+            {
+                propertyTypeName = "ebillmail",
+                operation = "GT",
+                propertyValueArray = new string[] { "1" }
+            };
             sSearchConditions[0] = sSearchCondition;
 
             Properties.Settings.Default.KendoxSearchProperties = FileHelper.XmlSerializeToString(sSearchConditions);
@@ -566,35 +510,31 @@ namespace docreminder
         private void btnTestKendoxConnection_Click(object sender, EventArgs e)
         {
             SaveConfig();
+            WCFHandler.GetInstance.Login();
             preLoadSettingsData();
         }
 
         private void preLoadSettingsData()
         {
-            bool loggedin = false;
-
             //Connect Button Action & Label
             lblKXConTest.Text = "Trying to log in...";
             this.Refresh();
-            WCFHandler wcfHandler = WCFHandler.GetInstance;
-            if (!wcfHandler.Connected)
-                wcfHandler.Login();
-
-            if (wcfHandler.Connected)
+            
+            if (WCFHandler.GetInstance.isConnected())
             {
                 lblKXConTest.Text = "Logged in sucessfully!";
                 btnTestKendoxConnection.Enabled = false;
-                loggedin = true;
             }
             else
             {
                 lblKXConTest.Text = "Login failed! See log...";
             }
 
-            if (loggedin)
+            if (WCFHandler.GetInstance.isConnected())
             {
                 //Populate InfoStore Checkboxes.
-                foreach (string storeName in mainform.webserviceHandler.getAllInfoStores())
+                //foreach (string storeName in mainform.webserviceHandler.getAllInfoStores())
+                foreach (string storeName in WCFHandler.GetInstance.GetAllInfoStores())
                 {
                     if (lInfoStores.Exists(x => x.Key == storeName))
                     {
@@ -609,11 +549,12 @@ namespace docreminder
                 UpdateInfoStoreList(lInfoStores);
 
                 //Populate ProcessTemplateBox
-                foreach (WebServiceHandler.ProcessTemplateItem pti in mainform.webserviceHandler.getAllProcessTemplates())
-                {
-                    if (pti.ProcessName != cBSelectedProcess.Text)
-                        cBSelectedProcess.Items.Add(pti);
-                }
+                //TODO
+                //foreach (WebServiceHandler.ProcessTemplateItem pti in mainform.webserviceHandler.getAllProcessTemplates())
+                //{
+                //    if (pti.ProcessName != cBSelectedProcess.Text)
+                //        cBSelectedProcess.Items.Add(pti);
+                //}
 
                 //Activate Index Buttons
                 btnInsertIndexMailRecipient.Enabled = true;
@@ -621,7 +562,6 @@ namespace docreminder
                 btnInsertIndexProcessRecipients.Enabled = true;
                 btnInsertMultiLanguageProperty.Enabled = true;
                 btnInsertAttachmentRenameProperty.Enabled = true;
-
             }
 
         }
@@ -664,7 +604,7 @@ namespace docreminder
                 if (prodCode != null)
                 {
                     prodCode.AutoCompleteMode = AutoCompleteMode.SuggestAppend;
-                    prodCode.AutoCompleteCustomSource = ClientListDropDown(false, false);
+                    prodCode.AutoCompleteCustomSource = PropertyListDropDown();
                     prodCode.AutoCompleteSource = AutoCompleteSource.CustomSource;
 
                 }
@@ -693,7 +633,7 @@ namespace docreminder
                 if (prodCode != null)
                 {
                     prodCode.AutoCompleteMode = AutoCompleteMode.SuggestAppend;
-                    prodCode.AutoCompleteCustomSource = ClientListDropDown(false, true);
+                    prodCode.AutoCompleteCustomSource = PropertyListDropDown(true);
                     prodCode.AutoCompleteSource = AutoCompleteSource.CustomSource;
 
                 }
@@ -728,60 +668,64 @@ namespace docreminder
             }
         }
 
-        private void dgwCustomWSFunction_EditingControlShowing(object sender, DataGridViewEditingControlShowingEventArgs e)
-        {
-            
-            if (dgwCustomWSFunction.CurrentCell.ColumnIndex == 0)
-            {
-                TextBox prodCode = e.Control as TextBox;
-                if (prodCode != null)
-                {
-                    prodCode.AutoCompleteMode = AutoCompleteMode.SuggestAppend;
-                    prodCode.AutoCompleteCustomSource = getCustomFunctionList(true, false,null);
-                    prodCode.AutoCompleteSource = AutoCompleteSource.CustomSource;
+        //Decapped
+        //private void dgwCustomWSFunction_EditingControlShowing(object sender, DataGridViewEditingControlShowingEventArgs e)
+        //{
 
-                }
-            }
-            else
-            {
-                TextBox prodCode = e.Control as TextBox;
-                if (prodCode != null)
-                {
-                    prodCode.AutoCompleteMode = AutoCompleteMode.None;
-                }
-            }
-        }
+        //    if (dgwCustomWSFunction.CurrentCell.ColumnIndex == 0)
+        //    {
+        //        TextBox prodCode = e.Control as TextBox;
+        //        if (prodCode != null)
+        //        {
+        //            prodCode.AutoCompleteMode = AutoCompleteMode.SuggestAppend;
+        //            prodCode.AutoCompleteCustomSource = getCustomFunctionList(true, false,null);
+        //            prodCode.AutoCompleteSource = AutoCompleteSource.CustomSource;
 
-        private void dgwCustomWSFunction_CellValueChanged(object sender, DataGridViewCellEventArgs e)
-        {
-            
-            if (e.ColumnIndex == 0 && e.RowIndex >= 0)
-            {
-                //AEPH 05.02.2016 Check if null first.
-                if (dgwCustomWSFunction[0, e.RowIndex].Value != null)
-                {
-                    AutoCompleteStringCollection asc = getCustomFunctionList(false, true, dgwCustomWSFunction[0, e.RowIndex].Value.ToString());
-                    if (asc.Count != 0)
-                    {
-                        //AEPH - 05.02.2016
-                        asc[0] = asc[0].Replace(",", ";");
+        //        }
+        //    }
+        //    else
+        //    {
+        //        TextBox prodCode = e.Control as TextBox;
+        //        if (prodCode != null)
+        //        {
+        //            prodCode.AutoCompleteMode = AutoCompleteMode.None;
+        //        }
+        //    }
+        //}
 
-                        dgwCustomWSFunction[1, e.RowIndex].Value = asc[0];
-                    }
-                }
-            }
-        }
+
+        //Decapped
+        //private void dgwCustomWSFunction_CellValueChanged(object sender, DataGridViewCellEventArgs e)
+        //{
+
+        //    if (e.ColumnIndex == 0 && e.RowIndex >= 0)
+        //    {
+        //        //AEPH 05.02.2016 Check if null first.
+        //        if (dgwCustomWSFunction[0, e.RowIndex].Value != null)
+        //        {
+        //            AutoCompleteStringCollection asc = getCustomFunctionList(false, true, dgwCustomWSFunction[0, e.RowIndex].Value.ToString());
+        //            if (asc.Count != 0)
+        //            {
+        //                //AEPH - 05.02.2016
+        //                asc[0] = asc[0].Replace(",", ";");
+
+        //                dgwCustomWSFunction[1, e.RowIndex].Value = asc[0];
+        //            }
+        //        }
+        //    }
+        //}
 
         /// <summary>
         /// Get String Collection for Documenttype-Properties
         /// </summary>
         /// <returns></returns>
-        public AutoCompleteStringCollection ClientListDropDown(bool all, bool onlyChangeable)
+        public AutoCompleteStringCollection PropertyListDropDown(bool onlyEditable = false)
         {
             AutoCompleteStringCollection asc = new AutoCompleteStringCollection();
             try
             {
-                foreach (string sPropName in mainform.webserviceHandler.getAllPropertyTypes(Properties.Settings.Default.Culture, all, onlyChangeable))
+                //foreach (string sPropName in mainform.webserviceHandler.getAllPropertyTypes(Properties.Settings.Default.Culture, all, onlyChangeable))
+                foreach (string sPropName in WCFHandler.GetInstance.GetAllPropertyTypes(onlyEditable))
                 {
                     asc.Add(sPropName);
                 }
@@ -793,61 +737,63 @@ namespace docreminder
             return asc;
         }
 
+
+        //Decapped
         /// <summary>
         /// Get String Collection for Documenttype-Properties
         /// </summary>
         /// <returns></returns>
-        public AutoCompleteStringCollection getCustomFunctionList(bool functionOnly, bool parametersonly, string specificfunction)
-        {
-            if (lWsFunctions == null)
-            {
-                try
-                {
+        //public AutoCompleteStringCollection getCustomFunctionList(bool functionOnly, bool parametersonly, string specificfunction)
+        //{
+        //    if (lWsFunctions == null)
+        //    {
+        //        try
+        //        {
                    
-                    lWsFunctions = mainform.webserviceHandler.getAllWSFunctions(pBarCustomWSFunctions);
-                }
-                catch (Exception e)
-                {
-                }
-            }
+        //            lWsFunctions = mainform.webserviceHandler.getAllWSFunctions(pBarCustomWSFunctions);
+        //        }
+        //        catch (Exception e)
+        //        {
+        //        }
+        //    }
 
-            AutoCompleteStringCollection asc = new AutoCompleteStringCollection();
-            try
-            {
-                foreach (string sFunctionName in lWsFunctions)
-                {
-                    int l = sFunctionName.IndexOf("(");
-                    string functionName = sFunctionName.Substring(0, l);
-                    string parameters = FileHelper.GetTextBetween(sFunctionName, "(", ")");
-                    if (specificfunction != null && functionName.ToLower() != specificfunction.ToLower())
-                    {
+        //    AutoCompleteStringCollection asc = new AutoCompleteStringCollection();
+        //    try
+        //    {
+        //        foreach (string sFunctionName in lWsFunctions)
+        //        {
+        //            int l = sFunctionName.IndexOf("(");
+        //            string functionName = sFunctionName.Substring(0, l);
+        //            string parameters = FileHelper.GetTextBetween(sFunctionName, "(", ")");
+        //            if (specificfunction != null && functionName.ToLower() != specificfunction.ToLower())
+        //            {
 
-                    }
-                    else
-                    {
+        //            }
+        //            else
+        //            {
 
-                        if (!functionOnly && !parametersonly)
-                        {
-                            asc.Add(sFunctionName);
-                        }
-                        else
-                        {
-                            if (functionOnly)
-                                asc.Add(functionName);
+        //                if (!functionOnly && !parametersonly)
+        //                {
+        //                    asc.Add(sFunctionName);
+        //                }
+        //                else
+        //                {
+        //                    if (functionOnly)
+        //                        asc.Add(functionName);
 
-                            if (parametersonly)
-                                asc.Add(parameters);
-                        }
-                    }
-                }
+        //                    if (parametersonly)
+        //                        asc.Add(parameters);
+        //                }
+        //            }
+        //        }
 
-            }
-            catch (Exception ex)
-            {
-                MessageBox.Show("For AutoComplete please connect to Kendox Server!");
-            }
-            return asc;
-        }
+        //    }
+        //    catch (Exception ex)
+        //    {
+        //        MessageBox.Show("For AutoComplete please connect to Kendox Server!");
+        //    }
+        //    return asc;
+        //}
 
 
         /// <summary>
@@ -858,7 +804,7 @@ namespace docreminder
         private void dgwSearchProperties_RowPostPaint(object sender, DataGridViewRowPostPaintEventArgs e)
         {
             var grid = sender as DataGridView;
-            var rowIdx = (e.RowIndex).ToString();
+            //var rowIdx = (e.RowIndex).ToString();
 
             var centerFormat = new StringFormat()
             {
@@ -868,7 +814,7 @@ namespace docreminder
             };
 
             var headerBounds = new Rectangle(e.RowBounds.Left, e.RowBounds.Top, grid.RowHeadersWidth, e.RowBounds.Height);
-            e.Graphics.DrawString(rowIdx, this.Font, SystemBrushes.ControlText, headerBounds, centerFormat);
+            //e.Graphics.DrawString(rowIdx, this.Font, SystemBrushes.ControlText, headerBounds, centerFormat);
         }
 
 
@@ -963,17 +909,13 @@ namespace docreminder
         {
             try
             {
-                string ret = NEWExpressionsEvaluator.Evaluate(txtBxAdditionalComputedIdentifier.Text,null,true).ToString();
+                string ret = NEWExpressionsEvaluator.GetInstance.Evaluate(txtBxAdditionalComputedIdentifier.Text,null,true).ToString();
                 bool value;
-                bool isBool = Boolean.TryParse(ret, out value);
+                bool isBool = bool.TryParse(ret, out value);
                 if (isBool)
-                {
                     MessageBox.Show(string.Format("Sucessful!\nResult is: '{0}'. ", ret));
-                }
                 else
-                {
                     MessageBox.Show(string.Format("Result is not a boolean!\nResult is: '{0}'. ", ret));
-                }
             }
             catch (Exception exc)
             {

@@ -105,8 +105,10 @@ namespace docreminder
             List<KXWS.SInfoStore> lInfoStores = new List<KXWS.SInfoStore>();
             foreach (string store in Properties.Settings.Default.KendoxInfoStores.Split(new[] { ";" }, StringSplitOptions.RemoveEmptyEntries))
             {
-                KXWS.SInfoStore infoStore = new KXWS.SInfoStore();
-                infoStore.name = store;
+                KXWS.SInfoStore infoStore = new KXWS.SInfoStore
+                {
+                    name = store
+                };
                 lInfoStores.Add(infoStore);
             }
 
@@ -161,8 +163,10 @@ namespace docreminder
             List<KXWS.SInfoStore> lInfoStores = new List<KXWS.SInfoStore>();
             foreach (string store in Properties.Settings.Default.KendoxInfoStores.Split(new[] { ";" }, StringSplitOptions.RemoveEmptyEntries))
             {
-                KXWS.SInfoStore infoStore = new KXWS.SInfoStore();
-                infoStore.name = store;
+                KXWS.SInfoStore infoStore = new KXWS.SInfoStore
+                {
+                    name = store
+                };
                 lInfoStores.Add(infoStore);
             }
 
@@ -667,8 +671,10 @@ namespace docreminder
             List<ProcessTemplateItem> lSProcessTemplates = new List<ProcessTemplateItem>();
             foreach (KXWS.SProcessTemplateExt template in processTemplates)
             {
-                ProcessTemplateItem pTitem = new ProcessTemplateItem();
-                pTitem.ProcessTemplate = template;
+                ProcessTemplateItem pTitem = new ProcessTemplateItem
+                {
+                    ProcessTemplate = template
+                };
                 KXWS.SCultureString[] cultureStrings = template.processName.cultureStrings;
                 pTitem.ProcessName = cultureStrings[0].text;
                 foreach (KXWS.SCultureString sCultStr in cultureStrings)
@@ -732,8 +738,10 @@ namespace docreminder
             List<string> lSFunctions = new List<string>();
             pbar.Value = 10;
             //Build the URL request string
-            UriBuilder uriBuilder = new UriBuilder("LAWL");
-            uriBuilder.Query = "WSDL";
+            UriBuilder uriBuilder = new UriBuilder("LAWL")
+            {
+                Query = "WSDL"
+            };
 
             HttpWebRequest webRequest = (HttpWebRequest)WebRequest.Create(uriBuilder.Uri);
             webRequest.ContentType = "text/xml;charset=\"utf-8\"";

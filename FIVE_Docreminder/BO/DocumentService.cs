@@ -87,25 +87,29 @@ namespace docreminder.BO
                         string[] values;
                         dictionaryProperties.TryGetValue(propertyName, out values); // Gets value for key from dictionary
 
-                        PropertyContract propertyContract = new PropertyContract();
-                        propertyContract.PropertyTypeId = propertyTypeID;
-                        propertyContract.Values = values;
+                        PropertyContract propertyContract = new PropertyContract
+                        {
+                            PropertyTypeId = propertyTypeID,
+                            Values = values
+                        };
 
                         listOfPropertyContract.Add(propertyContract); // Adds property contract
                     }				
 			    }
-		
-			    // Sets mandatory fields
-                documentContract = new DocumentContract();
-			    documentContract.ImportTemplateId = importTemplateID;
-			    documentContract.ProtectionDomainId = importTemplateContract.ProtectionDomainId;
-			    documentContract.InfoStoreId = importTemplateContract.InfoStoreId;
-			    documentContract.Properties = listOfPropertyContract.ToArray(); // Sets all property contracts (A)
-			    documentContract.Name = documentName;
-					
-			    //documentContract = this.DocumentClient.CreateDocument(connectionID, documentContract, fileID, options: null);
-			
-    	    }
+
+                // Sets mandatory fields
+                documentContract = new DocumentContract
+                {
+                    ImportTemplateId = importTemplateID,
+                    ProtectionDomainId = importTemplateContract.ProtectionDomainId,
+                    InfoStoreId = importTemplateContract.InfoStoreId,
+                    Properties = listOfPropertyContract.ToArray(), // Sets all property contracts (A)
+                    Name = documentName
+                };
+
+                //documentContract = this.DocumentClient.CreateDocument(connectionID, documentContract, fileID, options: null);
+
+            }
 		
 		    return documentContract;				
 	    }
@@ -225,9 +229,11 @@ namespace docreminder.BO
 			    }			
 		    }
 
-            CheckInParameterContract checkInParameterContract = new CheckInParameterContract();
-            // Releases the reservation of the document in order that other users can edit the document
-            checkInParameterContract.ReleaseReservation = true;
+            CheckInParameterContract checkInParameterContract = new CheckInParameterContract
+            {
+                // Releases the reservation of the document in order that other users can edit the document
+                ReleaseReservation = true
+            };
 
             documentContract = this.DocumentClient.UpdateDocument(connectionID, documentContract, null, checkInParameterContract);
 
@@ -265,12 +271,14 @@ namespace docreminder.BO
         /// <returns>the updated document contract</returns>
         public DocumentContract UpdateDocument(string connectionID, DocumentContract documentContract, string fileId = null)
         {
-            CheckInParameterContract checkInParameterContract = new CheckInParameterContract();
-            
-            // Releases the reservation of the document in order that other users can edit the document
-            checkInParameterContract.ReleaseReservation = true;
-            checkInParameterContract.Comment = "ImmobBelegID, Kontierungsmaske & Nachindex für ExterneBelege";
-            
+            CheckInParameterContract checkInParameterContract = new CheckInParameterContract
+            {
+
+                // Releases the reservation of the document in order that other users can edit the document
+                ReleaseReservation = true,
+                Comment = "ImmobBelegID, Kontierungsmaske & Nachindex für ExterneBelege"
+            };
+
 
             DocumentContract updatedDocumentContract = new DocumentContract();
             if (documentContract.CheckOutStateEnum == "NotCheckedOut")

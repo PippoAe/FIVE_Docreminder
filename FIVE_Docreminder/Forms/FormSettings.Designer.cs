@@ -55,11 +55,6 @@
             this.tbErrorMailSendTo = new System.Windows.Forms.TextBox();
             this.label14 = new System.Windows.Forms.Label();
             this.cBSendErrorMail = new System.Windows.Forms.CheckBox();
-            this.groupBox1 = new System.Windows.Forms.GroupBox();
-            this.bSelectPath = new System.Windows.Forms.Button();
-            this.lLogPath = new System.Windows.Forms.Label();
-            this.txtBxLogPath = new System.Windows.Forms.TextBox();
-            this.cBIsLogActive = new System.Windows.Forms.CheckBox();
             this.tbProcessing = new System.Windows.Forms.TabPage();
             this.groupBox6 = new System.Windows.Forms.GroupBox();
             this.btnTest = new System.Windows.Forms.Button();
@@ -67,9 +62,6 @@
             this.txtBxAdditionalComputedIdentifier = new System.Windows.Forms.TextBox();
             this.groupBox5 = new System.Windows.Forms.GroupBox();
             this.dGwMarkerProperties = new System.Windows.Forms.DataGridView();
-            this.dataGridViewTextBoxColumn1 = new System.Windows.Forms.DataGridViewTextBoxColumn();
-            this.dataGridViewTextBoxColumn2 = new System.Windows.Forms.DataGridViewTextBoxColumn();
-            this.Action = new System.Windows.Forms.DataGridViewComboBoxColumn();
             this.groupBox3 = new System.Windows.Forms.GroupBox();
             this.nUdSearchQuantity = new System.Windows.Forms.NumericUpDown();
             this.label22 = new System.Windows.Forms.Label();
@@ -107,12 +99,6 @@
             this.groupBox8 = new System.Windows.Forms.GroupBox();
             this.btnConfigureDocSafe = new System.Windows.Forms.Button();
             this.cBDocSafeActive = new System.Windows.Forms.CheckBox();
-            this.gBCustomFunction = new System.Windows.Forms.GroupBox();
-            this.pBarCustomWSFunctions = new System.Windows.Forms.ProgressBar();
-            this.dgwCustomWSFunction = new System.Windows.Forms.DataGridView();
-            this.cFunction = new System.Windows.Forms.DataGridViewTextBoxColumn();
-            this.cArguments = new System.Windows.Forms.DataGridViewTextBoxColumn();
-            this.cBCustomWSFunction = new System.Windows.Forms.CheckBox();
             this.gBProcess = new System.Windows.Forms.GroupBox();
             this.label23 = new System.Windows.Forms.Label();
             this.cBSelectedProcess = new System.Windows.Forms.ComboBox();
@@ -150,10 +136,12 @@
             this.Operation = new System.Windows.Forms.DataGridViewComboBoxColumn();
             this.Value = new System.Windows.Forms.DataGridViewTextBoxColumn();
             this.Relation = new System.Windows.Forms.DataGridViewComboBoxColumn();
+            this.dataGridViewTextBoxColumn1 = new System.Windows.Forms.DataGridViewTextBoxColumn();
+            this.dataGridViewTextBoxColumn2 = new System.Windows.Forms.DataGridViewTextBoxColumn();
+            this.Action = new System.Windows.Forms.DataGridViewComboBoxColumn();
             this.tpLog.SuspendLayout();
             this.groupBox7.SuspendLayout();
             this.groupBox2.SuspendLayout();
-            this.groupBox1.SuspendLayout();
             this.tbProcessing.SuspendLayout();
             this.groupBox6.SuspendLayout();
             this.groupBox5.SuspendLayout();
@@ -168,8 +156,6 @@
             this.tcSettings.SuspendLayout();
             this.tpOutput.SuspendLayout();
             this.groupBox8.SuspendLayout();
-            this.gBCustomFunction.SuspendLayout();
-            ((System.ComponentModel.ISupportInitialize)(this.dgwCustomWSFunction)).BeginInit();
             this.gBProcess.SuspendLayout();
             this.gbEbillmail.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.searchComparisonEnumBindingSource)).BeginInit();
@@ -201,7 +187,6 @@
             // 
             this.tpLog.Controls.Add(this.groupBox7);
             this.tpLog.Controls.Add(this.groupBox2);
-            this.tpLog.Controls.Add(this.groupBox1);
             this.tpLog.Location = new System.Drawing.Point(4, 22);
             this.tpLog.Name = "tpLog";
             this.tpLog.Size = new System.Drawing.Size(411, 514);
@@ -313,7 +298,7 @@
             this.groupBox2.Controls.Add(this.tbErrorMailSendTo);
             this.groupBox2.Controls.Add(this.label14);
             this.groupBox2.Controls.Add(this.cBSendErrorMail);
-            this.groupBox2.Location = new System.Drawing.Point(8, 216);
+            this.groupBox2.Location = new System.Drawing.Point(8, 134);
             this.groupBox2.Name = "groupBox2";
             this.groupBox2.Size = new System.Drawing.Size(392, 128);
             this.groupBox2.TabIndex = 13;
@@ -376,60 +361,6 @@
             this.cBSendErrorMail.Text = "Active";
             this.cBSendErrorMail.UseVisualStyleBackColor = true;
             // 
-            // groupBox1
-            // 
-            this.groupBox1.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Left) 
-            | System.Windows.Forms.AnchorStyles.Right)));
-            this.groupBox1.Controls.Add(this.bSelectPath);
-            this.groupBox1.Controls.Add(this.lLogPath);
-            this.groupBox1.Controls.Add(this.txtBxLogPath);
-            this.groupBox1.Controls.Add(this.cBIsLogActive);
-            this.groupBox1.Location = new System.Drawing.Point(8, 136);
-            this.groupBox1.Name = "groupBox1";
-            this.groupBox1.Size = new System.Drawing.Size(392, 72);
-            this.groupBox1.TabIndex = 12;
-            this.groupBox1.TabStop = false;
-            this.groupBox1.Text = "Log:";
-            // 
-            // bSelectPath
-            // 
-            this.bSelectPath.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Right)));
-            this.bSelectPath.Location = new System.Drawing.Point(360, 39);
-            this.bSelectPath.Name = "bSelectPath";
-            this.bSelectPath.Size = new System.Drawing.Size(24, 22);
-            this.bSelectPath.TabIndex = 3;
-            this.bSelectPath.Text = "...";
-            this.bSelectPath.UseVisualStyleBackColor = true;
-            this.bSelectPath.Click += new System.EventHandler(this.bSelectPath_Click);
-            // 
-            // lLogPath
-            // 
-            this.lLogPath.AutoSize = true;
-            this.lLogPath.Location = new System.Drawing.Point(8, 40);
-            this.lLogPath.Name = "lLogPath";
-            this.lLogPath.Size = new System.Drawing.Size(49, 13);
-            this.lLogPath.TabIndex = 2;
-            this.lLogPath.Text = "Logpath:";
-            // 
-            // txtBxLogPath
-            // 
-            this.txtBxLogPath.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Left) 
-            | System.Windows.Forms.AnchorStyles.Right)));
-            this.txtBxLogPath.Location = new System.Drawing.Point(80, 40);
-            this.txtBxLogPath.Name = "txtBxLogPath";
-            this.txtBxLogPath.Size = new System.Drawing.Size(280, 20);
-            this.txtBxLogPath.TabIndex = 1;
-            // 
-            // cBIsLogActive
-            // 
-            this.cBIsLogActive.AutoSize = true;
-            this.cBIsLogActive.Location = new System.Drawing.Point(8, 16);
-            this.cBIsLogActive.Name = "cBIsLogActive";
-            this.cBIsLogActive.Size = new System.Drawing.Size(56, 17);
-            this.cBIsLogActive.TabIndex = 0;
-            this.cBIsLogActive.Text = "Active";
-            this.cBIsLogActive.UseVisualStyleBackColor = true;
-            // 
             // tbProcessing
             // 
             this.tbProcessing.Controls.Add(this.groupBox6);
@@ -437,7 +368,7 @@
             this.tbProcessing.Controls.Add(this.groupBox3);
             this.tbProcessing.Location = new System.Drawing.Point(4, 22);
             this.tbProcessing.Name = "tbProcessing";
-            this.tbProcessing.Padding = new System.Windows.Forms.Padding(3, 3, 3, 3);
+            this.tbProcessing.Padding = new System.Windows.Forms.Padding(3);
             this.tbProcessing.Size = new System.Drawing.Size(411, 514);
             this.tbProcessing.TabIndex = 3;
             this.tbProcessing.Text = "Processing";
@@ -450,7 +381,7 @@
             this.groupBox6.Controls.Add(this.btnTest);
             this.groupBox6.Controls.Add(this.cBAddCpIdisActive);
             this.groupBox6.Controls.Add(this.txtBxAdditionalComputedIdentifier);
-            this.groupBox6.Location = new System.Drawing.Point(8, 184);
+            this.groupBox6.Location = new System.Drawing.Point(8, 182);
             this.groupBox6.Name = "groupBox6";
             this.groupBox6.Size = new System.Drawing.Size(397, 73);
             this.groupBox6.TabIndex = 19;
@@ -493,7 +424,7 @@
             this.groupBox5.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Left) 
             | System.Windows.Forms.AnchorStyles.Right)));
             this.groupBox5.Controls.Add(this.dGwMarkerProperties);
-            this.groupBox5.Location = new System.Drawing.Point(8, 272);
+            this.groupBox5.Location = new System.Drawing.Point(8, 261);
             this.groupBox5.Name = "groupBox5";
             this.groupBox5.Size = new System.Drawing.Size(397, 144);
             this.groupBox5.TabIndex = 18;
@@ -536,32 +467,10 @@
             dataGridViewCellStyle3.SelectionForeColor = System.Drawing.SystemColors.HighlightText;
             dataGridViewCellStyle3.WrapMode = System.Windows.Forms.DataGridViewTriState.True;
             this.dGwMarkerProperties.RowHeadersDefaultCellStyle = dataGridViewCellStyle3;
+            this.dGwMarkerProperties.RowHeadersWidth = 20;
             this.dGwMarkerProperties.Size = new System.Drawing.Size(382, 119);
             this.dGwMarkerProperties.TabIndex = 30;
             this.dGwMarkerProperties.EditingControlShowing += new System.Windows.Forms.DataGridViewEditingControlShowingEventHandler(this.dGwMarkerProperties_EditingControlShowing);
-            // 
-            // dataGridViewTextBoxColumn1
-            // 
-            this.dataGridViewTextBoxColumn1.HeaderText = "Propertyname";
-            this.dataGridViewTextBoxColumn1.Name = "dataGridViewTextBoxColumn1";
-            this.dataGridViewTextBoxColumn1.Width = 120;
-            // 
-            // dataGridViewTextBoxColumn2
-            // 
-            this.dataGridViewTextBoxColumn2.AutoSizeMode = System.Windows.Forms.DataGridViewAutoSizeColumnMode.Fill;
-            this.dataGridViewTextBoxColumn2.HeaderText = "Value(s)";
-            this.dataGridViewTextBoxColumn2.Name = "dataGridViewTextBoxColumn2";
-            // 
-            // Action
-            // 
-            this.Action.HeaderText = "Action";
-            this.Action.Items.AddRange(new object[] {
-            "UPDATE",
-            "NONE",
-            "ADD",
-            "DELETE"});
-            this.Action.Name = "Action";
-            this.Action.Width = 50;
             // 
             // groupBox3
             // 
@@ -649,6 +558,7 @@
             dataGridViewCellStyle6.SelectionForeColor = System.Drawing.SystemColors.HighlightText;
             dataGridViewCellStyle6.WrapMode = System.Windows.Forms.DataGridViewTriState.True;
             this.dgwSearchProperties.RowHeadersDefaultCellStyle = dataGridViewCellStyle6;
+            this.dgwSearchProperties.RowHeadersWidth = 20;
             this.dgwSearchProperties.Size = new System.Drawing.Size(381, 108);
             this.dgwSearchProperties.TabIndex = 0;
             this.dgwSearchProperties.DataError += new System.Windows.Forms.DataGridViewDataErrorEventHandler(this.dgwSearchProperties_DataError);
@@ -661,7 +571,7 @@
             this.tpInOut.Controls.Add(this.gBSMTP);
             this.tpInOut.Location = new System.Drawing.Point(4, 22);
             this.tpInOut.Name = "tpInOut";
-            this.tpInOut.Padding = new System.Windows.Forms.Padding(3, 3, 3, 3);
+            this.tpInOut.Padding = new System.Windows.Forms.Padding(3);
             this.tpInOut.Size = new System.Drawing.Size(411, 514);
             this.tpInOut.TabIndex = 0;
             this.tpInOut.Text = "Archive/Mail";
@@ -844,7 +754,7 @@
             this.gBSMTP.Controls.Add(this.label2);
             this.gBSMTP.Controls.Add(this.txtBxSMTPServer);
             this.gBSMTP.Controls.Add(this.label1);
-            this.gBSMTP.Location = new System.Drawing.Point(8, 224);
+            this.gBSMTP.Location = new System.Drawing.Point(8, 194);
             this.gBSMTP.Name = "gBSMTP";
             this.gBSMTP.Size = new System.Drawing.Size(397, 120);
             this.gBSMTP.TabIndex = 10;
@@ -855,7 +765,7 @@
             // 
             this.cBUseTSL.AutoSize = true;
             this.cBUseTSL.Location = new System.Drawing.Point(324, 20);
-            this.cBUseTSL.Margin = new System.Windows.Forms.Padding(2, 2, 2, 2);
+            this.cBUseTSL.Margin = new System.Windows.Forms.Padding(2);
             this.cBUseTSL.Name = "cBUseTSL";
             this.cBUseTSL.Size = new System.Drawing.Size(71, 17);
             this.cBUseTSL.TabIndex = 22;
@@ -982,7 +892,6 @@
             // tpOutput
             // 
             this.tpOutput.Controls.Add(this.groupBox8);
-            this.tpOutput.Controls.Add(this.gBCustomFunction);
             this.tpOutput.Controls.Add(this.gBProcess);
             this.tpOutput.Controls.Add(this.gbEbillmail);
             this.tpOutput.Location = new System.Drawing.Point(4, 22);
@@ -998,7 +907,8 @@
             | System.Windows.Forms.AnchorStyles.Right)));
             this.groupBox8.Controls.Add(this.btnConfigureDocSafe);
             this.groupBox8.Controls.Add(this.cBDocSafeActive);
-            this.groupBox8.Location = new System.Drawing.Point(6, 440);
+            this.groupBox8.Enabled = false;
+            this.groupBox8.Location = new System.Drawing.Point(6, 310);
             this.groupBox8.Name = "groupBox8";
             this.groupBox8.Size = new System.Drawing.Size(392, 64);
             this.groupBox8.TabIndex = 22;
@@ -1024,67 +934,6 @@
             this.cBDocSafeActive.TabIndex = 17;
             this.cBDocSafeActive.Text = "Active";
             this.cBDocSafeActive.UseVisualStyleBackColor = true;
-            // 
-            // gBCustomFunction
-            // 
-            this.gBCustomFunction.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Left) 
-            | System.Windows.Forms.AnchorStyles.Right)));
-            this.gBCustomFunction.Controls.Add(this.pBarCustomWSFunctions);
-            this.gBCustomFunction.Controls.Add(this.dgwCustomWSFunction);
-            this.gBCustomFunction.Controls.Add(this.cBCustomWSFunction);
-            this.gBCustomFunction.Location = new System.Drawing.Point(6, 312);
-            this.gBCustomFunction.Name = "gBCustomFunction";
-            this.gBCustomFunction.Size = new System.Drawing.Size(397, 120);
-            this.gBCustomFunction.TabIndex = 21;
-            this.gBCustomFunction.TabStop = false;
-            this.gBCustomFunction.Text = "Custom WS-Function:";
-            // 
-            // pBarCustomWSFunctions
-            // 
-            this.pBarCustomWSFunctions.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Left) 
-            | System.Windows.Forms.AnchorStyles.Right)));
-            this.pBarCustomWSFunctions.Location = new System.Drawing.Point(8, 37);
-            this.pBarCustomWSFunctions.Name = "pBarCustomWSFunctions";
-            this.pBarCustomWSFunctions.Size = new System.Drawing.Size(382, 3);
-            this.pBarCustomWSFunctions.Style = System.Windows.Forms.ProgressBarStyle.Continuous;
-            this.pBarCustomWSFunctions.TabIndex = 20;
-            // 
-            // dgwCustomWSFunction
-            // 
-            this.dgwCustomWSFunction.Anchor = ((System.Windows.Forms.AnchorStyles)((((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Bottom) 
-            | System.Windows.Forms.AnchorStyles.Left) 
-            | System.Windows.Forms.AnchorStyles.Right)));
-            this.dgwCustomWSFunction.ColumnHeadersHeightSizeMode = System.Windows.Forms.DataGridViewColumnHeadersHeightSizeMode.AutoSize;
-            this.dgwCustomWSFunction.Columns.AddRange(new System.Windows.Forms.DataGridViewColumn[] {
-            this.cFunction,
-            this.cArguments});
-            this.dgwCustomWSFunction.Location = new System.Drawing.Point(8, 40);
-            this.dgwCustomWSFunction.Name = "dgwCustomWSFunction";
-            this.dgwCustomWSFunction.Size = new System.Drawing.Size(382, 72);
-            this.dgwCustomWSFunction.TabIndex = 18;
-            this.dgwCustomWSFunction.CellValueChanged += new System.Windows.Forms.DataGridViewCellEventHandler(this.dgwCustomWSFunction_CellValueChanged);
-            this.dgwCustomWSFunction.EditingControlShowing += new System.Windows.Forms.DataGridViewEditingControlShowingEventHandler(this.dgwCustomWSFunction_EditingControlShowing);
-            // 
-            // cFunction
-            // 
-            this.cFunction.HeaderText = "Function";
-            this.cFunction.Name = "cFunction";
-            // 
-            // cArguments
-            // 
-            this.cArguments.AutoSizeMode = System.Windows.Forms.DataGridViewAutoSizeColumnMode.Fill;
-            this.cArguments.HeaderText = "Argument(s)";
-            this.cArguments.Name = "cArguments";
-            // 
-            // cBCustomWSFunction
-            // 
-            this.cBCustomWSFunction.AutoSize = true;
-            this.cBCustomWSFunction.Location = new System.Drawing.Point(8, 16);
-            this.cBCustomWSFunction.Name = "cBCustomWSFunction";
-            this.cBCustomWSFunction.Size = new System.Drawing.Size(56, 17);
-            this.cBCustomWSFunction.TabIndex = 17;
-            this.cBCustomWSFunction.Text = "Active";
-            this.cBCustomWSFunction.UseVisualStyleBackColor = true;
             // 
             // gBProcess
             // 
@@ -1263,7 +1112,7 @@
             this.cBGroupingActive.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Right)));
             this.cBGroupingActive.AutoSize = true;
             this.cBGroupingActive.Location = new System.Drawing.Point(86, 143);
-            this.cBGroupingActive.Margin = new System.Windows.Forms.Padding(2, 2, 2, 2);
+            this.cBGroupingActive.Margin = new System.Windows.Forms.Padding(2);
             this.cBGroupingActive.Name = "cBGroupingActive";
             this.cBGroupingActive.Size = new System.Drawing.Size(102, 17);
             this.cBGroupingActive.TabIndex = 41;
@@ -1274,7 +1123,7 @@
             // 
             this.btnConfigureGrouping.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Right)));
             this.btnConfigureGrouping.Location = new System.Drawing.Point(192, 143);
-            this.btnConfigureGrouping.Margin = new System.Windows.Forms.Padding(2, 2, 2, 2);
+            this.btnConfigureGrouping.Margin = new System.Windows.Forms.Padding(2);
             this.btnConfigureGrouping.Name = "btnConfigureGrouping";
             this.btnConfigureGrouping.Size = new System.Drawing.Size(198, 19);
             this.btnConfigureGrouping.TabIndex = 40;
@@ -1443,7 +1292,7 @@
             // 
             this.Propertyname.HeaderText = "Propertyname";
             this.Propertyname.Name = "Propertyname";
-            this.Propertyname.Width = 90;
+            this.Propertyname.Width = 150;
             // 
             // Operation
             // 
@@ -1481,6 +1330,29 @@
             this.Relation.Name = "Relation";
             this.Relation.Width = 60;
             // 
+            // dataGridViewTextBoxColumn1
+            // 
+            this.dataGridViewTextBoxColumn1.HeaderText = "Propertyname";
+            this.dataGridViewTextBoxColumn1.Name = "dataGridViewTextBoxColumn1";
+            this.dataGridViewTextBoxColumn1.Width = 150;
+            // 
+            // dataGridViewTextBoxColumn2
+            // 
+            this.dataGridViewTextBoxColumn2.AutoSizeMode = System.Windows.Forms.DataGridViewAutoSizeColumnMode.Fill;
+            this.dataGridViewTextBoxColumn2.HeaderText = "Value(s)";
+            this.dataGridViewTextBoxColumn2.Name = "dataGridViewTextBoxColumn2";
+            // 
+            // Action
+            // 
+            this.Action.HeaderText = "Action";
+            this.Action.Items.AddRange(new object[] {
+            "UPDATE",
+            "NONE",
+            "ADD",
+            "DELETE"});
+            this.Action.Name = "Action";
+            this.Action.Width = 50;
+            // 
             // FormSettings
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
@@ -1500,8 +1372,6 @@
             this.groupBox7.PerformLayout();
             this.groupBox2.ResumeLayout(false);
             this.groupBox2.PerformLayout();
-            this.groupBox1.ResumeLayout(false);
-            this.groupBox1.PerformLayout();
             this.tbProcessing.ResumeLayout(false);
             this.groupBox6.ResumeLayout(false);
             this.groupBox6.PerformLayout();
@@ -1521,9 +1391,6 @@
             this.tpOutput.ResumeLayout(false);
             this.groupBox8.ResumeLayout(false);
             this.groupBox8.PerformLayout();
-            this.gBCustomFunction.ResumeLayout(false);
-            this.gBCustomFunction.PerformLayout();
-            ((System.ComponentModel.ISupportInitialize)(this.dgwCustomWSFunction)).EndInit();
             this.gBProcess.ResumeLayout(false);
             this.gBProcess.PerformLayout();
             this.gbEbillmail.ResumeLayout(false);
@@ -1546,11 +1413,6 @@
         private System.Windows.Forms.TextBox tbErrorMailSendTo;
         private System.Windows.Forms.Label label14;
         private System.Windows.Forms.CheckBox cBSendErrorMail;
-        private System.Windows.Forms.GroupBox groupBox1;
-        private System.Windows.Forms.Button bSelectPath;
-        private System.Windows.Forms.Label lLogPath;
-        private System.Windows.Forms.TextBox txtBxLogPath;
-        private System.Windows.Forms.CheckBox cBIsLogActive;
         private System.Windows.Forms.TabPage tbProcessing;
         private System.Windows.Forms.TabPage tpInOut;
         private System.Windows.Forms.GroupBox gbKendox;
@@ -1623,15 +1485,6 @@
         private System.Windows.Forms.Label label25;
         private System.Windows.Forms.ComboBox cBSelectedProcess;
         private System.Windows.Forms.Label label23;
-        private System.Windows.Forms.DataGridViewTextBoxColumn dataGridViewTextBoxColumn1;
-        private System.Windows.Forms.DataGridViewTextBoxColumn dataGridViewTextBoxColumn2;
-        private System.Windows.Forms.DataGridViewComboBoxColumn Action;
-        private System.Windows.Forms.GroupBox gBCustomFunction;
-        private System.Windows.Forms.ProgressBar pBarCustomWSFunctions;
-        private System.Windows.Forms.DataGridView dgwCustomWSFunction;
-        private System.Windows.Forms.DataGridViewTextBoxColumn cFunction;
-        private System.Windows.Forms.DataGridViewTextBoxColumn cArguments;
-        private System.Windows.Forms.CheckBox cBCustomWSFunction;
         private System.Windows.Forms.CheckBox cbEncodePW;
         private System.Windows.Forms.GroupBox groupBox8;
         private System.Windows.Forms.Button btnConfigureDocSafe;
@@ -1646,6 +1499,9 @@
         private System.Windows.Forms.Label label24;
         private System.Windows.Forms.TextBox txtBxAttachmentRenameProperty;
         private System.Windows.Forms.BindingSource searchComparisonEnumBindingSource;
+        private System.Windows.Forms.DataGridViewTextBoxColumn dataGridViewTextBoxColumn1;
+        private System.Windows.Forms.DataGridViewTextBoxColumn dataGridViewTextBoxColumn2;
+        private System.Windows.Forms.DataGridViewComboBoxColumn Action;
         private System.Windows.Forms.DataGridViewTextBoxColumn Propertyname;
         private System.Windows.Forms.DataGridViewComboBoxColumn Operation;
         private System.Windows.Forms.DataGridViewTextBoxColumn Value;

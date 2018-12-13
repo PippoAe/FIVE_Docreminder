@@ -77,6 +77,7 @@
             this.Test});
             this.dataGridView1.Location = new System.Drawing.Point(8, 40);
             this.dataGridView1.Name = "dataGridView1";
+            this.dataGridView1.RowHeadersWidth = 20;
             this.dataGridView1.Size = new System.Drawing.Size(644, 88);
             this.dataGridView1.TabIndex = 4;
             this.dataGridView1.CellClick += new System.Windows.Forms.DataGridViewCellEventHandler(this.dataGridView1_CellClick);
@@ -156,6 +157,7 @@
             this.VarValue});
             this.dgwExpressionVariables.Location = new System.Drawing.Point(9, 40);
             this.dgwExpressionVariables.Name = "dgwExpressionVariables";
+            this.dgwExpressionVariables.RowHeadersWidth = 20;
             this.dgwExpressionVariables.Size = new System.Drawing.Size(644, 118);
             this.dgwExpressionVariables.TabIndex = 1;
             // 

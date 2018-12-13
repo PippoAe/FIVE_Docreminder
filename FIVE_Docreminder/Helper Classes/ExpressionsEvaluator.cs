@@ -41,7 +41,6 @@ namespace docreminder
         List<KeyValuePair<string, string>> sqlConnectionsList;
         List<sqlItem<string, SqlConnection>> sqlConnections = new List<sqlItem<string, SqlConnection>>();
 
-
         public ExpressionsEvaluator()
         {
             variables = new List<KeyValuePair<string, string>>();
@@ -214,8 +213,10 @@ namespace docreminder
 
                     if (sqlCon != null && sqlCon.State == ConnectionState.Closed)
                         sqlCon.Open();
-                    SqlCommand command = new SqlCommand(selectstatement.ToString());
-                    command.Connection = sqlCon;
+                    SqlCommand command = new SqlCommand(selectstatement.ToString())
+                    {
+                        Connection = sqlCon
+                    };
 
 
                     //AEPH 03.02.2016 

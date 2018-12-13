@@ -42,15 +42,19 @@ namespace docreminder.BO
         public static StringGlobalContract ConvertStringToStringGlobalContract(string str, string culture)
         {
 
-            StringGlobalEntry entry = new StringGlobalEntry();
-            entry.Culture = culture;
-            entry.Text = str;
+            StringGlobalEntry entry = new StringGlobalEntry
+            {
+                Culture = culture,
+                Text = str
+            };
 
             StringGlobalEntry[] arrayOfStringGlobalEntries = new StringGlobalEntry[1];
             arrayOfStringGlobalEntries[0] = entry;
 
-            StringGlobalContract strGlobalContract = new StringGlobalContract();
-            strGlobalContract.Values = arrayOfStringGlobalEntries;
+            StringGlobalContract strGlobalContract = new StringGlobalContract
+            {
+                Values = arrayOfStringGlobalEntries
+            };
 
             return strGlobalContract;
         }

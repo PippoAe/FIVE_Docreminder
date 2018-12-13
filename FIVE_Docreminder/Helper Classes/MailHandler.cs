@@ -50,9 +50,11 @@ namespace docreminder
         private void SendErrorMail()
         {
 
-            MailMessage mail = new MailMessage();
-            mail.Sender = new MailAddress(Properties.Settings.Default.SMTPSender);
-            mail.From = new MailAddress(Properties.Settings.Default.SMTPSender);
+            MailMessage mail = new MailMessage
+            {
+                Sender = new MailAddress(Properties.Settings.Default.SMTPSender),
+                From = new MailAddress(Properties.Settings.Default.SMTPSender)
+            };
 
             string mailRecipients = Properties.Settings.Default.ErrorMailSendTo;
             foreach (var address in mailRecipients.Split(new[] { ";" }, StringSplitOptions.RemoveEmptyEntries))
@@ -156,11 +158,10 @@ namespace docreminder
             TestConnection();
 
             log4.Info(string.Format("Trying to send test-mail to recipient '{0}'", recipient));
-            MailMessage mail = new MailMessage(Properties.Settings.Default.SMTPSender, recipient);
-            
-            
-
-            mail.Subject = "FIVE Docreminder - SMTP Test";
+            MailMessage mail = new MailMessage(Properties.Settings.Default.SMTPSender, recipient)
+            {
+                Subject = "FIVE Docreminder - SMTP Test"
+            };
             try
             {
                 string strClientIPAddress = GetLocalIPv4(NetworkInterfaceType.Ethernet);
@@ -218,9 +219,11 @@ namespace docreminder
             ExpressionsEvaluator expVal = new ExpressionsEvaluator();
 
             //PrepareMail
-            MailMessage mail = new MailMessage();
-            mail.Sender = new MailAddress(Properties.Settings.Default.SMTPSender);
-            mail.From = new MailAddress(Properties.Settings.Default.SMTPSender);
+            MailMessage mail = new MailMessage
+            {
+                Sender = new MailAddress(Properties.Settings.Default.SMTPSender),
+                From = new MailAddress(Properties.Settings.Default.SMTPSender)
+            };
 
             //Prepare Recipients
             string[] recipientsInput = Properties.Settings.Default.EBillSendTo.Split(new[] { ";" }, StringSplitOptions.RemoveEmptyEntries);
@@ -493,9 +496,11 @@ namespace docreminder
         {
 
             //Prepare Recipient.
-            MailMessage mail = new MailMessage();
-            mail.Sender = new MailAddress(Properties.Settings.Default.SMTPSender);
-            mail.From = new MailAddress(Properties.Settings.Default.SMTPSender);
+            MailMessage mail = new MailMessage
+            {
+                Sender = new MailAddress(Properties.Settings.Default.SMTPSender),
+                From = new MailAddress(Properties.Settings.Default.SMTPSender)
+            };
 
             string mailSubject = Properties.Settings.Default.ReportSubject;
 

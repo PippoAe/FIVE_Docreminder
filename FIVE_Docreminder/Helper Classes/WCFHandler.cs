@@ -11,6 +11,7 @@ namespace docreminder
         private static readonly log4net.ILog log4 = log4net.LogManager.GetLogger(System.Reflection.MethodBase.GetCurrentMethod().DeclaringType);
 
         private static WCFHandler instance;
+        private static object syncRoot = new Object();
 
         private DateTime lastActionTime = DateTime.Now;
         private static TimeSpan connectionTimeOut;
@@ -35,7 +36,16 @@ namespace docreminder
             get
             {
                 if (instance == null)
-                    instance = new WCFHandler();
+                {
+                    lock (syncRoot)
+                    {
+                        if (instance == null)
+                        {
+                            instance = new WCFHandler();
+                        }
+                    }
+                }
+
                 return instance;
             }
         }
@@ -71,27 +81,12 @@ namespace docreminder
                 else
                     decryptedPassword = Properties.Settings.Default.KendoxPassword;
 
-                try
-                {
+
                     LogonResultContract res;
                     res = authenticationService.Logon(Properties.Settings.Default.KendoxUsername, authenticationService.EncodeStringToBase64SHA512(decryptedPassword));
                     connID = res.ConnectionId;
                     connectionTimeOut = TimeSpan.FromSeconds(res.ConnectionTimeoutSeconds);
-                }
-                catch (Exception e)
-                {
-                    log4.Warn("Seems like you didn't provide me with the correct password.");
-                    if (decryptedPassword == null)
-                    {
-                        log4.Info("Let me try myself...");
-                        LogonResultContract res;
-                        res = authenticationService.Logon(Properties.Settings.Default.KendoxUsername, "hEFEn6uJCDGSFuOqUmSNxWWseZ8lKMZgfGyxubp/2kvBl+CuI62mdc8uqXZDvykh2jqrWiVeHiXPiL/NLfSs1g==");
-                        connID = res.ConnectionId;
-                        connectionTimeOut = TimeSpan.FromSeconds(res.ConnectionTimeoutSeconds);
-                    }
-                    else
-                        throw e;
-                }
+
             }
 
             catch (Exception e)

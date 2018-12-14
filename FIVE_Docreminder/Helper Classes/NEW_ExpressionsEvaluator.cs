@@ -18,6 +18,8 @@ namespace docreminder
         private static readonly log4net.ILog log4 = log4net.LogManager.GetLogger(System.Reflection.MethodBase.GetCurrentMethod().DeclaringType);
 
         private static NEWExpressionsEvaluator instance;
+        private static object syncRoot = new Object();
+
 
         [Serializable]
         [XmlType(TypeName = "CustomKeyValuePair")]
@@ -54,7 +56,16 @@ namespace docreminder
             get
             {
                 if (instance == null)
-                    instance = new NEWExpressionsEvaluator();
+                {
+                    lock (syncRoot)
+                    {
+                        if (instance == null)
+                        {
+                            instance = new NEWExpressionsEvaluator();
+                        }
+                    }
+                }
+
                 return instance;
             }
         }
@@ -62,7 +73,7 @@ namespace docreminder
 
         public void UpdateVariables()
         {
-            var start = DateTime.Now;
+            //var start = DateTime.Now;
 
             variables = new List<KeyValuePair<string, string>>();
             if (Properties.Settings.Default.ExpressionVariables != "")
@@ -89,8 +100,8 @@ namespace docreminder
                 }
             }
 
-            var end = DateTime.Now - start;
-            log4.Debug(string.Format("Initialisiation of Variables took {0} milliseconds.", end.TotalMilliseconds.ToString()));
+            //var end = DateTime.Now - start;
+            //log4.Debug(string.Format("Initialisiation of evaluator Variables took {0} milliseconds.", end.TotalMilliseconds.ToString()));
         }
 
         private NEWExpressionsEvaluator()
@@ -328,7 +339,7 @@ namespace docreminder
             }
 
             var end = DateTime.Now - start;
-            log4.Debug(string.Format("Evaluation expression took {0} milliseconds. in:'{1}' out:'{2}'", end.TotalMilliseconds.ToString(),input,returnvalue));
+            log4.Debug(string.Format("Evaluation of expression took {0} milliseconds. in:'{1}' out:'{2}'", end.TotalMilliseconds.ToString(),input,returnvalue));
 
             return returnvalue;
         }

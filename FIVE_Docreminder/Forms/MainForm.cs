@@ -40,8 +40,94 @@ namespace docreminder
             //CheckSchedule
             CheckSchedule();
         }
-        
-        //Toolstrip
+
+        #region Presentation
+
+        #region Visuals
+        private void dgwDocuments_CellFormatting(object sender, DataGridViewCellFormattingEventArgs e)
+        {
+            switch (e.ColumnIndex)
+            {
+                //ObjectID
+                case 0:
+                    break;
+
+                //RDY
+                case 1:
+                    if (Convert.ToBoolean(e.Value))
+                        e.CellStyle.BackColor = Color.LightGreen;
+                    break;
+
+                //Finished
+                case 2:
+                    if (Convert.ToBoolean(e.Value))
+                        e.CellStyle.BackColor = Color.LightGreen;
+                    break;
+
+                //Error
+                case 3:
+                    if (Convert.ToBoolean(e.Value))
+                        e.CellStyle.BackColor = Color.PaleVioletRed;
+                    break;
+            }
+        }
+
+        private void dgwDocuments_DataBindingComplete(object sender, DataGridViewBindingCompleteEventArgs e)
+        {
+            dgwDocuments.Columns[0].AutoSizeMode = DataGridViewAutoSizeColumnMode.AllCells;
+            dgwDocuments.Columns[1].AutoSizeMode = DataGridViewAutoSizeColumnMode.AllCells;
+            dgwDocuments.Columns[2].AutoSizeMode = DataGridViewAutoSizeColumnMode.AllCells;
+            dgwDocuments.Columns[3].AutoSizeMode = DataGridViewAutoSizeColumnMode.AllCells;
+            dgwDocuments.Columns[4].AutoSizeMode = DataGridViewAutoSizeColumnMode.Fill;
+
+            dgwDocuments.ClearSelection();
+        }
+        #endregion
+
+        #region LogicEvents
+        private void MainForm_Shown(object sender, EventArgs e)
+        {
+            var mess = "";
+            if (Program.customConfigFile != "")
+                mess = string.Format("Loaded Config: '{0}'", Path.GetFileName(Program.customConfigFile));
+            else
+                mess = "Loaded Config: 'Default'";
+            toolStripStatusConfig.Text = mess;
+            log4.Info(mess);
+
+            if (Program.automode)
+            {
+                log4.Info("Application started in Automode.");
+                CheckForDocuments();
+            }
+        }
+
+        private void timerShutDown_Tick(object sender, EventArgs e)
+        {
+            scheduledTimeLeft = scheduledTimeLeft.Subtract(new TimeSpan(0, 0, 1));
+
+            string TimeSpanText = string.Format(
+                scheduledTimeLeft.TotalDays >= 1 ? @"{0:d\.h\:mm\:ss}" : @"{0:hh\:mm\:ss}",
+                scheduledTimeLeft);
+            toolStripStatusCountdown.Text = ("(" + TimeSpanText + ")");
+
+            //Scheduled time reached
+            if (scheduledTimeLeft.TotalSeconds > 4 & scheduledTimeLeft.TotalSeconds < 5)
+            {
+                log4.Info(string.Format("Todays scheduled endtime is almost reached. Shutting down ASAP."));
+            }
+            if (scheduledTimeLeft.TotalSeconds < 0)
+            {
+                //No work is being done.
+                if (!processDocumentsWorker.IsBusy && !processDocumentsWorker.IsBusy)
+                {
+                    this.Close();
+                }
+            }
+        }
+        #endregion
+
+        #region toolstrip
         private void optionsToolStripMenuItem_Click(object sender, EventArgs e)
         {
             FormSettings settingsForm = new FormSettings(this);
@@ -69,22 +155,13 @@ namespace docreminder
                 CheckSchedule();
             }
         }
- 
+        #endregion
 
-        //Buttons
+        #region buttons
         private void bCheckForDocuments_Click(object sender, EventArgs e)
         {
             WCFHandler.GetInstance.resumePoint = null;
             CheckForDocuments();
-        }
-
-        private void bSendEbill_Click(object sender, EventArgs e)
-        {
-            bCheckForDocuments.Enabled = false;
-            bSendEbills.Enabled = false;
-            btnSearchMore.Enabled = false;
-            processDocumentsWorker.RunWorkerAsync();
-
         }
 
         private void btnSearchMore_Click(object sender, EventArgs e)
@@ -93,7 +170,20 @@ namespace docreminder
             btnSearchMore.Enabled = false;
         }
 
-        //Santas little helpers.
+        private void bSendEbill_Click(object sender, EventArgs e)
+        {
+            bCheckForDocuments.Enabled = false;
+            bSendEbills.Enabled = false;
+            btnSearchMore.Enabled = false;
+            //processDocumentsWorker.RunWorkerAsync();
+            NEWProcessDocumentsWorker.RunWorkerAsync();
+
+        }
+        #endregion
+
+        #endregion
+
+        #region Helpers
         public void CheckForDocuments()
         {
             bSendEbills.Enabled = false;
@@ -102,97 +192,7 @@ namespace docreminder
             progressBar1.Minimum = 0;
             progressBar1.Maximum = 100;
             progressBar1.Value = 0;
-            NEWGetDocumentsWorker.RunWorkerAsync();
-        }
-
-
-
-
-
-
-        public void displayFoundEBills(KXWS.SDocument[] documents)
-        {
-            log4.Info(string.Format("Found {0} documents matching the searchproperties. HasMore:{1}", documents.Count(), _webServiceHandler.hasMore));
-            dgwEbills.Columns.Clear();
-            dgwEbills.DataSource = null;
-            dgwEbills.DataSource = documents;
-
-            if (documents.Count() > 0)
-            {
-                //Add DocumentpropertyColumns to DGW.
-                if (documents[0].documentProperties.Count() > 0)
-                {
-                    foreach (KXWS.SDocumentProperty docprop in documents[0].documentProperties)
-                    {
-                        dgwEbills.Columns.Add(docprop.name, docprop.name);
-                    }
-                }
-
-                for (int i = 0; i < dgwEbills.Columns.Count; i++)
-                {
-                    dgwEbills.Columns[i].Visible = false;
-                }
-                try
-                {
-                    List<KXWS.SSearchCondition> searchonlist = new List<KXWS.SSearchCondition>();
-                    searchonlist = (List<KXWS.SSearchCondition>)(FileHelper.XmlDeserializeFromString(Properties.Settings.Default.KendoxSearchProperties, searchonlist.GetType()));
-
-                    dgwEbills.Columns["name"].Visible = true;
-                    dgwEbills.Columns["DocumentID"].Visible = true;
-
-                    foreach (KXWS.SSearchCondition searchcon in searchonlist)
-                    {
-                        dgwEbills.Columns[searchcon.propertyTypeName].Visible = true;
-                    }
-                }
-                catch
-                {
-                }
-
-                //FillEachDocumentProperty
-                foreach (DataGridViewRow row in dgwEbills.Rows)
-                {
-                    foreach (KXWS.SDocumentProperty docprop in ((KXWS.SDocument)(row.DataBoundItem)).documentProperties)
-                    {
-                        if (docprop.propertyValues.Count() > 0)
-                            row.Cells[docprop.name].Value = docprop.propertyValues[0];
-                        else
-                            row.Cells[docprop.name].Value = "";
-                    }
-                }
-
-
-                //Validate with Additional Computed Identifiers before sending.
-                if (Properties.Settings.Default.AddCpIdisActive)
-                {
-                    log4.Info("Additional computed identifier is active! Validating each document...");
-
-
-                        int greenlighted = 0;
-                        ExpressionsEvaluator expVal = new ExpressionsEvaluator();
-                        foreach (DataGridViewRow row in dgwEbills.Rows)
-                        {
-                            try{
-                                    if (Convert.ToBoolean(expVal.Evaluate(Properties.Settings.Default.AdditionalComputedIdentifier, row)))
-                                    {
-                                        row.DefaultCellStyle.BackColor = Color.LightGreen;
-                                        greenlighted++;
-                                    }
-                                    else
-                                    {
-                                        row.DefaultCellStyle.BackColor = Color.Orange;
-                                    }
-                                }
-                            catch (Exception e)
-                            {
-                                log4.Info("An Error happened while validating the documents with the additional computed identifier!" + e.Message);
-                                row.DefaultCellStyle.BackColor = Color.Red;
-                            }
-                        }
-
-                   log4.Info("Found " + greenlighted + " documents matching the additional computed identifier.");
-                }
-            }           
+            GetDocumentsWorker.RunWorkerAsync();
         }
 
         private void CheckSchedule()
@@ -239,32 +239,29 @@ namespace docreminder
                 toolStripStatusLabel2.Text = "";
             }
         }
+        #endregion
+  
+        #region Workers
 
-
-        //Workers
-
-
-        #region NewGetDocumentsWorker
-        private void NEWGetDocumentsWorker_DoWork(object sender, DoWorkEventArgs e)
+        private void GetDocumentsWorker_DoWork(object sender, DoWorkEventArgs e)
         {
-            NEWGetDocumentsWorker.ReportProgress(10);
+            GetDocumentsWorker.ReportProgress(10);
             try
             {
                 InfoShareService.DocumentSimpleContract[] documents;
                 if (WCFHandler.GetInstance.isConnected())
                 {
                     documents = WCFHandler.GetInstance.SearchForDocuments();
-                    NEWGetDocumentsWorker.ReportProgress(50);
+                    GetDocumentsWorker.ReportProgress(50);
 
                     List<BO.WorkObject> workObjects = new List<BO.WorkObject>();
                     foreach (InfoShareService.DocumentSimpleContract siCo in documents)
                     {
                         workObjects.Add(new BO.WorkObject(siCo.Id));
                     }
-                    NEWGetDocumentsWorker.ReportProgress(100);
+                    GetDocumentsWorker.ReportProgress(100);
 
                     e.Result = workObjects;
-
                 }
             }
             catch (Exception ex)
@@ -273,17 +270,21 @@ namespace docreminder
             }
         }
 
-        private void NEWGetDocumentsWorker_ProgressChanged(object sender, ProgressChangedEventArgs e)
+        private void GetDocumentsWorker_ProgressChanged(object sender, ProgressChangedEventArgs e)
         {
             progressBar1.Value = e.ProgressPercentage;
         }
 
-        private void NEWGetDocumentsWorker_RunWorkerCompleted(object sender, RunWorkerCompletedEventArgs e)
+        private void GetDocumentsWorker_RunWorkerCompleted(object sender, RunWorkerCompletedEventArgs e)
         {
-            dgwEbills.DataSource = e.Result;
+            dgwDocuments.SuspendLayout();
+            dgwDocuments.DataSource = e.Result;
+            dgwDocuments.ResumeLayout();
+
             progressBar1.Value = 0;
             bSendEbills.Enabled = true;
             bCheckForDocuments.Enabled = true;
+
             if (WCFHandler.GetInstance.hasMore)
             {
                 btnSearchMore.Enabled = true;
@@ -295,23 +296,53 @@ namespace docreminder
                 btnSearchMore.Enabled = false;
             }
 
-            //IF Automode, send Ebills
+            ////IF Automode, send Ebills
             //if (Program.automode)
             //    bSendEbill_Click(this, new EventArgs());
         }
 
-        #endregion EndRegion
 
-        #region processDocumentsWorker
-        /// <summary>
-        /// Process Documents Worker
-        /// </summary>
-        /// <param name="sender"></param>
-        /// <param name="e"></param>
+        private void NEWProcessDocumentsWorker_DoWork(object sender, DoWorkEventArgs e)
+        {
+            List<BO.WorkObject> workObjects = (List<BO.WorkObject>)dgwDocuments.DataSource;
+            
+            for (var i = 0; i < workObjects.Count();i++)
+            {
+                workObjects[i].Process();
+                NEWProcessDocumentsWorker.ReportProgress(((100)/workObjects.Count())*i);
+            }
+        }
+
+        private void NEWProcessDocumentsWorker_ProgressChanged(object sender, ProgressChangedEventArgs e)
+        {
+            progressBar1.Value = e.ProgressPercentage;
+            dgwDocuments.Refresh();
+        }
+
+        private void NEWProcessDocumentsWorker_RunWorkerCompleted(object sender, RunWorkerCompletedEventArgs e)
+        {
+            this.Text = "Five Informatik AG - Document Reminder";
+            progressBar1.Value = 0;
+            bCheckForDocuments.Enabled = true;
+            if (WCFHandler.GetInstance.hasMore)
+                btnSearchMore.Enabled = true;
+            bSendEbills.Enabled = false;
+
+            //If automode and NoMore Documents. Close!
+            if ((Program.automode && !WCFHandler.GetInstance.hasMore) || scheduledTimeLeft.TotalSeconds < 0)
+                this.Close();
+            //If automode and more Documents searchMore.
+            else if (Program.automode && WCFHandler.GetInstance.hasMore)
+            {
+                btnSearchMore_Click(null, null);
+            }
+        }
+
+
         private void processDocumentsWorker_DoWork(object sender, DoWorkEventArgs e)
         {
 
-            if (dgwEbills.Rows.Count > 0)
+            if (dgwDocuments.Rows.Count > 0)
             {
                 log4.Info("Document processing initiated. Now trying to process each document.");
                 List<KXWS.SSearchCondition> searchConList = new List<KXWS.SSearchCondition>();
@@ -320,9 +351,9 @@ namespace docreminder
                 bool errorHappened = false;
 
                 //Process all documents or Prepare Mailing List!
-                foreach (DataGridViewRow row in dgwEbills.Rows)
+                foreach (DataGridViewRow row in dgwDocuments.Rows)
                 {
-                    processDocumentsWorker.ReportProgress((100 / dgwEbills.Rows.Count) * (row.Index + 1));
+                    processDocumentsWorker.ReportProgress((100 / dgwDocuments.Rows.Count) * (row.Index + 1));
                     //if endtime is reached, turn remaining rows, but dont process.
                     if (scheduledTimeLeft.TotalSeconds < 0)
                     {
@@ -338,7 +369,7 @@ namespace docreminder
                             else
                             {
                                 List<string> childGuids = webserviceHandler.searchForChildDocumentGuids(row, documentId);
-                                
+
                                 //If Count <= 1, check if the child might be the parent.
                                 //AEPH 13.01.2017 - Besmer Request "Dont send Parent if no Child is found".
                                 if (Properties.Settings.Default.GroupingSendWithoutChild)
@@ -350,7 +381,7 @@ namespace docreminder
                                     if (childGuids.Count == 0 || (childGuids.Count == 1 && childGuids.Contains(documentId)))
                                     {
                                         row.HeaderCell.Style.BackColor = Color.LightGreen;
-                                        log4.Info("Parentdocument ignored, no child documents available. ObjectID:"+documentId);
+                                        log4.Info("Parentdocument ignored, no child documents available. ObjectID:" + documentId);
                                     }
                                     else
                                     {
@@ -366,18 +397,18 @@ namespace docreminder
 
                 log4.Info("Waiting for all asynchronus documentprocessing to finish...");
                 bool allfinished = false;
-                
+
                 processDocumentsWorker.ReportProgress(0);
                 while (!allfinished)
                 {
                     bool oneraised = false;
-                    dgwEbills.Invoke((MethodInvoker)delegate()
+                    dgwDocuments.Invoke((MethodInvoker)delegate ()
                     {
-                        dgwEbills.EnableHeadersVisualStyles = false;
+                        dgwDocuments.EnableHeadersVisualStyles = false;
                     });
 
                     int i = 0;
-                    foreach (DataGridViewRow row in dgwEbills.Rows)
+                    foreach (DataGridViewRow row in dgwDocuments.Rows)
                     {
                         if (!(row.HeaderCell.Style.BackColor == Color.LightGreen | row.HeaderCell.Style.BackColor == Color.Red | row.DefaultCellStyle.BackColor == Color.Orange))
                         {
@@ -394,20 +425,21 @@ namespace docreminder
                     else
                         allfinished = true;
 
-                    processDocumentsWorker.ReportProgress((100 / dgwEbills.Rows.Count) * i);
+                    processDocumentsWorker.ReportProgress((100 / dgwDocuments.Rows.Count) * i);
                 }
 
-                foreach (DataGridViewRow row in dgwEbills.Rows)
+                foreach (DataGridViewRow row in dgwDocuments.Rows)
                 {
                     if (row.HeaderCell.Style.BackColor == Color.LightGreen)
                         sucessfullySent++;
-                    if(row.HeaderCell.Style.BackColor == Color.Red)
+                    if (row.HeaderCell.Style.BackColor == Color.Red)
                         errorHappened = true;
                 }
 
 
                 //if there are more documents do nothing.
-                if (_webServiceHandler.hasMore && scheduledTimeLeft.TotalSeconds >= 0) {
+                if (_webServiceHandler.hasMore && scheduledTimeLeft.TotalSeconds >= 0)
+                {
                     string error = "Documents processed without errors.";
                     if (errorHappened)
                         error = "Documents processed with errors!";
@@ -435,12 +467,7 @@ namespace docreminder
                 log4.Info("There are no documents to be processed.");
             }
         }
-
-        /// <summary>
-        /// On the UI Trhead. Update the status.
-        /// </summary>
-        /// <param name="sender"></param>
-        /// <param name="e"></param>
+   
         private void processDocumentsWorker_ProgressChanged(object sender, ProgressChangedEventArgs e)
         {
             progressBar1.Value = e.ProgressPercentage;
@@ -465,48 +492,100 @@ namespace docreminder
             }
         }
 
-        #endregion 
 
-        private void timerShutDown_Tick(object sender, EventArgs e)
-        {
-            scheduledTimeLeft = scheduledTimeLeft.Subtract(new TimeSpan(0, 0, 1));
-            
-            string TimeSpanText = string.Format(
-                scheduledTimeLeft.TotalDays >= 1 ? @"{0:d\.h\:mm\:ss}" : @"{0:hh\:mm\:ss}",
-                scheduledTimeLeft); 
-             toolStripStatusCountdown.Text = ("("+TimeSpanText+")");
-            
-            //Scheduled time reached
-            if(scheduledTimeLeft.TotalSeconds > 4 & scheduledTimeLeft.TotalSeconds < 5 )
-            {
-                log4.Info(string.Format("Todays scheduled endtime is almost reached. Shutting down ASAP."));
-            }
-            if (scheduledTimeLeft.TotalSeconds < 0)
-            {
-                //No work is being done.
-                if (!processDocumentsWorker.IsBusy && !processDocumentsWorker.IsBusy)
-                {
-                    this.Close();
-                }
-            }
-        }
 
-        private void MainForm_Shown(object sender, EventArgs e)
-        {
-            var mess = "";
-            if (Program.customConfigFile != "")
-                mess = string.Format("Loaded Config: '{0}'", Path.GetFileName(Program.customConfigFile));
-            else
-                mess = "Loaded Config: 'Default'";
-            toolStripStatusConfig.Text = mess;
-            log4.Info(mess);
+        #endregion EndRegion
 
-            if (Program.automode)
-            {
-                log4.Info("Application started in Automode.");
-                CheckForDocuments();
-            }
-        }
+        #region OldStuff
+
+        //OLD
+        //public void displayFoundEBills(KXWS.SDocument[] documents)
+        //{
+        //    log4.Info(string.Format("Found {0} documents matching the searchproperties. HasMore:{1}", documents.Count(), _webServiceHandler.hasMore));
+        //    dgwEbills.Columns.Clear();
+        //    dgwEbills.DataSource = null;
+        //    dgwEbills.DataSource = documents;
+
+        //    if (documents.Count() > 0)
+        //    {
+        //        //Add DocumentpropertyColumns to DGW.
+        //        if (documents[0].documentProperties.Count() > 0)
+        //        {
+        //            foreach (KXWS.SDocumentProperty docprop in documents[0].documentProperties)
+        //            {
+        //                dgwEbills.Columns.Add(docprop.name, docprop.name);
+        //            }
+        //        }
+
+        //        for (int i = 0; i < dgwEbills.Columns.Count; i++)
+        //        {
+        //            dgwEbills.Columns[i].Visible = false;
+        //        }
+        //        try
+        //        {
+        //            List<KXWS.SSearchCondition> searchonlist = new List<KXWS.SSearchCondition>();
+        //            searchonlist = (List<KXWS.SSearchCondition>)(FileHelper.XmlDeserializeFromString(Properties.Settings.Default.KendoxSearchProperties, searchonlist.GetType()));
+
+        //            dgwEbills.Columns["name"].Visible = true;
+        //            dgwEbills.Columns["DocumentID"].Visible = true;
+
+        //            foreach (KXWS.SSearchCondition searchcon in searchonlist)
+        //            {
+        //                dgwEbills.Columns[searchcon.propertyTypeName].Visible = true;
+        //            }
+        //        }
+        //        catch
+        //        {
+        //        }
+
+        //        //FillEachDocumentProperty
+        //        foreach (DataGridViewRow row in dgwEbills.Rows)
+        //        {
+        //            foreach (KXWS.SDocumentProperty docprop in ((KXWS.SDocument)(row.DataBoundItem)).documentProperties)
+        //            {
+        //                if (docprop.propertyValues.Count() > 0)
+        //                    row.Cells[docprop.name].Value = docprop.propertyValues[0];
+        //                else
+        //                    row.Cells[docprop.name].Value = "";
+        //            }
+        //        }
+
+
+        //        //Validate with Additional Computed Identifiers before sending.
+        //        if (Properties.Settings.Default.AddCpIdisActive)
+        //        {
+        //            log4.Info("Additional computed identifier is active! Validating each document...");
+
+
+        //                int greenlighted = 0;
+        //                ExpressionsEvaluator expVal = new ExpressionsEvaluator();
+        //                foreach (DataGridViewRow row in dgwEbills.Rows)
+        //                {
+        //                    try{
+        //                            if (Convert.ToBoolean(expVal.Evaluate(Properties.Settings.Default.AdditionalComputedIdentifier, row)))
+        //                            {
+        //                                row.DefaultCellStyle.BackColor = Color.LightGreen;
+        //                                greenlighted++;
+        //                            }
+        //                            else
+        //                            {
+        //                                row.DefaultCellStyle.BackColor = Color.Orange;
+        //                            }
+        //                        }
+        //                    catch (Exception e)
+        //                    {
+        //                        log4.Info("An Error happened while validating the documents with the additional computed identifier!" + e.Message);
+        //                        row.DefaultCellStyle.BackColor = Color.Red;
+        //                    }
+        //                }
+
+        //           log4.Info("Found " + greenlighted + " documents matching the additional computed identifier.");
+        //        }
+        //    }           
+        //}
+
+        #endregion
+
 
     }
 }

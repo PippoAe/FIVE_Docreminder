@@ -62,10 +62,17 @@
             this.txtBxAdditionalComputedIdentifier = new System.Windows.Forms.TextBox();
             this.groupBox5 = new System.Windows.Forms.GroupBox();
             this.dGwMarkerProperties = new System.Windows.Forms.DataGridView();
+            this.dataGridViewTextBoxColumn1 = new System.Windows.Forms.DataGridViewTextBoxColumn();
+            this.dataGridViewTextBoxColumn2 = new System.Windows.Forms.DataGridViewTextBoxColumn();
+            this.Action = new System.Windows.Forms.DataGridViewComboBoxColumn();
             this.groupBox3 = new System.Windows.Forms.GroupBox();
             this.nUdSearchQuantity = new System.Windows.Forms.NumericUpDown();
             this.label22 = new System.Windows.Forms.Label();
             this.dgwSearchProperties = new System.Windows.Forms.DataGridView();
+            this.Propertyname = new System.Windows.Forms.DataGridViewTextBoxColumn();
+            this.Operation = new System.Windows.Forms.DataGridViewComboBoxColumn();
+            this.Value = new System.Windows.Forms.DataGridViewTextBoxColumn();
+            this.Relation = new System.Windows.Forms.DataGridViewComboBoxColumn();
             this.tpInOut = new System.Windows.Forms.TabPage();
             this.gbKendox = new System.Windows.Forms.GroupBox();
             this.cbEncodePW = new System.Windows.Forms.CheckBox();
@@ -132,13 +139,6 @@
             this.cBAttFile = new System.Windows.Forms.CheckBox();
             this.openFileDialog1 = new System.Windows.Forms.OpenFileDialog();
             this.searchComparisonEnumBindingSource = new System.Windows.Forms.BindingSource(this.components);
-            this.Propertyname = new System.Windows.Forms.DataGridViewTextBoxColumn();
-            this.Operation = new System.Windows.Forms.DataGridViewComboBoxColumn();
-            this.Value = new System.Windows.Forms.DataGridViewTextBoxColumn();
-            this.Relation = new System.Windows.Forms.DataGridViewComboBoxColumn();
-            this.dataGridViewTextBoxColumn1 = new System.Windows.Forms.DataGridViewTextBoxColumn();
-            this.dataGridViewTextBoxColumn2 = new System.Windows.Forms.DataGridViewTextBoxColumn();
-            this.Action = new System.Windows.Forms.DataGridViewComboBoxColumn();
             this.tpLog.SuspendLayout();
             this.groupBox7.SuspendLayout();
             this.groupBox2.SuspendLayout();
@@ -467,10 +467,35 @@
             dataGridViewCellStyle3.SelectionForeColor = System.Drawing.SystemColors.HighlightText;
             dataGridViewCellStyle3.WrapMode = System.Windows.Forms.DataGridViewTriState.True;
             this.dGwMarkerProperties.RowHeadersDefaultCellStyle = dataGridViewCellStyle3;
+            this.dGwMarkerProperties.RowHeadersVisible = false;
             this.dGwMarkerProperties.RowHeadersWidth = 20;
+            this.dGwMarkerProperties.SelectionMode = System.Windows.Forms.DataGridViewSelectionMode.FullRowSelect;
             this.dGwMarkerProperties.Size = new System.Drawing.Size(382, 119);
             this.dGwMarkerProperties.TabIndex = 30;
             this.dGwMarkerProperties.EditingControlShowing += new System.Windows.Forms.DataGridViewEditingControlShowingEventHandler(this.dGwMarkerProperties_EditingControlShowing);
+            // 
+            // dataGridViewTextBoxColumn1
+            // 
+            this.dataGridViewTextBoxColumn1.HeaderText = "Propertyname";
+            this.dataGridViewTextBoxColumn1.Name = "dataGridViewTextBoxColumn1";
+            this.dataGridViewTextBoxColumn1.Width = 150;
+            // 
+            // dataGridViewTextBoxColumn2
+            // 
+            this.dataGridViewTextBoxColumn2.AutoSizeMode = System.Windows.Forms.DataGridViewAutoSizeColumnMode.Fill;
+            this.dataGridViewTextBoxColumn2.HeaderText = "Value(s)";
+            this.dataGridViewTextBoxColumn2.Name = "dataGridViewTextBoxColumn2";
+            // 
+            // Action
+            // 
+            this.Action.HeaderText = "Action";
+            this.Action.Items.AddRange(new object[] {
+            "UPDATE",
+            "NONE",
+            "ADD",
+            "DELETE"});
+            this.Action.Name = "Action";
+            this.Action.Width = 50;
             // 
             // groupBox3
             // 
@@ -558,12 +583,56 @@
             dataGridViewCellStyle6.SelectionForeColor = System.Drawing.SystemColors.HighlightText;
             dataGridViewCellStyle6.WrapMode = System.Windows.Forms.DataGridViewTriState.True;
             this.dgwSearchProperties.RowHeadersDefaultCellStyle = dataGridViewCellStyle6;
+            this.dgwSearchProperties.RowHeadersVisible = false;
             this.dgwSearchProperties.RowHeadersWidth = 20;
+            this.dgwSearchProperties.SelectionMode = System.Windows.Forms.DataGridViewSelectionMode.FullRowSelect;
             this.dgwSearchProperties.Size = new System.Drawing.Size(381, 108);
             this.dgwSearchProperties.TabIndex = 0;
             this.dgwSearchProperties.DataError += new System.Windows.Forms.DataGridViewDataErrorEventHandler(this.dgwSearchProperties_DataError);
             this.dgwSearchProperties.EditingControlShowing += new System.Windows.Forms.DataGridViewEditingControlShowingEventHandler(this.dgwSearchProperties_EditingControlShowing);
             this.dgwSearchProperties.RowPostPaint += new System.Windows.Forms.DataGridViewRowPostPaintEventHandler(this.dgwSearchProperties_RowPostPaint);
+            // 
+            // Propertyname
+            // 
+            this.Propertyname.HeaderText = "Propertyname";
+            this.Propertyname.Name = "Propertyname";
+            this.Propertyname.Width = 150;
+            // 
+            // Operation
+            // 
+            this.Operation.HeaderText = "Operation";
+            this.Operation.Items.AddRange(new object[] {
+            "Equals",
+            "NotEqual",
+            "GreaterThan",
+            "GreaterOrEqual",
+            "LessThan",
+            "LessOrEqual",
+            "Like",
+            "Contains",
+            "Undefined",
+            "In",
+            "None",
+            "Soundex",
+            "NotIn"});
+            this.Operation.MaxDropDownItems = 20;
+            this.Operation.Name = "Operation";
+            this.Operation.Width = 50;
+            // 
+            // Value
+            // 
+            this.Value.AutoSizeMode = System.Windows.Forms.DataGridViewAutoSizeColumnMode.Fill;
+            this.Value.HeaderText = "Value";
+            this.Value.Name = "Value";
+            // 
+            // Relation
+            // 
+            this.Relation.HeaderText = "Relation";
+            this.Relation.Items.AddRange(new object[] {
+            "AND",
+            "OR"});
+            this.Relation.Name = "Relation";
+            this.Relation.Width = 60;
             // 
             // tpInOut
             // 
@@ -1287,71 +1356,6 @@
             // searchComparisonEnumBindingSource
             // 
             this.searchComparisonEnumBindingSource.DataSource = typeof(docreminder.BO.Utility.SearchComparisonEnum);
-            // 
-            // Propertyname
-            // 
-            this.Propertyname.HeaderText = "Propertyname";
-            this.Propertyname.Name = "Propertyname";
-            this.Propertyname.Width = 150;
-            // 
-            // Operation
-            // 
-            this.Operation.HeaderText = "Operation";
-            this.Operation.Items.AddRange(new object[] {
-            "Equals",
-            "NotEqual",
-            "GreaterThan",
-            "GreaterOrEqual",
-            "LessThan",
-            "LessOrEqual",
-            "Like",
-            "Contains",
-            "Undefined",
-            "In",
-            "None",
-            "Soundex",
-            "NotIn"});
-            this.Operation.MaxDropDownItems = 20;
-            this.Operation.Name = "Operation";
-            this.Operation.Width = 50;
-            // 
-            // Value
-            // 
-            this.Value.AutoSizeMode = System.Windows.Forms.DataGridViewAutoSizeColumnMode.Fill;
-            this.Value.HeaderText = "Value";
-            this.Value.Name = "Value";
-            // 
-            // Relation
-            // 
-            this.Relation.HeaderText = "Relation";
-            this.Relation.Items.AddRange(new object[] {
-            "AND",
-            "OR"});
-            this.Relation.Name = "Relation";
-            this.Relation.Width = 60;
-            // 
-            // dataGridViewTextBoxColumn1
-            // 
-            this.dataGridViewTextBoxColumn1.HeaderText = "Propertyname";
-            this.dataGridViewTextBoxColumn1.Name = "dataGridViewTextBoxColumn1";
-            this.dataGridViewTextBoxColumn1.Width = 150;
-            // 
-            // dataGridViewTextBoxColumn2
-            // 
-            this.dataGridViewTextBoxColumn2.AutoSizeMode = System.Windows.Forms.DataGridViewAutoSizeColumnMode.Fill;
-            this.dataGridViewTextBoxColumn2.HeaderText = "Value(s)";
-            this.dataGridViewTextBoxColumn2.Name = "dataGridViewTextBoxColumn2";
-            // 
-            // Action
-            // 
-            this.Action.HeaderText = "Action";
-            this.Action.Items.AddRange(new object[] {
-            "UPDATE",
-            "NONE",
-            "ADD",
-            "DELETE"});
-            this.Action.Name = "Action";
-            this.Action.Width = 50;
             // 
             // FormSettings
             // 

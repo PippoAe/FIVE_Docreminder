@@ -118,7 +118,6 @@ namespace docreminder.Forms
 
         private void bTestExpression_Click(object sender, EventArgs e)
         {
-            //ExpressionsEvaluator expVal = new ExpressionsEvaluator();
             try
             {
                 NEWExpressionsEvaluator.GetInstance.UpdateVariables();

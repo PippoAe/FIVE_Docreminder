@@ -1,5 +1,6 @@
 ﻿using docreminder.InfoShareService;
 using System;
+using System.Threading;
 
 namespace docreminder.BO
 {
@@ -11,14 +12,16 @@ namespace docreminder.BO
 
         public DocumentContract document;
         public string objectID { get; private set; }
-        public bool isValid { get; private set; }
+        public bool ready { get; private set; }
         public bool finished { get; private set; }
-        public string error { get; private set; }
+        public bool error { get; private set; }
+        public string info { get; private set; }
         
 
         public WorkObject(string InfoShareObjectID)
         { 
             objectID = InfoShareObjectID;
+            info = "";
 
             try
             {
@@ -26,75 +29,82 @@ namespace docreminder.BO
             }
             catch(Exception e)
             {
-                log4.Error(string.Format("Couldn't retrieve documentcontract for document '{0}' Message: {1}", objectID,e.Message));
-                error = string.Format("Couldn't retrieve documentcontract for document");
-                isValid = false;
-                finished = true;
+                string message = string.Format("Couldn't retrieve documentcontract. ObjectID:'{0}', Msg:'{1}'", objectID, e.Message);
+                log4.Error(message);
+                error = true;
+                info = message;
             }
 
-            if (Properties.Settings.Default.AddCpIdisActive)
-                PrepareForProcessing();
+            PrepareForProcessing();
         }
 
-        public string GetPropertyValueFromName(string propertyTypeName)
-        {
-            string propId = WCFHandler.GetInstance.GetPropertyTypeID(propertyTypeName);
-            foreach(PropertyContract prop in document.Properties)
-            {
-                if (prop.PropertyTypeId == propId)
-                    return prop.Values[0];
-            }
-            return "";
-        }
-
-        public string GetPropertyValueFromID(string propertyID)
-        {
-            return "";
-        }
-
-
-        public void Process()
-        {
-            log4.Debug(string.Format("Processing Document {0}", objectID));
-            Evaluate();
-            Update();
-            error = "";
-            finished = true;
-        }
-
-        private void Evaluate()
-        {
-            //Random rndG = new Random();
-            //int rnd1 = rndG.Next(0, 1000);
-            //int rnd2 = rndG.Next(0, 1000);
-            //string evalInput = rnd1.ToString() +"+"+rnd2.ToString();
-
-            //log4.Debug(string.Format("Evaluating expression '{0}' for document '{1}'.", evalInput, objectID));
-            //var evalOutput = NEWExpressionsEvaluator.Evaluate(evalInput);
-            //log4.Debug(string.Format("Evaluated '{0}' to '{1}'.", evalInput, evalOutput));
-        }
-
+        #region processing
         private void PrepareForProcessing()
         {
-            try
+            //Start off as ready
+            ready = true;
+
+            //Check against AdditionalComputedIdentifier if document is valid for processing.
+            if (Properties.Settings.Default.AddCpIdisActive)
             {
-                if (Convert.ToBoolean(NEWExpressionsEvaluator.GetInstance.Evaluate(Properties.Settings.Default.AdditionalComputedIdentifier, document)))
+                try
                 {
-                    isValid = true;
+                    var isValid = Convert.ToBoolean(NEWExpressionsEvaluator.GetInstance.Evaluate(Properties.Settings.Default.AdditionalComputedIdentifier, document));
+                    if (!isValid)
+                    {
+                        ready = false;
+                        string message = string.Format("ACI = false ", this.objectID);
+                        info += message;
+                        finished = true;
+                    }
+                }
+                catch (Exception e)
+                {
+                    ready = false;
+                    string message = string.Format("ACI validation failed! ObjectID:'{0}', Msg:'{1}'", this.objectID, e.Message);
+                    log4.Error(message);
+                    info = message;
+                    error = true;
+                }
+            }
+
+            //Check checkoutstate of document
+            if (document.CheckOutStateEnum != "NotCheckedOut")
+            {
+                ready = false;
+                string message = string.Format("Document is checked out! ", this.objectID);
+                info += message;
+                finished = true;
+            }
+        }
+
+        //MOCKUP PROCESSING
+        public void Process()
+        {
+            if(ready && !error)
+            { 
+                log4.Info(string.Format("Processing Document {0}", objectID));
+                Random rand = new Random();
+                int workingtime = rand.Next(100, 1000);
+                Thread.Sleep(workingtime);
+
+
+                Random rand2 = new Random();
+                var err = rand2.Next(0, 10);
+                if(err == 0)
+                {
+                    string message = string.Format("An error happened during documentprocessing! ObjectID:'{0}', Msg:'{1}'", this.objectID, "ERROROROROROROR");
+                    log4.Error(message);
+                    info = message;
+                    error = true;
                 }
                 else
                 {
-                    isValid = false;
+                    string message = string.Format("Document processed sucessfully. ObjectID:'{0}'", this.objectID);
+                    log4.Info(message);
+                    info = message;
                     finished = true;
                 }
-            }
-            catch (Exception e)
-            {
-                string message = "An Error happened while validating additional computed identifier!" + e.Message;
-                error = message;
-                log4.Info(message);
-                finished = true;
-                isValid = false;
             }
         }
 
@@ -109,10 +119,30 @@ namespace docreminder.BO
 
         }
 
+        #endregion
+
+        #region utility
+        public string GetPropertyValueFromName(string propertyTypeName)
+        {
+            string propId = WCFHandler.GetInstance.GetPropertyTypeID(propertyTypeName);
+            foreach (PropertyContract prop in document.Properties)
+            {
+                if (prop.PropertyTypeId == propId)
+                    return prop.Values[0];
+            }
+            return "";
+        }
+
+        public string GetPropertyValueFromID(string propertyID)
+        {
+            return "";
+        }
+
         private void GetDocumentBytes()
         {
 
         }
+        #endregion 
 
     }
 }

@@ -45,17 +45,17 @@
             this.toolStripStatusLabel2 = new System.Windows.Forms.ToolStripStatusLabel();
             this.toolStripStatusCountdown = new System.Windows.Forms.ToolStripStatusLabel();
             this.processDocumentsWorker = new System.ComponentModel.BackgroundWorker();
-            this.getDocumentsWorker = new System.ComponentModel.BackgroundWorker();
             this.btnSearchMore = new System.Windows.Forms.Button();
             this.timerShutDown = new System.Windows.Forms.Timer(this.components);
             this.progressBar1 = new System.Windows.Forms.ProgressBar();
             this.groupBox2 = new System.Windows.Forms.GroupBox();
-            this.dgwEbills = new System.Windows.Forms.DataGridView();
-            this.NEWGetDocumentsWorker = new System.ComponentModel.BackgroundWorker();
+            this.dgwDocuments = new System.Windows.Forms.DataGridView();
+            this.GetDocumentsWorker = new System.ComponentModel.BackgroundWorker();
+            this.NEWProcessDocumentsWorker = new System.ComponentModel.BackgroundWorker();
             this.menuStrip1.SuspendLayout();
             this.statusStrip1.SuspendLayout();
             this.groupBox2.SuspendLayout();
-            ((System.ComponentModel.ISupportInitialize)(this.dgwEbills)).BeginInit();
+            ((System.ComponentModel.ISupportInitialize)(this.dgwDocuments)).BeginInit();
             this.SuspendLayout();
             // 
             // menuStrip1
@@ -65,7 +65,7 @@
             this.EvaluatorToolStripMenuItem});
             this.menuStrip1.Location = new System.Drawing.Point(0, 0);
             this.menuStrip1.Name = "menuStrip1";
-            this.menuStrip1.Size = new System.Drawing.Size(831, 24);
+            this.menuStrip1.Size = new System.Drawing.Size(664, 24);
             this.menuStrip1.TabIndex = 0;
             this.menuStrip1.Text = "menuStrip1";
             // 
@@ -82,21 +82,21 @@
             // optionsToolStripMenuItem
             // 
             this.optionsToolStripMenuItem.Name = "optionsToolStripMenuItem";
-            this.optionsToolStripMenuItem.Size = new System.Drawing.Size(122, 22);
+            this.optionsToolStripMenuItem.Size = new System.Drawing.Size(180, 22);
             this.optionsToolStripMenuItem.Text = "Options";
             this.optionsToolStripMenuItem.Click += new System.EventHandler(this.optionsToolStripMenuItem_Click);
             // 
             // ScheduleStripMenuItem
             // 
             this.ScheduleStripMenuItem.Name = "ScheduleStripMenuItem";
-            this.ScheduleStripMenuItem.Size = new System.Drawing.Size(122, 22);
+            this.ScheduleStripMenuItem.Size = new System.Drawing.Size(180, 22);
             this.ScheduleStripMenuItem.Text = "Schedule";
             this.ScheduleStripMenuItem.Click += new System.EventHandler(this.ScheduleStripMenuItem_Click);
             // 
             // aboutToolStripMenuItem
             // 
             this.aboutToolStripMenuItem.Name = "aboutToolStripMenuItem";
-            this.aboutToolStripMenuItem.Size = new System.Drawing.Size(122, 22);
+            this.aboutToolStripMenuItem.Size = new System.Drawing.Size(180, 22);
             this.aboutToolStripMenuItem.Text = "About...";
             this.aboutToolStripMenuItem.Click += new System.EventHandler(this.aboutToolStripMenuItem_Click);
             // 
@@ -110,9 +110,9 @@
             // bCheckForDocuments
             // 
             this.bCheckForDocuments.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Left)));
-            this.bCheckForDocuments.Location = new System.Drawing.Point(208, 312);
+            this.bCheckForDocuments.Location = new System.Drawing.Point(3, 348);
             this.bCheckForDocuments.Name = "bCheckForDocuments";
-            this.bCheckForDocuments.Size = new System.Drawing.Size(194, 23);
+            this.bCheckForDocuments.Size = new System.Drawing.Size(124, 23);
             this.bCheckForDocuments.TabIndex = 2;
             this.bCheckForDocuments.Text = "Dokumente suchen";
             this.bCheckForDocuments.UseVisualStyleBackColor = true;
@@ -121,9 +121,9 @@
             // bSendEbills
             // 
             this.bSendEbills.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Left)));
-            this.bSendEbills.Location = new System.Drawing.Point(416, 312);
+            this.bSendEbills.Location = new System.Drawing.Point(185, 348);
             this.bSendEbills.Name = "bSendEbills";
-            this.bSendEbills.Size = new System.Drawing.Size(209, 23);
+            this.bSendEbills.Size = new System.Drawing.Size(186, 23);
             this.bSendEbills.TabIndex = 6;
             this.bSendEbills.Text = "Dokumente verarbeiten";
             this.bSendEbills.UseVisualStyleBackColor = true;
@@ -137,9 +137,9 @@
             this.toolStripStatusPlatzHalter,
             this.toolStripStatusLabel2,
             this.toolStripStatusCountdown});
-            this.statusStrip1.Location = new System.Drawing.Point(0, 344);
+            this.statusStrip1.Location = new System.Drawing.Point(0, 380);
             this.statusStrip1.Name = "statusStrip1";
-            this.statusStrip1.Size = new System.Drawing.Size(831, 22);
+            this.statusStrip1.Size = new System.Drawing.Size(664, 22);
             this.statusStrip1.TabIndex = 11;
             this.statusStrip1.Text = "statusStrip1";
             // 
@@ -158,7 +158,7 @@
             // toolStripStatusPlatzHalter
             // 
             this.toolStripStatusPlatzHalter.Name = "toolStripStatusPlatzHalter";
-            this.toolStripStatusPlatzHalter.Size = new System.Drawing.Size(587, 17);
+            this.toolStripStatusPlatzHalter.Size = new System.Drawing.Size(420, 17);
             this.toolStripStatusPlatzHalter.Spring = true;
             // 
             // toolStripStatusLabel2
@@ -183,9 +183,9 @@
             // 
             this.btnSearchMore.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Left)));
             this.btnSearchMore.Enabled = false;
-            this.btnSearchMore.Location = new System.Drawing.Point(631, 312);
+            this.btnSearchMore.Location = new System.Drawing.Point(125, 348);
             this.btnSearchMore.Name = "btnSearchMore";
-            this.btnSearchMore.Size = new System.Drawing.Size(194, 23);
+            this.btnSearchMore.Size = new System.Drawing.Size(56, 23);
             this.btnSearchMore.TabIndex = 12;
             this.btnSearchMore.Text = "Nächste";
             this.btnSearchMore.UseVisualStyleBackColor = true;
@@ -200,9 +200,9 @@
             // 
             this.progressBar1.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Left) 
             | System.Windows.Forms.AnchorStyles.Right)));
-            this.progressBar1.Location = new System.Drawing.Point(-1, 341);
+            this.progressBar1.Location = new System.Drawing.Point(-1, 377);
             this.progressBar1.Name = "progressBar1";
-            this.progressBar1.Size = new System.Drawing.Size(833, 3);
+            this.progressBar1.Size = new System.Drawing.Size(666, 3);
             this.progressBar1.Style = System.Windows.Forms.ProgressBarStyle.Continuous;
             this.progressBar1.TabIndex = 13;
             // 
@@ -211,46 +211,57 @@
             this.groupBox2.Anchor = ((System.Windows.Forms.AnchorStyles)((((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Bottom) 
             | System.Windows.Forms.AnchorStyles.Left) 
             | System.Windows.Forms.AnchorStyles.Right)));
-            this.groupBox2.Controls.Add(this.dgwEbills);
+            this.groupBox2.Controls.Add(this.dgwDocuments);
             this.groupBox2.Location = new System.Drawing.Point(3, 27);
             this.groupBox2.Name = "groupBox2";
-            this.groupBox2.Size = new System.Drawing.Size(822, 276);
+            this.groupBox2.Size = new System.Drawing.Size(661, 315);
             this.groupBox2.TabIndex = 10;
             this.groupBox2.TabStop = false;
             this.groupBox2.Text = "Gefundene Dokumente:";
             // 
-            // dgwEbills
+            // dgwDocuments
             // 
-            this.dgwEbills.Anchor = ((System.Windows.Forms.AnchorStyles)((((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Bottom) 
+            this.dgwDocuments.Anchor = ((System.Windows.Forms.AnchorStyles)((((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Bottom) 
             | System.Windows.Forms.AnchorStyles.Left) 
             | System.Windows.Forms.AnchorStyles.Right)));
-            this.dgwEbills.ColumnHeadersHeightSizeMode = System.Windows.Forms.DataGridViewColumnHeadersHeightSizeMode.AutoSize;
-            this.dgwEbills.Location = new System.Drawing.Point(6, 16);
-            this.dgwEbills.Name = "dgwEbills";
-            this.dgwEbills.ReadOnly = true;
-            this.dgwEbills.RowHeadersVisible = false;
-            this.dgwEbills.Size = new System.Drawing.Size(810, 254);
-            this.dgwEbills.TabIndex = 5;
+            this.dgwDocuments.AutoSizeColumnsMode = System.Windows.Forms.DataGridViewAutoSizeColumnsMode.DisplayedCells;
+            this.dgwDocuments.ColumnHeadersHeightSizeMode = System.Windows.Forms.DataGridViewColumnHeadersHeightSizeMode.AutoSize;
+            this.dgwDocuments.Location = new System.Drawing.Point(6, 16);
+            this.dgwDocuments.Name = "dgwDocuments";
+            this.dgwDocuments.ReadOnly = true;
+            this.dgwDocuments.RowHeadersVisible = false;
+            this.dgwDocuments.SelectionMode = System.Windows.Forms.DataGridViewSelectionMode.FullRowSelect;
+            this.dgwDocuments.Size = new System.Drawing.Size(649, 293);
+            this.dgwDocuments.TabIndex = 5;
+            this.dgwDocuments.CellFormatting += new System.Windows.Forms.DataGridViewCellFormattingEventHandler(this.dgwDocuments_CellFormatting);
+            this.dgwDocuments.DataBindingComplete += new System.Windows.Forms.DataGridViewBindingCompleteEventHandler(this.dgwDocuments_DataBindingComplete);
             // 
-            // NEWGetDocumentsWorker
+            // GetDocumentsWorker
             // 
-            this.NEWGetDocumentsWorker.WorkerReportsProgress = true;
-            this.NEWGetDocumentsWorker.WorkerSupportsCancellation = true;
-            this.NEWGetDocumentsWorker.DoWork += new System.ComponentModel.DoWorkEventHandler(this.NEWGetDocumentsWorker_DoWork);
-            this.NEWGetDocumentsWorker.ProgressChanged += new System.ComponentModel.ProgressChangedEventHandler(this.NEWGetDocumentsWorker_ProgressChanged);
-            this.NEWGetDocumentsWorker.RunWorkerCompleted += new System.ComponentModel.RunWorkerCompletedEventHandler(this.NEWGetDocumentsWorker_RunWorkerCompleted);
+            this.GetDocumentsWorker.WorkerReportsProgress = true;
+            this.GetDocumentsWorker.WorkerSupportsCancellation = true;
+            this.GetDocumentsWorker.DoWork += new System.ComponentModel.DoWorkEventHandler(this.GetDocumentsWorker_DoWork);
+            this.GetDocumentsWorker.ProgressChanged += new System.ComponentModel.ProgressChangedEventHandler(this.GetDocumentsWorker_ProgressChanged);
+            this.GetDocumentsWorker.RunWorkerCompleted += new System.ComponentModel.RunWorkerCompletedEventHandler(this.GetDocumentsWorker_RunWorkerCompleted);
+            // 
+            // NEWProcessDocumentsWorker
+            // 
+            this.NEWProcessDocumentsWorker.WorkerReportsProgress = true;
+            this.NEWProcessDocumentsWorker.DoWork += new System.ComponentModel.DoWorkEventHandler(this.NEWProcessDocumentsWorker_DoWork);
+            this.NEWProcessDocumentsWorker.ProgressChanged += new System.ComponentModel.ProgressChangedEventHandler(this.NEWProcessDocumentsWorker_ProgressChanged);
+            this.NEWProcessDocumentsWorker.RunWorkerCompleted += new System.ComponentModel.RunWorkerCompletedEventHandler(this.NEWProcessDocumentsWorker_RunWorkerCompleted);
             // 
             // MainForm
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
-            this.ClientSize = new System.Drawing.Size(831, 366);
+            this.ClientSize = new System.Drawing.Size(664, 402);
+            this.Controls.Add(this.bCheckForDocuments);
             this.Controls.Add(this.groupBox2);
             this.Controls.Add(this.progressBar1);
             this.Controls.Add(this.btnSearchMore);
             this.Controls.Add(this.statusStrip1);
             this.Controls.Add(this.bSendEbills);
-            this.Controls.Add(this.bCheckForDocuments);
             this.Controls.Add(this.menuStrip1);
             this.Icon = ((System.Drawing.Icon)(resources.GetObject("$this.Icon")));
             this.MainMenuStrip = this.menuStrip1;
@@ -262,7 +273,7 @@
             this.statusStrip1.ResumeLayout(false);
             this.statusStrip1.PerformLayout();
             this.groupBox2.ResumeLayout(false);
-            ((System.ComponentModel.ISupportInitialize)(this.dgwEbills)).EndInit();
+            ((System.ComponentModel.ISupportInitialize)(this.dgwDocuments)).EndInit();
             this.ResumeLayout(false);
             this.PerformLayout();
 
@@ -280,7 +291,6 @@
         private System.Windows.Forms.ToolStripStatusLabel toolStripStatusConfig;
         private System.Windows.Forms.ToolStripProgressBar toolStripProgressBar1;
         private System.ComponentModel.BackgroundWorker processDocumentsWorker;
-        private System.ComponentModel.BackgroundWorker getDocumentsWorker;
         private System.Windows.Forms.Button btnSearchMore;
         private System.Windows.Forms.ToolStripMenuItem ScheduleStripMenuItem;
         private System.Windows.Forms.ToolStripStatusLabel toolStripStatusLabel2;
@@ -290,8 +300,9 @@
         private System.Windows.Forms.ToolStripMenuItem EvaluatorToolStripMenuItem;
         private System.Windows.Forms.ProgressBar progressBar1;
         private System.Windows.Forms.GroupBox groupBox2;
-        private System.Windows.Forms.DataGridView dgwEbills;
-        private System.ComponentModel.BackgroundWorker NEWGetDocumentsWorker;
+        private System.Windows.Forms.DataGridView dgwDocuments;
+        private System.ComponentModel.BackgroundWorker GetDocumentsWorker;
+        private System.ComponentModel.BackgroundWorker NEWProcessDocumentsWorker;
     }
 }
 

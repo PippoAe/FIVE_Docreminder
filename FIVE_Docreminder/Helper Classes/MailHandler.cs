@@ -21,6 +21,7 @@ namespace docreminder
         private static MailHandler instance;
 
         private static readonly ILog log4 = LogManager.GetLogger(System.Reflection.MethodBase.GetCurrentMethod().DeclaringType);
+        //TODO LOGFILE path does not work.
         string logfile = GetLogFileName("RollingFileAppender");
 
         private MailHandler()

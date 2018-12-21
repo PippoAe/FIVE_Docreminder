@@ -7,6 +7,7 @@ using System.Linq;
 using System.Threading;
 using System.Threading.Tasks;
 using System.Windows.Forms;
+using Timer = System.Windows.Forms.Timer;
 
 namespace docreminder
 {
@@ -18,6 +19,7 @@ namespace docreminder
         public DateTime starttime;
         public TimeSpan scheduledTimeLeft;
         public int sucessfullySent = 0;
+        private List<BO.WorkObject> currentWorkObjects;
 
         public WebServiceHandler webserviceHandler
         {
@@ -39,11 +41,24 @@ namespace docreminder
             starttime = DateTime.Now;
             //CheckSchedule
             CheckSchedule();
+
+            //Refresh Timer
+            Timer timer = new Timer();
+            timer.Interval = (1000); // 10 secs
+            timer.Tick += new EventHandler(timer_Tick);
+            timer.Start();
         }
 
         #region Presentation
 
         #region Visuals
+        private void timer_Tick(object sender, EventArgs e)
+        {
+            //dgwDocuments.DataSource = null;
+            //dgwDocuments.DataSource = currentWorkObjects;
+            dgwDocuments.Refresh();
+        }
+
         private void dgwDocuments_CellFormatting(object sender, DataGridViewCellFormattingEventArgs e)
         {
             switch (e.ColumnIndex)
@@ -277,8 +292,9 @@ namespace docreminder
 
         private void GetDocumentsWorker_RunWorkerCompleted(object sender, RunWorkerCompletedEventArgs e)
         {
+            currentWorkObjects = (List<BO.WorkObject>)e.Result;
             dgwDocuments.SuspendLayout();
-            dgwDocuments.DataSource = e.Result;
+            dgwDocuments.DataSource = currentWorkObjects;
             dgwDocuments.ResumeLayout();
 
             progressBar1.Value = 0;
@@ -304,25 +320,36 @@ namespace docreminder
 
         private void NEWProcessDocumentsWorker_DoWork(object sender, DoWorkEventArgs e)
         {
-            List<BO.WorkObject> workObjects = (List<BO.WorkObject>)dgwDocuments.DataSource;
-            
-            for (var i = 0; i < workObjects.Count();i++)
+            foreach(BO.WorkObject wo in currentWorkObjects)
             {
-                workObjects[i].Process();
-                NEWProcessDocumentsWorker.ReportProgress(((100)/workObjects.Count())*i);
+                Task.Factory.StartNew(() => wo.Process());
+                Thread.Sleep(10);
+            }
+
+            bool finished = false;
+            while(!finished)
+            {
+                var doneProcessing = currentWorkObjects.Where(x => x.finished || x.error).Count();
+                var total = currentWorkObjects.Count();
+                if (doneProcessing == total)
+                    finished = true;
+
+                double progress = ((double)doneProcessing / total) * 100;
+                NEWProcessDocumentsWorker.ReportProgress(Convert.ToInt32(progress));
+                Thread.Sleep(100);
             }
         }
 
         private void NEWProcessDocumentsWorker_ProgressChanged(object sender, ProgressChangedEventArgs e)
         {
             progressBar1.Value = e.ProgressPercentage;
-            dgwDocuments.Refresh();
         }
 
         private void NEWProcessDocumentsWorker_RunWorkerCompleted(object sender, RunWorkerCompletedEventArgs e)
         {
             this.Text = "Five Informatik AG - Document Reminder";
             progressBar1.Value = 0;
+            progressBar1.Style = ProgressBarStyle.Blocks;
             bCheckForDocuments.Enabled = true;
             if (WCFHandler.GetInstance.hasMore)
                 btnSearchMore.Enabled = true;

@@ -85,7 +85,7 @@ namespace docreminder.BO
             { 
                 log4.Info(string.Format("Processing Document {0}", objectID));
                 Random rand = new Random();
-                int workingtime = rand.Next(100, 1000);
+                int workingtime = rand.Next(100, 10000);
                 Thread.Sleep(workingtime);
 
 

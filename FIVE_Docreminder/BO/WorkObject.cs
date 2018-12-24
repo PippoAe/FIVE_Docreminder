@@ -41,40 +41,48 @@ namespace docreminder.BO
         #region processing
         private void PrepareForProcessing()
         {
-            //Start off as ready
-            ready = true;
+            //Start off as not ready.
+            ready = false;
 
             //Check against AdditionalComputedIdentifier if document is valid for processing.
             if (Properties.Settings.Default.AddCpIdisActive)
             {
                 try
                 {
-                    var isValid = Convert.ToBoolean(NEWExpressionsEvaluator.GetInstance.Evaluate(Properties.Settings.Default.AdditionalComputedIdentifier, document));
-                    if (!isValid)
+                    ready = Convert.ToBoolean(NEWExpressionsEvaluator.GetInstance.Evaluate(Properties.Settings.Default.AdditionalComputedIdentifier, document));
+                    if (!ready)
                     {
                         ready = false;
-                        string message = string.Format("ACI = false ", this.objectID);
+                        string message = string.Format("ACI validation returned false", this.objectID);
                         info += message;
                         finished = true;
                     }
                 }
                 catch (Exception e)
                 {
-                    ready = false;
                     string message = string.Format("ACI validation failed! ObjectID:'{0}', Msg:'{1}'", this.objectID, e.Message);
                     log4.Error(message);
                     info = message;
                     error = true;
                 }
             }
+            else
+                ready = true;
 
             //Check checkoutstate of document
-            if (document.CheckOutStateEnum != "NotCheckedOut")
+            if (ready && document.CheckOutStateEnum != "NotCheckedOut")
             {
-                ready = false;
-                string message = string.Format("Document is checked out! ", this.objectID);
-                info += message;
-                finished = true;
+                try { 
+                //First try to force-checkin documents.
+                WCFHandler.GetInstance.UndoCheckOutDocument(this.objectID);
+                }
+                catch
+                {
+                    ready = false;
+                    string message = string.Format("Document is checked out! Attempt to undo-checkout failed. Is probably being edited by user.", this.objectID);
+                    info += message;
+                    finished = true;
+                }
             }
         }
 
@@ -82,28 +90,65 @@ namespace docreminder.BO
         public void Process()
         {
             if(ready && !error)
-            { 
-                log4.Info(string.Format("Processing Document {0}", objectID));
-                Random rand = new Random();
-                int workingtime = rand.Next(100, 10000);
-                Thread.Sleep(workingtime);
+            {
+                try
+                {
+                    log4.Info(string.Format("Processing Document {0}", objectID));
+
+                    #region EvaluateMarkerProperties
+                    //WCFHandler.GetInstance.documentService.UpdateDocumentProperty()
+                    DocumentContract newDocContract = this.document;
+                    //document.Properties[0].
+                    //List<KXWS.SDocumentPropertyUpdate> markerProperties = new List<KXWS.SDocumentPropertyUpdate>();
+                    //markerProperties = (List<KXWS.SDocumentPropertyUpdate>)(FileHelper.XmlDeserializeFromString(Properties.Settings.Default.KendoxMarkerProperties, markerProperties.GetType()));
+                    //KXWS.SDocumentPropertyUpdate[] updatePropList;
+                    //WCFHandler.GetInstance.documentService.Update
+                    #endregion
+
+                    #region Checkout Document
+                    //Try to checkout document.
+                    try
+                        {
+                            WCFHandler.GetInstance.CheckOutDocument(this.objectID);
+                        }
+                    catch(Exception e)
+                        {
+                            throw new Exception("Document could not be checked out.");
+                        }
+                    #endregion
 
 
-                Random rand2 = new Random();
-                var err = rand2.Next(0, 10);
-                if(err == 0)
-                {
-                    string message = string.Format("An error happened during documentprocessing! ObjectID:'{0}', Msg:'{1}'", this.objectID, "ERROROROROROROR");
-                    log4.Error(message);
-                    info = message;
-                    error = true;
-                }
-                else
-                {
+
+
+                    //Random rand = new Random();
+                    //int workingtime = rand.Next(100, 10000);
+                    //Thread.Sleep(workingtime);
+
+
+                    //Random rand2 = new Random();
+                    //var err = rand2.Next(0, 10);
+                    //if(err == 0)
+                    //{
+                    //    throw new Exception("RANDOM ERROR");
+                    //}
+
                     string message = string.Format("Document processed sucessfully. ObjectID:'{0}'", this.objectID);
                     log4.Info(message);
                     info = message;
                     finished = true;
+                }
+                //If an error happens during processing.
+                catch(Exception e)
+                {
+                    string message = string.Format("An error happened during documentprocessing! ObjectID:'{0}', Msg:'{1}'", this.objectID, e.Message);
+                    log4.Error(message);
+                    info = message;
+                    error = true;
+                }
+                //Documents are always checkedbackin in when finished.
+                finally
+                {
+                    WCFHandler.GetInstance.UndoCheckOutDocument(this.objectID);
                 }
             }
         }

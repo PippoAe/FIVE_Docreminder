@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.Drawing;
 using System.Windows.Forms;
 using System.IO;
+using System.Linq;
 
 namespace docreminder
 {
@@ -184,36 +185,51 @@ namespace docreminder
                 dgwSearchProperties.Rows.Add(row);
             }
 
-
-            //KendoxMarkerProperties
-            List<KXWS.SDocumentPropertyUpdate> markerProperties = new List<KXWS.SDocumentPropertyUpdate>();
-            if (Properties.Settings.Default.KendoxMarkerProperties != "")
-                markerProperties = (List<KXWS.SDocumentPropertyUpdate>)(FileHelper.XmlDeserializeFromString(Properties.Settings.Default.KendoxMarkerProperties, markerProperties.GetType()));
-
+            //MarkerProperites
+            List<BO.MarkerProperty> NEWmarkerProperties = new List<BO.MarkerProperty>();
+            if (Properties.Settings.Default.NEWMarkerProperties != "")
+                NEWmarkerProperties = (List<BO.MarkerProperty>)(FileHelper.XmlDeserializeFromString(Properties.Settings.Default.NEWMarkerProperties, NEWmarkerProperties.GetType()));
 
             //Fill MarkerProperties
-            foreach (KXWS.SDocumentPropertyUpdate markerProperty in markerProperties)
+            foreach (BO.MarkerProperty markerproperty in NEWmarkerProperties)
             {
-                string updateAction = "UPDATE";
-                switch (markerProperty.updateAction)
-                {
-                    case KXWS.UpdateActions.UPDATE:
-                        updateAction = "UPDATE";
-                        break;
-                    case KXWS.UpdateActions.NONE:
-                        updateAction = "NONE";
-                        break;
-                    case KXWS.UpdateActions.DELETE:
-                        updateAction = "DELETE";
-                        break;
-                    case KXWS.UpdateActions.ADD:
-                        updateAction = "ADD";
-                        break;
-                }
+                string propertyTypeID = markerproperty.propertyTypeID;
+                string values = string.Join(";", markerproperty.values);
+                string updateAction = markerproperty.updateAction.ToString();
 
-                string[] row = { markerProperty.propertyTypeName, string.Join(";", markerProperty.propertyValues), updateAction };
+                string[] row = { WCFHandler.GetInstance.GetPropertyTypeName(propertyTypeID), values, updateAction};
                 dGwMarkerProperties.Rows.Add(row);
             }
+
+            //KendoxMarkerProperties
+            //List<KXWS.SDocumentPropertyUpdate> markerProperties = new List<KXWS.SDocumentPropertyUpdate>();
+            //if (Properties.Settings.Default.KendoxMarkerProperties != "")
+            //    markerProperties = (List<KXWS.SDocumentPropertyUpdate>)(FileHelper.XmlDeserializeFromString(Properties.Settings.Default.KendoxMarkerProperties, markerProperties.GetType()));
+
+
+            ////Fill MarkerProperties
+            //foreach (KXWS.SDocumentPropertyUpdate markerProperty in markerProperties)
+            //{
+            //    string updateAction = "UPDATE";
+            //    switch (markerProperty.updateAction)
+            //    {
+            //        case KXWS.UpdateActions.UPDATE:
+            //            updateAction = "UPDATE";
+            //            break;
+            //        case KXWS.UpdateActions.NONE:
+            //            updateAction = "NONE";
+            //            break;
+            //        case KXWS.UpdateActions.DELETE:
+            //            updateAction = "DELETE";
+            //            break;
+            //        case KXWS.UpdateActions.ADD:
+            //            updateAction = "ADD";
+            //            break;
+            //    }
+
+            //    string[] row = { markerProperty.propertyTypeName, string.Join(";", markerProperty.propertyValues), updateAction };
+            //    dGwMarkerProperties.Rows.Add(row);
+            //}
 
 
             //Custom WS Functions
@@ -351,8 +367,7 @@ MessageBoxButtons.OK, MessageBoxIcon.Information);
 
 
 
-            //MarkerProperties
-            List<KXWS.SDocumentPropertyUpdate> markerProperties = new List<KXWS.SDocumentPropertyUpdate>();
+
 
 
             //InfoStores
@@ -404,50 +419,55 @@ MessageBoxButtons.OK, MessageBoxIcon.Information);
                     newSearchCons.Add(condition);
                 }
             }
-            Properties.Settings.Default["NewSearchProperties"] = FileHelper.XmlSerializeToString(newSearchCons);
+            Properties.Settings.Default["NEWSearchProperties"] = FileHelper.XmlSerializeToString(newSearchCons);
 
 
+
+
+
+            //NEWMarkerProperties
+            List<BO.MarkerProperty> NEWmarkerProperties = new List<BO.MarkerProperty>();
             //KendoxMarkerProperties
             foreach (DataGridViewRow row in dGwMarkerProperties.Rows)
             {
                 if (row.Cells.Count > 0 && row.Cells[0].Value != null)
                 {
-
-                    KXWS.SDocumentPropertyUpdate markerProp = new KXWS.SDocumentPropertyUpdate
-                    {
-                        propertyTypeName = row.Cells[0].Value.ToString()
-                    };
+                    var propertyID = WCFHandler.GetInstance.GetPropertyTypeID(row.Cells[0].Value.ToString());
+                    List<string> values = new List<string>();
+                    BO.MarkerProperty.UpdateAction updateAction;
 
                     if (row.Cells[1].Value != null)
-                        markerProp.propertyValues = row.Cells[1].Value.ToString().Split(new[] { ";" }, StringSplitOptions.RemoveEmptyEntries);
-                    else
-                        markerProp.propertyValues = new string[1] { "" };
+                        values.AddRange(row.Cells[1].Value.ToString().Split(new[] { ";" }, StringSplitOptions.RemoveEmptyEntries).ToList());
+                    //else
+                    //    values = new string[1] { "" };
 
-                    markerProp.updateAction = KXWS.UpdateActions.UPDATE;
+                    updateAction = BO.MarkerProperty.UpdateAction.UPDATE;
                     if (row.Cells[2].Value != null)
                     {
                         switch (row.Cells[2].Value.ToString().ToLower())
                         {
                             case "none":
-                                markerProp.updateAction = KXWS.UpdateActions.NONE;
+                                updateAction = BO.MarkerProperty.UpdateAction.NONE;
                                 break;
                             case "update":
-                                markerProp.updateAction = KXWS.UpdateActions.UPDATE;
+                                updateAction = BO.MarkerProperty.UpdateAction.UPDATE;
                                 break;
                             case "add":
-                                markerProp.updateAction = KXWS.UpdateActions.ADD;
+                                updateAction = BO.MarkerProperty.UpdateAction.ADD;
                                 break;
                             case "delete":
-                                markerProp.updateAction = KXWS.UpdateActions.DELETE;
+                                updateAction = BO.MarkerProperty.UpdateAction.DELETE;
                                 break;
                         }
                     };
 
-                    markerProperties.Add(markerProp);
+                    NEWmarkerProperties.Add(new BO.MarkerProperty(propertyID, values.ToArray(), updateAction));
                 }
             }
 
-            Properties.Settings.Default["KendoxMarkerProperties"] = FileHelper.XmlSerializeToString(markerProperties);
+            Properties.Settings.Default["NEWMarkerProperties"] = FileHelper.XmlSerializeToString(NEWmarkerProperties);
+
+
 
             //Decapped
             //Properties.Settings.Default["CustomWSFunctionsActive"] = cBCustomWSFunction.Checked;
@@ -469,7 +489,52 @@ MessageBoxButtons.OK, MessageBoxIcon.Information);
             //if (variables.Count <= 0)
             //    Properties.Settings.Default["CustomWSFunctionsActive"] = false;
 
-            
+
+            ////MarkerProperties
+            //List<KXWS.SDocumentPropertyUpdate> markerProperties = new List<KXWS.SDocumentPropertyUpdate>();
+
+            ////KendoxMarkerProperties
+            //foreach (DataGridViewRow row in dGwMarkerProperties.Rows)
+            //{
+            //    if (row.Cells.Count > 0 && row.Cells[0].Value != null)
+            //    {
+
+            //        KXWS.SDocumentPropertyUpdate markerProp = new KXWS.SDocumentPropertyUpdate
+            //        {
+            //            propertyTypeName = row.Cells[0].Value.ToString()
+            //        };
+
+            //        if (row.Cells[1].Value != null)
+            //            markerProp.propertyValues = row.Cells[1].Value.ToString().Split(new[] { ";" }, StringSplitOptions.RemoveEmptyEntries);
+            //        else
+            //            markerProp.propertyValues = new string[1] { "" };
+
+            //        markerProp.updateAction = KXWS.UpdateActions.UPDATE;
+            //        if (row.Cells[2].Value != null)
+            //        {
+            //            switch (row.Cells[2].Value.ToString().ToLower())
+            //            {
+            //                case "none":
+            //                    markerProp.updateAction = KXWS.UpdateActions.NONE;
+            //                    break;
+            //                case "update":
+            //                    markerProp.updateAction = KXWS.UpdateActions.UPDATE;
+            //                    break;
+            //                case "add":
+            //                    markerProp.updateAction = KXWS.UpdateActions.ADD;
+            //                    break;
+            //                case "delete":
+            //                    markerProp.updateAction = KXWS.UpdateActions.DELETE;
+            //                    break;
+            //            }
+            //        };
+
+            //        markerProperties.Add(markerProp);
+            //    }
+            //}
+
+            //Properties.Settings.Default["KendoxMarkerProperties"] = FileHelper.XmlSerializeToString(markerProperties);
+
 
             Properties.Settings.Default.Save();
         }

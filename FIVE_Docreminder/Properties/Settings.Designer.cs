@@ -27,7 +27,7 @@ namespace docreminder.Properties {
         [global::System.Configuration.SettingsProviderAttribute(typeof(docreminder.PortableSettingsProvider))]
         [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
         [global::System.Configuration.SpecialSettingAttribute(global::System.Configuration.SpecialSetting.WebServiceUrl)]
-        [global::System.Configuration.DefaultSettingValueAttribute("http://kx5be01/KendoxWebService")]
+        [global::System.Configuration.DefaultSettingValueAttribute("http://db5be03t:82/InfoShare")]
         [global::System.Configuration.SettingsManageabilityAttribute(global::System.Configuration.SettingsManageability.Roaming)]
         public string KendoxWCFURL {
             get {
@@ -953,6 +953,32 @@ namespace docreminder.Properties {
             }
             set {
                 this["NEWSearchProperties"] = value;
+            }
+        }
+        
+        [global::System.Configuration.UserScopedSettingAttribute()]
+        [global::System.Configuration.SettingsProviderAttribute(typeof(docreminder.PortableSettingsProvider))]
+        [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+        [global::System.Configuration.DefaultSettingValueAttribute("True")]
+        public bool ConsoleEnabled {
+            get {
+                return ((bool)(this["ConsoleEnabled"]));
+            }
+            set {
+                this["ConsoleEnabled"] = value;
+            }
+        }
+        
+        [global::System.Configuration.UserScopedSettingAttribute()]
+        [global::System.Configuration.SettingsProviderAttribute(typeof(docreminder.PortableSettingsProvider))]
+        [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+        [global::System.Configuration.DefaultSettingValueAttribute("")]
+        public string NEWMarkerProperties {
+            get {
+                return ((string)(this["NEWMarkerProperties"]));
+            }
+            set {
+                this["NEWMarkerProperties"] = value;
             }
         }
     }

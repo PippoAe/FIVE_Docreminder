@@ -236,7 +236,6 @@ namespace docreminder.BO
             };
 
             documentContract = this.DocumentClient.UpdateDocument(connectionID, documentContract, null, checkInParameterContract);
-
             return documentContract;
 	    }
 
@@ -260,6 +259,16 @@ namespace docreminder.BO
         public DocumentContract GetDocument(string connectionID, string documentID)
         {
             return this.DocumentClient.GetDocument(connectionID, documentID);
+        }
+
+        public void UndoCheckOutDocument(string connectionID, string documentID)
+        {
+            this.DocumentClient.UndoCheckOutDocument(connectionID,  documentID);
+        }
+
+        public void CheckOutDocument(string connectionID, string documentID)
+        {
+            this.DocumentClient.CheckOutDocument(connectionID, documentID);
         }
 
         /// <summary>

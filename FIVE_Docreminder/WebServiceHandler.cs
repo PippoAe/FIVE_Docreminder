@@ -203,6 +203,7 @@ namespace docreminder
 
             return childDocuments;
         }
+
         public async Task<bool> ProcessDocument(string docGuid, DataGridViewRow row, List<string> childGuids = null)
         {
             log4.Info(string.Format("TaskID {0} processing DocGuid {1}",Task.CurrentId,docGuid));

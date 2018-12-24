@@ -115,6 +115,7 @@
     <Compile Include="BO\CommonService.cs" />
     <Compile Include="BO\DocumentService.cs" />
     <Compile Include="BO\FileService.cs" />
+    <Compile Include="BO\MarkerProperty.cs" />
     <Compile Include="BO\NotFoundException.cs" />
     <Compile Include="BO\SearchService.cs" />
     <Compile Include="BO\Utility.cs" />

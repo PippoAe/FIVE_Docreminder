@@ -107,10 +107,21 @@ namespace docreminder
             }          
         }
 
+        internal void UndoCheckOutDocument(string infoShareObjectID)
+        {
+            documentService.UndoCheckOutDocument(ConnectionID, infoShareObjectID);
+        }
+
+        internal void CheckOutDocument(string infoShareObjectID)
+        {
+            documentService.CheckOutDocument(ConnectionID, infoShareObjectID);
+        }
+
         internal DocumentContract GetDocument(string infoShareObjectID)
         {
             return documentService.GetDocument(ConnectionID, infoShareObjectID);
         }
+
 
 
         internal DocumentSimpleContract[] SearchForDocuments()

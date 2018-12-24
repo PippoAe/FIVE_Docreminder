@@ -844,14 +844,20 @@ namespace docreminder.BO
 			    if (propertyType.Id == propertyTypeID)
                 {
                     propertyTypeName = Utility.GetValue(propertyType.Name, schemaCulture);
+                    if(propertyTypeName == null)
+                    {
+                        var hit = propertyType.Name.Values.Where(x => x.Text != null).First();
+                        propertyTypeName = hit.Text;
+                        log.Warn(string.Format("Property name for '{0}' not found in culture '{1}' but in culture '{2}'! Configure '{3}' in all cultures!", propertyTypeID, schemaCulture, hit.Culture,propertyTypeName));
+                    }
+                    break;
                 }
 		    }
-		    if (propertyTypeName == null)
-            {
-                log.Error("No property type name found for property type ID '" + propertyTypeID + "'.");
-		    }
-		
-		    return propertyTypeName;
+            
+            if(propertyTypeName == null)
+                log.Error(string.Format("Property name for '{0}' not found in culture '{1}'! Check spelling!", propertyTypeID, schemaCulture));
+
+            return propertyTypeName;
 	    }
 
         /// <summary>
@@ -874,10 +880,23 @@ namespace docreminder.BO
                 {
                     propertyTypeID = propertyType.Id;
                     break;
+                }   
+            }
+
+
+            if (propertyTypeID == null) {
+                foreach (PropertyTypeContract propertyType in this.SchemaStore.PropertyTypes)
+                {
+                    var hits = propertyType.Name.Values.Where(x => x.Text == propertyTypeName).Count();
+
+                    if (hits > 0)
+                    {
+                        var hit = propertyType.Name.Values.Where(x => x.Text == propertyTypeName).First();
+                        log.Warn(string.Format("PropertyTypeID for '{0}' not found in culture '{1}' but in culture '{2}'! Configure '{0}' in all cultures! ", propertyTypeName, schemaCulture, hit.Culture));
+                        return propertyType.Id;
+                    }
                 }
-		    }
-		    if (propertyTypeID == null) {
-                throw new Exception("No property type ID found for property type name '" + propertyTypeName + "' with culture '" + schemaCulture + "'. Check spelling and culture!");
+                log.Error("No property type ID found for property type name '" + propertyTypeName + "' with culture '" + schemaCulture + "'. Check spelling and culture!");
 		    }
 		
 		    return propertyTypeID;

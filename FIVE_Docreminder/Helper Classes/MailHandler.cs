@@ -1,5 +1,6 @@
 ﻿using log4net;
 using log4net.Appender;
+using log4net.Repository.Hierarchy;
 using System;
 using System.Collections.Generic;
 using System.IO;
@@ -21,11 +22,10 @@ namespace docreminder
         private static MailHandler instance;
 
         private static readonly ILog log4 = LogManager.GetLogger(System.Reflection.MethodBase.GetCurrentMethod().DeclaringType);
-        //TODO LOGFILE path does not work.
-        string logfile = GetLogFileName("RollingFileAppender");
 
         private MailHandler()
         {
+            var test = GetLogFileName();
         }
 
         public static MailHandler GetInstance
@@ -38,14 +38,14 @@ namespace docreminder
             }
         }
 
-        public static string GetLogFileName(string name)
+        public static string GetLogFileName()
         {
-            var rootAppender = LogManager.GetRepository()
-                                         .GetAppenders()
-                                         .OfType<FileAppender>()
-                                         .FirstOrDefault(fa => fa.Name == name);
+            FileAppender rootAppender = ((Hierarchy)LogManager.GetRepository())
+                                             .Root.Appenders.OfType<FileAppender>()
+                                             .FirstOrDefault();
 
-            return rootAppender != null ? rootAppender.File : string.Empty;
+            string filename = rootAppender != null ? rootAppender.File : string.Empty;
+            return filename;
         }
 
         private void SendErrorMail()
@@ -88,7 +88,7 @@ namespace docreminder
 
             if (Properties.Settings.Default.ErrorMailIncludeLog)
             {
-                mail.Attachments.Add(new Attachment(logfile));
+                mail.Attachments.Add(new Attachment(GetLogFileName()));
             }
 
             try

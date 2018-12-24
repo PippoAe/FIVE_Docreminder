@@ -36,8 +36,8 @@
             this.ScheduleStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.aboutToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.EvaluatorToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
-            this.bCheckForDocuments = new System.Windows.Forms.Button();
-            this.bSendEbills = new System.Windows.Forms.Button();
+            this.bGetDocumentsDocuments = new System.Windows.Forms.Button();
+            this.bProcessDocuments = new System.Windows.Forms.Button();
             this.statusStrip1 = new System.Windows.Forms.StatusStrip();
             this.toolStripStatusConfig = new System.Windows.Forms.ToolStripStatusLabel();
             this.toolStripProgressBar1 = new System.Windows.Forms.ToolStripProgressBar();
@@ -52,6 +52,7 @@
             this.dgwDocuments = new System.Windows.Forms.DataGridView();
             this.GetDocumentsWorker = new System.ComponentModel.BackgroundWorker();
             this.NEWProcessDocumentsWorker = new System.ComponentModel.BackgroundWorker();
+            this.cBShowConsole = new System.Windows.Forms.CheckBox();
             this.menuStrip1.SuspendLayout();
             this.statusStrip1.SuspendLayout();
             this.groupBox2.SuspendLayout();
@@ -82,21 +83,21 @@
             // optionsToolStripMenuItem
             // 
             this.optionsToolStripMenuItem.Name = "optionsToolStripMenuItem";
-            this.optionsToolStripMenuItem.Size = new System.Drawing.Size(180, 22);
+            this.optionsToolStripMenuItem.Size = new System.Drawing.Size(122, 22);
             this.optionsToolStripMenuItem.Text = "Options";
             this.optionsToolStripMenuItem.Click += new System.EventHandler(this.optionsToolStripMenuItem_Click);
             // 
             // ScheduleStripMenuItem
             // 
             this.ScheduleStripMenuItem.Name = "ScheduleStripMenuItem";
-            this.ScheduleStripMenuItem.Size = new System.Drawing.Size(180, 22);
+            this.ScheduleStripMenuItem.Size = new System.Drawing.Size(122, 22);
             this.ScheduleStripMenuItem.Text = "Schedule";
             this.ScheduleStripMenuItem.Click += new System.EventHandler(this.ScheduleStripMenuItem_Click);
             // 
             // aboutToolStripMenuItem
             // 
             this.aboutToolStripMenuItem.Name = "aboutToolStripMenuItem";
-            this.aboutToolStripMenuItem.Size = new System.Drawing.Size(180, 22);
+            this.aboutToolStripMenuItem.Size = new System.Drawing.Size(122, 22);
             this.aboutToolStripMenuItem.Text = "About...";
             this.aboutToolStripMenuItem.Click += new System.EventHandler(this.aboutToolStripMenuItem_Click);
             // 
@@ -107,27 +108,27 @@
             this.EvaluatorToolStripMenuItem.Text = "Evaluator...";
             this.EvaluatorToolStripMenuItem.Click += new System.EventHandler(this.evaluatorToolStripMenuItem_Click);
             // 
-            // bCheckForDocuments
+            // bGetDocumentsDocuments
             // 
-            this.bCheckForDocuments.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Left)));
-            this.bCheckForDocuments.Location = new System.Drawing.Point(3, 348);
-            this.bCheckForDocuments.Name = "bCheckForDocuments";
-            this.bCheckForDocuments.Size = new System.Drawing.Size(124, 23);
-            this.bCheckForDocuments.TabIndex = 2;
-            this.bCheckForDocuments.Text = "Dokumente suchen";
-            this.bCheckForDocuments.UseVisualStyleBackColor = true;
-            this.bCheckForDocuments.Click += new System.EventHandler(this.bCheckForDocuments_Click);
+            this.bGetDocumentsDocuments.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Left)));
+            this.bGetDocumentsDocuments.Location = new System.Drawing.Point(3, 348);
+            this.bGetDocumentsDocuments.Name = "bGetDocumentsDocuments";
+            this.bGetDocumentsDocuments.Size = new System.Drawing.Size(124, 23);
+            this.bGetDocumentsDocuments.TabIndex = 2;
+            this.bGetDocumentsDocuments.Text = "Dokumente suchen";
+            this.bGetDocumentsDocuments.UseVisualStyleBackColor = true;
+            this.bGetDocumentsDocuments.Click += new System.EventHandler(this.bCheckForDocuments_Click);
             // 
-            // bSendEbills
+            // bProcessDocuments
             // 
-            this.bSendEbills.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Left)));
-            this.bSendEbills.Location = new System.Drawing.Point(185, 348);
-            this.bSendEbills.Name = "bSendEbills";
-            this.bSendEbills.Size = new System.Drawing.Size(186, 23);
-            this.bSendEbills.TabIndex = 6;
-            this.bSendEbills.Text = "Dokumente verarbeiten";
-            this.bSendEbills.UseVisualStyleBackColor = true;
-            this.bSendEbills.Click += new System.EventHandler(this.bSendEbill_Click);
+            this.bProcessDocuments.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Left)));
+            this.bProcessDocuments.Location = new System.Drawing.Point(185, 348);
+            this.bProcessDocuments.Name = "bProcessDocuments";
+            this.bProcessDocuments.Size = new System.Drawing.Size(186, 23);
+            this.bProcessDocuments.TabIndex = 6;
+            this.bProcessDocuments.Text = "Dokumente verarbeiten";
+            this.bProcessDocuments.UseVisualStyleBackColor = true;
+            this.bProcessDocuments.Click += new System.EventHandler(this.bProcessDocuments_Click);
             // 
             // statusStrip1
             // 
@@ -251,17 +252,30 @@
             this.NEWProcessDocumentsWorker.ProgressChanged += new System.ComponentModel.ProgressChangedEventHandler(this.NEWProcessDocumentsWorker_ProgressChanged);
             this.NEWProcessDocumentsWorker.RunWorkerCompleted += new System.ComponentModel.RunWorkerCompletedEventHandler(this.NEWProcessDocumentsWorker_RunWorkerCompleted);
             // 
+            // cBShowConsole
+            // 
+            this.cBShowConsole.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Right)));
+            this.cBShowConsole.AutoSize = true;
+            this.cBShowConsole.Location = new System.Drawing.Point(594, 360);
+            this.cBShowConsole.Name = "cBShowConsole";
+            this.cBShowConsole.Size = new System.Drawing.Size(64, 17);
+            this.cBShowConsole.TabIndex = 14;
+            this.cBShowConsole.Text = "Console";
+            this.cBShowConsole.UseVisualStyleBackColor = true;
+            this.cBShowConsole.CheckedChanged += new System.EventHandler(this.cBShowConsole_CheckedChanged);
+            // 
             // MainForm
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.ClientSize = new System.Drawing.Size(664, 402);
-            this.Controls.Add(this.bCheckForDocuments);
+            this.Controls.Add(this.cBShowConsole);
+            this.Controls.Add(this.bGetDocumentsDocuments);
             this.Controls.Add(this.groupBox2);
             this.Controls.Add(this.progressBar1);
             this.Controls.Add(this.btnSearchMore);
             this.Controls.Add(this.statusStrip1);
-            this.Controls.Add(this.bSendEbills);
+            this.Controls.Add(this.bProcessDocuments);
             this.Controls.Add(this.menuStrip1);
             this.Icon = ((System.Drawing.Icon)(resources.GetObject("$this.Icon")));
             this.MainMenuStrip = this.menuStrip1;
@@ -284,8 +298,8 @@
         private System.Windows.Forms.MenuStrip menuStrip1;
         private System.Windows.Forms.ToolStripMenuItem dateiToolStripMenuItem;
         private System.Windows.Forms.ToolStripMenuItem optionsToolStripMenuItem;
-        private System.Windows.Forms.Button bCheckForDocuments;
-        private System.Windows.Forms.Button bSendEbills;
+        private System.Windows.Forms.Button bGetDocumentsDocuments;
+        private System.Windows.Forms.Button bProcessDocuments;
         private System.Windows.Forms.ToolStripMenuItem aboutToolStripMenuItem;
         private System.Windows.Forms.StatusStrip statusStrip1;
         private System.Windows.Forms.ToolStripStatusLabel toolStripStatusConfig;
@@ -303,6 +317,7 @@
         private System.Windows.Forms.DataGridView dgwDocuments;
         private System.ComponentModel.BackgroundWorker GetDocumentsWorker;
         private System.ComponentModel.BackgroundWorker NEWProcessDocumentsWorker;
+        private System.Windows.Forms.CheckBox cBShowConsole;
     }
 }
 

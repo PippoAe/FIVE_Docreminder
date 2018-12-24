@@ -12,9 +12,9 @@ using Timer = System.Windows.Forms.Timer;
 namespace docreminder
 {
     public partial class MainForm : Form
-    {   
+    {
         private static readonly log4net.ILog log4 = log4net.LogManager.GetLogger(System.Reflection.MethodBase.GetCurrentMethod().DeclaringType);
-        
+
         private WebServiceHandler _webServiceHandler;
         public DateTime starttime;
         public TimeSpan scheduledTimeLeft;
@@ -49,7 +49,7 @@ namespace docreminder
             timer.Start();
         }
 
-        #region Presentation
+        #region Events&Presentation
 
         #region Visuals
         private void timer_Tick(object sender, EventArgs e)
@@ -99,9 +99,12 @@ namespace docreminder
         }
         #endregion
 
-        #region LogicEvents
+        #region Events
         private void MainForm_Shown(object sender, EventArgs e)
         {
+            cBShowConsole.Checked = Properties.Settings.Default.ConsoleEnabled;
+            cBShowConsole_CheckedChanged(cBShowConsole, null);
+
             var mess = "";
             if (Program.customConfigFile != "")
                 mess = string.Format("Loaded Config: '{0}'", Path.GetFileName(Program.customConfigFile));
@@ -140,9 +143,40 @@ namespace docreminder
                 }
             }
         }
+
+        private void cBShowConsole_CheckedChanged(object sender, EventArgs e)
+        {
+            bool showConsole = ((CheckBox)sender).Checked;
+            Properties.Settings.Default["ConsoleEnabled"] = showConsole;
+            Properties.Settings.Default.Save();
+
+            if (showConsole)
+                AllocConsole();
+            else
+                FreeConsole();
+
+
+        }
         #endregion
 
-        #region toolstrip
+        #region Clicks
+        private void bCheckForDocuments_Click(object sender, EventArgs e)
+        {
+            WCFHandler.GetInstance.resumePoint = null;
+            CheckForDocuments();
+        }
+        private void btnSearchMore_Click(object sender, EventArgs e)
+        {
+            CheckForDocuments();
+            btnSearchMore.Enabled = false;
+        }
+
+        private void bProcessDocuments_Click(object sender, EventArgs e)
+        {
+            ProcessDocuments();
+        }
+
+
         private void optionsToolStripMenuItem_Click(object sender, EventArgs e)
         {
             FormSettings settingsForm = new FormSettings(this);
@@ -170,30 +204,7 @@ namespace docreminder
                 CheckSchedule();
             }
         }
-        #endregion
 
-        #region buttons
-        private void bCheckForDocuments_Click(object sender, EventArgs e)
-        {
-            WCFHandler.GetInstance.resumePoint = null;
-            CheckForDocuments();
-        }
-
-        private void btnSearchMore_Click(object sender, EventArgs e)
-        {
-            CheckForDocuments();
-            btnSearchMore.Enabled = false;
-        }
-
-        private void bSendEbill_Click(object sender, EventArgs e)
-        {
-            bCheckForDocuments.Enabled = false;
-            bSendEbills.Enabled = false;
-            btnSearchMore.Enabled = false;
-            //processDocumentsWorker.RunWorkerAsync();
-            NEWProcessDocumentsWorker.RunWorkerAsync();
-
-        }
         #endregion
 
         #endregion
@@ -201,13 +212,25 @@ namespace docreminder
         #region Helpers
         public void CheckForDocuments()
         {
-            bSendEbills.Enabled = false;
-            bCheckForDocuments.Enabled = false;
+            bProcessDocuments.Enabled = false;
+            bGetDocumentsDocuments.Enabled = false;
 
             progressBar1.Minimum = 0;
             progressBar1.Maximum = 100;
             progressBar1.Value = 0;
             GetDocumentsWorker.RunWorkerAsync();
+        }
+
+        public void ProcessDocuments()
+        {
+            bGetDocumentsDocuments.Enabled = false;
+            bProcessDocuments.Enabled = false;
+            btnSearchMore.Enabled = false;
+
+            progressBar1.Minimum = 0;
+            progressBar1.Maximum = 100;
+            progressBar1.Value = 0;
+            NEWProcessDocumentsWorker.RunWorkerAsync();
         }
 
         private void CheckSchedule()
@@ -254,10 +277,17 @@ namespace docreminder
                 toolStripStatusLabel2.Text = "";
             }
         }
+
+        [System.Runtime.InteropServices.DllImport("kernel32.dll")]
+        private static extern bool FreeConsole();
+
+        [System.Runtime.InteropServices.DllImport("kernel32.dll")]
+        private static extern bool AllocConsole();
         #endregion
-  
+
         #region Workers
 
+        #region GetDocumentsWorker
         private void GetDocumentsWorker_DoWork(object sender, DoWorkEventArgs e)
         {
             GetDocumentsWorker.ReportProgress(10);
@@ -298,8 +328,8 @@ namespace docreminder
             dgwDocuments.ResumeLayout();
 
             progressBar1.Value = 0;
-            bSendEbills.Enabled = true;
-            bCheckForDocuments.Enabled = true;
+            bProcessDocuments.Enabled = true;
+            bGetDocumentsDocuments.Enabled = true;
 
             if (WCFHandler.GetInstance.hasMore)
             {
@@ -312,37 +342,51 @@ namespace docreminder
                 btnSearchMore.Enabled = false;
             }
 
-            ////IF Automode, send Ebills
-            //if (Program.automode)
-            //    bSendEbill_Click(this, new EventArgs());
+            //IF Automode, Process-Documents.
+            if (Program.automode)
+                bProcessDocuments_Click(this, new EventArgs());
         }
+        #endregion
 
-
+        #region NEWProcessDocumentsWorker
         private void NEWProcessDocumentsWorker_DoWork(object sender, DoWorkEventArgs e)
         {
-            foreach(BO.WorkObject wo in currentWorkObjects)
+            if (currentWorkObjects.Count > 0)
             {
-                Task.Factory.StartNew(() => wo.Process());
-                Thread.Sleep(10);
+                //Start processing of all workobjects.
+                log4.Info("Document processing initiated. Now trying to process each document.");
+                foreach (BO.WorkObject wo in currentWorkObjects)
+                {
+                    Task.Factory.StartNew(() => wo.Process());
+                    Thread.Sleep(10);
+                }
+
+
+                //Wait for all documents to finish.
+                log4.Info("Waiting for all documentprocessing to finish...");
+                bool finished = false;
+                while (!finished)
+                {
+                    var doneProcessing = currentWorkObjects.Where(x => x.finished || x.error).Count();
+                    var total = currentWorkObjects.Count();
+                    if (doneProcessing == total)
+                        finished = true;
+
+                    double progress = ((double)doneProcessing / total) * 100;
+                    NEWProcessDocumentsWorker.ReportProgress(Convert.ToInt32(progress));
+                    Thread.Sleep(100);
+                }
             }
-
-            bool finished = false;
-            while(!finished)
+            else
             {
-                var doneProcessing = currentWorkObjects.Where(x => x.finished || x.error).Count();
-                var total = currentWorkObjects.Count();
-                if (doneProcessing == total)
-                    finished = true;
-
-                double progress = ((double)doneProcessing / total) * 100;
-                NEWProcessDocumentsWorker.ReportProgress(Convert.ToInt32(progress));
-                Thread.Sleep(100);
+                log4.Info("There are no documents to be processed.");
             }
         }
 
         private void NEWProcessDocumentsWorker_ProgressChanged(object sender, ProgressChangedEventArgs e)
         {
             progressBar1.Value = e.ProgressPercentage;
+            this.Text = e.ProgressPercentage.ToString() + "%";
         }
 
         private void NEWProcessDocumentsWorker_RunWorkerCompleted(object sender, RunWorkerCompletedEventArgs e)
@@ -350,22 +394,26 @@ namespace docreminder
             this.Text = "Five Informatik AG - Document Reminder";
             progressBar1.Value = 0;
             progressBar1.Style = ProgressBarStyle.Blocks;
-            bCheckForDocuments.Enabled = true;
+            bGetDocumentsDocuments.Enabled = true;
             if (WCFHandler.GetInstance.hasMore)
                 btnSearchMore.Enabled = true;
-            bSendEbills.Enabled = false;
+            bProcessDocuments.Enabled = false;
 
             //If automode and NoMore Documents. Close!
             if ((Program.automode && !WCFHandler.GetInstance.hasMore) || scheduledTimeLeft.TotalSeconds < 0)
+            {
+                log4.Info(string.Format("Scheduled shutdown-time has been reached. Shutting down."));
                 this.Close();
+            }
             //If automode and more Documents searchMore.
             else if (Program.automode && WCFHandler.GetInstance.hasMore)
             {
                 btnSearchMore_Click(null, null);
             }
         }
+        #endregion
 
-
+        #region OldProcessDocumentsWorker
         private void processDocumentsWorker_DoWork(object sender, DoWorkEventArgs e)
         {
 
@@ -494,7 +542,7 @@ namespace docreminder
                 log4.Info("There are no documents to be processed.");
             }
         }
-   
+
         private void processDocumentsWorker_ProgressChanged(object sender, ProgressChangedEventArgs e)
         {
             progressBar1.Value = e.ProgressPercentage;
@@ -505,10 +553,10 @@ namespace docreminder
         {
             this.Text = "Five Informatik AG - Document Reminder";
             progressBar1.Value = 0;
-            bCheckForDocuments.Enabled = true;
+            bGetDocumentsDocuments.Enabled = true;
             if (_webServiceHandler.hasMore)
                 btnSearchMore.Enabled = true;
-            bSendEbills.Enabled = false;
+            bProcessDocuments.Enabled = false;
             //If automode and NoMore Documents. Close!
             if ((Program.automode && !_webServiceHandler.hasMore) || scheduledTimeLeft.TotalSeconds < 0)
                 this.Close();
@@ -518,8 +566,7 @@ namespace docreminder
                 btnSearchMore_Click(null, null);
             }
         }
-
-
+        #endregion
 
         #endregion EndRegion
 
@@ -612,7 +659,6 @@ namespace docreminder
         //}
 
         #endregion
-
 
     }
 }

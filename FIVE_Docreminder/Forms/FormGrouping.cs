@@ -50,7 +50,7 @@ namespace docreminder.Forms
             Properties.Settings.Default["GroupingSendWithoutChild"] =  checkBox2.Checked;
 
             //New SearchProperties
-            List<InfoShareService.SearchConditionContract> newSearchCons = new List<InfoShareService.SearchConditionContract>();
+            List<InfoShareService.SearchConditionContract> searchConditions = new List<InfoShareService.SearchConditionContract>();
             foreach (DataGridViewRow row in dgwSearchProperties.Rows)
             {
                 if (row.Cells.Count > 0 && row.Cells[0].Value != null)
@@ -82,10 +82,10 @@ namespace docreminder.Forms
                     else
                         condition.Values = new string[] { "" };
 
-                    newSearchCons.Add(condition);
+                    searchConditions.Add(condition);
                 }
             }
-            Properties.Settings.Default["GroupingSearchProperties"] = FileHelper.XmlSerializeToString(newSearchCons);
+            Properties.Settings.Default["GroupingSearchProperties"] = FileHelper.XmlSerializeToString(searchConditions);
 
             Properties.Settings.Default.Save();
         }

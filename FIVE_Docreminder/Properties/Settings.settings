@@ -44,9 +44,6 @@
     <Setting Name="SendErrorMail" Provider="docreminder.PortableSettingsProvider" Roaming="true" Type="System.Boolean" Scope="User">
       <Value Profile="(Default)">False</Value>
     </Setting>
-    <Setting Name="KendoxSearchProperties" Provider="docreminder.PortableSettingsProvider" Roaming="true" Type="System.String" Scope="User">
-      <Value Profile="(Default)" />
-    </Setting>
     <Setting Name="AttachDocument" Provider="docreminder.PortableSettingsProvider" Roaming="true" Type="System.Boolean" Scope="User">
       <Value Profile="(Default)">False</Value>
     </Setting>
@@ -203,13 +200,16 @@
     <Setting Name="AttachmentRenameProperty" Provider="docreminder.PortableSettingsProvider" Type="System.String" Scope="User">
       <Value Profile="(Default)" />
     </Setting>
-    <Setting Name="NEWSearchProperties" Provider="docreminder.PortableSettingsProvider" Type="System.String" Scope="User">
+    <Setting Name="SearchProperties" Provider="docreminder.PortableSettingsProvider" Type="System.String" Scope="User">
       <Value Profile="(Default)" />
     </Setting>
     <Setting Name="ConsoleEnabled" Provider="docreminder.PortableSettingsProvider" Type="System.Boolean" Scope="User">
       <Value Profile="(Default)">True</Value>
     </Setting>
     <Setting Name="NEWMarkerProperties" Provider="docreminder.PortableSettingsProvider" Type="System.String" Scope="User">
+      <Value Profile="(Default)" />
+    </Setting>
+    <Setting Name="KendoxSearchProperties" Type="System.String" Scope="User">
       <Value Profile="(Default)" />
     </Setting>
   </Settings>

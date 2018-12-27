@@ -223,20 +223,6 @@ namespace docreminder.Properties {
         [global::System.Configuration.UserScopedSettingAttribute()]
         [global::System.Configuration.SettingsProviderAttribute(typeof(docreminder.PortableSettingsProvider))]
         [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
-        [global::System.Configuration.DefaultSettingValueAttribute("")]
-        [global::System.Configuration.SettingsManageabilityAttribute(global::System.Configuration.SettingsManageability.Roaming)]
-        public string KendoxSearchProperties {
-            get {
-                return ((string)(this["KendoxSearchProperties"]));
-            }
-            set {
-                this["KendoxSearchProperties"] = value;
-            }
-        }
-        
-        [global::System.Configuration.UserScopedSettingAttribute()]
-        [global::System.Configuration.SettingsProviderAttribute(typeof(docreminder.PortableSettingsProvider))]
-        [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
         [global::System.Configuration.DefaultSettingValueAttribute("False")]
         [global::System.Configuration.SettingsManageabilityAttribute(global::System.Configuration.SettingsManageability.Roaming)]
         public bool AttachDocument {
@@ -919,12 +905,12 @@ namespace docreminder.Properties {
         [global::System.Configuration.SettingsProviderAttribute(typeof(docreminder.PortableSettingsProvider))]
         [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
         [global::System.Configuration.DefaultSettingValueAttribute("")]
-        public string NEWSearchProperties {
+        public string SearchProperties {
             get {
-                return ((string)(this["NEWSearchProperties"]));
+                return ((string)(this["SearchProperties"]));
             }
             set {
-                this["NEWSearchProperties"] = value;
+                this["SearchProperties"] = value;
             }
         }
         
@@ -951,6 +937,18 @@ namespace docreminder.Properties {
             }
             set {
                 this["NEWMarkerProperties"] = value;
+            }
+        }
+        
+        [global::System.Configuration.UserScopedSettingAttribute()]
+        [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+        [global::System.Configuration.DefaultSettingValueAttribute("")]
+        public string KendoxSearchProperties {
+            get {
+                return ((string)(this["KendoxSearchProperties"]));
+            }
+            set {
+                this["KendoxSearchProperties"] = value;
             }
         }
     }

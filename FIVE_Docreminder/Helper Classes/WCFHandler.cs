@@ -132,7 +132,7 @@ namespace docreminder
             List<DocumentContract> documents = new List<DocumentContract>();
 
             List<SearchConditionContract> searchConContractList = new List<SearchConditionContract>();
-            searchConContractList = (List<SearchConditionContract>)(FileHelper.XmlDeserializeFromString(Properties.Settings.Default.NEWSearchProperties, searchConContractList.GetType()));  
+            searchConContractList = (List<SearchConditionContract>)(FileHelper.XmlDeserializeFromString(Properties.Settings.Default.SearchProperties, searchConContractList.GetType()));  
             searchConContractList = EvaluateSearchConditions(searchConContractList);
             SearchDefinitionContract sDefContract = new SearchDefinitionContract
             {

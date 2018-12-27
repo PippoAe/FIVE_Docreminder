@@ -172,8 +172,8 @@ namespace docreminder
 
             //SearchConditions
             List<InfoShareService.SearchConditionContract> searchonlist = new List<InfoShareService.SearchConditionContract>();
-            if (Properties.Settings.Default.KendoxSearchProperties != "")
-                searchonlist = (List<InfoShareService.SearchConditionContract>)(FileHelper.XmlDeserializeFromString(Properties.Settings.Default.NEWSearchProperties, searchonlist.GetType()));
+            if (Properties.Settings.Default.SearchProperties != "")
+                searchonlist = (List<InfoShareService.SearchConditionContract>)(FileHelper.XmlDeserializeFromString(Properties.Settings.Default.SearchProperties, searchonlist.GetType()));
 
             //Fill SearchProperties
             foreach (InfoShareService.SearchConditionContract searchcon in searchonlist)
@@ -383,8 +383,8 @@ MessageBoxButtons.OK, MessageBoxIcon.Information);
             Properties.Settings.Default["SearchQuantity"] = Convert.ToInt32(nUdSearchQuantity.Value);
 
 
-            //New SearchProperties
-            List<InfoShareService.SearchConditionContract> newSearchCons = new List<InfoShareService.SearchConditionContract>();
+            //SearchProperties
+            List<InfoShareService.SearchConditionContract> searchConditions = new List<InfoShareService.SearchConditionContract>();
             foreach (DataGridViewRow row in dgwSearchProperties.Rows)
             {
                 if (row.Cells.Count > 0 && row.Cells[0].Value != null)
@@ -416,10 +416,10 @@ MessageBoxButtons.OK, MessageBoxIcon.Information);
                     else
                         condition.Values = new string[] { "" };
 
-                    newSearchCons.Add(condition);
+                    searchConditions.Add(condition);
                 }
             }
-            Properties.Settings.Default["NEWSearchProperties"] = FileHelper.XmlSerializeToString(newSearchCons);
+            Properties.Settings.Default["SearchProperties"] = FileHelper.XmlSerializeToString(searchConditions);
 
 
 
@@ -539,23 +539,23 @@ MessageBoxButtons.OK, MessageBoxIcon.Information);
             Properties.Settings.Default.Save();
         }
 
-        private void SearchPropertiesSerialization()
-        {
-            KXWS.SSearchCondition[] sSearchConditions = new KXWS.SSearchCondition[1];
-            KXWS.SSearchCondition sSearchCondition = new KXWS.SSearchCondition
-            {
-                propertyTypeName = "ebillmail",
-                operation = "GT",
-                propertyValueArray = new string[] { "1" }
-            };
-            sSearchConditions[0] = sSearchCondition;
+        //private void SearchPropertiesSerialization()
+        //{
+        //    KXWS.SSearchCondition[] sSearchConditions = new KXWS.SSearchCondition[1];
+        //    KXWS.SSearchCondition sSearchCondition = new KXWS.SSearchCondition
+        //    {
+        //        propertyTypeName = "ebillmail",
+        //        operation = "GT",
+        //        propertyValueArray = new string[] { "1" }
+        //    };
+        //    sSearchConditions[0] = sSearchCondition;
 
-            Properties.Settings.Default.KendoxSearchProperties = FileHelper.XmlSerializeToString(sSearchConditions);
+        //    Properties.Settings.Default.KendoxSearchProperties = FileHelper.XmlSerializeToString(sSearchConditions);
 
-            KXWS.SSearchCondition[] sSearchConditionsTEST = new KXWS.SSearchCondition[1];
+        //    KXWS.SSearchCondition[] sSearchConditionsTEST = new KXWS.SSearchCondition[1];
 
-            sSearchConditionsTEST = (KXWS.SSearchCondition[])FileHelper.XmlDeserializeFromString(Properties.Settings.Default.KendoxSearchProperties, sSearchConditionsTEST.GetType());
-        }
+        //    sSearchConditionsTEST = (KXWS.SSearchCondition[])FileHelper.XmlDeserializeFromString(Properties.Settings.Default.KendoxSearchProperties, sSearchConditionsTEST.GetType());
+        //}
 
         private void btnTestSMTP_Click(object sender, EventArgs e)
         {

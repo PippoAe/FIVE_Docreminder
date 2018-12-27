@@ -381,7 +381,7 @@
             this.groupBox6.Controls.Add(this.btnTest);
             this.groupBox6.Controls.Add(this.cBAddCpIdisActive);
             this.groupBox6.Controls.Add(this.txtBxAdditionalComputedIdentifier);
-            this.groupBox6.Location = new System.Drawing.Point(8, 94);
+            this.groupBox6.Location = new System.Drawing.Point(8, 150);
             this.groupBox6.Name = "groupBox6";
             this.groupBox6.Size = new System.Drawing.Size(397, 73);
             this.groupBox6.TabIndex = 19;
@@ -424,7 +424,7 @@
             this.groupBox5.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Left) 
             | System.Windows.Forms.AnchorStyles.Right)));
             this.groupBox5.Controls.Add(this.dGwMarkerProperties);
-            this.groupBox5.Location = new System.Drawing.Point(8, 173);
+            this.groupBox5.Location = new System.Drawing.Point(8, 229);
             this.groupBox5.Name = "groupBox5";
             this.groupBox5.Size = new System.Drawing.Size(397, 144);
             this.groupBox5.TabIndex = 18;
@@ -516,7 +516,7 @@
             // nUdSearchQuantity
             // 
             this.nUdSearchQuantity.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Left)));
-            this.nUdSearchQuantity.Location = new System.Drawing.Point(96, 104);
+            this.nUdSearchQuantity.Location = new System.Drawing.Point(96, 110);
             this.nUdSearchQuantity.Maximum = new decimal(new int[] {
             100000,
             0,
@@ -540,7 +540,7 @@
             // 
             this.label22.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Left)));
             this.label22.AutoSize = true;
-            this.label22.Location = new System.Drawing.Point(8, 104);
+            this.label22.Location = new System.Drawing.Point(8, 110);
             this.label22.Name = "label22";
             this.label22.Size = new System.Drawing.Size(86, 13);
             this.label22.TabIndex = 2;
@@ -586,7 +586,7 @@
             this.dgwSearchProperties.RowHeadersVisible = false;
             this.dgwSearchProperties.RowHeadersWidth = 20;
             this.dgwSearchProperties.SelectionMode = System.Windows.Forms.DataGridViewSelectionMode.FullRowSelect;
-            this.dgwSearchProperties.Size = new System.Drawing.Size(381, 76);
+            this.dgwSearchProperties.Size = new System.Drawing.Size(381, 91);
             this.dgwSearchProperties.TabIndex = 0;
             this.dgwSearchProperties.DataError += new System.Windows.Forms.DataGridViewDataErrorEventHandler(this.dgwSearchProperties_DataError);
             this.dgwSearchProperties.EditingControlShowing += new System.Windows.Forms.DataGridViewEditingControlShowingEventHandler(this.dgwSearchProperties_EditingControlShowing);

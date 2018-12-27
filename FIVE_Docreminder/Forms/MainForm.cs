@@ -162,7 +162,10 @@ namespace docreminder
         #region Clicks
         private void bCheckForDocuments_Click(object sender, EventArgs e)
         {
-            WCFHandler.GetInstance.resumePoint = null;
+            //New Search. Delete resumepoint if its not the first search.
+            if(currentWorkObjects != null)
+                WCFHandler.GetInstance.resumePoint = null;
+
             CheckForDocuments();
         }
         private void btnSearchMore_Click(object sender, EventArgs e)

@@ -12,6 +12,7 @@ namespace docreminder.BO
 
         public DocumentContract document;
         public string objectID { get; private set; }
+        public string[] childObjectIDs { get; private set; }
         public bool ready { get; private set; }
         public bool finished { get; private set; }
         public bool error { get; private set; }
@@ -86,7 +87,6 @@ namespace docreminder.BO
             }
         }
 
-        //MOCKUP PROCESSING
         public void Process()
         {
             if(ready && !error)
@@ -117,21 +117,6 @@ namespace docreminder.BO
                         }
                     #endregion
 
-
-
-
-                    //Random rand = new Random();
-                    //int workingtime = rand.Next(100, 10000);
-                    //Thread.Sleep(workingtime);
-
-
-                    //Random rand2 = new Random();
-                    //var err = rand2.Next(0, 10);
-                    //if(err == 0)
-                    //{
-                    //    throw new Exception("RANDOM ERROR");
-                    //}
-
                     string message = string.Format("Document processed sucessfully. ObjectID:'{0}'", this.objectID);
                     log4.Info(message);
                     info = message;
@@ -145,7 +130,7 @@ namespace docreminder.BO
                     info = message;
                     error = true;
                 }
-                //Documents are always checkedbackin in when finished.
+                //Documents are always checked back in in when finished.
                 finally
                 {
                     WCFHandler.GetInstance.UndoCheckOutDocument(this.objectID);

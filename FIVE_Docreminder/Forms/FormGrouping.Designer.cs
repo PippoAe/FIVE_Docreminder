@@ -43,10 +43,10 @@
             this.label1 = new System.Windows.Forms.Label();
             this.radioButton1 = new System.Windows.Forms.RadioButton();
             this.dgwSearchProperties = new System.Windows.Forms.DataGridView();
-            this.Propertyname = new System.Windows.Forms.DataGridViewTextBoxColumn();
-            this.Operation = new System.Windows.Forms.DataGridViewComboBoxColumn();
-            this.Value = new System.Windows.Forms.DataGridViewTextBoxColumn();
-            this.Relation = new System.Windows.Forms.DataGridViewComboBoxColumn();
+            this.dataGridViewTextBoxColumn1 = new System.Windows.Forms.DataGridViewTextBoxColumn();
+            this.dataGridViewComboBoxColumn1 = new System.Windows.Forms.DataGridViewComboBoxColumn();
+            this.dataGridViewTextBoxColumn2 = new System.Windows.Forms.DataGridViewTextBoxColumn();
+            this.dataGridViewComboBoxColumn2 = new System.Windows.Forms.DataGridViewComboBoxColumn();
             this.groupBox1.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.dgwSearchProperties)).BeginInit();
             this.SuspendLayout();
@@ -80,6 +80,7 @@
             this.groupBox1.Anchor = ((System.Windows.Forms.AnchorStyles)((((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Bottom) 
             | System.Windows.Forms.AnchorStyles.Left) 
             | System.Windows.Forms.AnchorStyles.Right)));
+            this.groupBox1.Controls.Add(this.dgwSearchProperties);
             this.groupBox1.Controls.Add(this.checkBox2);
             this.groupBox1.Controls.Add(this.radioButton2);
             this.groupBox1.Controls.Add(this.checkBox1);
@@ -87,7 +88,6 @@
             this.groupBox1.Controls.Add(this.textBox1);
             this.groupBox1.Controls.Add(this.label1);
             this.groupBox1.Controls.Add(this.radioButton1);
-            this.groupBox1.Controls.Add(this.dgwSearchProperties);
             this.groupBox1.Location = new System.Drawing.Point(6, 6);
             this.groupBox1.Margin = new System.Windows.Forms.Padding(2);
             this.groupBox1.Name = "groupBox1";
@@ -101,7 +101,7 @@
             // 
             this.checkBox2.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Right)));
             this.checkBox2.AutoSize = true;
-            this.checkBox2.Location = new System.Drawing.Point(2, 247);
+            this.checkBox2.Location = new System.Drawing.Point(4, 249);
             this.checkBox2.Margin = new System.Windows.Forms.Padding(2);
             this.checkBox2.Name = "checkBox2";
             this.checkBox2.Size = new System.Drawing.Size(285, 17);
@@ -193,10 +193,10 @@
             this.dgwSearchProperties.ColumnHeadersDefaultCellStyle = dataGridViewCellStyle1;
             this.dgwSearchProperties.ColumnHeadersHeightSizeMode = System.Windows.Forms.DataGridViewColumnHeadersHeightSizeMode.AutoSize;
             this.dgwSearchProperties.Columns.AddRange(new System.Windows.Forms.DataGridViewColumn[] {
-            this.Propertyname,
-            this.Operation,
-            this.Value,
-            this.Relation});
+            this.dataGridViewTextBoxColumn1,
+            this.dataGridViewComboBoxColumn1,
+            this.dataGridViewTextBoxColumn2,
+            this.dataGridViewComboBoxColumn2});
             dataGridViewCellStyle2.Alignment = System.Windows.Forms.DataGridViewContentAlignment.MiddleLeft;
             dataGridViewCellStyle2.BackColor = System.Drawing.SystemColors.Window;
             dataGridViewCellStyle2.Font = new System.Drawing.Font("Microsoft Sans Serif", 8.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
@@ -205,7 +205,7 @@
             dataGridViewCellStyle2.SelectionForeColor = System.Drawing.SystemColors.HighlightText;
             dataGridViewCellStyle2.WrapMode = System.Windows.Forms.DataGridViewTriState.False;
             this.dgwSearchProperties.DefaultCellStyle = dataGridViewCellStyle2;
-            this.dgwSearchProperties.Location = new System.Drawing.Point(6, 20);
+            this.dgwSearchProperties.Location = new System.Drawing.Point(6, 18);
             this.dgwSearchProperties.Name = "dgwSearchProperties";
             dataGridViewCellStyle3.Alignment = System.Windows.Forms.DataGridViewContentAlignment.MiddleLeft;
             dataGridViewCellStyle3.BackColor = System.Drawing.SystemColors.Control;
@@ -218,51 +218,51 @@
             this.dgwSearchProperties.RowHeadersVisible = false;
             this.dgwSearchProperties.RowHeadersWidth = 20;
             this.dgwSearchProperties.SelectionMode = System.Windows.Forms.DataGridViewSelectionMode.FullRowSelect;
-            this.dgwSearchProperties.Size = new System.Drawing.Size(354, 165);
-            this.dgwSearchProperties.TabIndex = 9;
+            this.dgwSearchProperties.Size = new System.Drawing.Size(354, 153);
+            this.dgwSearchProperties.TabIndex = 18;
             this.dgwSearchProperties.EditingControlShowing += new System.Windows.Forms.DataGridViewEditingControlShowingEventHandler(this.dgwSearchProperties_EditingControlShowing);
             // 
-            // Propertyname
+            // dataGridViewTextBoxColumn1
             // 
-            this.Propertyname.HeaderText = "Propertyname";
-            this.Propertyname.Name = "Propertyname";
-            this.Propertyname.Width = 90;
+            this.dataGridViewTextBoxColumn1.HeaderText = "Propertyname";
+            this.dataGridViewTextBoxColumn1.Name = "dataGridViewTextBoxColumn1";
+            this.dataGridViewTextBoxColumn1.Width = 150;
             // 
-            // Operation
+            // dataGridViewComboBoxColumn1
             // 
-            this.Operation.HeaderText = "Operation";
-            this.Operation.Items.AddRange(new object[] {
-            "EQ",
-            "LE",
-            "LT",
-            "GT",
-            "GE",
-            "NE",
-            "LK",
-            "CT",
-            "BT",
-            "UN",
-            "IN",
-            "NOTIN",
-            "SX",
-            "NONE"});
-            this.Operation.Name = "Operation";
-            this.Operation.Width = 50;
+            this.dataGridViewComboBoxColumn1.HeaderText = "Operation";
+            this.dataGridViewComboBoxColumn1.Items.AddRange(new object[] {
+            "Equals",
+            "NotEqual",
+            "GreaterThan",
+            "GreaterOrEqual",
+            "LessThan",
+            "LessOrEqual",
+            "Like",
+            "Contains",
+            "Undefined",
+            "In",
+            "None",
+            "Soundex",
+            "NotIn"});
+            this.dataGridViewComboBoxColumn1.MaxDropDownItems = 20;
+            this.dataGridViewComboBoxColumn1.Name = "dataGridViewComboBoxColumn1";
+            this.dataGridViewComboBoxColumn1.Width = 50;
             // 
-            // Value
+            // dataGridViewTextBoxColumn2
             // 
-            this.Value.AutoSizeMode = System.Windows.Forms.DataGridViewAutoSizeColumnMode.Fill;
-            this.Value.HeaderText = "Value";
-            this.Value.Name = "Value";
+            this.dataGridViewTextBoxColumn2.AutoSizeMode = System.Windows.Forms.DataGridViewAutoSizeColumnMode.Fill;
+            this.dataGridViewTextBoxColumn2.HeaderText = "Value";
+            this.dataGridViewTextBoxColumn2.Name = "dataGridViewTextBoxColumn2";
             // 
-            // Relation
+            // dataGridViewComboBoxColumn2
             // 
-            this.Relation.HeaderText = "Relation";
-            this.Relation.Items.AddRange(new object[] {
+            this.dataGridViewComboBoxColumn2.HeaderText = "Relation";
+            this.dataGridViewComboBoxColumn2.Items.AddRange(new object[] {
             "AND",
             "OR"});
-            this.Relation.Name = "Relation";
-            this.Relation.Width = 60;
+            this.dataGridViewComboBoxColumn2.Name = "dataGridViewComboBoxColumn2";
+            this.dataGridViewComboBoxColumn2.Width = 60;
             // 
             // FormGrouping
             // 
@@ -288,11 +288,6 @@
         private System.Windows.Forms.Button bOK;
         private System.Windows.Forms.Button bSave;
         private System.Windows.Forms.GroupBox groupBox1;
-        private System.Windows.Forms.DataGridView dgwSearchProperties;
-        private System.Windows.Forms.DataGridViewTextBoxColumn Propertyname;
-        private System.Windows.Forms.DataGridViewComboBoxColumn Operation;
-        private System.Windows.Forms.DataGridViewTextBoxColumn Value;
-        private System.Windows.Forms.DataGridViewComboBoxColumn Relation;
         private System.Windows.Forms.CheckBox checkBox1;
         private System.Windows.Forms.Label label2;
         private System.Windows.Forms.TextBox textBox1;
@@ -300,6 +295,10 @@
         private System.Windows.Forms.RadioButton radioButton1;
         private System.Windows.Forms.RadioButton radioButton2;
         private System.Windows.Forms.CheckBox checkBox2;
-
+        private System.Windows.Forms.DataGridView dgwSearchProperties;
+        private System.Windows.Forms.DataGridViewTextBoxColumn dataGridViewTextBoxColumn1;
+        private System.Windows.Forms.DataGridViewComboBoxColumn dataGridViewComboBoxColumn1;
+        private System.Windows.Forms.DataGridViewTextBoxColumn dataGridViewTextBoxColumn2;
+        private System.Windows.Forms.DataGridViewComboBoxColumn dataGridViewComboBoxColumn2;
     }
 }

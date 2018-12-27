@@ -182,7 +182,7 @@ namespace docreminder
                     foreach (string sValue in sCon.Values)
                     {
 
-                        //nicht Evaluarieren wenn "".
+                        //don't evaluate if ""
                         if (sValue != "")
                         {
                             string sEvaluatedValue = "";

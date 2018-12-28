@@ -12,17 +12,17 @@ namespace docreminder
 
         private static WCFHandler instance;
         private static object syncRoot = new Object();
-
+    
+        public string ConnectionID { get; private set; }
         private DateTime lastActionTime = DateTime.Now;
         private static TimeSpan connectionTimeOut;
-        
-        public string ConnectionID { get; private set; }
 
         public AuthenticationService authenticationService { get; private set; }
         public CommonService commonService { get; private set; }
         public SearchService searchService { get; private set; }
         public FileService fileService { get; private set; }
         public DocumentService documentService { get; private set; }
+
 
         private bool _hasMore = false;
         private string _resumePoint = null;
@@ -56,6 +56,7 @@ namespace docreminder
         }
 
 
+        #region Connection
         private void SetBindings(string wcfURL)
         {
             //Bindings
@@ -106,7 +107,28 @@ namespace docreminder
                 ConnectionID = connID;
             }          
         }
+        public bool isConnected()
+        {
+            //We have been connected. But timeout since last action is reached.
+            if (ConnectionID != null && (lastActionTime + connectionTimeOut) < DateTime.Now)
+            {
+                //Refresh connection
+                log4.Info("Session-Timeout reached. Refreshing session.");
+                Login();
+                lastActionTime = DateTime.Now;
+                return true;
+            }
+            if (ConnectionID != null)
+            {
+                lastActionTime = DateTime.Now;
+                return true;
+            }
+            //We have never been connected
+            return false;
+        }
+        #endregion
 
+        #region Utility
         internal void UndoCheckOutDocument(string infoShareObjectID)
         {
             documentService.UndoCheckOutDocument(ConnectionID, infoShareObjectID);
@@ -117,12 +139,79 @@ namespace docreminder
             documentService.CheckOutDocument(ConnectionID, infoShareObjectID);
         }
 
+        internal void UpdateDocument(DocumentContract documentConctract)
+        {
+            documentService.UpdateDocument(ConnectionID, documentConctract);
+        }
+
+        public string GetPropertyTypeName(string id)
+        {
+            if (isConnected())
+                return commonService.GetPropertyTypeName(id, Properties.Settings.Default.Culture);
+            else
+                return id;
+        }
+
+        public string GetPropertyTypeID(string name)
+        {
+            if (isConnected())
+                return commonService.GetPropertyTypeID(name, Properties.Settings.Default.Culture);
+            else
+                return name;
+        }
+
+        internal IEnumerable<string> GetAllPropertyTypes(bool editable = false)
+        {
+            List<string> lSpropertyNames = new List<string>();
+
+            List<PropertyTypeContract> filteredProps;
+
+            PropertyTypeContract[] props = commonService.GetAllPropertyTypes();
+            if (!editable)
+                filteredProps = props.Where(x => x.Searchable == true).ToList();
+
+            else
+                filteredProps = props.Where(x => x.FreeEditable == true).ToList();
+
+
+            foreach (PropertyTypeContract ptc in filteredProps)
+            {
+                string name = Utility.GetValue(ptc.Name, Properties.Settings.Default.Culture);
+                if (name != null)
+                    lSpropertyNames.Add(name);
+                else
+                {
+                    name = ptc.Name.Values.Where(x => x.Text != null).Select(x => x.Text).First();
+                    lSpropertyNames.Add(name);
+                }
+            }
+            return lSpropertyNames;
+        }
+
+        internal IEnumerable<string> GetAllInfoStores()
+        {
+            List<string> lSInfoStores = new List<string>();
+
+            InfoStoreContract[] infoStores = commonService.GetAllInfoStores(ConnectionID);
+
+            foreach (InfoStoreContract isc in infoStores)
+            {
+                string name = Utility.GetValue(isc.Name, Properties.Settings.Default.Culture);
+                if (name != null)
+                    lSInfoStores.Add(name);
+                else
+                {
+                    name = isc.Name.Values.Where(x => x.Text != null).Select(x => x.Text).First();
+                    lSInfoStores.Add(name);
+                }
+            }
+            return lSInfoStores;
+        }
         internal DocumentContract GetDocument(string infoShareObjectID)
         {
             return documentService.GetDocument(ConnectionID, infoShareObjectID);
         }
-
-
+        #endregion
 
         internal DocumentSimpleContract[] SearchForDocuments()
         {
@@ -169,6 +258,62 @@ namespace docreminder
             return resultContract.Documents;
         }
 
+        internal DocumentSimpleContract[] SearchForChildDocuments(DocumentContract parentDoc)
+        {
+            isConnected();
+
+            //Get Grouping-Search Properties and evaluate them.
+            List<SearchConditionContract> searchConContractList = new List<SearchConditionContract>();
+            searchConContractList = (List<SearchConditionContract>)(FileHelper.XmlDeserializeFromString(Properties.Settings.Default.GroupingSearchProperties, searchConContractList.GetType()));
+            searchConContractList = EvaluateSearchConditions(searchConContractList, parentDoc);
+            SearchDefinitionContract sDefContract = new SearchDefinitionContract
+            {
+                Conditions = searchConContractList.ToArray()
+            };
+
+
+            //***ADDITIONAL CHECKS FOR SAFETY***            
+            //Check against no grouping search-properties.
+            if(searchConContractList.Count() < 1)
+                throw new Exception("No grouping searchproperties defined! This could result in an accidental sending of an entire archive. This file will thus be ignored!");
+
+            //If grouping searchproperty of parent evaluated to empty (val = "") we could end up sending an entire archive by accident.
+            foreach (SearchConditionContract scc in searchConContractList)
+            {
+                foreach(string val in scc.Values)
+                {
+                    if (val == "")
+                        throw new Exception("Searchproperties for child-document-search were empty. This could result in an accidental sending of an entire archive. This file will thus be ignored!");
+                }
+            }
+
+
+
+
+            //Set InfoStores to search for.
+            //If "All" is selected, "null" is sent.
+            List<string> infoStores = new List<string>();
+            var infoStoresArray = Properties.Settings.Default.KendoxInfoStores.Split(new char[] { ';' }, StringSplitOptions.RemoveEmptyEntries);
+            if (!infoStoresArray.Contains("All"))
+            {
+                foreach (string infoStore in infoStoresArray)
+                {
+                    infoStores.Add(commonService.GetInfoStoreID(ConnectionID, infoStore, Properties.Settings.Default.Culture));
+                }
+                sDefContract.SearchStores = infoStores.ToArray();
+            }
+
+            //Set PageSize
+            //Maximum of 50 childdocuments would get send.
+            sDefContract.PageSize = 50;
+
+
+
+
+            var resultContract = searchService.SearchDocument(commonService, ConnectionID, sDefContract, null);
+
+            return resultContract.Documents;
+        }
 
         public List<SearchConditionContract> EvaluateSearchConditions(List<SearchConditionContract> searchConList, DocumentContract doc = null)
         {
@@ -201,95 +346,11 @@ namespace docreminder
                 }
                 catch (Exception e)
                 {
-                    log4.Error("An Error happened while evaluating the SearchProperties." + e.Message);
-                    throw e;
+                    throw new Exception(string.Format("An Error happened while evaluating the SearchProperties. Msg: {0}", e.Message));
                 }
             }
             return searchConList;
         }
 
-        public string GetPropertyTypeName(string id)
-        {
-            if (isConnected())
-                return commonService.GetPropertyTypeName(id, Properties.Settings.Default.Culture);
-            else
-                return id;
-        }
-
-        public string GetPropertyTypeID(string name)
-        {
-            if (isConnected())
-                return commonService.GetPropertyTypeID(name, Properties.Settings.Default.Culture);
-            else
-                return name;
-        }
-
-        public bool isConnected()
-        {
-            //We have been connected. But timeout since last action is reached.
-            if(ConnectionID != null && (lastActionTime + connectionTimeOut) < DateTime.Now )
-            {
-                //Refresh connection
-                log4.Info("Session-Timeout reached. Refreshing session.");
-                Login();
-                lastActionTime = DateTime.Now;
-                return true;
-            }
-            if(ConnectionID != null)
-            {
-                lastActionTime = DateTime.Now;
-                return true;
-            }
-            //We have never been connected
-            return false;
-        }
-
-        internal IEnumerable<string> GetAllInfoStores()
-        {
-            List<string> lSInfoStores = new List<string>();
-
-            InfoStoreContract[] infoStores = commonService.GetAllInfoStores(ConnectionID);
-
-            foreach (InfoStoreContract isc in infoStores)
-            {
-                string name = Utility.GetValue(isc.Name, Properties.Settings.Default.Culture);
-                if(name != null)
-                    lSInfoStores.Add(name);
-                else
-                {
-                    name = isc.Name.Values.Where(x => x.Text != null).Select(x => x.Text).First();
-                    lSInfoStores.Add(name);
-                }
-            }
-            return lSInfoStores;
-        }
-
-        internal IEnumerable<string> GetAllPropertyTypes(bool editable = false)
-        {
-            List<string> lSpropertyNames = new List<string>();
-
-            List<PropertyTypeContract> filteredProps;
-
-            PropertyTypeContract[] props = commonService.GetAllPropertyTypes();
-            if(!editable)
-                filteredProps = props.Where(x => x.Searchable == true).ToList();
-
-            else
-                filteredProps = props.Where(x => x.FreeEditable == true).ToList();
-
-
-            foreach(PropertyTypeContract ptc in filteredProps)
-            {
-                string name = Utility.GetValue(ptc.Name, Properties.Settings.Default.Culture);
-                if (name != null)
-                    lSpropertyNames.Add(name);
-                else
-                {
-                    name = ptc.Name.Values.Where(x => x.Text != null).Select(x => x.Text).First();
-                    lSpropertyNames.Add(name);
-                }
-            }
-            return lSpropertyNames;  
-        }
     }
 }

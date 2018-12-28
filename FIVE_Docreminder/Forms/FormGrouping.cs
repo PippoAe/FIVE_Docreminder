@@ -24,6 +24,7 @@ namespace docreminder.Forms
             radioButton2.Checked = !Properties.Settings.Default.GroupingZipped;
             textBox1.Text = Properties.Settings.Default.GroupingZipName;
             checkBox2.Checked = Properties.Settings.Default.GroupingSendWithoutChild;
+            checkBox3.Checked = Properties.Settings.Default.GroupingInheritMarkerProperties;
 
 
             //SearchConditions
@@ -48,6 +49,7 @@ namespace docreminder.Forms
             Properties.Settings.Default["GroupingZipped"] = radioButton1.Checked;
             Properties.Settings.Default["GroupingZipName"] = textBox1.Text;
             Properties.Settings.Default["GroupingSendWithoutChild"] =  checkBox2.Checked;
+            Properties.Settings.Default["GroupingInheritMarkerProperties"] = checkBox3.Checked;
 
             //New SearchProperties
             List<InfoShareService.SearchConditionContract> searchConditions = new List<InfoShareService.SearchConditionContract>();
@@ -133,7 +135,6 @@ namespace docreminder.Forms
         {
 
         }
-
 
         /// <summary>
         /// Add AutoComplete with Documenttypes to DataGridView SearchProperties.

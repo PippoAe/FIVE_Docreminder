@@ -888,7 +888,7 @@ MessageBoxButtons.OK, MessageBoxIcon.Information);
             //FormInputDialog testDialog = new FormInputDialog(txtBxSMTPSendTo.Text);
             string recipient = txtBxSMTPSendTo.Text;
 
-            FormPickDialog pickDialog = new FormPickDialog(mainform.webserviceHandler.getAllPropertyTypes(Properties.Settings.Default.Culture, true, false), sender);
+            FormPickDialog pickDialog = new FormPickDialog(WCFHandler.GetInstance.GetAllPropertyTypes().ToList(), sender);
             if (pickDialog.ShowDialog(this) == DialogResult.OK)
             {
                 txtBxSMTPSendTo.Text = txtBxSMTPSendTo.Text.Insert(txtBxSMTPSendTo.SelectionStart, "IDX('" + pickDialog.comboBox1.Text + "')");
@@ -908,7 +908,7 @@ MessageBoxButtons.OK, MessageBoxIcon.Information);
         {
             string property = txtBxMultiLanguageProperty.Text;
 
-            FormPickDialog pickDialog = new FormPickDialog(mainform.webserviceHandler.getAllPropertyTypes(Properties.Settings.Default.Culture, true, false), sender);
+            FormPickDialog pickDialog = new FormPickDialog(WCFHandler.GetInstance.GetAllPropertyTypes().ToList(), sender);
             if (pickDialog.ShowDialog(this) == DialogResult.OK)
             {
                 txtBxMultiLanguageProperty.Text = txtBxMultiLanguageProperty.Text.Insert(txtBxMultiLanguageProperty.SelectionStart, "IDX('" + pickDialog.comboBox1.Text + "')");
@@ -928,7 +928,7 @@ MessageBoxButtons.OK, MessageBoxIcon.Information);
         {
             string property = txtBxAttachmentRenameProperty.Text;
 
-            FormPickDialog pickDialog = new FormPickDialog(mainform.webserviceHandler.getAllPropertyTypes(Properties.Settings.Default.Culture, true, false), sender);
+            FormPickDialog pickDialog = new FormPickDialog(WCFHandler.GetInstance.GetAllPropertyTypes().ToList(), sender);
             if (pickDialog.ShowDialog(this) == DialogResult.OK)
             {
                 txtBxAttachmentRenameProperty.Text = txtBxAttachmentRenameProperty.Text.Insert(txtBxAttachmentRenameProperty.SelectionStart, "IDX('" + pickDialog.comboBox1.Text + "')");
@@ -954,7 +954,7 @@ MessageBoxButtons.OK, MessageBoxIcon.Information);
         /// <param name="e"></param>
         private void btnInsertIndexMailSubject_Click(object sender, EventArgs e)
         {
-            FormPickDialog pickDialog = new FormPickDialog(mainform.webserviceHandler.getAllPropertyTypes(Properties.Settings.Default.Culture, true, false), sender);
+            FormPickDialog pickDialog = new FormPickDialog(WCFHandler.GetInstance.GetAllPropertyTypes().ToList(), sender);
             if (pickDialog.ShowDialog(this) == DialogResult.OK)
             {
                 txtBxSMTPSubject.Text = txtBxSMTPSubject.Text.Insert(txtBxSMTPSubject.SelectionStart, "IDX('" + pickDialog.comboBox1.Text + "')");
@@ -1071,7 +1071,7 @@ MessageBoxButtons.OK, MessageBoxIcon.Information);
             //FormInputDialog testDialog = new FormInputDialog(txtBxSMTPSendTo.Text);
             string recipient = txtBxProcessRecipient.Text;
 
-            FormPickDialog pickDialog = new FormPickDialog(mainform.webserviceHandler.getAllPropertyTypes(Properties.Settings.Default.Culture, true, false), sender);
+            FormPickDialog pickDialog = new FormPickDialog(WCFHandler.GetInstance.GetAllPropertyTypes().ToList(), sender);
             if (pickDialog.ShowDialog(this) == DialogResult.OK)
             {
                 txtBxProcessRecipient.Text = txtBxProcessRecipient.Text.Insert(txtBxProcessRecipient.SelectionStart, "IDX('" + pickDialog.comboBox1.Text + "')");

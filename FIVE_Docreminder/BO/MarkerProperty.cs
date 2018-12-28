@@ -27,16 +27,27 @@ namespace docreminder.BO
         public enum UpdateAction
         {
 
-            /// <remarks/>
+            /// <summary>
+            /// NONE: Does not change a document property.
+            /// </summary>
             NONE,
 
-            /// <remarks/>
+            /// <summary>
+            /// UPDATE: Overwrites the existing document property values. If the document property does not exist the new document property is added.
+            /// </summary>
             UPDATE,
-
-            /// <remarks/>
+            
+            /// <summary>
+            /// ADD: Add new document property. If the document property does not exist the document property is added. 
+            /// If the document property already exists the values are added to the existing ones. 
+            /// Attention: To add multiple values to a document property the poperty type of the document property must be a multikey. 
+            /// If values are added to an existing document property the document property must be a multikey.
+            /// </summary>
             ADD,
 
-            /// <remarks/>
+            /// <summary>
+            /// DELETE: Delete a document property (idempotend: if the document property does not exist - do nothing).
+            /// </summary>
             DELETE,
         }
     }

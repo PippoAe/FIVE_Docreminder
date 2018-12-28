@@ -25,7 +25,6 @@ namespace docreminder
 
         private MailHandler()
         {
-            var test = GetLogFileName();
         }
 
         public static MailHandler GetInstance
@@ -38,14 +37,25 @@ namespace docreminder
             }
         }
 
-        public static string GetLogFileName()
+        public static string GetTemporaryLogFileName()
         {
             FileAppender rootAppender = ((Hierarchy)LogManager.GetRepository())
                                              .Root.Appenders.OfType<FileAppender>()
                                              .FirstOrDefault();
 
             string filename = rootAppender != null ? rootAppender.File : string.Empty;
-            return filename;
+
+            var tempLogFile = Path.Combine(Path.GetTempPath(), Path.GetFileName(filename));
+
+            using (var stream = File.Open(filename, FileMode.Open, FileAccess.Read, FileShare.ReadWrite))
+            {
+                //mail.Attachments.Add(new Attachment(stream, Path.GetFileName(GetLogFileName())));
+                using (FileStream fs = File.OpenWrite(tempLogFile))
+                {
+                    stream.CopyTo(fs);
+                }
+            }
+            return tempLogFile;
         }
 
         private void SendErrorMail()
@@ -88,7 +98,7 @@ namespace docreminder
 
             if (Properties.Settings.Default.ErrorMailIncludeLog)
             {
-                mail.Attachments.Add(new Attachment(GetLogFileName()));
+                mail.Attachments.Add(new Attachment(GetTemporaryLogFileName()));
             }
 
             try
@@ -159,59 +169,63 @@ namespace docreminder
             TestConnection();
 
             log4.Info(string.Format("Trying to send test-mail to recipient '{0}'", recipient));
-            MailMessage mail = new MailMessage(Properties.Settings.Default.SMTPSender, recipient)
+
+            using (MailMessage mail = new MailMessage(Properties.Settings.Default.SMTPSender, recipient))
             {
-                Subject = "FIVE Docreminder - SMTP Test"
-            };
-            try
-            {
-                string strClientIPAddress = GetLocalIPv4(NetworkInterfaceType.Ethernet);
-                string strClientMachineName = Environment.MachineName.ToString().Trim();
-                string strClientUserName = Environment.UserName.ToString().Trim();
-                string strClientDomainName = Environment.UserDomainName.ToString().Trim();
-                string strClientOSVersion = Environment.OSVersion.ToString().Trim();
+                mail.Subject = "FIVE Docreminder - SMTP Test";
+            
+                try
+                {
+                    string strClientIPAddress = GetLocalIPv4(NetworkInterfaceType.Ethernet);
+                    string strClientMachineName = Environment.MachineName.ToString().Trim();
+                    string strClientUserName = Environment.UserName.ToString().Trim();
+                    string strClientDomainName = Environment.UserDomainName.ToString().Trim();
+                    string strClientOSVersion = Environment.OSVersion.ToString().Trim();
 
-                mail.Body =
-                    "IP Address: " + strClientIPAddress + "\r\n" +
-                    "Machine Name: " + strClientMachineName + "\r\n" +
-                    "Client Username: " + strClientUserName + "\r\n" +
-                    "Client Domain: " + strClientDomainName + "\r\n" +
-                    "Client OSVersion: " + strClientOSVersion + "\r\n";
-            }
-            catch (Exception e)
-            {
-                log4.Info("There was a problem while gathering system-information." + e.Message);
-                mail.Body = "There was a problem while gathering system-information.";
-            }
+                    mail.Body =
+                        "IP Address: " + strClientIPAddress + "\r\n" +
+                        "Machine Name: " + strClientMachineName + "\r\n" +
+                        "Client Username: " + strClientUserName + "\r\n" +
+                        "Client Domain: " + strClientDomainName + "\r\n" +
+                        "Client OSVersion: " + strClientOSVersion + "\r\n";
+                }
+                catch (Exception e)
+                {
+                    log4.Info("There was a problem while gathering system-information." + e.Message);
+                    mail.Body = "There was a problem while gathering system-information.";
+                }
 
-            //Get some binary data
-            string str = "This is a test attachment.";
+                //Get some binary data
+                string str = "This is a test attachment.";
 
-            byte[] data = new byte[str.Length * sizeof(char)];
-            System.Buffer.BlockCopy(str.ToCharArray(), 0, data, 0, data.Length);
+                byte[] data = new byte[str.Length * sizeof(char)];
+                System.Buffer.BlockCopy(str.ToCharArray(), 0, data, 0, data.Length);
 
-            //save the data to a memory stream
-            MemoryStream ms = new MemoryStream(data);
+                //save the data to a memory stream
+                MemoryStream ms = new MemoryStream(data);
 
-            //create the attachment from a stream. Be sure to name the data 
-            //with a file and 
-            //media type that is respective of the data
-            mail.Attachments.Add(new Attachment(ms, "example.txt", "text/plain"));
+                //create the attachment from a stream. Be sure to name the data 
+                //with a file and 
+                //media type that is respective of the data
+                mail.Attachments.Add(new Attachment(ms, "example.txt", "text/plain"));
 
-            try
-            {
-                //client.Send(mail);
-                SendEmail(mail);
-                log4.Info("SMTP Test-Mail was sent successfully.");
-                return true;
-            }
-            catch (Exception e)
-            {
-                String innerMessage = (e.InnerException != null)
-                    ? e.InnerException.Message
-                    : "";
-                log4.Info("Problem with sending SMTP-Mail: " + e.Message + "\r\n" + innerMessage);
-                return false;
+                mail.Attachments.Add(new Attachment(GetTemporaryLogFileName()));
+
+                try
+                {
+                    //client.Send(mail);
+                    SendEmail(mail);
+                    log4.Info("SMTP Test-Mail was sent successfully.");
+                    return true;
+                }
+                catch (Exception e)
+                {
+                    String innerMessage = (e.InnerException != null)
+                        ? e.InnerException.Message
+                        : "";
+                    log4.Info("Problem with sending SMTP-Mail: " + e.Message + "\r\n" + innerMessage);
+                    return false;
+                }
             }
         }
 

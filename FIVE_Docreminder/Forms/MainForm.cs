@@ -93,7 +93,18 @@ namespace docreminder
             dgwDocuments.Columns[1].AutoSizeMode = DataGridViewAutoSizeColumnMode.AllCells;
             dgwDocuments.Columns[2].AutoSizeMode = DataGridViewAutoSizeColumnMode.AllCells;
             dgwDocuments.Columns[3].AutoSizeMode = DataGridViewAutoSizeColumnMode.AllCells;
-            dgwDocuments.Columns[4].AutoSizeMode = DataGridViewAutoSizeColumnMode.Fill;
+
+            //childs
+            if (Properties.Settings.Default.GroupingActive)
+            { 
+                dgwDocuments.Columns[4].AutoSizeMode = DataGridViewAutoSizeColumnMode.AllCells;
+                dgwDocuments.Columns[4].Visible = true;
+            }
+            else
+                dgwDocuments.Columns[4].Visible = false;
+
+            //info
+            dgwDocuments.Columns[5].AutoSizeMode = DataGridViewAutoSizeColumnMode.Fill;
 
             dgwDocuments.ClearSelection();
         }
@@ -139,7 +150,7 @@ namespace docreminder
                 //No work is being done.
                 if (!processDocumentsWorker.IsBusy && !processDocumentsWorker.IsBusy)
                 {
-                    this.Close();
+                    Exit();
                 }
             }
         }
@@ -281,6 +292,19 @@ namespace docreminder
             }
         }
 
+        private void Exit()
+        {
+            
+            log4.Info("Application shutting down.");
+            this.Refresh();
+
+#if DEBUG
+            log4.Info("We are running in debug. Waiting for input before shutdown.");
+            Console.ReadLine();
+#endif
+            this.Close();
+        }
+
         [System.Runtime.InteropServices.DllImport("kernel32.dll")]
         private static extern bool FreeConsole();
 
@@ -354,14 +378,14 @@ namespace docreminder
         #region NEWProcessDocumentsWorker
         private void NEWProcessDocumentsWorker_DoWork(object sender, DoWorkEventArgs e)
         {
-            if (currentWorkObjects.Count > 0)
+            var noOfItems = currentWorkObjects.Where(x => x.ready).Count();
+            if (noOfItems > 0)
             {
                 //Start processing of all workobjects.
                 log4.Info("Document processing initiated. Now trying to process each document.");
                 foreach (BO.WorkObject wo in currentWorkObjects)
                 {
                     Task.Factory.StartNew(() => wo.Process());
-                    Thread.Sleep(10);
                 }
 
 
@@ -379,6 +403,7 @@ namespace docreminder
                     NEWProcessDocumentsWorker.ReportProgress(Convert.ToInt32(progress));
                     Thread.Sleep(100);
                 }
+                log4.Info("Done!");
             }
             else
             {
@@ -397,6 +422,7 @@ namespace docreminder
             this.Text = "Five Informatik AG - Document Reminder";
             progressBar1.Value = 0;
             progressBar1.Style = ProgressBarStyle.Blocks;
+            this.Refresh();
             bGetDocumentsDocuments.Enabled = true;
             if (WCFHandler.GetInstance.hasMore)
                 btnSearchMore.Enabled = true;
@@ -405,8 +431,8 @@ namespace docreminder
             //If automode and NoMore Documents. Close!
             if ((Program.automode && !WCFHandler.GetInstance.hasMore) || scheduledTimeLeft.TotalSeconds < 0)
             {
-                log4.Info(string.Format("Scheduled shutdown-time has been reached. Shutting down."));
-                this.Close();
+                log4.Info(string.Format("No more documents or scheduled shutdown-time has been reached. Shutting down."));
+                Exit();
             }
             //If automode and more Documents searchMore.
             else if (Program.automode && WCFHandler.GetInstance.hasMore)
@@ -562,7 +588,7 @@ namespace docreminder
             bProcessDocuments.Enabled = false;
             //If automode and NoMore Documents. Close!
             if ((Program.automode && !_webServiceHandler.hasMore) || scheduledTimeLeft.TotalSeconds < 0)
-                this.Close();
+                Exit();
             //If automode and more Documents searchMore.
             else if (Program.automode && _webServiceHandler.hasMore)
             {
@@ -571,7 +597,10 @@ namespace docreminder
         }
         #endregion
 
-        #endregion EndRegion
+        #endregion 
+
+
+
 
         #region OldStuff
 

@@ -174,11 +174,14 @@ namespace docreminder
                     if (doc != null)
                     {
                         var propID = WCFHandler.GetInstance.GetPropertyTypeID(index);
-                        string[] values = doc.Properties.Where(x => x.PropertyTypeId == propID).Select(x => x.Values).First();
-                        if (values.Count() > 0)
-                        {
-                            idxvalue = values.First();
-                        }
+                        string[] values = doc.Properties.Where(x => x.PropertyTypeId == propID).Select(x => x.Values).FirstOrDefault();
+                        if (values == null)
+                            throw new Exception(string.Format("Document did not contain a value for '{0}'.", index));
+
+                        //if (values.Count() > 1)
+                        //{
+                        idxvalue = values.First();
+                        //}
 
                     }
 

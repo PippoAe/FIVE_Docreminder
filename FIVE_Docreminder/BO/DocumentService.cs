@@ -285,23 +285,11 @@ namespace docreminder.BO
 
                 // Releases the reservation of the document in order that other users can edit the document
                 ReleaseReservation = true,
-                Comment = "ImmobBelegID, Kontierungsmaske & Nachindex für ExterneBelege"
+                Comment = "Updated trough FIVE-Docreminder."
             };
 
+            DocumentContract updatedDocumentContract = this.DocumentClient.UpdateDocument(connectionID, documentContract, fileId, checkInParameterContract);
 
-            DocumentContract updatedDocumentContract = new DocumentContract();
-            if (documentContract.CheckOutStateEnum == "NotCheckedOut")
-            {
-                updatedDocumentContract = this.DocumentClient.UpdateDocument(connectionID, documentContract, fileId, checkInParameterContract);
-            }
-            else
-            {
-                log.Warn(String.Format("Document checked out already. Current-State:'{0}'", documentContract.CheckOutStateEnum));
-                log.Warn("Trying to force-checkin document...");
-                this.DocumentClient.UndoCheckOutDocument(connectionID, documentContract.Id);
-                updatedDocumentContract = this.DocumentClient.UpdateDocument(connectionID, documentContract, fileId, checkInParameterContract);
-                log.Info("Document sucesfully updated.");
-            } 
             return updatedDocumentContract;
         }
 	

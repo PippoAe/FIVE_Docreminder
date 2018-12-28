@@ -951,5 +951,18 @@ namespace docreminder.Properties {
                 this["KendoxSearchProperties"] = value;
             }
         }
+        
+        [global::System.Configuration.UserScopedSettingAttribute()]
+        [global::System.Configuration.SettingsProviderAttribute(typeof(docreminder.PortableSettingsProvider))]
+        [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+        [global::System.Configuration.DefaultSettingValueAttribute("False")]
+        public bool GroupingInheritMarkerProperties {
+            get {
+                return ((bool)(this["GroupingInheritMarkerProperties"]));
+            }
+            set {
+                this["GroupingInheritMarkerProperties"] = value;
+            }
+        }
     }
 }

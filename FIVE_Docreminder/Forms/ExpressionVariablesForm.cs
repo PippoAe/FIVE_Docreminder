@@ -1,11 +1,5 @@
 ﻿using System;
 using System.Collections.Generic;
-using System.ComponentModel;
-using System.Data;
-using System.Drawing;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 using System.Windows.Forms;
 using System.Data.SqlClient;
 using System.Collections;
@@ -80,9 +74,11 @@ namespace docreminder.Forms
             {
                 if (row.Cells.Count > 0 && row.Cells[0].Value != null && row.Cells[1].Value != null)
                 {
-                    KeyValuePair<string, string> kvp = new KeyValuePair<string, string>();
-                    kvp.Key = row.Cells[0].Value.ToString();
-                    kvp.Value = row.Cells[1].Value.ToString();
+                    KeyValuePair<string, string> kvp = new KeyValuePair<string, string>
+                    {
+                        Key = row.Cells[0].Value.ToString(),
+                        Value = row.Cells[1].Value.ToString()
+                    };
                     sqlConnections.Add(kvp);
                 }
             }
@@ -98,9 +94,11 @@ namespace docreminder.Forms
             {
                 if (row.Cells.Count > 0 && row.Cells[0].Value != null && row.Cells[1].Value != null)
                 {
-                    KeyValuePair<string,string> kvp = new KeyValuePair<string,string>();
-                    kvp.Key = row.Cells[0].Value.ToString();
-                    kvp.Value = row.Cells[1].Value.ToString();
+                    KeyValuePair<string, string> kvp = new KeyValuePair<string, string>
+                    {
+                        Key = row.Cells[0].Value.ToString(),
+                        Value = row.Cells[1].Value.ToString()
+                    };
                     variables.Add(kvp);
                 }
             }
@@ -120,10 +118,10 @@ namespace docreminder.Forms
 
         private void bTestExpression_Click(object sender, EventArgs e)
         {
-            ExpressionsEvaluator expVal = new ExpressionsEvaluator();
             try
             {
-                string ret = expVal.Evaluate(txtBxExpressionTest.Text).ToString();
+                ExpressionsEvaluator.GetInstance.UpdateVariables();
+                string ret = ExpressionsEvaluator.GetInstance.Evaluate(txtBxExpressionTest.Text,null,true).ToString();
                 MessageBox.Show(ret);
             }
             catch (Exception exc)
@@ -148,7 +146,6 @@ namespace docreminder.Forms
                     MessageBox.Show("Error while connecting to SQL-Server." + Environment.NewLine + exp.Message, "Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
                 }
             }
-            //MessageBox.Show("Column-Index:" + e.ColumnIndex);
         }
 
     }

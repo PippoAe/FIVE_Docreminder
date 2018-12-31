@@ -1,11 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
-using System.ComponentModel;
-using System.Data;
 using System.Drawing;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 using System.Windows.Forms;
 
 namespace docreminder
@@ -28,8 +23,10 @@ namespace docreminder
 
             comboBox1.AutoCompleteMode = AutoCompleteMode.SuggestAppend;
             comboBox1.AutoCompleteSource = AutoCompleteSource.ListItems;
-            BindingSource bs = new BindingSource();
-            bs.DataSource = lChooseableValues;
+            BindingSource bs = new BindingSource
+            {
+                DataSource = lChooseableValues
+            };
             comboBox1.DataSource = bs;
             comboBox1.Focus();
             comboBox1.Refresh();

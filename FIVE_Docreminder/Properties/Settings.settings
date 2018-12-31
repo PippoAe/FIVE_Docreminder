@@ -2,11 +2,8 @@
 <SettingsFile xmlns="http://schemas.microsoft.com/VisualStudio/2004/01/settings" CurrentProfile="(Default)" GeneratedClassNamespace="docreminder.Properties" GeneratedClassName="Settings">
   <Profiles />
   <Settings>
-    <Setting Name="KendoxWebserviceURL" Provider="docreminder.PortableSettingsProvider" Roaming="true" Type="(Web Service URL)" Scope="User">
-      <Value Profile="(Default)">http://kx5be01/KendoxWebService</Value>
-    </Setting>
-    <Setting Name="KendoxServerAdress" Provider="docreminder.PortableSettingsProvider" Roaming="true" Type="System.String" Scope="User">
-      <Value Profile="(Default)">db5be03t</Value>
+    <Setting Name="KendoxWCFURL" Provider="docreminder.PortableSettingsProvider" Roaming="true" Type="(Web Service URL)" Scope="User">
+      <Value Profile="(Default)">http://db5be03t:82/InfoShare</Value>
     </Setting>
     <Setting Name="KendoxUsername" Provider="docreminder.PortableSettingsProvider" Roaming="true" Type="System.String" Scope="User">
       <Value Profile="(Default)">dciadmin</Value>
@@ -25,9 +22,6 @@
     </Setting>
     <Setting Name="SMPTPassword" Provider="docreminder.PortableSettingsProvider" Roaming="true" Type="System.String" Scope="User">
       <Value Profile="(Default)" />
-    </Setting>
-    <Setting Name="KendoxPort" Provider="docreminder.PortableSettingsProvider" Roaming="true" Type="System.String" Scope="User">
-      <Value Profile="(Default)">23450</Value>
     </Setting>
     <Setting Name="SMTPPort" Provider="docreminder.PortableSettingsProvider" Roaming="true" Type="System.String" Scope="User">
       <Value Profile="(Default)">25</Value>
@@ -49,18 +43,6 @@
     </Setting>
     <Setting Name="SendErrorMail" Provider="docreminder.PortableSettingsProvider" Roaming="true" Type="System.Boolean" Scope="User">
       <Value Profile="(Default)">False</Value>
-    </Setting>
-    <Setting Name="IsLogActive" Provider="docreminder.PortableSettingsProvider" Roaming="true" Type="System.Boolean" Scope="User">
-      <Value Profile="(Default)">True</Value>
-    </Setting>
-    <Setting Name="LogPath" Provider="docreminder.PortableSettingsProvider" Roaming="true" Type="System.String" Scope="User">
-      <Value Profile="(Default)" />
-    </Setting>
-    <Setting Name="E_Bill_Uploader_KXWS_KXWebService40" Provider="docreminder.PortableSettingsProvider" Roaming="true" Type="(Web Service URL)" Scope="User">
-      <Value Profile="(Default)">http://db5be03/KxWebService/KxWebService40.asmx</Value>
-    </Setting>
-    <Setting Name="KendoxSearchProperties" Provider="docreminder.PortableSettingsProvider" Roaming="true" Type="System.String" Scope="User">
-      <Value Profile="(Default)" />
     </Setting>
     <Setting Name="AttachDocument" Provider="docreminder.PortableSettingsProvider" Roaming="true" Type="System.Boolean" Scope="User">
       <Value Profile="(Default)">False</Value>
@@ -217,6 +199,21 @@
     </Setting>
     <Setting Name="AttachmentRenameProperty" Provider="docreminder.PortableSettingsProvider" Type="System.String" Scope="User">
       <Value Profile="(Default)" />
+    </Setting>
+    <Setting Name="SearchProperties" Provider="docreminder.PortableSettingsProvider" Type="System.String" Scope="User">
+      <Value Profile="(Default)" />
+    </Setting>
+    <Setting Name="ConsoleEnabled" Provider="docreminder.PortableSettingsProvider" Type="System.Boolean" Scope="User">
+      <Value Profile="(Default)">True</Value>
+    </Setting>
+    <Setting Name="NEWMarkerProperties" Provider="docreminder.PortableSettingsProvider" Type="System.String" Scope="User">
+      <Value Profile="(Default)" />
+    </Setting>
+    <Setting Name="KendoxSearchProperties" Type="System.String" Scope="User">
+      <Value Profile="(Default)" />
+    </Setting>
+    <Setting Name="GroupingInheritMarkerProperties" Provider="docreminder.PortableSettingsProvider" Type="System.Boolean" Scope="User">
+      <Value Profile="(Default)">False</Value>
     </Setting>
   </Settings>
 </SettingsFile>

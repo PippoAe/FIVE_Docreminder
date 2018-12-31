@@ -28,6 +28,7 @@
         /// </summary>
         private void InitializeComponent()
         {
+            this.components = new System.ComponentModel.Container();
             System.Windows.Forms.DataGridViewCellStyle dataGridViewCellStyle1 = new System.Windows.Forms.DataGridViewCellStyle();
             System.Windows.Forms.DataGridViewCellStyle dataGridViewCellStyle2 = new System.Windows.Forms.DataGridViewCellStyle();
             System.Windows.Forms.DataGridViewCellStyle dataGridViewCellStyle3 = new System.Windows.Forms.DataGridViewCellStyle();
@@ -54,11 +55,6 @@
             this.tbErrorMailSendTo = new System.Windows.Forms.TextBox();
             this.label14 = new System.Windows.Forms.Label();
             this.cBSendErrorMail = new System.Windows.Forms.CheckBox();
-            this.groupBox1 = new System.Windows.Forms.GroupBox();
-            this.bSelectPath = new System.Windows.Forms.Button();
-            this.lLogPath = new System.Windows.Forms.Label();
-            this.txtBxLogPath = new System.Windows.Forms.TextBox();
-            this.cBIsLogActive = new System.Windows.Forms.CheckBox();
             this.tbProcessing = new System.Windows.Forms.TabPage();
             this.groupBox6 = new System.Windows.Forms.GroupBox();
             this.btnTest = new System.Windows.Forms.Button();
@@ -92,10 +88,6 @@
             this.label8 = new System.Windows.Forms.Label();
             this.txtBxKendoxUsername = new System.Windows.Forms.TextBox();
             this.label9 = new System.Windows.Forms.Label();
-            this.txtBxKendoxPort = new System.Windows.Forms.TextBox();
-            this.label10 = new System.Windows.Forms.Label();
-            this.txtBxKendoxServer = new System.Windows.Forms.TextBox();
-            this.label11 = new System.Windows.Forms.Label();
             this.gBSMTP = new System.Windows.Forms.GroupBox();
             this.cBUseTSL = new System.Windows.Forms.CheckBox();
             this.txtBxSMTPSender = new System.Windows.Forms.TextBox();
@@ -114,12 +106,6 @@
             this.groupBox8 = new System.Windows.Forms.GroupBox();
             this.btnConfigureDocSafe = new System.Windows.Forms.Button();
             this.cBDocSafeActive = new System.Windows.Forms.CheckBox();
-            this.gBCustomFunction = new System.Windows.Forms.GroupBox();
-            this.pBarCustomWSFunctions = new System.Windows.Forms.ProgressBar();
-            this.dgwCustomWSFunction = new System.Windows.Forms.DataGridView();
-            this.cFunction = new System.Windows.Forms.DataGridViewTextBoxColumn();
-            this.cArguments = new System.Windows.Forms.DataGridViewTextBoxColumn();
-            this.cBCustomWSFunction = new System.Windows.Forms.CheckBox();
             this.gBProcess = new System.Windows.Forms.GroupBox();
             this.label23 = new System.Windows.Forms.Label();
             this.cBSelectedProcess = new System.Windows.Forms.ComboBox();
@@ -128,6 +114,9 @@
             this.txtBxProcessRecipient = new System.Windows.Forms.TextBox();
             this.label25 = new System.Windows.Forms.Label();
             this.gbEbillmail = new System.Windows.Forms.GroupBox();
+            this.btnInsertAttachmentRenameProperty = new System.Windows.Forms.Button();
+            this.label24 = new System.Windows.Forms.Label();
+            this.txtBxAttachmentRenameProperty = new System.Windows.Forms.TextBox();
             this.btnInsertMultiLanguageProperty = new System.Windows.Forms.Button();
             this.label15 = new System.Windows.Forms.Label();
             this.txtBxMultiLanguageProperty = new System.Windows.Forms.TextBox();
@@ -149,13 +138,10 @@
             this.label18 = new System.Windows.Forms.Label();
             this.cBAttFile = new System.Windows.Forms.CheckBox();
             this.openFileDialog1 = new System.Windows.Forms.OpenFileDialog();
-            this.btnInsertAttachmentRenameProperty = new System.Windows.Forms.Button();
-            this.label24 = new System.Windows.Forms.Label();
-            this.txtBxAttachmentRenameProperty = new System.Windows.Forms.TextBox();
+            this.searchComparisonEnumBindingSource = new System.Windows.Forms.BindingSource(this.components);
             this.tpLog.SuspendLayout();
             this.groupBox7.SuspendLayout();
             this.groupBox2.SuspendLayout();
-            this.groupBox1.SuspendLayout();
             this.tbProcessing.SuspendLayout();
             this.groupBox6.SuspendLayout();
             this.groupBox5.SuspendLayout();
@@ -170,19 +156,17 @@
             this.tcSettings.SuspendLayout();
             this.tpOutput.SuspendLayout();
             this.groupBox8.SuspendLayout();
-            this.gBCustomFunction.SuspendLayout();
-            ((System.ComponentModel.ISupportInitialize)(this.dgwCustomWSFunction)).BeginInit();
             this.gBProcess.SuspendLayout();
             this.gbEbillmail.SuspendLayout();
+            ((System.ComponentModel.ISupportInitialize)(this.searchComparisonEnumBindingSource)).BeginInit();
             this.SuspendLayout();
             // 
             // bSave
             // 
             this.bSave.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Right)));
-            this.bSave.Location = new System.Drawing.Point(469, 698);
-            this.bSave.Margin = new System.Windows.Forms.Padding(4);
+            this.bSave.Location = new System.Drawing.Point(352, 479);
             this.bSave.Name = "bSave";
-            this.bSave.Size = new System.Drawing.Size(100, 28);
+            this.bSave.Size = new System.Drawing.Size(75, 23);
             this.bSave.TabIndex = 1;
             this.bSave.Text = "Save";
             this.bSave.UseVisualStyleBackColor = true;
@@ -191,10 +175,9 @@
             // bOK
             // 
             this.bOK.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Right)));
-            this.bOK.Location = new System.Drawing.Point(352, 698);
-            this.bOK.Margin = new System.Windows.Forms.Padding(4);
+            this.bOK.Location = new System.Drawing.Point(264, 479);
             this.bOK.Name = "bOK";
-            this.bOK.Size = new System.Drawing.Size(100, 28);
+            this.bOK.Size = new System.Drawing.Size(75, 23);
             this.bOK.TabIndex = 2;
             this.bOK.Text = "OK";
             this.bOK.UseVisualStyleBackColor = true;
@@ -204,11 +187,9 @@
             // 
             this.tpLog.Controls.Add(this.groupBox7);
             this.tpLog.Controls.Add(this.groupBox2);
-            this.tpLog.Controls.Add(this.groupBox1);
-            this.tpLog.Location = new System.Drawing.Point(4, 25);
-            this.tpLog.Margin = new System.Windows.Forms.Padding(4);
+            this.tpLog.Location = new System.Drawing.Point(4, 22);
             this.tpLog.Name = "tpLog";
-            this.tpLog.Size = new System.Drawing.Size(551, 611);
+            this.tpLog.Size = new System.Drawing.Size(411, 426);
             this.tpLog.TabIndex = 2;
             this.tpLog.Text = "Report/Log";
             this.tpLog.UseVisualStyleBackColor = true;
@@ -225,11 +206,9 @@
             this.groupBox7.Controls.Add(this.txtBxReportRecipient);
             this.groupBox7.Controls.Add(this.label20);
             this.groupBox7.Controls.Add(this.cbIsReportActive);
-            this.groupBox7.Location = new System.Drawing.Point(11, 10);
-            this.groupBox7.Margin = new System.Windows.Forms.Padding(4);
+            this.groupBox7.Location = new System.Drawing.Point(8, 8);
             this.groupBox7.Name = "groupBox7";
-            this.groupBox7.Padding = new System.Windows.Forms.Padding(4);
-            this.groupBox7.Size = new System.Drawing.Size(523, 148);
+            this.groupBox7.Size = new System.Drawing.Size(392, 120);
             this.groupBox7.TabIndex = 14;
             this.groupBox7.TabStop = false;
             this.groupBox7.Text = "Report:";
@@ -237,10 +216,9 @@
             // label16
             // 
             this.label16.AutoSize = true;
-            this.label16.Location = new System.Drawing.Point(11, 108);
-            this.label16.Margin = new System.Windows.Forms.Padding(4, 0, 4, 0);
+            this.label16.Location = new System.Drawing.Point(8, 88);
             this.label16.Name = "label16";
-            this.label16.Size = new System.Drawing.Size(71, 17);
+            this.label16.Size = new System.Drawing.Size(54, 13);
             this.label16.TabIndex = 36;
             this.label16.Text = "Template:";
             // 
@@ -248,19 +226,17 @@
             // 
             this.txtBxReportTemplatePath.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Left) 
             | System.Windows.Forms.AnchorStyles.Right)));
-            this.txtBxReportTemplatePath.Location = new System.Drawing.Point(117, 108);
-            this.txtBxReportTemplatePath.Margin = new System.Windows.Forms.Padding(4);
+            this.txtBxReportTemplatePath.Location = new System.Drawing.Point(88, 88);
             this.txtBxReportTemplatePath.Name = "txtBxReportTemplatePath";
-            this.txtBxReportTemplatePath.Size = new System.Drawing.Size(361, 22);
+            this.txtBxReportTemplatePath.Size = new System.Drawing.Size(272, 20);
             this.txtBxReportTemplatePath.TabIndex = 35;
             // 
             // btnBrowseReportTemplatePath
             // 
             this.btnBrowseReportTemplatePath.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Right)));
-            this.btnBrowseReportTemplatePath.Location = new System.Drawing.Point(480, 107);
-            this.btnBrowseReportTemplatePath.Margin = new System.Windows.Forms.Padding(4);
+            this.btnBrowseReportTemplatePath.Location = new System.Drawing.Point(360, 87);
             this.btnBrowseReportTemplatePath.Name = "btnBrowseReportTemplatePath";
-            this.btnBrowseReportTemplatePath.Size = new System.Drawing.Size(32, 27);
+            this.btnBrowseReportTemplatePath.Size = new System.Drawing.Size(24, 22);
             this.btnBrowseReportTemplatePath.TabIndex = 34;
             this.btnBrowseReportTemplatePath.Text = "...";
             this.btnBrowseReportTemplatePath.UseVisualStyleBackColor = true;
@@ -270,19 +246,17 @@
             // 
             this.txtBxReportSubject.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Left) 
             | System.Windows.Forms.AnchorStyles.Right)));
-            this.txtBxReportSubject.Location = new System.Drawing.Point(117, 79);
-            this.txtBxReportSubject.Margin = new System.Windows.Forms.Padding(4);
+            this.txtBxReportSubject.Location = new System.Drawing.Point(88, 64);
             this.txtBxReportSubject.Name = "txtBxReportSubject";
-            this.txtBxReportSubject.Size = new System.Drawing.Size(393, 22);
+            this.txtBxReportSubject.Size = new System.Drawing.Size(296, 20);
             this.txtBxReportSubject.TabIndex = 33;
             // 
             // label19
             // 
             this.label19.AutoSize = true;
-            this.label19.Location = new System.Drawing.Point(11, 79);
-            this.label19.Margin = new System.Windows.Forms.Padding(4, 0, 4, 0);
+            this.label19.Location = new System.Drawing.Point(8, 64);
             this.label19.Name = "label19";
-            this.label19.Size = new System.Drawing.Size(59, 17);
+            this.label19.Size = new System.Drawing.Size(46, 13);
             this.label19.TabIndex = 32;
             this.label19.Text = "Subject:";
             // 
@@ -290,29 +264,26 @@
             // 
             this.txtBxReportRecipient.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Left) 
             | System.Windows.Forms.AnchorStyles.Right)));
-            this.txtBxReportRecipient.Location = new System.Drawing.Point(117, 49);
-            this.txtBxReportRecipient.Margin = new System.Windows.Forms.Padding(4);
+            this.txtBxReportRecipient.Location = new System.Drawing.Point(88, 40);
             this.txtBxReportRecipient.Name = "txtBxReportRecipient";
-            this.txtBxReportRecipient.Size = new System.Drawing.Size(393, 22);
+            this.txtBxReportRecipient.Size = new System.Drawing.Size(296, 20);
             this.txtBxReportRecipient.TabIndex = 31;
             // 
             // label20
             // 
             this.label20.AutoSize = true;
-            this.label20.Location = new System.Drawing.Point(11, 49);
-            this.label20.Margin = new System.Windows.Forms.Padding(4, 0, 4, 0);
+            this.label20.Location = new System.Drawing.Point(8, 40);
             this.label20.Name = "label20";
-            this.label20.Size = new System.Drawing.Size(88, 17);
+            this.label20.Size = new System.Drawing.Size(66, 13);
             this.label20.TabIndex = 30;
             this.label20.Text = "Recipient(s):";
             // 
             // cbIsReportActive
             // 
             this.cbIsReportActive.AutoSize = true;
-            this.cbIsReportActive.Location = new System.Drawing.Point(11, 20);
-            this.cbIsReportActive.Margin = new System.Windows.Forms.Padding(4);
+            this.cbIsReportActive.Location = new System.Drawing.Point(8, 16);
             this.cbIsReportActive.Name = "cbIsReportActive";
-            this.cbIsReportActive.Size = new System.Drawing.Size(68, 21);
+            this.cbIsReportActive.Size = new System.Drawing.Size(56, 17);
             this.cbIsReportActive.TabIndex = 0;
             this.cbIsReportActive.Text = "Active";
             this.cbIsReportActive.UseVisualStyleBackColor = true;
@@ -327,11 +298,9 @@
             this.groupBox2.Controls.Add(this.tbErrorMailSendTo);
             this.groupBox2.Controls.Add(this.label14);
             this.groupBox2.Controls.Add(this.cBSendErrorMail);
-            this.groupBox2.Location = new System.Drawing.Point(11, 266);
-            this.groupBox2.Margin = new System.Windows.Forms.Padding(4);
+            this.groupBox2.Location = new System.Drawing.Point(8, 134);
             this.groupBox2.Name = "groupBox2";
-            this.groupBox2.Padding = new System.Windows.Forms.Padding(4);
-            this.groupBox2.Size = new System.Drawing.Size(523, 158);
+            this.groupBox2.Size = new System.Drawing.Size(392, 128);
             this.groupBox2.TabIndex = 13;
             this.groupBox2.TabStop = false;
             this.groupBox2.Text = "Error-Mail:";
@@ -339,10 +308,9 @@
             // cBErrorMailIncludeLog
             // 
             this.cBErrorMailIncludeLog.AutoSize = true;
-            this.cBErrorMailIncludeLog.Location = new System.Drawing.Point(107, 128);
-            this.cBErrorMailIncludeLog.Margin = new System.Windows.Forms.Padding(4);
+            this.cBErrorMailIncludeLog.Location = new System.Drawing.Point(80, 104);
             this.cBErrorMailIncludeLog.Name = "cBErrorMailIncludeLog";
-            this.cBErrorMailIncludeLog.Size = new System.Drawing.Size(103, 21);
+            this.cBErrorMailIncludeLog.Size = new System.Drawing.Size(82, 17);
             this.cBErrorMailIncludeLog.TabIndex = 14;
             this.cBErrorMailIncludeLog.Text = "Include Log";
             this.cBErrorMailIncludeLog.UseVisualStyleBackColor = true;
@@ -351,19 +319,17 @@
             // 
             this.tBErrorMailSubject.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Left) 
             | System.Windows.Forms.AnchorStyles.Right)));
-            this.tBErrorMailSubject.Location = new System.Drawing.Point(107, 86);
-            this.tBErrorMailSubject.Margin = new System.Windows.Forms.Padding(4);
+            this.tBErrorMailSubject.Location = new System.Drawing.Point(80, 70);
             this.tBErrorMailSubject.Name = "tBErrorMailSubject";
-            this.tBErrorMailSubject.Size = new System.Drawing.Size(404, 22);
+            this.tBErrorMailSubject.Size = new System.Drawing.Size(304, 20);
             this.tBErrorMailSubject.TabIndex = 13;
             // 
             // label13
             // 
             this.label13.AutoSize = true;
-            this.label13.Location = new System.Drawing.Point(9, 90);
-            this.label13.Margin = new System.Windows.Forms.Padding(4, 0, 4, 0);
+            this.label13.Location = new System.Drawing.Point(7, 73);
             this.label13.Name = "label13";
-            this.label13.Size = new System.Drawing.Size(59, 17);
+            this.label13.Size = new System.Drawing.Size(46, 13);
             this.label13.TabIndex = 12;
             this.label13.Text = "Subject:";
             // 
@@ -371,103 +337,39 @@
             // 
             this.tbErrorMailSendTo.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Left) 
             | System.Windows.Forms.AnchorStyles.Right)));
-            this.tbErrorMailSendTo.Location = new System.Drawing.Point(107, 49);
-            this.tbErrorMailSendTo.Margin = new System.Windows.Forms.Padding(4);
+            this.tbErrorMailSendTo.Location = new System.Drawing.Point(80, 40);
             this.tbErrorMailSendTo.Name = "tbErrorMailSendTo";
-            this.tbErrorMailSendTo.Size = new System.Drawing.Size(404, 22);
+            this.tbErrorMailSendTo.Size = new System.Drawing.Size(304, 20);
             this.tbErrorMailSendTo.TabIndex = 11;
             // 
             // label14
             // 
             this.label14.AutoSize = true;
-            this.label14.Location = new System.Drawing.Point(11, 49);
-            this.label14.Margin = new System.Windows.Forms.Padding(4, 0, 4, 0);
+            this.label14.Location = new System.Drawing.Point(8, 40);
             this.label14.Name = "label14";
-            this.label14.Size = new System.Drawing.Size(88, 17);
+            this.label14.Size = new System.Drawing.Size(66, 13);
             this.label14.TabIndex = 10;
             this.label14.Text = "Recipient(s):";
             // 
             // cBSendErrorMail
             // 
             this.cBSendErrorMail.AutoSize = true;
-            this.cBSendErrorMail.Location = new System.Drawing.Point(11, 20);
-            this.cBSendErrorMail.Margin = new System.Windows.Forms.Padding(4);
+            this.cBSendErrorMail.Location = new System.Drawing.Point(8, 16);
             this.cBSendErrorMail.Name = "cBSendErrorMail";
-            this.cBSendErrorMail.Size = new System.Drawing.Size(68, 21);
+            this.cBSendErrorMail.Size = new System.Drawing.Size(56, 17);
             this.cBSendErrorMail.TabIndex = 0;
             this.cBSendErrorMail.Text = "Active";
             this.cBSendErrorMail.UseVisualStyleBackColor = true;
-            // 
-            // groupBox1
-            // 
-            this.groupBox1.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Left) 
-            | System.Windows.Forms.AnchorStyles.Right)));
-            this.groupBox1.Controls.Add(this.bSelectPath);
-            this.groupBox1.Controls.Add(this.lLogPath);
-            this.groupBox1.Controls.Add(this.txtBxLogPath);
-            this.groupBox1.Controls.Add(this.cBIsLogActive);
-            this.groupBox1.Location = new System.Drawing.Point(11, 167);
-            this.groupBox1.Margin = new System.Windows.Forms.Padding(4);
-            this.groupBox1.Name = "groupBox1";
-            this.groupBox1.Padding = new System.Windows.Forms.Padding(4);
-            this.groupBox1.Size = new System.Drawing.Size(523, 89);
-            this.groupBox1.TabIndex = 12;
-            this.groupBox1.TabStop = false;
-            this.groupBox1.Text = "Log:";
-            // 
-            // bSelectPath
-            // 
-            this.bSelectPath.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Right)));
-            this.bSelectPath.Location = new System.Drawing.Point(480, 48);
-            this.bSelectPath.Margin = new System.Windows.Forms.Padding(4);
-            this.bSelectPath.Name = "bSelectPath";
-            this.bSelectPath.Size = new System.Drawing.Size(32, 27);
-            this.bSelectPath.TabIndex = 3;
-            this.bSelectPath.Text = "...";
-            this.bSelectPath.UseVisualStyleBackColor = true;
-            this.bSelectPath.Click += new System.EventHandler(this.bSelectPath_Click);
-            // 
-            // lLogPath
-            // 
-            this.lLogPath.AutoSize = true;
-            this.lLogPath.Location = new System.Drawing.Point(11, 49);
-            this.lLogPath.Margin = new System.Windows.Forms.Padding(4, 0, 4, 0);
-            this.lLogPath.Name = "lLogPath";
-            this.lLogPath.Size = new System.Drawing.Size(64, 17);
-            this.lLogPath.TabIndex = 2;
-            this.lLogPath.Text = "Logpath:";
-            // 
-            // txtBxLogPath
-            // 
-            this.txtBxLogPath.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Left) 
-            | System.Windows.Forms.AnchorStyles.Right)));
-            this.txtBxLogPath.Location = new System.Drawing.Point(107, 49);
-            this.txtBxLogPath.Margin = new System.Windows.Forms.Padding(4);
-            this.txtBxLogPath.Name = "txtBxLogPath";
-            this.txtBxLogPath.Size = new System.Drawing.Size(372, 22);
-            this.txtBxLogPath.TabIndex = 1;
-            // 
-            // cBIsLogActive
-            // 
-            this.cBIsLogActive.AutoSize = true;
-            this.cBIsLogActive.Location = new System.Drawing.Point(11, 20);
-            this.cBIsLogActive.Margin = new System.Windows.Forms.Padding(4);
-            this.cBIsLogActive.Name = "cBIsLogActive";
-            this.cBIsLogActive.Size = new System.Drawing.Size(68, 21);
-            this.cBIsLogActive.TabIndex = 0;
-            this.cBIsLogActive.Text = "Active";
-            this.cBIsLogActive.UseVisualStyleBackColor = true;
             // 
             // tbProcessing
             // 
             this.tbProcessing.Controls.Add(this.groupBox6);
             this.tbProcessing.Controls.Add(this.groupBox5);
             this.tbProcessing.Controls.Add(this.groupBox3);
-            this.tbProcessing.Location = new System.Drawing.Point(4, 25);
-            this.tbProcessing.Margin = new System.Windows.Forms.Padding(4);
+            this.tbProcessing.Location = new System.Drawing.Point(4, 22);
             this.tbProcessing.Name = "tbProcessing";
-            this.tbProcessing.Padding = new System.Windows.Forms.Padding(4);
-            this.tbProcessing.Size = new System.Drawing.Size(551, 611);
+            this.tbProcessing.Padding = new System.Windows.Forms.Padding(3);
+            this.tbProcessing.Size = new System.Drawing.Size(411, 426);
             this.tbProcessing.TabIndex = 3;
             this.tbProcessing.Text = "Processing";
             this.tbProcessing.UseVisualStyleBackColor = true;
@@ -479,11 +381,9 @@
             this.groupBox6.Controls.Add(this.btnTest);
             this.groupBox6.Controls.Add(this.cBAddCpIdisActive);
             this.groupBox6.Controls.Add(this.txtBxAdditionalComputedIdentifier);
-            this.groupBox6.Location = new System.Drawing.Point(11, 226);
-            this.groupBox6.Margin = new System.Windows.Forms.Padding(4);
+            this.groupBox6.Location = new System.Drawing.Point(8, 150);
             this.groupBox6.Name = "groupBox6";
-            this.groupBox6.Padding = new System.Windows.Forms.Padding(4);
-            this.groupBox6.Size = new System.Drawing.Size(529, 90);
+            this.groupBox6.Size = new System.Drawing.Size(397, 73);
             this.groupBox6.TabIndex = 19;
             this.groupBox6.TabStop = false;
             this.groupBox6.Text = "Additional Computed Identifier:";
@@ -491,10 +391,9 @@
             // btnTest
             // 
             this.btnTest.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Right)));
-            this.btnTest.Location = new System.Drawing.Point(433, 48);
-            this.btnTest.Margin = new System.Windows.Forms.Padding(4);
+            this.btnTest.Location = new System.Drawing.Point(325, 39);
             this.btnTest.Name = "btnTest";
-            this.btnTest.Size = new System.Drawing.Size(85, 27);
+            this.btnTest.Size = new System.Drawing.Size(64, 22);
             this.btnTest.TabIndex = 16;
             this.btnTest.Text = "Test";
             this.btnTest.UseVisualStyleBackColor = true;
@@ -503,10 +402,9 @@
             // cBAddCpIdisActive
             // 
             this.cBAddCpIdisActive.AutoSize = true;
-            this.cBAddCpIdisActive.Location = new System.Drawing.Point(11, 20);
-            this.cBAddCpIdisActive.Margin = new System.Windows.Forms.Padding(4);
+            this.cBAddCpIdisActive.Location = new System.Drawing.Point(8, 16);
             this.cBAddCpIdisActive.Name = "cBAddCpIdisActive";
-            this.cBAddCpIdisActive.Size = new System.Drawing.Size(68, 21);
+            this.cBAddCpIdisActive.Size = new System.Drawing.Size(56, 17);
             this.cBAddCpIdisActive.TabIndex = 1;
             this.cBAddCpIdisActive.Text = "Active";
             this.cBAddCpIdisActive.UseVisualStyleBackColor = true;
@@ -516,10 +414,9 @@
             this.txtBxAdditionalComputedIdentifier.Anchor = ((System.Windows.Forms.AnchorStyles)((((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Bottom) 
             | System.Windows.Forms.AnchorStyles.Left) 
             | System.Windows.Forms.AnchorStyles.Right)));
-            this.txtBxAdditionalComputedIdentifier.Location = new System.Drawing.Point(11, 49);
-            this.txtBxAdditionalComputedIdentifier.Margin = new System.Windows.Forms.Padding(4);
+            this.txtBxAdditionalComputedIdentifier.Location = new System.Drawing.Point(8, 40);
             this.txtBxAdditionalComputedIdentifier.Name = "txtBxAdditionalComputedIdentifier";
-            this.txtBxAdditionalComputedIdentifier.Size = new System.Drawing.Size(421, 22);
+            this.txtBxAdditionalComputedIdentifier.Size = new System.Drawing.Size(317, 20);
             this.txtBxAdditionalComputedIdentifier.TabIndex = 0;
             // 
             // groupBox5
@@ -527,11 +424,9 @@
             this.groupBox5.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Left) 
             | System.Windows.Forms.AnchorStyles.Right)));
             this.groupBox5.Controls.Add(this.dGwMarkerProperties);
-            this.groupBox5.Location = new System.Drawing.Point(11, 335);
-            this.groupBox5.Margin = new System.Windows.Forms.Padding(4);
+            this.groupBox5.Location = new System.Drawing.Point(8, 229);
             this.groupBox5.Name = "groupBox5";
-            this.groupBox5.Padding = new System.Windows.Forms.Padding(4);
-            this.groupBox5.Size = new System.Drawing.Size(529, 177);
+            this.groupBox5.Size = new System.Drawing.Size(397, 144);
             this.groupBox5.TabIndex = 18;
             this.groupBox5.TabStop = false;
             this.groupBox5.Text = "Markerproperties:";
@@ -562,8 +457,7 @@
             dataGridViewCellStyle2.SelectionForeColor = System.Drawing.SystemColors.HighlightText;
             dataGridViewCellStyle2.WrapMode = System.Windows.Forms.DataGridViewTriState.False;
             this.dGwMarkerProperties.DefaultCellStyle = dataGridViewCellStyle2;
-            this.dGwMarkerProperties.Location = new System.Drawing.Point(9, 23);
-            this.dGwMarkerProperties.Margin = new System.Windows.Forms.Padding(4);
+            this.dGwMarkerProperties.Location = new System.Drawing.Point(7, 19);
             this.dGwMarkerProperties.Name = "dGwMarkerProperties";
             dataGridViewCellStyle3.Alignment = System.Windows.Forms.DataGridViewContentAlignment.MiddleLeft;
             dataGridViewCellStyle3.BackColor = System.Drawing.SystemColors.Control;
@@ -573,7 +467,10 @@
             dataGridViewCellStyle3.SelectionForeColor = System.Drawing.SystemColors.HighlightText;
             dataGridViewCellStyle3.WrapMode = System.Windows.Forms.DataGridViewTriState.True;
             this.dGwMarkerProperties.RowHeadersDefaultCellStyle = dataGridViewCellStyle3;
-            this.dGwMarkerProperties.Size = new System.Drawing.Size(509, 146);
+            this.dGwMarkerProperties.RowHeadersVisible = false;
+            this.dGwMarkerProperties.RowHeadersWidth = 20;
+            this.dGwMarkerProperties.SelectionMode = System.Windows.Forms.DataGridViewSelectionMode.FullRowSelect;
+            this.dGwMarkerProperties.Size = new System.Drawing.Size(382, 119);
             this.dGwMarkerProperties.TabIndex = 30;
             this.dGwMarkerProperties.EditingControlShowing += new System.Windows.Forms.DataGridViewEditingControlShowingEventHandler(this.dGwMarkerProperties_EditingControlShowing);
             // 
@@ -581,7 +478,7 @@
             // 
             this.dataGridViewTextBoxColumn1.HeaderText = "Propertyname";
             this.dataGridViewTextBoxColumn1.Name = "dataGridViewTextBoxColumn1";
-            this.dataGridViewTextBoxColumn1.Width = 120;
+            this.dataGridViewTextBoxColumn1.Width = 150;
             // 
             // dataGridViewTextBoxColumn2
             // 
@@ -608,12 +505,10 @@
             this.groupBox3.Controls.Add(this.nUdSearchQuantity);
             this.groupBox3.Controls.Add(this.label22);
             this.groupBox3.Controls.Add(this.dgwSearchProperties);
-            this.groupBox3.Location = new System.Drawing.Point(11, 10);
-            this.groupBox3.Margin = new System.Windows.Forms.Padding(4);
-            this.groupBox3.MinimumSize = new System.Drawing.Size(529, 167);
+            this.groupBox3.Location = new System.Drawing.Point(8, 8);
+            this.groupBox3.MinimumSize = new System.Drawing.Size(397, 136);
             this.groupBox3.Name = "groupBox3";
-            this.groupBox3.Padding = new System.Windows.Forms.Padding(4);
-            this.groupBox3.Size = new System.Drawing.Size(529, 207);
+            this.groupBox3.Size = new System.Drawing.Size(397, 136);
             this.groupBox3.TabIndex = 13;
             this.groupBox3.TabStop = false;
             this.groupBox3.Text = "Searchproperties:";
@@ -621,8 +516,7 @@
             // nUdSearchQuantity
             // 
             this.nUdSearchQuantity.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Left)));
-            this.nUdSearchQuantity.Location = new System.Drawing.Point(128, 167);
-            this.nUdSearchQuantity.Margin = new System.Windows.Forms.Padding(4);
+            this.nUdSearchQuantity.Location = new System.Drawing.Point(96, 110);
             this.nUdSearchQuantity.Maximum = new decimal(new int[] {
             100000,
             0,
@@ -634,7 +528,7 @@
             0,
             0});
             this.nUdSearchQuantity.Name = "nUdSearchQuantity";
-            this.nUdSearchQuantity.Size = new System.Drawing.Size(73, 22);
+            this.nUdSearchQuantity.Size = new System.Drawing.Size(55, 20);
             this.nUdSearchQuantity.TabIndex = 3;
             this.nUdSearchQuantity.Value = new decimal(new int[] {
             1,
@@ -646,10 +540,9 @@
             // 
             this.label22.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Left)));
             this.label22.AutoSize = true;
-            this.label22.Location = new System.Drawing.Point(11, 167);
-            this.label22.Margin = new System.Windows.Forms.Padding(4, 0, 4, 0);
+            this.label22.Location = new System.Drawing.Point(8, 110);
             this.label22.Name = "label22";
-            this.label22.Size = new System.Drawing.Size(115, 17);
+            this.label22.Size = new System.Drawing.Size(86, 13);
             this.label22.TabIndex = 2;
             this.label22.Text = "Search-Quantity:";
             // 
@@ -680,8 +573,7 @@
             dataGridViewCellStyle5.SelectionForeColor = System.Drawing.SystemColors.HighlightText;
             dataGridViewCellStyle5.WrapMode = System.Windows.Forms.DataGridViewTriState.False;
             this.dgwSearchProperties.DefaultCellStyle = dataGridViewCellStyle5;
-            this.dgwSearchProperties.Location = new System.Drawing.Point(11, 20);
-            this.dgwSearchProperties.Margin = new System.Windows.Forms.Padding(4);
+            this.dgwSearchProperties.Location = new System.Drawing.Point(8, 16);
             this.dgwSearchProperties.Name = "dgwSearchProperties";
             dataGridViewCellStyle6.Alignment = System.Windows.Forms.DataGridViewContentAlignment.MiddleLeft;
             dataGridViewCellStyle6.BackColor = System.Drawing.SystemColors.Control;
@@ -691,8 +583,12 @@
             dataGridViewCellStyle6.SelectionForeColor = System.Drawing.SystemColors.HighlightText;
             dataGridViewCellStyle6.WrapMode = System.Windows.Forms.DataGridViewTriState.True;
             this.dgwSearchProperties.RowHeadersDefaultCellStyle = dataGridViewCellStyle6;
-            this.dgwSearchProperties.Size = new System.Drawing.Size(508, 133);
+            this.dgwSearchProperties.RowHeadersVisible = false;
+            this.dgwSearchProperties.RowHeadersWidth = 20;
+            this.dgwSearchProperties.SelectionMode = System.Windows.Forms.DataGridViewSelectionMode.FullRowSelect;
+            this.dgwSearchProperties.Size = new System.Drawing.Size(381, 91);
             this.dgwSearchProperties.TabIndex = 0;
+            this.dgwSearchProperties.DataError += new System.Windows.Forms.DataGridViewDataErrorEventHandler(this.dgwSearchProperties_DataError);
             this.dgwSearchProperties.EditingControlShowing += new System.Windows.Forms.DataGridViewEditingControlShowingEventHandler(this.dgwSearchProperties_EditingControlShowing);
             this.dgwSearchProperties.RowPostPaint += new System.Windows.Forms.DataGridViewRowPostPaintEventHandler(this.dgwSearchProperties_RowPostPaint);
             // 
@@ -700,26 +596,26 @@
             // 
             this.Propertyname.HeaderText = "Propertyname";
             this.Propertyname.Name = "Propertyname";
-            this.Propertyname.Width = 90;
+            this.Propertyname.Width = 150;
             // 
             // Operation
             // 
             this.Operation.HeaderText = "Operation";
             this.Operation.Items.AddRange(new object[] {
-            "EQ",
-            "LE",
-            "LT",
-            "GT",
-            "GE",
-            "NE",
-            "LK",
-            "CT",
-            "BT",
-            "UN",
-            "IN",
-            "NOTIN",
-            "SX",
-            "NONE"});
+            "Equals",
+            "NotEqual",
+            "GreaterThan",
+            "GreaterOrEqual",
+            "LessThan",
+            "LessOrEqual",
+            "Like",
+            "Contains",
+            "Undefined",
+            "In",
+            "None",
+            "Soundex",
+            "NotIn"});
+            this.Operation.MaxDropDownItems = 20;
             this.Operation.Name = "Operation";
             this.Operation.Width = 50;
             // 
@@ -742,11 +638,10 @@
             // 
             this.tpInOut.Controls.Add(this.gbKendox);
             this.tpInOut.Controls.Add(this.gBSMTP);
-            this.tpInOut.Location = new System.Drawing.Point(4, 25);
-            this.tpInOut.Margin = new System.Windows.Forms.Padding(4);
+            this.tpInOut.Location = new System.Drawing.Point(4, 22);
             this.tpInOut.Name = "tpInOut";
-            this.tpInOut.Padding = new System.Windows.Forms.Padding(4);
-            this.tpInOut.Size = new System.Drawing.Size(551, 611);
+            this.tpInOut.Padding = new System.Windows.Forms.Padding(3);
+            this.tpInOut.Size = new System.Drawing.Size(411, 426);
             this.tpInOut.TabIndex = 0;
             this.tpInOut.Text = "Archive/Mail";
             this.tpInOut.UseVisualStyleBackColor = true;
@@ -767,15 +662,9 @@
             this.gbKendox.Controls.Add(this.label8);
             this.gbKendox.Controls.Add(this.txtBxKendoxUsername);
             this.gbKendox.Controls.Add(this.label9);
-            this.gbKendox.Controls.Add(this.txtBxKendoxPort);
-            this.gbKendox.Controls.Add(this.label10);
-            this.gbKendox.Controls.Add(this.txtBxKendoxServer);
-            this.gbKendox.Controls.Add(this.label11);
-            this.gbKendox.Location = new System.Drawing.Point(11, 10);
-            this.gbKendox.Margin = new System.Windows.Forms.Padding(4);
+            this.gbKendox.Location = new System.Drawing.Point(8, 8);
             this.gbKendox.Name = "gbKendox";
-            this.gbKendox.Padding = new System.Windows.Forms.Padding(4);
-            this.gbKendox.Size = new System.Drawing.Size(529, 256);
+            this.gbKendox.Size = new System.Drawing.Size(397, 180);
             this.gbKendox.TabIndex = 12;
             this.gbKendox.TabStop = false;
             this.gbKendox.Text = "Kendox:";
@@ -783,20 +672,18 @@
             // cbEncodePW
             // 
             this.cbEncodePW.AutoSize = true;
-            this.cbEncodePW.Location = new System.Drawing.Point(501, 79);
-            this.cbEncodePW.Margin = new System.Windows.Forms.Padding(4);
+            this.cbEncodePW.Location = new System.Drawing.Point(376, 42);
             this.cbEncodePW.Name = "cbEncodePW";
-            this.cbEncodePW.Size = new System.Drawing.Size(18, 17);
+            this.cbEncodePW.Size = new System.Drawing.Size(15, 14);
             this.cbEncodePW.TabIndex = 25;
             this.cbEncodePW.UseVisualStyleBackColor = true;
             // 
             // label21
             // 
             this.label21.AutoSize = true;
-            this.label21.Location = new System.Drawing.Point(11, 108);
-            this.label21.Margin = new System.Windows.Forms.Padding(4, 0, 4, 0);
+            this.label21.Location = new System.Drawing.Point(11, 69);
             this.label21.Name = "label21";
-            this.label21.Size = new System.Drawing.Size(57, 17);
+            this.label21.Size = new System.Drawing.Size(43, 13);
             this.label21.TabIndex = 24;
             this.label21.Text = "Culture:";
             // 
@@ -813,10 +700,9 @@
             "en-US",
             "",
             ""});
-            this.cBCulture.Location = new System.Drawing.Point(117, 108);
-            this.cBCulture.Margin = new System.Windows.Forms.Padding(4);
+            this.cBCulture.Location = new System.Drawing.Point(88, 69);
             this.cBCulture.Name = "cBCulture";
-            this.cBCulture.Size = new System.Drawing.Size(69, 24);
+            this.cBCulture.Size = new System.Drawing.Size(53, 21);
             this.cBCulture.TabIndex = 23;
             // 
             // groupBox4
@@ -824,11 +710,9 @@
             this.groupBox4.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Left) 
             | System.Windows.Forms.AnchorStyles.Right)));
             this.groupBox4.Controls.Add(this.cLbInfoStores);
-            this.groupBox4.Location = new System.Drawing.Point(11, 148);
-            this.groupBox4.Margin = new System.Windows.Forms.Padding(4);
+            this.groupBox4.Location = new System.Drawing.Point(8, 97);
             this.groupBox4.Name = "groupBox4";
-            this.groupBox4.Padding = new System.Windows.Forms.Padding(4);
-            this.groupBox4.Size = new System.Drawing.Size(508, 94);
+            this.groupBox4.Size = new System.Drawing.Size(381, 76);
             this.groupBox4.TabIndex = 22;
             this.groupBox4.TabStop = false;
             this.groupBox4.Text = "InfoStores:";
@@ -841,31 +725,28 @@
             this.cLbInfoStores.FormattingEnabled = true;
             this.cLbInfoStores.Items.AddRange(new object[] {
             "All"});
-            this.cLbInfoStores.Location = new System.Drawing.Point(8, 23);
-            this.cLbInfoStores.Margin = new System.Windows.Forms.Padding(4);
+            this.cLbInfoStores.Location = new System.Drawing.Point(6, 19);
             this.cLbInfoStores.Name = "cLbInfoStores";
             this.cLbInfoStores.ScrollAlwaysVisible = true;
-            this.cLbInfoStores.Size = new System.Drawing.Size(491, 55);
+            this.cLbInfoStores.Size = new System.Drawing.Size(369, 34);
             this.cLbInfoStores.TabIndex = 16;
             // 
             // lblKXConTest
             // 
             this.lblKXConTest.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Right)));
             this.lblKXConTest.AutoSize = true;
-            this.lblKXConTest.Location = new System.Drawing.Point(220, 118);
-            this.lblKXConTest.Margin = new System.Windows.Forms.Padding(4, 0, 4, 0);
+            this.lblKXConTest.Location = new System.Drawing.Point(165, 77);
             this.lblKXConTest.Name = "lblKXConTest";
-            this.lblKXConTest.Size = new System.Drawing.Size(104, 17);
+            this.lblKXConTest.Size = new System.Drawing.Size(81, 13);
             this.lblKXConTest.TabIndex = 21;
             this.lblKXConTest.Text = "Not connected.";
             // 
             // btnTestKendoxConnection
             // 
             this.btnTestKendoxConnection.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Right)));
-            this.btnTestKendoxConnection.Location = new System.Drawing.Point(412, 107);
-            this.btnTestKendoxConnection.Margin = new System.Windows.Forms.Padding(4);
+            this.btnTestKendoxConnection.Location = new System.Drawing.Point(309, 72);
             this.btnTestKendoxConnection.Name = "btnTestKendoxConnection";
-            this.btnTestKendoxConnection.Size = new System.Drawing.Size(107, 28);
+            this.btnTestKendoxConnection.Size = new System.Drawing.Size(80, 23);
             this.btnTestKendoxConnection.TabIndex = 20;
             this.btnTestKendoxConnection.Text = "Test";
             this.btnTestKendoxConnection.UseVisualStyleBackColor = true;
@@ -875,40 +756,36 @@
             // 
             this.txtBxKendoxWebserviceURL.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Left) 
             | System.Windows.Forms.AnchorStyles.Right)));
-            this.txtBxKendoxWebserviceURL.Location = new System.Drawing.Point(117, 20);
-            this.txtBxKendoxWebserviceURL.Margin = new System.Windows.Forms.Padding(4);
+            this.txtBxKendoxWebserviceURL.Location = new System.Drawing.Point(88, 16);
             this.txtBxKendoxWebserviceURL.Name = "txtBxKendoxWebserviceURL";
-            this.txtBxKendoxWebserviceURL.Size = new System.Drawing.Size(400, 22);
+            this.txtBxKendoxWebserviceURL.Size = new System.Drawing.Size(301, 20);
             this.txtBxKendoxWebserviceURL.TabIndex = 19;
             // 
             // label12
             // 
             this.label12.AutoSize = true;
-            this.label12.Location = new System.Drawing.Point(11, 20);
-            this.label12.Margin = new System.Windows.Forms.Padding(4, 0, 4, 0);
+            this.label12.Location = new System.Drawing.Point(8, 16);
             this.label12.Name = "label12";
-            this.label12.Size = new System.Drawing.Size(66, 17);
+            this.label12.Size = new System.Drawing.Size(59, 13);
             this.label12.TabIndex = 18;
-            this.label12.Text = "WS URL:";
+            this.label12.Text = "WCF URL:";
             // 
             // txtBxKendoxPassword
             // 
             this.txtBxKendoxPassword.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Right)));
-            this.txtBxKendoxPassword.Location = new System.Drawing.Point(412, 79);
-            this.txtBxKendoxPassword.Margin = new System.Windows.Forms.Padding(4);
+            this.txtBxKendoxPassword.Location = new System.Drawing.Point(309, 42);
             this.txtBxKendoxPassword.Name = "txtBxKendoxPassword";
             this.txtBxKendoxPassword.PasswordChar = '•';
-            this.txtBxKendoxPassword.Size = new System.Drawing.Size(105, 22);
+            this.txtBxKendoxPassword.Size = new System.Drawing.Size(80, 20);
             this.txtBxKendoxPassword.TabIndex = 17;
             // 
             // label8
             // 
             this.label8.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Right)));
             this.label8.AutoSize = true;
-            this.label8.Location = new System.Drawing.Point(337, 79);
-            this.label8.Margin = new System.Windows.Forms.Padding(4, 0, 4, 0);
+            this.label8.Location = new System.Drawing.Point(253, 42);
             this.label8.Name = "label8";
-            this.label8.Size = new System.Drawing.Size(73, 17);
+            this.label8.Size = new System.Drawing.Size(56, 13);
             this.label8.TabIndex = 16;
             this.label8.Text = "Password:";
             // 
@@ -916,61 +793,19 @@
             // 
             this.txtBxKendoxUsername.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Left) 
             | System.Windows.Forms.AnchorStyles.Right)));
-            this.txtBxKendoxUsername.Location = new System.Drawing.Point(117, 79);
-            this.txtBxKendoxUsername.Margin = new System.Windows.Forms.Padding(4);
+            this.txtBxKendoxUsername.Location = new System.Drawing.Point(88, 42);
             this.txtBxKendoxUsername.Name = "txtBxKendoxUsername";
-            this.txtBxKendoxUsername.Size = new System.Drawing.Size(204, 22);
+            this.txtBxKendoxUsername.Size = new System.Drawing.Size(154, 20);
             this.txtBxKendoxUsername.TabIndex = 15;
             // 
             // label9
             // 
             this.label9.AutoSize = true;
-            this.label9.Location = new System.Drawing.Point(11, 79);
-            this.label9.Margin = new System.Windows.Forms.Padding(4, 0, 4, 0);
+            this.label9.Location = new System.Drawing.Point(8, 42);
             this.label9.Name = "label9";
-            this.label9.Size = new System.Drawing.Size(77, 17);
+            this.label9.Size = new System.Drawing.Size(58, 13);
             this.label9.TabIndex = 14;
             this.label9.Text = "Username:";
-            // 
-            // txtBxKendoxPort
-            // 
-            this.txtBxKendoxPort.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Right)));
-            this.txtBxKendoxPort.Location = new System.Drawing.Point(455, 49);
-            this.txtBxKendoxPort.Margin = new System.Windows.Forms.Padding(4);
-            this.txtBxKendoxPort.Name = "txtBxKendoxPort";
-            this.txtBxKendoxPort.Size = new System.Drawing.Size(63, 22);
-            this.txtBxKendoxPort.TabIndex = 13;
-            // 
-            // label10
-            // 
-            this.label10.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Right)));
-            this.label10.AutoSize = true;
-            this.label10.Location = new System.Drawing.Point(412, 49);
-            this.label10.Margin = new System.Windows.Forms.Padding(4, 0, 4, 0);
-            this.label10.Name = "label10";
-            this.label10.Size = new System.Drawing.Size(38, 17);
-            this.label10.TabIndex = 12;
-            this.label10.Text = "Port:";
-            // 
-            // txtBxKendoxServer
-            // 
-            this.txtBxKendoxServer.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Left) 
-            | System.Windows.Forms.AnchorStyles.Right)));
-            this.txtBxKendoxServer.Location = new System.Drawing.Point(117, 49);
-            this.txtBxKendoxServer.Margin = new System.Windows.Forms.Padding(4);
-            this.txtBxKendoxServer.Name = "txtBxKendoxServer";
-            this.txtBxKendoxServer.Size = new System.Drawing.Size(280, 22);
-            this.txtBxKendoxServer.TabIndex = 11;
-            // 
-            // label11
-            // 
-            this.label11.AutoSize = true;
-            this.label11.Location = new System.Drawing.Point(11, 49);
-            this.label11.Margin = new System.Windows.Forms.Padding(4, 0, 4, 0);
-            this.label11.Name = "label11";
-            this.label11.Size = new System.Drawing.Size(89, 17);
-            this.label11.TabIndex = 10;
-            this.label11.Text = "Servername:";
             // 
             // gBSMTP
             // 
@@ -988,11 +823,9 @@
             this.gBSMTP.Controls.Add(this.label2);
             this.gBSMTP.Controls.Add(this.txtBxSMTPServer);
             this.gBSMTP.Controls.Add(this.label1);
-            this.gBSMTP.Location = new System.Drawing.Point(11, 276);
-            this.gBSMTP.Margin = new System.Windows.Forms.Padding(4);
+            this.gBSMTP.Location = new System.Drawing.Point(8, 194);
             this.gBSMTP.Name = "gBSMTP";
-            this.gBSMTP.Padding = new System.Windows.Forms.Padding(4);
-            this.gBSMTP.Size = new System.Drawing.Size(529, 148);
+            this.gBSMTP.Size = new System.Drawing.Size(397, 120);
             this.gBSMTP.TabIndex = 10;
             this.gBSMTP.TabStop = false;
             this.gBSMTP.Text = "SMTP:";
@@ -1000,9 +833,10 @@
             // cBUseTSL
             // 
             this.cBUseTSL.AutoSize = true;
-            this.cBUseTSL.Location = new System.Drawing.Point(432, 24);
+            this.cBUseTSL.Location = new System.Drawing.Point(324, 20);
+            this.cBUseTSL.Margin = new System.Windows.Forms.Padding(2);
             this.cBUseTSL.Name = "cBUseTSL";
-            this.cBUseTSL.Size = new System.Drawing.Size(86, 21);
+            this.cBUseTSL.Size = new System.Drawing.Size(71, 17);
             this.cBUseTSL.TabIndex = 22;
             this.cBUseTSL.Text = "TLS/SSL";
             this.cBUseTSL.UseVisualStyleBackColor = true;
@@ -1011,29 +845,26 @@
             // 
             this.txtBxSMTPSender.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Left) 
             | System.Windows.Forms.AnchorStyles.Right)));
-            this.txtBxSMTPSender.Location = new System.Drawing.Point(117, 79);
-            this.txtBxSMTPSender.Margin = new System.Windows.Forms.Padding(4);
+            this.txtBxSMTPSender.Location = new System.Drawing.Point(88, 64);
             this.txtBxSMTPSender.Name = "txtBxSMTPSender";
-            this.txtBxSMTPSender.Size = new System.Drawing.Size(400, 22);
+            this.txtBxSMTPSender.Size = new System.Drawing.Size(301, 20);
             this.txtBxSMTPSender.TabIndex = 13;
             // 
             // label3
             // 
             this.label3.AutoSize = true;
-            this.label3.Location = new System.Drawing.Point(11, 79);
-            this.label3.Margin = new System.Windows.Forms.Padding(4, 0, 4, 0);
+            this.label3.Location = new System.Drawing.Point(8, 64);
             this.label3.Name = "label3";
-            this.label3.Size = new System.Drawing.Size(58, 17);
+            this.label3.Size = new System.Drawing.Size(44, 13);
             this.label3.TabIndex = 12;
             this.label3.Text = "Sender:";
             // 
             // btnTestSMTP
             // 
             this.btnTestSMTP.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Right)));
-            this.btnTestSMTP.Location = new System.Drawing.Point(412, 108);
-            this.btnTestSMTP.Margin = new System.Windows.Forms.Padding(4);
+            this.btnTestSMTP.Location = new System.Drawing.Point(309, 88);
             this.btnTestSMTP.Name = "btnTestSMTP";
-            this.btnTestSMTP.Size = new System.Drawing.Size(107, 28);
+            this.btnTestSMTP.Size = new System.Drawing.Size(80, 23);
             this.btnTestSMTP.TabIndex = 21;
             this.btnTestSMTP.Text = "Test";
             this.btnTestSMTP.UseVisualStyleBackColor = true;
@@ -1042,21 +873,19 @@
             // txtBxSMTPPassword
             // 
             this.txtBxSMTPPassword.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Right)));
-            this.txtBxSMTPPassword.Location = new System.Drawing.Point(412, 49);
-            this.txtBxSMTPPassword.Margin = new System.Windows.Forms.Padding(4);
+            this.txtBxSMTPPassword.Location = new System.Drawing.Point(309, 40);
             this.txtBxSMTPPassword.Name = "txtBxSMTPPassword";
             this.txtBxSMTPPassword.PasswordChar = '•';
-            this.txtBxSMTPPassword.Size = new System.Drawing.Size(105, 22);
+            this.txtBxSMTPPassword.Size = new System.Drawing.Size(80, 20);
             this.txtBxSMTPPassword.TabIndex = 17;
             // 
             // label5
             // 
             this.label5.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Right)));
             this.label5.AutoSize = true;
-            this.label5.Location = new System.Drawing.Point(327, 49);
-            this.label5.Margin = new System.Windows.Forms.Padding(4, 0, 4, 0);
+            this.label5.Location = new System.Drawing.Point(245, 40);
             this.label5.Name = "label5";
-            this.label5.Size = new System.Drawing.Size(73, 17);
+            this.label5.Size = new System.Drawing.Size(56, 13);
             this.label5.TabIndex = 16;
             this.label5.Text = "Password:";
             // 
@@ -1064,39 +893,35 @@
             // 
             this.txtBXSMTPUsername.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Left) 
             | System.Windows.Forms.AnchorStyles.Right)));
-            this.txtBXSMTPUsername.Location = new System.Drawing.Point(117, 49);
-            this.txtBXSMTPUsername.Margin = new System.Windows.Forms.Padding(4);
+            this.txtBXSMTPUsername.Location = new System.Drawing.Point(88, 40);
             this.txtBXSMTPUsername.Name = "txtBXSMTPUsername";
-            this.txtBXSMTPUsername.Size = new System.Drawing.Size(204, 22);
+            this.txtBXSMTPUsername.Size = new System.Drawing.Size(154, 20);
             this.txtBXSMTPUsername.TabIndex = 15;
             // 
             // label4
             // 
             this.label4.AutoSize = true;
-            this.label4.Location = new System.Drawing.Point(11, 49);
-            this.label4.Margin = new System.Windows.Forms.Padding(4, 0, 4, 0);
+            this.label4.Location = new System.Drawing.Point(8, 40);
             this.label4.Name = "label4";
-            this.label4.Size = new System.Drawing.Size(77, 17);
+            this.label4.Size = new System.Drawing.Size(58, 13);
             this.label4.TabIndex = 14;
             this.label4.Text = "Username:";
             // 
             // txtBxSMTPPort
             // 
             this.txtBxSMTPPort.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Right)));
-            this.txtBxSMTPPort.Location = new System.Drawing.Point(368, 22);
-            this.txtBxSMTPPort.Margin = new System.Windows.Forms.Padding(4);
+            this.txtBxSMTPPort.Location = new System.Drawing.Point(276, 18);
             this.txtBxSMTPPort.Name = "txtBxSMTPPort";
-            this.txtBxSMTPPort.Size = new System.Drawing.Size(48, 22);
+            this.txtBxSMTPPort.Size = new System.Drawing.Size(37, 20);
             this.txtBxSMTPPort.TabIndex = 13;
             // 
             // label2
             // 
             this.label2.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Right)));
             this.label2.AutoSize = true;
-            this.label2.Location = new System.Drawing.Point(328, 24);
-            this.label2.Margin = new System.Windows.Forms.Padding(4, 0, 4, 0);
+            this.label2.Location = new System.Drawing.Point(246, 20);
             this.label2.Name = "label2";
-            this.label2.Size = new System.Drawing.Size(38, 17);
+            this.label2.Size = new System.Drawing.Size(29, 13);
             this.label2.TabIndex = 12;
             this.label2.Text = "Port:";
             // 
@@ -1104,19 +929,17 @@
             // 
             this.txtBxSMTPServer.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Left) 
             | System.Windows.Forms.AnchorStyles.Right)));
-            this.txtBxSMTPServer.Location = new System.Drawing.Point(117, 20);
-            this.txtBxSMTPServer.Margin = new System.Windows.Forms.Padding(4);
+            this.txtBxSMTPServer.Location = new System.Drawing.Point(88, 16);
             this.txtBxSMTPServer.Name = "txtBxSMTPServer";
-            this.txtBxSMTPServer.Size = new System.Drawing.Size(203, 22);
+            this.txtBxSMTPServer.Size = new System.Drawing.Size(153, 20);
             this.txtBxSMTPServer.TabIndex = 11;
             // 
             // label1
             // 
             this.label1.AutoSize = true;
-            this.label1.Location = new System.Drawing.Point(11, 20);
-            this.label1.Margin = new System.Windows.Forms.Padding(4, 0, 4, 0);
+            this.label1.Location = new System.Drawing.Point(8, 16);
             this.label1.Name = "label1";
-            this.label1.Size = new System.Drawing.Size(98, 17);
+            this.label1.Size = new System.Drawing.Size(73, 13);
             this.label1.TabIndex = 10;
             this.label1.Text = "Sever-Adress:";
             // 
@@ -1129,23 +952,20 @@
             this.tcSettings.Controls.Add(this.tbProcessing);
             this.tcSettings.Controls.Add(this.tpOutput);
             this.tcSettings.Controls.Add(this.tpLog);
-            this.tcSettings.Location = new System.Drawing.Point(17, 15);
-            this.tcSettings.Margin = new System.Windows.Forms.Padding(4);
+            this.tcSettings.Location = new System.Drawing.Point(13, 12);
             this.tcSettings.Name = "tcSettings";
             this.tcSettings.SelectedIndex = 0;
-            this.tcSettings.Size = new System.Drawing.Size(559, 664);
+            this.tcSettings.Size = new System.Drawing.Size(419, 452);
             this.tcSettings.TabIndex = 0;
             // 
             // tpOutput
             // 
             this.tpOutput.Controls.Add(this.groupBox8);
-            this.tpOutput.Controls.Add(this.gBCustomFunction);
             this.tpOutput.Controls.Add(this.gBProcess);
             this.tpOutput.Controls.Add(this.gbEbillmail);
-            this.tpOutput.Location = new System.Drawing.Point(4, 25);
-            this.tpOutput.Margin = new System.Windows.Forms.Padding(4);
+            this.tpOutput.Location = new System.Drawing.Point(4, 22);
             this.tpOutput.Name = "tpOutput";
-            this.tpOutput.Size = new System.Drawing.Size(551, 635);
+            this.tpOutput.Size = new System.Drawing.Size(411, 426);
             this.tpOutput.TabIndex = 4;
             this.tpOutput.Text = "Output";
             this.tpOutput.UseVisualStyleBackColor = true;
@@ -1156,21 +976,19 @@
             | System.Windows.Forms.AnchorStyles.Right)));
             this.groupBox8.Controls.Add(this.btnConfigureDocSafe);
             this.groupBox8.Controls.Add(this.cBDocSafeActive);
-            this.groupBox8.Location = new System.Drawing.Point(8, 542);
-            this.groupBox8.Margin = new System.Windows.Forms.Padding(4);
+            this.groupBox8.Enabled = false;
+            this.groupBox8.Location = new System.Drawing.Point(8, 310);
             this.groupBox8.Name = "groupBox8";
-            this.groupBox8.Padding = new System.Windows.Forms.Padding(4);
-            this.groupBox8.Size = new System.Drawing.Size(523, 79);
+            this.groupBox8.Size = new System.Drawing.Size(392, 64);
             this.groupBox8.TabIndex = 22;
             this.groupBox8.TabStop = false;
             this.groupBox8.Text = "Swisscom DocSafe:";
             // 
             // btnConfigureDocSafe
             // 
-            this.btnConfigureDocSafe.Location = new System.Drawing.Point(11, 39);
-            this.btnConfigureDocSafe.Margin = new System.Windows.Forms.Padding(4);
+            this.btnConfigureDocSafe.Location = new System.Drawing.Point(8, 32);
             this.btnConfigureDocSafe.Name = "btnConfigureDocSafe";
-            this.btnConfigureDocSafe.Size = new System.Drawing.Size(501, 28);
+            this.btnConfigureDocSafe.Size = new System.Drawing.Size(376, 23);
             this.btnConfigureDocSafe.TabIndex = 18;
             this.btnConfigureDocSafe.Text = "Configuration...";
             this.btnConfigureDocSafe.UseVisualStyleBackColor = true;
@@ -1179,79 +997,12 @@
             // cBDocSafeActive
             // 
             this.cBDocSafeActive.AutoSize = true;
-            this.cBDocSafeActive.Location = new System.Drawing.Point(11, 20);
-            this.cBDocSafeActive.Margin = new System.Windows.Forms.Padding(4);
+            this.cBDocSafeActive.Location = new System.Drawing.Point(8, 16);
             this.cBDocSafeActive.Name = "cBDocSafeActive";
-            this.cBDocSafeActive.Size = new System.Drawing.Size(68, 21);
+            this.cBDocSafeActive.Size = new System.Drawing.Size(56, 17);
             this.cBDocSafeActive.TabIndex = 17;
             this.cBDocSafeActive.Text = "Active";
             this.cBDocSafeActive.UseVisualStyleBackColor = true;
-            // 
-            // gBCustomFunction
-            // 
-            this.gBCustomFunction.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Left) 
-            | System.Windows.Forms.AnchorStyles.Right)));
-            this.gBCustomFunction.Controls.Add(this.pBarCustomWSFunctions);
-            this.gBCustomFunction.Controls.Add(this.dgwCustomWSFunction);
-            this.gBCustomFunction.Controls.Add(this.cBCustomWSFunction);
-            this.gBCustomFunction.Location = new System.Drawing.Point(8, 384);
-            this.gBCustomFunction.Margin = new System.Windows.Forms.Padding(4);
-            this.gBCustomFunction.Name = "gBCustomFunction";
-            this.gBCustomFunction.Padding = new System.Windows.Forms.Padding(4);
-            this.gBCustomFunction.Size = new System.Drawing.Size(529, 148);
-            this.gBCustomFunction.TabIndex = 21;
-            this.gBCustomFunction.TabStop = false;
-            this.gBCustomFunction.Text = "Custom WS-Function:";
-            // 
-            // pBarCustomWSFunctions
-            // 
-            this.pBarCustomWSFunctions.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Left) 
-            | System.Windows.Forms.AnchorStyles.Right)));
-            this.pBarCustomWSFunctions.Location = new System.Drawing.Point(11, 46);
-            this.pBarCustomWSFunctions.Margin = new System.Windows.Forms.Padding(4);
-            this.pBarCustomWSFunctions.Name = "pBarCustomWSFunctions";
-            this.pBarCustomWSFunctions.Size = new System.Drawing.Size(509, 4);
-            this.pBarCustomWSFunctions.Style = System.Windows.Forms.ProgressBarStyle.Continuous;
-            this.pBarCustomWSFunctions.TabIndex = 20;
-            // 
-            // dgwCustomWSFunction
-            // 
-            this.dgwCustomWSFunction.Anchor = ((System.Windows.Forms.AnchorStyles)((((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Bottom) 
-            | System.Windows.Forms.AnchorStyles.Left) 
-            | System.Windows.Forms.AnchorStyles.Right)));
-            this.dgwCustomWSFunction.ColumnHeadersHeightSizeMode = System.Windows.Forms.DataGridViewColumnHeadersHeightSizeMode.AutoSize;
-            this.dgwCustomWSFunction.Columns.AddRange(new System.Windows.Forms.DataGridViewColumn[] {
-            this.cFunction,
-            this.cArguments});
-            this.dgwCustomWSFunction.Location = new System.Drawing.Point(11, 49);
-            this.dgwCustomWSFunction.Margin = new System.Windows.Forms.Padding(4);
-            this.dgwCustomWSFunction.Name = "dgwCustomWSFunction";
-            this.dgwCustomWSFunction.Size = new System.Drawing.Size(509, 89);
-            this.dgwCustomWSFunction.TabIndex = 18;
-            this.dgwCustomWSFunction.CellValueChanged += new System.Windows.Forms.DataGridViewCellEventHandler(this.dgwCustomWSFunction_CellValueChanged);
-            this.dgwCustomWSFunction.EditingControlShowing += new System.Windows.Forms.DataGridViewEditingControlShowingEventHandler(this.dgwCustomWSFunction_EditingControlShowing);
-            // 
-            // cFunction
-            // 
-            this.cFunction.HeaderText = "Function";
-            this.cFunction.Name = "cFunction";
-            // 
-            // cArguments
-            // 
-            this.cArguments.AutoSizeMode = System.Windows.Forms.DataGridViewAutoSizeColumnMode.Fill;
-            this.cArguments.HeaderText = "Argument(s)";
-            this.cArguments.Name = "cArguments";
-            // 
-            // cBCustomWSFunction
-            // 
-            this.cBCustomWSFunction.AutoSize = true;
-            this.cBCustomWSFunction.Location = new System.Drawing.Point(11, 20);
-            this.cBCustomWSFunction.Margin = new System.Windows.Forms.Padding(4);
-            this.cBCustomWSFunction.Name = "cBCustomWSFunction";
-            this.cBCustomWSFunction.Size = new System.Drawing.Size(68, 21);
-            this.cBCustomWSFunction.TabIndex = 17;
-            this.cBCustomWSFunction.Text = "Active";
-            this.cBCustomWSFunction.UseVisualStyleBackColor = true;
             // 
             // gBProcess
             // 
@@ -1263,11 +1014,9 @@
             this.gBProcess.Controls.Add(this.btnInsertIndexProcessRecipients);
             this.gBProcess.Controls.Add(this.txtBxProcessRecipient);
             this.gBProcess.Controls.Add(this.label25);
-            this.gBProcess.Location = new System.Drawing.Point(8, 256);
-            this.gBProcess.Margin = new System.Windows.Forms.Padding(4);
+            this.gBProcess.Location = new System.Drawing.Point(8, 208);
             this.gBProcess.Name = "gBProcess";
-            this.gBProcess.Padding = new System.Windows.Forms.Padding(4);
-            this.gBProcess.Size = new System.Drawing.Size(529, 118);
+            this.gBProcess.Size = new System.Drawing.Size(397, 96);
             this.gBProcess.TabIndex = 16;
             this.gBProcess.TabStop = false;
             this.gBProcess.Text = "Process:";
@@ -1275,10 +1024,9 @@
             // label23
             // 
             this.label23.AutoSize = true;
-            this.label23.Location = new System.Drawing.Point(11, 79);
-            this.label23.Margin = new System.Windows.Forms.Padding(4, 0, 4, 0);
+            this.label23.Location = new System.Drawing.Point(8, 64);
             this.label23.Name = "label23";
-            this.label23.Size = new System.Drawing.Size(71, 17);
+            this.label23.Size = new System.Drawing.Size(54, 13);
             this.label23.TabIndex = 28;
             this.label23.Text = "Template:";
             // 
@@ -1287,19 +1035,17 @@
             this.cBSelectedProcess.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Left) 
             | System.Windows.Forms.AnchorStyles.Right)));
             this.cBSelectedProcess.FormattingEnabled = true;
-            this.cBSelectedProcess.Location = new System.Drawing.Point(117, 79);
-            this.cBSelectedProcess.Margin = new System.Windows.Forms.Padding(4);
+            this.cBSelectedProcess.Location = new System.Drawing.Point(88, 64);
             this.cBSelectedProcess.Name = "cBSelectedProcess";
-            this.cBSelectedProcess.Size = new System.Drawing.Size(399, 24);
+            this.cBSelectedProcess.Size = new System.Drawing.Size(300, 21);
             this.cBSelectedProcess.TabIndex = 27;
             // 
             // cBStartProcessActive
             // 
             this.cBStartProcessActive.AutoSize = true;
-            this.cBStartProcessActive.Location = new System.Drawing.Point(11, 20);
-            this.cBStartProcessActive.Margin = new System.Windows.Forms.Padding(4);
+            this.cBStartProcessActive.Location = new System.Drawing.Point(8, 16);
             this.cBStartProcessActive.Name = "cBStartProcessActive";
-            this.cBStartProcessActive.Size = new System.Drawing.Size(68, 21);
+            this.cBStartProcessActive.Size = new System.Drawing.Size(56, 17);
             this.cBStartProcessActive.TabIndex = 18;
             this.cBStartProcessActive.Text = "Active";
             this.cBStartProcessActive.UseVisualStyleBackColor = true;
@@ -1308,10 +1054,9 @@
             // 
             this.btnInsertIndexProcessRecipients.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Right)));
             this.btnInsertIndexProcessRecipients.Enabled = false;
-            this.btnInsertIndexProcessRecipients.Location = new System.Drawing.Point(487, 48);
-            this.btnInsertIndexProcessRecipients.Margin = new System.Windows.Forms.Padding(4);
+            this.btnInsertIndexProcessRecipients.Location = new System.Drawing.Point(365, 39);
             this.btnInsertIndexProcessRecipients.Name = "btnInsertIndexProcessRecipients";
-            this.btnInsertIndexProcessRecipients.Size = new System.Drawing.Size(32, 27);
+            this.btnInsertIndexProcessRecipients.Size = new System.Drawing.Size(24, 22);
             this.btnInsertIndexProcessRecipients.TabIndex = 26;
             this.btnInsertIndexProcessRecipients.Text = "...";
             this.btnInsertIndexProcessRecipients.UseVisualStyleBackColor = true;
@@ -1321,19 +1066,17 @@
             // 
             this.txtBxProcessRecipient.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Left) 
             | System.Windows.Forms.AnchorStyles.Right)));
-            this.txtBxProcessRecipient.Location = new System.Drawing.Point(117, 49);
-            this.txtBxProcessRecipient.Margin = new System.Windows.Forms.Padding(4);
+            this.txtBxProcessRecipient.Location = new System.Drawing.Point(88, 40);
             this.txtBxProcessRecipient.Name = "txtBxProcessRecipient";
-            this.txtBxProcessRecipient.Size = new System.Drawing.Size(368, 22);
+            this.txtBxProcessRecipient.Size = new System.Drawing.Size(277, 20);
             this.txtBxProcessRecipient.TabIndex = 19;
             // 
             // label25
             // 
             this.label25.AutoSize = true;
-            this.label25.Location = new System.Drawing.Point(11, 49);
-            this.label25.Margin = new System.Windows.Forms.Padding(4, 0, 4, 0);
+            this.label25.Location = new System.Drawing.Point(8, 40);
             this.label25.Name = "label25";
-            this.label25.Size = new System.Drawing.Size(88, 17);
+            this.label25.Size = new System.Drawing.Size(66, 13);
             this.label25.TabIndex = 18;
             this.label25.Text = "Recipient(s):";
             // 
@@ -1365,22 +1108,50 @@
             this.gbEbillmail.Controls.Add(this.label18);
             this.gbEbillmail.Controls.Add(this.cBAttFile);
             this.gbEbillmail.Location = new System.Drawing.Point(8, 8);
-            this.gbEbillmail.Margin = new System.Windows.Forms.Padding(4);
             this.gbEbillmail.Name = "gbEbillmail";
-            this.gbEbillmail.Padding = new System.Windows.Forms.Padding(4);
-            this.gbEbillmail.Size = new System.Drawing.Size(529, 246);
+            this.gbEbillmail.Size = new System.Drawing.Size(397, 200);
             this.gbEbillmail.TabIndex = 15;
             this.gbEbillmail.TabStop = false;
             this.gbEbillmail.Text = "E-Mail:";
+            // 
+            // btnInsertAttachmentRenameProperty
+            // 
+            this.btnInsertAttachmentRenameProperty.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Right)));
+            this.btnInsertAttachmentRenameProperty.Enabled = false;
+            this.btnInsertAttachmentRenameProperty.Location = new System.Drawing.Point(364, 117);
+            this.btnInsertAttachmentRenameProperty.Name = "btnInsertAttachmentRenameProperty";
+            this.btnInsertAttachmentRenameProperty.Size = new System.Drawing.Size(24, 22);
+            this.btnInsertAttachmentRenameProperty.TabIndex = 48;
+            this.btnInsertAttachmentRenameProperty.Text = "...";
+            this.btnInsertAttachmentRenameProperty.UseVisualStyleBackColor = true;
+            this.btnInsertAttachmentRenameProperty.Click += new System.EventHandler(this.btnInsertAttachmentRenameProperty_Click);
+            // 
+            // label24
+            // 
+            this.label24.AutoSize = true;
+            this.label24.Location = new System.Drawing.Point(174, 117);
+            this.label24.Margin = new System.Windows.Forms.Padding(2, 0, 2, 0);
+            this.label24.Name = "label24";
+            this.label24.Size = new System.Drawing.Size(50, 13);
+            this.label24.TabIndex = 47;
+            this.label24.Text = "Rename:";
+            // 
+            // txtBxAttachmentRenameProperty
+            // 
+            this.txtBxAttachmentRenameProperty.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Left) 
+            | System.Windows.Forms.AnchorStyles.Right)));
+            this.txtBxAttachmentRenameProperty.Location = new System.Drawing.Point(228, 118);
+            this.txtBxAttachmentRenameProperty.Name = "txtBxAttachmentRenameProperty";
+            this.txtBxAttachmentRenameProperty.Size = new System.Drawing.Size(136, 20);
+            this.txtBxAttachmentRenameProperty.TabIndex = 46;
             // 
             // btnInsertMultiLanguageProperty
             // 
             this.btnInsertMultiLanguageProperty.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Right)));
             this.btnInsertMultiLanguageProperty.Enabled = false;
-            this.btnInsertMultiLanguageProperty.Location = new System.Drawing.Point(486, 109);
-            this.btnInsertMultiLanguageProperty.Margin = new System.Windows.Forms.Padding(4);
+            this.btnInsertMultiLanguageProperty.Location = new System.Drawing.Point(364, 89);
             this.btnInsertMultiLanguageProperty.Name = "btnInsertMultiLanguageProperty";
-            this.btnInsertMultiLanguageProperty.Size = new System.Drawing.Size(32, 27);
+            this.btnInsertMultiLanguageProperty.Size = new System.Drawing.Size(24, 22);
             this.btnInsertMultiLanguageProperty.TabIndex = 45;
             this.btnInsertMultiLanguageProperty.Text = "...";
             this.btnInsertMultiLanguageProperty.UseVisualStyleBackColor = true;
@@ -1389,9 +1160,10 @@
             // label15
             // 
             this.label15.AutoSize = true;
-            this.label15.Location = new System.Drawing.Point(314, 111);
+            this.label15.Location = new System.Drawing.Point(236, 88);
+            this.label15.Margin = new System.Windows.Forms.Padding(2, 0, 2, 0);
             this.label15.Name = "label15";
-            this.label15.Size = new System.Drawing.Size(61, 17);
+            this.label15.Size = new System.Drawing.Size(47, 13);
             this.label15.TabIndex = 44;
             this.label15.Text = "MLProp:";
             // 
@@ -1399,19 +1171,19 @@
             // 
             this.txtBxMultiLanguageProperty.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Left) 
             | System.Windows.Forms.AnchorStyles.Right)));
-            this.txtBxMultiLanguageProperty.Location = new System.Drawing.Point(376, 109);
-            this.txtBxMultiLanguageProperty.Margin = new System.Windows.Forms.Padding(4);
+            this.txtBxMultiLanguageProperty.Location = new System.Drawing.Point(285, 90);
             this.txtBxMultiLanguageProperty.Name = "txtBxMultiLanguageProperty";
-            this.txtBxMultiLanguageProperty.Size = new System.Drawing.Size(108, 22);
+            this.txtBxMultiLanguageProperty.Size = new System.Drawing.Size(79, 20);
             this.txtBxMultiLanguageProperty.TabIndex = 43;
             // 
             // cBGroupingActive
             // 
             this.cBGroupingActive.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Right)));
             this.cBGroupingActive.AutoSize = true;
-            this.cBGroupingActive.Location = new System.Drawing.Point(120, 176);
+            this.cBGroupingActive.Location = new System.Drawing.Point(90, 143);
+            this.cBGroupingActive.Margin = new System.Windows.Forms.Padding(2);
             this.cBGroupingActive.Name = "cBGroupingActive";
-            this.cBGroupingActive.Size = new System.Drawing.Size(131, 21);
+            this.cBGroupingActive.Size = new System.Drawing.Size(102, 17);
             this.cBGroupingActive.TabIndex = 41;
             this.cBGroupingActive.Text = "Grouping Active";
             this.cBGroupingActive.UseVisualStyleBackColor = true;
@@ -1419,9 +1191,10 @@
             // btnConfigureGrouping
             // 
             this.btnConfigureGrouping.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Right)));
-            this.btnConfigureGrouping.Location = new System.Drawing.Point(256, 176);
+            this.btnConfigureGrouping.Location = new System.Drawing.Point(192, 143);
+            this.btnConfigureGrouping.Margin = new System.Windows.Forms.Padding(2);
             this.btnConfigureGrouping.Name = "btnConfigureGrouping";
-            this.btnConfigureGrouping.Size = new System.Drawing.Size(264, 23);
+            this.btnConfigureGrouping.Size = new System.Drawing.Size(198, 19);
             this.btnConfigureGrouping.TabIndex = 40;
             this.btnConfigureGrouping.Text = "Grouping...";
             this.btnConfigureGrouping.UseVisualStyleBackColor = true;
@@ -1430,27 +1203,24 @@
             // label17
             // 
             this.label17.AutoSize = true;
-            this.label17.Location = new System.Drawing.Point(11, 108);
-            this.label17.Margin = new System.Windows.Forms.Padding(4, 0, 4, 0);
+            this.label17.Location = new System.Drawing.Point(8, 88);
             this.label17.Name = "label17";
-            this.label17.Size = new System.Drawing.Size(71, 17);
+            this.label17.Size = new System.Drawing.Size(54, 13);
             this.label17.TabIndex = 39;
             this.label17.Text = "Template:";
             // 
             // txtBxEmailTemplatePath
             // 
-            this.txtBxEmailTemplatePath.Location = new System.Drawing.Point(117, 108);
-            this.txtBxEmailTemplatePath.Margin = new System.Windows.Forms.Padding(4);
+            this.txtBxEmailTemplatePath.Location = new System.Drawing.Point(88, 88);
             this.txtBxEmailTemplatePath.Name = "txtBxEmailTemplatePath";
-            this.txtBxEmailTemplatePath.Size = new System.Drawing.Size(163, 22);
+            this.txtBxEmailTemplatePath.Size = new System.Drawing.Size(123, 20);
             this.txtBxEmailTemplatePath.TabIndex = 38;
             // 
             // btnBrowseEmailTemplate
             // 
-            this.btnBrowseEmailTemplate.Location = new System.Drawing.Point(280, 107);
-            this.btnBrowseEmailTemplate.Margin = new System.Windows.Forms.Padding(4);
+            this.btnBrowseEmailTemplate.Location = new System.Drawing.Point(210, 87);
             this.btnBrowseEmailTemplate.Name = "btnBrowseEmailTemplate";
-            this.btnBrowseEmailTemplate.Size = new System.Drawing.Size(32, 27);
+            this.btnBrowseEmailTemplate.Size = new System.Drawing.Size(24, 22);
             this.btnBrowseEmailTemplate.TabIndex = 37;
             this.btnBrowseEmailTemplate.Text = "...";
             this.btnBrowseEmailTemplate.UseVisualStyleBackColor = true;
@@ -1460,19 +1230,17 @@
             // 
             this.txtBxLinkFilePath.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Left) 
             | System.Windows.Forms.AnchorStyles.Right)));
-            this.txtBxLinkFilePath.Location = new System.Drawing.Point(256, 206);
-            this.txtBxLinkFilePath.Margin = new System.Windows.Forms.Padding(4);
+            this.txtBxLinkFilePath.Location = new System.Drawing.Point(191, 168);
             this.txtBxLinkFilePath.Name = "txtBxLinkFilePath";
-            this.txtBxLinkFilePath.Size = new System.Drawing.Size(232, 22);
+            this.txtBxLinkFilePath.Size = new System.Drawing.Size(175, 20);
             this.txtBxLinkFilePath.TabIndex = 28;
             // 
             // btnSelectTemplate
             // 
             this.btnSelectTemplate.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Right)));
-            this.btnSelectTemplate.Location = new System.Drawing.Point(488, 205);
-            this.btnSelectTemplate.Margin = new System.Windows.Forms.Padding(4);
+            this.btnSelectTemplate.Location = new System.Drawing.Point(366, 167);
             this.btnSelectTemplate.Name = "btnSelectTemplate";
-            this.btnSelectTemplate.Size = new System.Drawing.Size(31, 27);
+            this.btnSelectTemplate.Size = new System.Drawing.Size(23, 22);
             this.btnSelectTemplate.TabIndex = 27;
             this.btnSelectTemplate.Text = "...";
             this.btnSelectTemplate.UseVisualStyleBackColor = true;
@@ -1481,10 +1249,9 @@
             // cBSendMailActive
             // 
             this.cBSendMailActive.AutoSize = true;
-            this.cBSendMailActive.Location = new System.Drawing.Point(11, 20);
-            this.cBSendMailActive.Margin = new System.Windows.Forms.Padding(4);
+            this.cBSendMailActive.Location = new System.Drawing.Point(8, 16);
             this.cBSendMailActive.Name = "cBSendMailActive";
-            this.cBSendMailActive.Size = new System.Drawing.Size(68, 21);
+            this.cBSendMailActive.Size = new System.Drawing.Size(56, 17);
             this.cBSendMailActive.TabIndex = 18;
             this.cBSendMailActive.Text = "Active";
             this.cBSendMailActive.UseVisualStyleBackColor = true;
@@ -1493,10 +1260,9 @@
             // 
             this.btnInsertIndexMailRecipient.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Right)));
             this.btnInsertIndexMailRecipient.Enabled = false;
-            this.btnInsertIndexMailRecipient.Location = new System.Drawing.Point(487, 48);
-            this.btnInsertIndexMailRecipient.Margin = new System.Windows.Forms.Padding(4);
+            this.btnInsertIndexMailRecipient.Location = new System.Drawing.Point(365, 39);
             this.btnInsertIndexMailRecipient.Name = "btnInsertIndexMailRecipient";
-            this.btnInsertIndexMailRecipient.Size = new System.Drawing.Size(32, 27);
+            this.btnInsertIndexMailRecipient.Size = new System.Drawing.Size(24, 22);
             this.btnInsertIndexMailRecipient.TabIndex = 26;
             this.btnInsertIndexMailRecipient.Text = "...";
             this.btnInsertIndexMailRecipient.UseVisualStyleBackColor = true;
@@ -1506,10 +1272,9 @@
             // 
             this.btnInsertIndexMailSubject.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Right)));
             this.btnInsertIndexMailSubject.Enabled = false;
-            this.btnInsertIndexMailSubject.Location = new System.Drawing.Point(487, 78);
-            this.btnInsertIndexMailSubject.Margin = new System.Windows.Forms.Padding(4);
+            this.btnInsertIndexMailSubject.Location = new System.Drawing.Point(365, 63);
             this.btnInsertIndexMailSubject.Name = "btnInsertIndexMailSubject";
-            this.btnInsertIndexMailSubject.Size = new System.Drawing.Size(32, 27);
+            this.btnInsertIndexMailSubject.Size = new System.Drawing.Size(24, 22);
             this.btnInsertIndexMailSubject.TabIndex = 24;
             this.btnInsertIndexMailSubject.Text = "...";
             this.btnInsertIndexMailSubject.UseVisualStyleBackColor = true;
@@ -1519,19 +1284,17 @@
             // 
             this.txtBxSMTPSubject.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Left) 
             | System.Windows.Forms.AnchorStyles.Right)));
-            this.txtBxSMTPSubject.Location = new System.Drawing.Point(117, 79);
-            this.txtBxSMTPSubject.Margin = new System.Windows.Forms.Padding(4);
+            this.txtBxSMTPSubject.Location = new System.Drawing.Point(88, 64);
             this.txtBxSMTPSubject.Name = "txtBxSMTPSubject";
-            this.txtBxSMTPSubject.Size = new System.Drawing.Size(368, 22);
+            this.txtBxSMTPSubject.Size = new System.Drawing.Size(277, 20);
             this.txtBxSMTPSubject.TabIndex = 21;
             // 
             // label7
             // 
             this.label7.AutoSize = true;
-            this.label7.Location = new System.Drawing.Point(11, 79);
-            this.label7.Margin = new System.Windows.Forms.Padding(4, 0, 4, 0);
+            this.label7.Location = new System.Drawing.Point(8, 64);
             this.label7.Name = "label7";
-            this.label7.Size = new System.Drawing.Size(59, 17);
+            this.label7.Size = new System.Drawing.Size(46, 13);
             this.label7.TabIndex = 20;
             this.label7.Text = "Subject:";
             // 
@@ -1539,19 +1302,17 @@
             // 
             this.txtBxSMTPSendTo.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Left) 
             | System.Windows.Forms.AnchorStyles.Right)));
-            this.txtBxSMTPSendTo.Location = new System.Drawing.Point(117, 49);
-            this.txtBxSMTPSendTo.Margin = new System.Windows.Forms.Padding(4);
+            this.txtBxSMTPSendTo.Location = new System.Drawing.Point(88, 40);
             this.txtBxSMTPSendTo.Name = "txtBxSMTPSendTo";
-            this.txtBxSMTPSendTo.Size = new System.Drawing.Size(368, 22);
+            this.txtBxSMTPSendTo.Size = new System.Drawing.Size(277, 20);
             this.txtBxSMTPSendTo.TabIndex = 19;
             // 
             // label6
             // 
             this.label6.AutoSize = true;
-            this.label6.Location = new System.Drawing.Point(11, 49);
-            this.label6.Margin = new System.Windows.Forms.Padding(4, 0, 4, 0);
+            this.label6.Location = new System.Drawing.Point(8, 40);
             this.label6.Name = "label6";
-            this.label6.Size = new System.Drawing.Size(88, 17);
+            this.label6.Size = new System.Drawing.Size(66, 13);
             this.label6.TabIndex = 18;
             this.label6.Text = "Recipient(s):";
             // 
@@ -1559,10 +1320,9 @@
             // 
             this.cBKxLinkFile.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Left)));
             this.cBKxLinkFile.AutoSize = true;
-            this.cBKxLinkFile.Location = new System.Drawing.Point(120, 208);
-            this.cBKxLinkFile.Margin = new System.Windows.Forms.Padding(4);
+            this.cBKxLinkFile.Location = new System.Drawing.Point(90, 169);
             this.cBKxLinkFile.Name = "cBKxLinkFile";
-            this.cBKxLinkFile.Size = new System.Drawing.Size(134, 21);
+            this.cBKxLinkFile.Size = new System.Drawing.Size(104, 17);
             this.cBKxLinkFile.TabIndex = 14;
             this.cBKxLinkFile.Text = "Kendox Link-File";
             this.cBKxLinkFile.UseVisualStyleBackColor = true;
@@ -1571,10 +1331,9 @@
             // 
             this.label18.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Left)));
             this.label18.AutoSize = true;
-            this.label18.Location = new System.Drawing.Point(16, 144);
-            this.label18.Margin = new System.Windows.Forms.Padding(4, 0, 4, 0);
+            this.label18.Location = new System.Drawing.Point(12, 117);
             this.label18.Name = "label18";
-            this.label18.Size = new System.Drawing.Size(90, 17);
+            this.label18.Size = new System.Drawing.Size(69, 13);
             this.label18.TabIndex = 13;
             this.label18.Text = "Attachments:";
             // 
@@ -1582,10 +1341,9 @@
             // 
             this.cBAttFile.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Left)));
             this.cBAttFile.AutoSize = true;
-            this.cBAttFile.Location = new System.Drawing.Point(120, 144);
-            this.cBAttFile.Margin = new System.Windows.Forms.Padding(4);
+            this.cBAttFile.Location = new System.Drawing.Point(90, 117);
             this.cBAttFile.Name = "cBAttFile";
-            this.cBAttFile.Size = new System.Drawing.Size(94, 21);
+            this.cBAttFile.Size = new System.Drawing.Size(75, 17);
             this.cBAttFile.TabIndex = 12;
             this.cBAttFile.Text = "Document";
             this.cBAttFile.UseVisualStyleBackColor = true;
@@ -1595,49 +1353,20 @@
             // 
             this.openFileDialog1.FileName = "openFileDialog1";
             // 
-            // btnInsertAttachmentRenameProperty
+            // searchComparisonEnumBindingSource
             // 
-            this.btnInsertAttachmentRenameProperty.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Right)));
-            this.btnInsertAttachmentRenameProperty.Enabled = false;
-            this.btnInsertAttachmentRenameProperty.Location = new System.Drawing.Point(486, 144);
-            this.btnInsertAttachmentRenameProperty.Margin = new System.Windows.Forms.Padding(4);
-            this.btnInsertAttachmentRenameProperty.Name = "btnInsertAttachmentRenameProperty";
-            this.btnInsertAttachmentRenameProperty.Size = new System.Drawing.Size(32, 27);
-            this.btnInsertAttachmentRenameProperty.TabIndex = 48;
-            this.btnInsertAttachmentRenameProperty.Text = "...";
-            this.btnInsertAttachmentRenameProperty.UseVisualStyleBackColor = true;
-            this.btnInsertAttachmentRenameProperty.Click += new System.EventHandler(this.btnInsertAttachmentRenameProperty_Click);
-            // 
-            // label24
-            // 
-            this.label24.AutoSize = true;
-            this.label24.Location = new System.Drawing.Point(232, 144);
-            this.label24.Name = "label24";
-            this.label24.Size = new System.Drawing.Size(67, 17);
-            this.label24.TabIndex = 47;
-            this.label24.Text = "ReName:";
-            // 
-            // txtBxAttachmentRenameProperty
-            // 
-            this.txtBxAttachmentRenameProperty.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Left) 
-            | System.Windows.Forms.AnchorStyles.Right)));
-            this.txtBxAttachmentRenameProperty.Location = new System.Drawing.Point(304, 144);
-            this.txtBxAttachmentRenameProperty.Margin = new System.Windows.Forms.Padding(4);
-            this.txtBxAttachmentRenameProperty.Name = "txtBxAttachmentRenameProperty";
-            this.txtBxAttachmentRenameProperty.Size = new System.Drawing.Size(180, 22);
-            this.txtBxAttachmentRenameProperty.TabIndex = 46;
+            this.searchComparisonEnumBindingSource.DataSource = typeof(docreminder.BO.Utility.SearchComparisonEnum);
             // 
             // FormSettings
             // 
-            this.AutoScaleDimensions = new System.Drawing.SizeF(8F, 16F);
+            this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
-            this.ClientSize = new System.Drawing.Size(585, 745);
+            this.ClientSize = new System.Drawing.Size(439, 517);
             this.Controls.Add(this.bOK);
             this.Controls.Add(this.bSave);
             this.Controls.Add(this.tcSettings);
             this.Icon = ((System.Drawing.Icon)(resources.GetObject("$this.Icon")));
-            this.Margin = new System.Windows.Forms.Padding(4);
-            this.MinimumSize = new System.Drawing.Size(601, 675);
+            this.MinimumSize = new System.Drawing.Size(455, 556);
             this.Name = "FormSettings";
             this.StartPosition = System.Windows.Forms.FormStartPosition.CenterParent;
             this.Text = "Settings";
@@ -1647,8 +1376,6 @@
             this.groupBox7.PerformLayout();
             this.groupBox2.ResumeLayout(false);
             this.groupBox2.PerformLayout();
-            this.groupBox1.ResumeLayout(false);
-            this.groupBox1.PerformLayout();
             this.tbProcessing.ResumeLayout(false);
             this.groupBox6.ResumeLayout(false);
             this.groupBox6.PerformLayout();
@@ -1668,13 +1395,11 @@
             this.tpOutput.ResumeLayout(false);
             this.groupBox8.ResumeLayout(false);
             this.groupBox8.PerformLayout();
-            this.gBCustomFunction.ResumeLayout(false);
-            this.gBCustomFunction.PerformLayout();
-            ((System.ComponentModel.ISupportInitialize)(this.dgwCustomWSFunction)).EndInit();
             this.gBProcess.ResumeLayout(false);
             this.gBProcess.PerformLayout();
             this.gbEbillmail.ResumeLayout(false);
             this.gbEbillmail.PerformLayout();
+            ((System.ComponentModel.ISupportInitialize)(this.searchComparisonEnumBindingSource)).EndInit();
             this.ResumeLayout(false);
 
         }
@@ -1692,11 +1417,6 @@
         private System.Windows.Forms.TextBox tbErrorMailSendTo;
         private System.Windows.Forms.Label label14;
         private System.Windows.Forms.CheckBox cBSendErrorMail;
-        private System.Windows.Forms.GroupBox groupBox1;
-        private System.Windows.Forms.Button bSelectPath;
-        private System.Windows.Forms.Label lLogPath;
-        private System.Windows.Forms.TextBox txtBxLogPath;
-        private System.Windows.Forms.CheckBox cBIsLogActive;
         private System.Windows.Forms.TabPage tbProcessing;
         private System.Windows.Forms.TabPage tpInOut;
         private System.Windows.Forms.GroupBox gbKendox;
@@ -1708,10 +1428,6 @@
         private System.Windows.Forms.Label label8;
         private System.Windows.Forms.TextBox txtBxKendoxUsername;
         private System.Windows.Forms.Label label9;
-        private System.Windows.Forms.TextBox txtBxKendoxPort;
-        private System.Windows.Forms.Label label10;
-        private System.Windows.Forms.TextBox txtBxKendoxServer;
-        private System.Windows.Forms.Label label11;
         private System.Windows.Forms.GroupBox gBSMTP;
         private System.Windows.Forms.TextBox txtBxSMTPSender;
         private System.Windows.Forms.Label label3;
@@ -1773,19 +1489,6 @@
         private System.Windows.Forms.Label label25;
         private System.Windows.Forms.ComboBox cBSelectedProcess;
         private System.Windows.Forms.Label label23;
-        private System.Windows.Forms.DataGridViewTextBoxColumn Propertyname;
-        private System.Windows.Forms.DataGridViewComboBoxColumn Operation;
-        private System.Windows.Forms.DataGridViewTextBoxColumn Value;
-        private System.Windows.Forms.DataGridViewComboBoxColumn Relation;
-        private System.Windows.Forms.DataGridViewTextBoxColumn dataGridViewTextBoxColumn1;
-        private System.Windows.Forms.DataGridViewTextBoxColumn dataGridViewTextBoxColumn2;
-        private System.Windows.Forms.DataGridViewComboBoxColumn Action;
-        private System.Windows.Forms.GroupBox gBCustomFunction;
-        private System.Windows.Forms.ProgressBar pBarCustomWSFunctions;
-        private System.Windows.Forms.DataGridView dgwCustomWSFunction;
-        private System.Windows.Forms.DataGridViewTextBoxColumn cFunction;
-        private System.Windows.Forms.DataGridViewTextBoxColumn cArguments;
-        private System.Windows.Forms.CheckBox cBCustomWSFunction;
         private System.Windows.Forms.CheckBox cbEncodePW;
         private System.Windows.Forms.GroupBox groupBox8;
         private System.Windows.Forms.Button btnConfigureDocSafe;
@@ -1799,5 +1502,13 @@
         private System.Windows.Forms.Button btnInsertAttachmentRenameProperty;
         private System.Windows.Forms.Label label24;
         private System.Windows.Forms.TextBox txtBxAttachmentRenameProperty;
+        private System.Windows.Forms.BindingSource searchComparisonEnumBindingSource;
+        private System.Windows.Forms.DataGridViewTextBoxColumn dataGridViewTextBoxColumn1;
+        private System.Windows.Forms.DataGridViewTextBoxColumn dataGridViewTextBoxColumn2;
+        private System.Windows.Forms.DataGridViewComboBoxColumn Action;
+        private System.Windows.Forms.DataGridViewTextBoxColumn Propertyname;
+        private System.Windows.Forms.DataGridViewComboBoxColumn Operation;
+        private System.Windows.Forms.DataGridViewTextBoxColumn Value;
+        private System.Windows.Forms.DataGridViewComboBoxColumn Relation;
     }
 }

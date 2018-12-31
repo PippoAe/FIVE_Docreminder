@@ -300,7 +300,7 @@ namespace docreminder
             return filepath;
         }
 
-        public static string CleanFileName(string fileName)
+        public static string CleanUpFileName(string fileName)
         {
             return Path.GetInvalidFileNameChars().Aggregate(fileName, (current, c) => current.Replace(c.ToString(), string.Empty));
         }

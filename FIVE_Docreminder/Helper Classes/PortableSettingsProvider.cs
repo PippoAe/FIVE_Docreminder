@@ -101,9 +101,11 @@ namespace docreminder
             foreach (SettingsProperty setting in props)
             {
 
-                SettingsPropertyValue value = new SettingsPropertyValue(setting);
-                value.IsDirty = false;
-                value.SerializedValue = GetValue(setting);
+                SettingsPropertyValue value = new SettingsPropertyValue(setting)
+                {
+                    IsDirty = false,
+                    SerializedValue = GetValue(setting)
+                };
                 values.Add(value);
             }
             return values;

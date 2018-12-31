@@ -175,10 +175,10 @@
             // 
             // processDocumentsWorker
             // 
-            this.processDocumentsWorker.WorkerReportsProgress = true;
-            this.processDocumentsWorker.DoWork += new System.ComponentModel.DoWorkEventHandler(this.processDocumentsWorker_DoWork);
-            this.processDocumentsWorker.ProgressChanged += new System.ComponentModel.ProgressChangedEventHandler(this.processDocumentsWorker_ProgressChanged);
-            this.processDocumentsWorker.RunWorkerCompleted += new System.ComponentModel.RunWorkerCompletedEventHandler(this.processDocumentsWorker_RunWorkerCompleted);
+            //this.processDocumentsWorker.WorkerReportsProgress = true;
+            //this.processDocumentsWorker.DoWork += new System.ComponentModel.DoWorkEventHandler(this.processDocumentsWorker_DoWork);
+            //this.processDocumentsWorker.ProgressChanged += new System.ComponentModel.ProgressChangedEventHandler(this.processDocumentsWorker_ProgressChanged);
+            //this.processDocumentsWorker.RunWorkerCompleted += new System.ComponentModel.RunWorkerCompletedEventHandler(this.processDocumentsWorker_RunWorkerCompleted);
             // 
             // btnSearchMore
             // 

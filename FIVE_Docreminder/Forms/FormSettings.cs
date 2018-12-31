@@ -100,27 +100,29 @@ namespace docreminder
             cBStartProcessActive.Checked = Properties.Settings.Default.StartProcessActive;
             txtBxProcessRecipient.Text = Properties.Settings.Default.ProcessRecipient;
 
-            WebServiceHandler.ProcessTemplateItem processTemplateItem = new WebServiceHandler.ProcessTemplateItem
-            {
 
-                //If ProcessTemplate is a string, it has to be evaluated. Else its fixed.
-                ProcessName = "Template auswählen..."
-            };
-            if (Properties.Settings.Default.ProcessName != "")
-            {
-                try
-                {
-                    processTemplateItem = (WebServiceHandler.ProcessTemplateItem)FileHelper.XmlDeserializeFromString(Properties.Settings.Default.ProcessName, processTemplateItem.GetType());
-                }
-                catch
-                {
-                    //ProcessTemplateItem seems to be a string and needs to be evaluated on runtime.
-                    processTemplateItem.ProcessName = Properties.Settings.Default.ProcessName;
-                }
-            } 
+            //TODO: Not implemented yet
+            //WebServiceHandler.ProcessTemplateItem processTemplateItem = new WebServiceHandler.ProcessTemplateItem
+            //{
 
-            cBSelectedProcess.Items.Add(processTemplateItem);
-            cBSelectedProcess.SelectedIndex = 0;
+            //    //If ProcessTemplate is a string, it has to be evaluated. Else its fixed.
+            //    ProcessName = "Template auswählen..."
+            //};
+            //if (Properties.Settings.Default.ProcessName != "")
+            //{
+            //    try
+            //    {
+            //        processTemplateItem = (WebServiceHandler.ProcessTemplateItem)FileHelper.XmlDeserializeFromString(Properties.Settings.Default.ProcessName, processTemplateItem.GetType());
+            //    }
+            //    catch
+            //    {
+            //        //ProcessTemplateItem seems to be a string and needs to be evaluated on runtime.
+            //        processTemplateItem.ProcessName = Properties.Settings.Default.ProcessName;
+            //    }
+            //} 
+
+            //cBSelectedProcess.Items.Add(processTemplateItem);
+            //cBSelectedProcess.SelectedIndex = 0;
 
 
 
@@ -974,7 +976,7 @@ MessageBoxButtons.OK, MessageBoxIcon.Information);
         {
             try
             {
-                string ret = NEWExpressionsEvaluator.GetInstance.Evaluate(txtBxAdditionalComputedIdentifier.Text,null,true).ToString();
+                string ret = ExpressionsEvaluator.GetInstance.Evaluate(txtBxAdditionalComputedIdentifier.Text,null,true).ToString();
                 bool value;
                 bool isBool = bool.TryParse(ret, out value);
                 if (isBool)
@@ -996,7 +998,7 @@ MessageBoxButtons.OK, MessageBoxIcon.Information);
             if (txtBxLinkFilePath.Text == "")
             {
                 string progPath = System.IO.Path.GetDirectoryName(System.Reflection.Assembly.GetExecutingAssembly().Location);
-                string templateFilePath = Path.Combine(progPath, "linkfile.dlk");
+                string templateFilePath = Path.Combine(progPath, "DefaultTemplates/standard_linkfile_template.dlk");
                 fileBrowserDialog.InitialDirectory = templateFilePath;
                 fileBrowserDialog.RestoreDirectory = true;
                 fileBrowserDialog.Filter = "Kendox Linkfile|*.dlk;";
@@ -1019,7 +1021,7 @@ MessageBoxButtons.OK, MessageBoxIcon.Information);
             if (txtBxLinkFilePath.Text == "")
             {
                 string progPath = System.IO.Path.GetDirectoryName(System.Reflection.Assembly.GetExecutingAssembly().Location);
-                string templateFilePath = Path.Combine(progPath, "standard_report_template.html");
+                string templateFilePath = Path.Combine(progPath, "/standard_report_template.html");
                 fileBrowserDialog.InitialDirectory = templateFilePath;
                 fileBrowserDialog.RestoreDirectory = true;
                 fileBrowserDialog.Filter = "Template|*.html;";
@@ -1043,7 +1045,7 @@ MessageBoxButtons.OK, MessageBoxIcon.Information);
             if (txtBxEmailTemplatePath.Text == "")
             {
                 string progPath = System.IO.Path.GetDirectoryName(System.Reflection.Assembly.GetExecutingAssembly().Location);
-                string templateFilePath = Path.Combine(progPath, "standard_email_template.html");
+                string templateFilePath = Path.Combine(progPath, "DefaultTemplates/standard_email_template.html");
                 fileBrowserDialog.InitialDirectory = templateFilePath;
                 fileBrowserDialog.RestoreDirectory = true;
                 fileBrowserDialog.Filter = "Template|*.html;";

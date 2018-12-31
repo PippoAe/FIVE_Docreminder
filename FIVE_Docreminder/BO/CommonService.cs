@@ -709,6 +709,12 @@ namespace docreminder.BO
             return arrayOfInfoStore;   
         }
 
+        public UserStoreContract GetAllUsers(string connAdminUserID)
+        {
+            UserStoreContract userStore = CommonClient.GetUserStore(connAdminUserID);
+            return userStore;
+        }
+
         public PropertyTypeContract[] GetAllPropertyTypes()
         {
             return this.SchemaStore.PropertyTypes;

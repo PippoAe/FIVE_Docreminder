@@ -211,6 +211,12 @@ namespace docreminder
         {
             return documentService.GetDocument(ConnectionID, infoShareObjectID);
         }
+
+        internal UserContract[] GetAllUsers()
+        {
+            UserStoreContract usc = commonService.GetAllUsers(ConnectionID);
+            return usc.Users;
+        }
         #endregion
 
         internal DocumentSimpleContract[] SearchForDocuments()
@@ -315,6 +321,11 @@ namespace docreminder
             return resultContract.Documents;
         }
 
+        internal byte[] GetDocumentFile(string infoShareObjectID)
+        {
+            return fileService.DownloadFileBytesOnly(ConnectionID,infoShareObjectID);
+        }
+
         public List<SearchConditionContract> EvaluateSearchConditions(List<SearchConditionContract> searchConList, DocumentContract doc = null)
         {
             //Evaluate Searchconditions
@@ -332,9 +343,9 @@ namespace docreminder
                         {
                             string sEvaluatedValue = "";
                             if (doc == null)
-                                sEvaluatedValue = NEWExpressionsEvaluator.GetInstance.Evaluate(sValue);
+                                sEvaluatedValue = ExpressionsEvaluator.GetInstance.Evaluate(sValue);
                             else
-                                sEvaluatedValue = NEWExpressionsEvaluator.GetInstance.Evaluate(sValue, doc);
+                                sEvaluatedValue = ExpressionsEvaluator.GetInstance.Evaluate(sValue, doc);
                             sNewValues[i] = sEvaluatedValue;
                         }
                         else

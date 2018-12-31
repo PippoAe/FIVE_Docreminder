@@ -120,8 +120,8 @@ namespace docreminder.Forms
         {
             try
             {
-                NEWExpressionsEvaluator.GetInstance.UpdateVariables();
-                string ret = NEWExpressionsEvaluator.GetInstance.Evaluate(txtBxExpressionTest.Text,null,true).ToString();
+                ExpressionsEvaluator.GetInstance.UpdateVariables();
+                string ret = ExpressionsEvaluator.GetInstance.Evaluate(txtBxExpressionTest.Text,null,true).ToString();
                 MessageBox.Show(ret);
             }
             catch (Exception exc)

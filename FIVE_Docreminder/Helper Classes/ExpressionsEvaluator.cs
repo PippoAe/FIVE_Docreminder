@@ -9,12 +9,18 @@ using System.Xml.Serialization;
 using System.Data.SqlClient;
 using System.Data;
 using System.Text.RegularExpressions;
+using docreminder.InfoShareService;
 
 namespace docreminder
 {
     public class ExpressionsEvaluator
     {
-        //Hashtable htVariables = new Hashtable();
+        private static readonly log4net.ILog log4 = log4net.LogManager.GetLogger(System.Reflection.MethodBase.GetCurrentMethod().DeclaringType);
+
+        private static ExpressionsEvaluator instance;
+        private static object syncRoot = new Object();
+
+
         [Serializable]
         [XmlType(TypeName = "CustomKeyValuePair")]
         public struct KeyValuePair<K, V>
@@ -37,16 +43,41 @@ namespace docreminder
             { get; set; }
         }
 
-        List<KeyValuePair<string, string>> variables;
-        List<KeyValuePair<string, string>> sqlConnectionsList;
-        List<sqlItem<string, SqlConnection>> sqlConnections = new List<sqlItem<string, SqlConnection>>();
+        private static List<KeyValuePair<string, string>> variables;
+        private static List<KeyValuePair<string, string>> sqlConnectionsList;
+        //private static List<KeyValuePair<string, string>> propertyTypeIDs;
 
-        public ExpressionsEvaluator()
+        private static List<sqlItem<string, SqlConnection>> sqlConnections = new List<sqlItem<string, SqlConnection>>();
+
+
+
+        public static ExpressionsEvaluator GetInstance
         {
-            variables = new List<KeyValuePair<string, string>>();
-            if(Properties.Settings.Default.ExpressionVariables != "")
-                variables = (List<KeyValuePair<string, string>>)(FileHelper.XmlDeserializeFromString(Properties.Settings.Default.ExpressionVariables, variables.GetType()));
+            get
+            {
+                if (instance == null)
+                {
+                    lock (syncRoot)
+                    {
+                        if (instance == null)
+                        {
+                            instance = new ExpressionsEvaluator();
+                        }
+                    }
+                }
 
+                return instance;
+            }
+        }
+
+
+        public void UpdateVariables()
+        {
+            //var start = DateTime.Now;
+
+            variables = new List<KeyValuePair<string, string>>();
+            if (Properties.Settings.Default.ExpressionVariables != "")
+                variables = (List<KeyValuePair<string, string>>)(FileHelper.XmlDeserializeFromString(Properties.Settings.Default.ExpressionVariables, variables.GetType()));
 
             if (Properties.Settings.Default.SQLConnectionString != "")
             {
@@ -57,14 +88,11 @@ namespace docreminder
                     foreach (KeyValuePair<string, string> kvp in sqlConnectionsList)
                     {
                         sqlItem<string, SqlConnection> con = new sqlItem<string, SqlConnection>();
-
                         SqlConnection sqlConnection = new SqlConnection(kvp.Value);
                         con.connection = sqlConnection;
                         con.name = kvp.Key;
                         sqlConnections.Add(con);
-
                     }
-                    //sqlCon = new SqlConnection(Properties.Settings.Default.SQLConnectionString);
                 }
                 catch (Exception exp)
                 {
@@ -72,10 +100,19 @@ namespace docreminder
                 }
             }
 
+            //var end = DateTime.Now - start;
+            //log4.Debug(string.Format("Initialisiation of evaluator Variables took {0} milliseconds.", end.TotalMilliseconds.ToString()));
         }
 
-        public string Evaluate(string input, DataGridViewRow row = null, KXWS.SDocument docinfo = null,bool testmode = false)
+        private ExpressionsEvaluator()
         {
+            //variables = new List<KeyValuePair<string, string>>();
+            UpdateVariables();
+        }
+
+        public string Evaluate(string input, DocumentContract doc = null,bool testmode = false)
+        {
+            var start = DateTime.Now;
             Hashtable hTenteredIDX = new Hashtable();
 
             string returnvalue = "";
@@ -130,51 +167,47 @@ namespace docreminder
                 if (name == "IDX")
                 {
                     string index = args.Parameters[0].Evaluate().ToString();
+
                     string idxvalue = "";
 
-                    //Get IDX Value from Docinfo if available.
-                    if (docinfo != null)
+                    //Get IDX Value from DocumentContract if available.
+                    if (doc != null)
                     {
-                        foreach (KXWS.SDocumentProperty prop in docinfo.documentProperties)
-                        {
-                            if (prop.name == index){
-                                if(prop.propertyValues.Count() > 0)
-                                    idxvalue = prop.propertyValues[0];
-                            }
-                        }
+                        var propID = WCFHandler.GetInstance.GetPropertyTypeID(index);
+                        string[] values = doc.Properties.Where(x => x.PropertyTypeId == propID).Select(x => x.Values).FirstOrDefault();
+                        if (values == null)
+                            throw new Exception(string.Format("Document did not contain a value for '{0}'.", index));
+
+                        //if (values.Count() > 1)
+                        //{
+                        idxvalue = values.First();
+                        //}
+
                     }
 
-                    //Else get it from the row.
-                    else
-                    {
-                        if(row != null)
-                            idxvalue = row.Cells[index].Value.ToString();
-                        //If nothing helps, let user pick it.
+                    if(testmode)
+                    { 
+                        if (hTenteredIDX.ContainsKey(index))
+                        {
+                            idxvalue = hTenteredIDX[index].ToString();
+                        }
                         else
                         {
-                            if (hTenteredIDX.ContainsKey(index))
+                            FormInputDialog inputDialog = new FormInputDialog("IDX Value", "Set Value for '" + index.ToString() + "':", "OK");
+                            if (inputDialog.ShowDialog(null) == DialogResult.OK)
                             {
-                                idxvalue = hTenteredIDX[index].ToString();
-                            }
-                            else
-                            {
-
-                                FormInputDialog inputDialog = new FormInputDialog("IDX Value", "Set Value for '" + index.ToString() + "':", "OK");
-                                if (inputDialog.ShowDialog(null) == DialogResult.OK)
-                                {
-                                    //recipient = inputDialog.txtBxInput.Text;
-                                    idxvalue = inputDialog.txtBxInput.Text;
-                                    hTenteredIDX.Add(index.ToString(), idxvalue);
-                                    inputDialog.Dispose();
-                                }
+                                //recipient = inputDialog.txtBxInput.Text;
+                                idxvalue = inputDialog.txtBxInput.Text;
+                                hTenteredIDX.Add(index.ToString(), idxvalue);
+                                inputDialog.Dispose();
                             }
                         }
                     }
 
                     //Check if its a Date
                     DateTime idxValueDate;
-                    string[] formats = { "dd.MM.yyyy", "dd.MM.yyyy HH:mm", "dd.MM.yyyy HH:mm:ss" };
-                    if (DateTime.TryParseExact(idxvalue, formats, new CultureInfo(Properties.Settings.Default.Culture), System.Globalization.DateTimeStyles.None, out idxValueDate))
+                    string[] formats = { "dd.MM.yyyy", "dd.MM.yyyy HH:mm", "dd.MM.yyyy HH:mm:ss","yyyy-MM-ddTHH:mm:ss"};
+                    if (DateTime.TryParseExact(idxvalue, formats, new CultureInfo(Properties.Settings.Default.Culture), DateTimeStyles.None, out idxValueDate))
                     {
                         args.Result = idxValueDate;
                         return;
@@ -226,8 +259,7 @@ namespace docreminder
                     {
                         command.CommandType = CommandType.Text;
                         command.CommandText = "SET NOEXEC ON;";
-                        //command.Connection.Open();
-                        //command.ExecuteNonQuery();
+
                     }
 
                     using (SqlDataReader reader = command.ExecuteReader())
@@ -280,7 +312,6 @@ namespace docreminder
 
             if (e.HasErrors())
             {
-                //MessageBox.Show(e.Error);
                 throw new Exception(e.Error);
             }
 
@@ -288,14 +319,20 @@ namespace docreminder
             {
                 try
                 {
-                    var output = e.Evaluate();
-                    //AEPH 04.02.2016
-                    //decimal dec;
-                    //Decimal.TryParse(output.ToString(),out dec);
-                    //returnvalue = FileHelper.ToInvariantString(output);
+                    var output = e.Evaluate().ToString();
                     //AEPH 05.02.2016
                     //Decimal sign is used based on system settings.
-                    returnvalue = output.ToString();
+                    //AEPH 23.11.2018
+                    //Check if ReturnValue is a DateTime
+                    DateTime idxValueDate;
+                    string[] formats = { "dd.MM.yyyy", "dd.MM.yyyy HH:mm", "dd.MM.yyyy HH:mm:ss"};
+                    IFormatProvider culture = CultureInfo.InvariantCulture;
+                    if (DateTime.TryParseExact(output, formats, culture, DateTimeStyles.None, out idxValueDate))
+                    {
+                        output = idxValueDate.ToString("yyyy-MM-ddTHH:mm:ss");
+                    }
+
+                    returnvalue = output;
                 }
 
                 catch (Exception ex)
@@ -303,6 +340,9 @@ namespace docreminder
                     throw new Exception(ex.Message);
                 }
             }
+
+            var end = DateTime.Now - start;
+            log4.Debug(string.Format("Evaluation of expression took {0}ms. in:'{1}' out:'{2}'", end.TotalMilliseconds.ToString(),input,returnvalue));
 
             return returnvalue;
         }

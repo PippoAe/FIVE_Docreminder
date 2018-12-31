@@ -1,4 +1,5 @@
-﻿using System;
+﻿using docreminder.InfoShareService;
+using System;
 using System.Collections.Generic;
 using System.ComponentModel;
 using System.Drawing;
@@ -14,18 +15,12 @@ namespace docreminder
     public partial class MainForm : Form
     {
         private static readonly log4net.ILog log4 = log4net.LogManager.GetLogger(System.Reflection.MethodBase.GetCurrentMethod().DeclaringType);
+        public static string defaultText = "Five Informatik AG - Document Reminder";
 
-        private WebServiceHandler _webServiceHandler;
         public DateTime starttime;
         public TimeSpan scheduledTimeLeft;
         public int sucessfullySent = 0;
         private List<BO.WorkObject> currentWorkObjects;
-
-        public WebServiceHandler webserviceHandler
-        {
-            get { return _webServiceHandler; }
-            set { _webServiceHandler = value; }
-        }
 
         public MainForm()
         {
@@ -323,13 +318,39 @@ namespace docreminder
                 InfoShareService.DocumentSimpleContract[] documents;
                 if (WCFHandler.GetInstance.isConnected())
                 {
+                    GetDocumentsWorker.ReportProgress(10);
                     documents = WCFHandler.GetInstance.SearchForDocuments();
-                    GetDocumentsWorker.ReportProgress(50);
+                    GetDocumentsWorker.ReportProgress(20);
 
                     List<BO.WorkObject> workObjects = new List<BO.WorkObject>();
-                    foreach (InfoShareService.DocumentSimpleContract siCo in documents)
+                    int done = 0;
+                    foreach (DocumentSimpleContract siCo in documents)
                     {
                         workObjects.Add(new BO.WorkObject(siCo.Id));
+
+                        //ReportProgress
+                        done++;
+                        var total = workObjects.Count();
+                        double progress = ((double)done / total) * 100;
+                        GetDocumentsWorker.ReportProgress(Convert.ToInt32(progress));
+                    }
+                    GetDocumentsWorker.ReportProgress(80);
+
+                    //Check for cross-referenced child documents if child documents inherit parent document markerproperties.
+                    if (Properties.Settings.Default.GroupingActive && Properties.Settings.Default.GroupingInheritMarkerProperties)
+                    { 
+                        List<DocumentContract> allAffectedDocs = new List<DocumentContract>();
+                        foreach (BO.WorkObject wo in workObjects)
+                        {
+                            allAffectedDocs.AddRange(wo.allAffectedDocuments);
+                        }
+                        var duplicates = allAffectedDocs.GroupBy(x => x.Id).Where(g => g.Count() > 1).Select(y => y.Key);
+                        foreach (BO.WorkObject wo in workObjects)
+                        {
+                            var numberOfdupesForDoc = wo.allAffectedDocuments.Where(x => duplicates.Contains(x.Id)).Count();
+                            if(numberOfdupesForDoc > 0)
+                                wo.AbortProcessing(string.Format("Some child-documents of this document ({0}) are referenced by other parent-documents. This is not allowed if markerproperties are inherited to child-documents.", numberOfdupesForDoc));
+                        }
                     }
                     GetDocumentsWorker.ReportProgress(100);
 
@@ -345,10 +366,14 @@ namespace docreminder
         private void GetDocumentsWorker_ProgressChanged(object sender, ProgressChangedEventArgs e)
         {
             progressBar1.Value = e.ProgressPercentage;
+            this.Text = e.ProgressPercentage.ToString() + "%";
         }
 
         private void GetDocumentsWorker_RunWorkerCompleted(object sender, RunWorkerCompletedEventArgs e)
         {
+            this.Text = defaultText;
+            progressBar1.Value = 0;
+
             currentWorkObjects = (List<BO.WorkObject>)e.Result;
             dgwDocuments.SuspendLayout();
             dgwDocuments.DataSource = currentWorkObjects;
@@ -419,7 +444,7 @@ namespace docreminder
 
         private void NEWProcessDocumentsWorker_RunWorkerCompleted(object sender, RunWorkerCompletedEventArgs e)
         {
-            this.Text = "Five Informatik AG - Document Reminder";
+            this.Text = defaultText;
             progressBar1.Value = 0;
             progressBar1.Style = ProgressBarStyle.Blocks;
             this.Refresh();
@@ -442,160 +467,160 @@ namespace docreminder
         }
         #endregion
 
-        #region OldProcessDocumentsWorker
-        private void processDocumentsWorker_DoWork(object sender, DoWorkEventArgs e)
-        {
+        //#region OldProcessDocumentsWorker
+        //private void processDocumentsWorker_DoWork(object sender, DoWorkEventArgs e)
+        //{
 
-            if (dgwDocuments.Rows.Count > 0)
-            {
-                log4.Info("Document processing initiated. Now trying to process each document.");
-                List<KXWS.SSearchCondition> searchConList = new List<KXWS.SSearchCondition>();
-                searchConList = (List<KXWS.SSearchCondition>)(FileHelper.XmlDeserializeFromString(Properties.Settings.Default.KendoxSearchProperties, searchConList.GetType()));
+        //    if (dgwDocuments.Rows.Count > 0)
+        //    {
+        //        log4.Info("Document processing initiated. Now trying to process each document.");
+        //        List<KXWS.SSearchCondition> searchConList = new List<KXWS.SSearchCondition>();
+        //        searchConList = (List<KXWS.SSearchCondition>)(FileHelper.XmlDeserializeFromString(Properties.Settings.Default.KendoxSearchProperties, searchConList.GetType()));
 
-                bool errorHappened = false;
+        //        bool errorHappened = false;
 
-                //Process all documents or Prepare Mailing List!
-                foreach (DataGridViewRow row in dgwDocuments.Rows)
-                {
-                    processDocumentsWorker.ReportProgress((100 / dgwDocuments.Rows.Count) * (row.Index + 1));
-                    //if endtime is reached, turn remaining rows, but dont process.
-                    if (scheduledTimeLeft.TotalSeconds < 0)
-                    {
-                        row.HeaderCell.Style.BackColor = Color.LightGreen;
-                    }
-                    else
-                    {
-                        if (row.DefaultCellStyle.BackColor != Color.Red && row.DefaultCellStyle.BackColor != Color.Orange)
-                        {
-                            string documentId = (string)row.Cells["DocumentID"].Value;
-                            if (!Properties.Settings.Default.GroupingActive)
-                                Task.Run(() => _webServiceHandler.ProcessDocument(documentId, row));
-                            else
-                            {
-                                List<string> childGuids = webserviceHandler.searchForChildDocumentGuids(row, documentId);
+        //        //Process all documents or Prepare Mailing List!
+        //        foreach (DataGridViewRow row in dgwDocuments.Rows)
+        //        {
+        //            processDocumentsWorker.ReportProgress((100 / dgwDocuments.Rows.Count) * (row.Index + 1));
+        //            //if endtime is reached, turn remaining rows, but dont process.
+        //            if (scheduledTimeLeft.TotalSeconds < 0)
+        //            {
+        //                row.HeaderCell.Style.BackColor = Color.LightGreen;
+        //            }
+        //            else
+        //            {
+        //                if (row.DefaultCellStyle.BackColor != Color.Red && row.DefaultCellStyle.BackColor != Color.Orange)
+        //                {
+        //                    string documentId = (string)row.Cells["DocumentID"].Value;
+        //                    if (!Properties.Settings.Default.GroupingActive)
+        //                        Task.Run(() => _webServiceHandler.ProcessDocument(documentId, row));
+        //                    else
+        //                    {
+        //                        List<string> childGuids = webserviceHandler.searchForChildDocumentGuids(row, documentId);
 
-                                //If Count <= 1, check if the child might be the parent.
-                                //AEPH 13.01.2017 - Besmer Request "Dont send Parent if no Child is found".
-                                if (Properties.Settings.Default.GroupingSendWithoutChild)
-                                {
-                                    Task.Run(() => _webServiceHandler.ProcessDocument(documentId, row, childGuids));
-                                }
-                                else
-                                {
-                                    if (childGuids.Count == 0 || (childGuids.Count == 1 && childGuids.Contains(documentId)))
-                                    {
-                                        row.HeaderCell.Style.BackColor = Color.LightGreen;
-                                        log4.Info("Parentdocument ignored, no child documents available. ObjectID:" + documentId);
-                                    }
-                                    else
-                                    {
-                                        Task.Run(() => _webServiceHandler.ProcessDocument(documentId, row, childGuids));
-                                    }
-                                }
-                            }
-                        }
-                    }
-                }
-
-
-
-                log4.Info("Waiting for all asynchronus documentprocessing to finish...");
-                bool allfinished = false;
-
-                processDocumentsWorker.ReportProgress(0);
-                while (!allfinished)
-                {
-                    bool oneraised = false;
-                    dgwDocuments.Invoke((MethodInvoker)delegate ()
-                    {
-                        dgwDocuments.EnableHeadersVisualStyles = false;
-                    });
-
-                    int i = 0;
-                    foreach (DataGridViewRow row in dgwDocuments.Rows)
-                    {
-                        if (!(row.HeaderCell.Style.BackColor == Color.LightGreen | row.HeaderCell.Style.BackColor == Color.Red | row.DefaultCellStyle.BackColor == Color.Orange))
-                        {
-                            oneraised = true;
-                        }
-                        else
-                        {
-                            i++;
-                        }
-                    }
-
-                    if (oneraised)
-                        allfinished = false;
-                    else
-                        allfinished = true;
-
-                    processDocumentsWorker.ReportProgress((100 / dgwDocuments.Rows.Count) * i);
-                }
-
-                foreach (DataGridViewRow row in dgwDocuments.Rows)
-                {
-                    if (row.HeaderCell.Style.BackColor == Color.LightGreen)
-                        sucessfullySent++;
-                    if (row.HeaderCell.Style.BackColor == Color.Red)
-                        errorHappened = true;
-                }
+        //                        //If Count <= 1, check if the child might be the parent.
+        //                        //AEPH 13.01.2017 - Besmer Request "Dont send Parent if no Child is found".
+        //                        if (Properties.Settings.Default.GroupingSendWithoutChild)
+        //                        {
+        //                            Task.Run(() => _webServiceHandler.ProcessDocument(documentId, row, childGuids));
+        //                        }
+        //                        else
+        //                        {
+        //                            if (childGuids.Count == 0 || (childGuids.Count == 1 && childGuids.Contains(documentId)))
+        //                            {
+        //                                row.HeaderCell.Style.BackColor = Color.LightGreen;
+        //                                log4.Info("Parentdocument ignored, no child documents available. ObjectID:" + documentId);
+        //                            }
+        //                            else
+        //                            {
+        //                                Task.Run(() => _webServiceHandler.ProcessDocument(documentId, row, childGuids));
+        //                            }
+        //                        }
+        //                    }
+        //                }
+        //            }
+        //        }
 
 
-                //if there are more documents do nothing.
-                if (_webServiceHandler.hasMore && scheduledTimeLeft.TotalSeconds >= 0)
-                {
-                    string error = "Documents processed without errors.";
-                    if (errorHappened)
-                        error = "Documents processed with errors!";
-                    log4.Info(error);
-                }
-                else
-                {
-                    //Send report if needed
-                    if (Properties.Settings.Default.IsReportActive)
-                    {
-                        MailHandler.GetInstance.SendReportMail(sucessfullySent, DateTime.Now - starttime);
-                        sucessfullySent = 0;
-                    }
 
-                    //Check if Error Happened
-                    if (errorHappened)
-                        log4.Error("An Error occured in atleast one of the processed documents.");
-                    else
-                        log4.Info("All Documents have been processed.");
-                }
+        //        log4.Info("Waiting for all asynchronus documentprocessing to finish...");
+        //        bool allfinished = false;
 
-            }
-            else
-            {
-                log4.Info("There are no documents to be processed.");
-            }
-        }
+        //        processDocumentsWorker.ReportProgress(0);
+        //        while (!allfinished)
+        //        {
+        //            bool oneraised = false;
+        //            dgwDocuments.Invoke((MethodInvoker)delegate ()
+        //            {
+        //                dgwDocuments.EnableHeadersVisualStyles = false;
+        //            });
 
-        private void processDocumentsWorker_ProgressChanged(object sender, ProgressChangedEventArgs e)
-        {
-            progressBar1.Value = e.ProgressPercentage;
-            this.Text = e.ProgressPercentage.ToString() + "%";
-        }
+        //            int i = 0;
+        //            foreach (DataGridViewRow row in dgwDocuments.Rows)
+        //            {
+        //                if (!(row.HeaderCell.Style.BackColor == Color.LightGreen | row.HeaderCell.Style.BackColor == Color.Red | row.DefaultCellStyle.BackColor == Color.Orange))
+        //                {
+        //                    oneraised = true;
+        //                }
+        //                else
+        //                {
+        //                    i++;
+        //                }
+        //            }
 
-        private void processDocumentsWorker_RunWorkerCompleted(object sender, RunWorkerCompletedEventArgs e)
-        {
-            this.Text = "Five Informatik AG - Document Reminder";
-            progressBar1.Value = 0;
-            bGetDocumentsDocuments.Enabled = true;
-            if (_webServiceHandler.hasMore)
-                btnSearchMore.Enabled = true;
-            bProcessDocuments.Enabled = false;
-            //If automode and NoMore Documents. Close!
-            if ((Program.automode && !_webServiceHandler.hasMore) || scheduledTimeLeft.TotalSeconds < 0)
-                Exit();
-            //If automode and more Documents searchMore.
-            else if (Program.automode && _webServiceHandler.hasMore)
-            {
-                btnSearchMore_Click(null, null);
-            }
-        }
-        #endregion
+        //            if (oneraised)
+        //                allfinished = false;
+        //            else
+        //                allfinished = true;
+
+        //            processDocumentsWorker.ReportProgress((100 / dgwDocuments.Rows.Count) * i);
+        //        }
+
+        //        foreach (DataGridViewRow row in dgwDocuments.Rows)
+        //        {
+        //            if (row.HeaderCell.Style.BackColor == Color.LightGreen)
+        //                sucessfullySent++;
+        //            if (row.HeaderCell.Style.BackColor == Color.Red)
+        //                errorHappened = true;
+        //        }
+
+
+        //        //if there are more documents do nothing.
+        //        if (_webServiceHandler.hasMore && scheduledTimeLeft.TotalSeconds >= 0)
+        //        {
+        //            string error = "Documents processed without errors.";
+        //            if (errorHappened)
+        //                error = "Documents processed with errors!";
+        //            log4.Info(error);
+        //        }
+        //        else
+        //        {
+        //            //Send report if needed
+        //            if (Properties.Settings.Default.IsReportActive)
+        //            {
+        //                MailHandler.GetInstance.SendReportMail(sucessfullySent, DateTime.Now - starttime);
+        //                sucessfullySent = 0;
+        //            }
+
+        //            //Check if Error Happened
+        //            if (errorHappened)
+        //                log4.Error("An Error occured in atleast one of the processed documents.");
+        //            else
+        //                log4.Info("All Documents have been processed.");
+        //        }
+
+        //    }
+        //    else
+        //    {
+        //        log4.Info("There are no documents to be processed.");
+        //    }
+        //}
+
+        //private void processDocumentsWorker_ProgressChanged(object sender, ProgressChangedEventArgs e)
+        //{
+        //    progressBar1.Value = e.ProgressPercentage;
+        //    this.Text = e.ProgressPercentage.ToString() + "%";
+        //}
+
+        //private void processDocumentsWorker_RunWorkerCompleted(object sender, RunWorkerCompletedEventArgs e)
+        //{
+        //    this.Text = defaultText;
+        //    progressBar1.Value = 0;
+        //    bGetDocumentsDocuments.Enabled = true;
+        //    if (_webServiceHandler.hasMore)
+        //        btnSearchMore.Enabled = true;
+        //    bProcessDocuments.Enabled = false;
+        //    //If automode and NoMore Documents. Close!
+        //    if ((Program.automode && !_webServiceHandler.hasMore) || scheduledTimeLeft.TotalSeconds < 0)
+        //        Exit();
+        //    //If automode and more Documents searchMore.
+        //    else if (Program.automode && _webServiceHandler.hasMore)
+        //    {
+        //        btnSearchMore_Click(null, null);
+        //    }
+        //}
+        //#endregion
 
         #endregion 
 

@@ -110,7 +110,7 @@ namespace docreminder
             UpdateVariables();
         }
 
-        public string Evaluate(string input, DocumentContract doc = null,bool testmode = false)
+        public string Evaluate(string input, DocumentContract doc = null,bool testmode = false,bool isForSearchOrUpdate = false)
         {
             var start = DateTime.Now;
             Hashtable hTenteredIDX = new Hashtable();
@@ -209,6 +209,7 @@ namespace docreminder
                     string[] formats = { "dd.MM.yyyy", "dd.MM.yyyy HH:mm", "dd.MM.yyyy HH:mm:ss","yyyy-MM-ddTHH:mm:ss"};
                     if (DateTime.TryParseExact(idxvalue, formats, new CultureInfo(Properties.Settings.Default.Culture), DateTimeStyles.None, out idxValueDate))
                     {
+                        //AEPH 03.01.2019: Convert DateTime to UNIX Timestamp as needed by WCFWebService
                         args.Result = idxValueDate;
                         return;
                     }
@@ -322,15 +323,28 @@ namespace docreminder
                     var output = e.Evaluate().ToString();
                     //AEPH 05.02.2016
                     //Decimal sign is used based on system settings.
-                    //AEPH 23.11.2018
-                    //Check if ReturnValue is a DateTime
-                    DateTime idxValueDate;
-                    string[] formats = { "dd.MM.yyyy", "dd.MM.yyyy HH:mm", "dd.MM.yyyy HH:mm:ss"};
-                    IFormatProvider culture = CultureInfo.InvariantCulture;
-                    if (DateTime.TryParseExact(output, formats, culture, DateTimeStyles.None, out idxValueDate))
-                    {
-                        output = idxValueDate.ToString("yyyy-MM-ddTHH:mm:ss");
+
+                    //AEPH 03.01.2019
+                    //Convert Date or DateTime Values to correct format for new WCF-WebServices.
+                    //yyyy-MM-ddTHH:mm:ss for DateTime.
+                    //yyyy-MM-dd for dates.
+                    if (isForSearchOrUpdate)
+                    { 
+                        DateTime idxValueDate;
+                        string[] formats = { "dd.MM.yyyy", "dd.MM.yyyy HH:mm", "dd.MM.yyyy HH:mm:ss" };
+                        IFormatProvider culture = CultureInfo.InvariantCulture;
+                        if (DateTime.TryParseExact(output, formats, culture, DateTimeStyles.None, out idxValueDate))
+                        {
+                            //Check if its a Date or DateTime
+                            //Source: https://stackoverflow.com/questions/15893339/check-if-date-time-string-contains-time
+                            if (idxValueDate.TimeOfDay.TotalSeconds == 0)
+                                output = idxValueDate.ToString("yyyy-MM-dd");
+                            else
+                                output = idxValueDate.ToString("yyyy-MM-ddTHH:mm:ss");
+                        }
                     }
+
+
 
                     returnvalue = output;
                 }

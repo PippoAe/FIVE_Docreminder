@@ -154,7 +154,7 @@ namespace docreminder.BO
                             //Evaluate markerproperty
                             for (int i = 0; i < mProp.values.Length; i++)
                             {
-                                mProp.values[i] = ExpressionsEvaluator.GetInstance.Evaluate(mProp.values[i], this.document);
+                                mProp.values[i] = ExpressionsEvaluator.GetInstance.Evaluate(mProp.values[i], this.document,false,true);
                             }
                         }
 

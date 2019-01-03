@@ -16,7 +16,7 @@ namespace docreminder
 
         const string SETTINGSROOT = "Settings";
         //XML Root Node
-        
+    
 
 
         public override void Initialize(string name, NameValueCollection col)

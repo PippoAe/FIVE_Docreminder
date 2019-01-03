@@ -342,10 +342,7 @@ namespace docreminder
                         if (sValue != "")
                         {
                             string sEvaluatedValue = "";
-                            if (doc == null)
-                                sEvaluatedValue = ExpressionsEvaluator.GetInstance.Evaluate(sValue);
-                            else
-                                sEvaluatedValue = ExpressionsEvaluator.GetInstance.Evaluate(sValue, doc);
+                            sEvaluatedValue = ExpressionsEvaluator.GetInstance.Evaluate(sValue, doc,false,true);
                             sNewValues[i] = sEvaluatedValue;
                         }
                         else

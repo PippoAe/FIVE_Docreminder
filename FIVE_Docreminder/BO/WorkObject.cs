@@ -147,21 +147,22 @@ namespace docreminder.BO
                         //Get Markerproperties from settings.
                         markerProperties = (List<BO.MarkerProperty>)(FileHelper.XmlDeserializeFromString(Properties.Settings.Default.NEWMarkerProperties, markerProperties.GetType()));
 
-                        //Evaluate MarkerProperty-Values
-                        foreach (MarkerProperty mProp in markerProperties)
-                        {
-                            //Evaluate markerproperty
-                            for (int i = 0; i < mProp.values.Length; i++)
+                        if (markerProperties.Count > 0)
+                        { 
+                            DateTime start = DateTime.Now;
+                            //Evaluate MarkerProperty-Values
+                            foreach (MarkerProperty mProp in markerProperties)
                             {
-                                mProp.values[i] = ExpressionsEvaluator.GetInstance.Evaluate(mProp.values[i], this.document,false,true);
+                                //Evaluate markerproperty
+                                for (int i = 0; i < mProp.values.Length; i++)
+                                {
+                                    mProp.values[i] = ExpressionsEvaluator.GetInstance.Evaluate(mProp.values[i], this.document, true, true);
+                                }
                             }
+                            DateTime end = DateTime.Now;
+                            log4.Debug(string.Format("Test-evaulation of markerproperties for document took {0}ms. ObjectID:'{1}'", (end - start).TotalMilliseconds.ToString(), this.objectID));
                         }
-
-                        //Merge propertyupdates into all affected documents
-                        foreach (DocumentContract doc in allAffectedDocuments)
-                        {
-                            MergeMarkerPropertiesToDocument(doc);
-                        }
+       
                     }
                     catch (Exception e) { throw new Exception(string.Format("Markerproperties could not be prepared! Msg: {0}", e.Message)); }
                 }
@@ -408,10 +409,38 @@ namespace docreminder.BO
 
                     #region Set Markerproperties
                     try
-                    { 
-                        foreach (DocumentContract doc in allAffectedDocuments)
-                        {
-                            WCFHandler.GetInstance.UpdateDocument(doc);
+                    {
+                        if(markerProperties.Count > 0)
+                        { 
+                            DateTime start = DateTime.Now;
+                            //Evaluate MarkerProperty-Values
+                            foreach (MarkerProperty mProp in markerProperties)
+                            {
+                                //Evaluate markerproperty
+                                for (int i = 0; i < mProp.values.Length; i++)
+                                {
+                                    mProp.values[i] = ExpressionsEvaluator.GetInstance.Evaluate(mProp.values[i], this.document, false, true);
+                                }
+                            }
+                            DateTime end = DateTime.Now;
+                            log4.Debug(string.Format("Evaulation of markerproperties for document took {0}ms. ObjectID:'{1}'", (end - start).TotalMilliseconds.ToString(), this.objectID));
+
+                            start = DateTime.Now;
+                            //Merge propertyupdates into all affected documents
+                            foreach (DocumentContract doc in allAffectedDocuments)
+                            {
+                                MergeMarkerPropertiesToDocument(doc);
+                            }
+                            end = DateTime.Now;
+                            log4.Debug(string.Format("Merging of markerproperties for document took {0}ms. ObjectID:'{1}'", (end - start).TotalMilliseconds.ToString(), this.objectID));
+
+                            start = DateTime.Now;
+                            foreach (DocumentContract doc in allAffectedDocuments)
+                            {
+                                WCFHandler.GetInstance.UpdateDocument(doc);
+                            }
+                            end = DateTime.Now;
+                            log4.Debug(string.Format("Documentupdates for document took {0}ms. ObjectID:'{1}'", (end - start).TotalMilliseconds.ToString(), this.objectID));
                         }
                     }
                     catch (Exception e) { throw new Exception(string.Format("Markerproperties could not be set! Msg:'{0}'", e.Message)); }

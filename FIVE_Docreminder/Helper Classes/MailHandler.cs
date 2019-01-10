@@ -767,7 +767,7 @@ namespace docreminder
             }
         }
 
-        private void SendErrorMail()
+        public void SendErrorMail()
         {
 
             MailMessage mail = new MailMessage
@@ -813,12 +813,7 @@ namespace docreminder
             try
             {
                 SendEmail(mail);
-                //client.Send(mail);
-                log4.Info("Error-Mail was sent successfully.\n Job stopped. Check config and try again.");
-                if (Program.automode)
-                {
-                    Application.Exit();
-                }
+                log4.Info("Error-Mail was sent successfully.");
             }
             catch (Exception e)
             {
@@ -827,10 +822,6 @@ namespace docreminder
                   : "";
 
                 log4.Info("Problem with sending mail: " + e.Message + "\r\n" + innerMessage);
-                if (Program.automode)
-                {
-                    Application.Exit();
-                }
             }
         }
 
@@ -946,9 +937,20 @@ namespace docreminder
         }
         public static string GetTemporaryLogFileName()
         {
+            //If XML-Appender is activated, try to get this appender.
+            FileAppender xmlAppender = ((Hierarchy)LogManager.GetRepository())
+                                             .Root.Appenders.OfType<FileAppender>()
+                                             .Where(x => x.Layout.ContentType == "text/xml").FirstOrDefault();
+            
+               
+
             FileAppender rootAppender = ((Hierarchy)LogManager.GetRepository())
                                              .Root.Appenders.OfType<FileAppender>()
                                              .FirstOrDefault();
+
+            //Prefer XML-Logfile if XML-Appender is activated.
+            if (xmlAppender != null)
+                rootAppender = xmlAppender;
 
             string filename = rootAppender != null ? rootAppender.File : string.Empty;
 
@@ -956,7 +958,6 @@ namespace docreminder
 
             using (var stream = System.IO.File.Open(filename, FileMode.Open, FileAccess.Read, FileShare.ReadWrite))
             {
-                //mail.Attachments.Add(new Attachment(stream, Path.GetFileName(GetLogFileName())));
                 using (FileStream fs = System.IO.File.OpenWrite(tempLogFile))
                 {
                     stream.CopyTo(fs);

@@ -21,6 +21,8 @@ namespace docreminder
         public TimeSpan scheduledTimeLeft;
         public int sucessfullySent = 0;
         private List<BO.WorkObject> currentWorkObjects;
+        
+        private int nOofErrors;
 
         public MainForm()
         {
@@ -289,7 +291,12 @@ namespace docreminder
 
         private void Exit()
         {
-            
+            if (Properties.Settings.Default.SendErrorMail && nOofErrors > 0)
+            {
+                log4.Info("Sending error-mail...");
+                MailHandler.GetInstance.SendErrorMail();
+            }
+
             log4.Info("Application shutting down.");
             this.Refresh();
 
@@ -373,8 +380,9 @@ namespace docreminder
         {
             this.Text = defaultText;
             progressBar1.Value = 0;
-
+            //Set current WorkObjects.
             currentWorkObjects = (List<BO.WorkObject>)e.Result;
+            //Update DGW
             dgwDocuments.SuspendLayout();
             dgwDocuments.DataSource = currentWorkObjects;
             dgwDocuments.ResumeLayout();
@@ -410,7 +418,7 @@ namespace docreminder
                 log4.Info("Document processing initiated. Now trying to process each document.");
                 foreach (BO.WorkObject wo in currentWorkObjects)
                 {
-                    Task.Factory.StartNew(() => wo.Process());
+                    Task.Run(() => wo.Process());
                 }
 
 
@@ -428,8 +436,8 @@ namespace docreminder
                     NEWProcessDocumentsWorker.ReportProgress(Convert.ToInt32(progress));
                     Thread.Sleep(100);
                 }
-                log4.Info("Done!");
             }
+
             else
             {
                 log4.Info("There are no documents to be processed.");
@@ -444,6 +452,8 @@ namespace docreminder
 
         private void NEWProcessDocumentsWorker_RunWorkerCompleted(object sender, RunWorkerCompletedEventArgs e)
         {
+            log4.Info("Done!");
+
             this.Text = defaultText;
             progressBar1.Value = 0;
             progressBar1.Style = ProgressBarStyle.Blocks;
@@ -452,6 +462,10 @@ namespace docreminder
             if (WCFHandler.GetInstance.hasMore)
                 btnSearchMore.Enabled = true;
             bProcessDocuments.Enabled = false;
+
+            //Add total number of errors to counter.
+            nOofErrors += currentWorkObjects.Where(x => x.error).Count();
+
 
             //If automode and NoMore Documents. Close!
             if ((Program.automode && !WCFHandler.GetInstance.hasMore) || scheduledTimeLeft.TotalSeconds < 0)

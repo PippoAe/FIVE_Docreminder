@@ -156,7 +156,10 @@ namespace docreminder.BO
                                 //Evaluate markerproperty
                                 for (int i = 0; i < mProp.values.Length; i++)
                                 {
-                                    mProp.values[i] = ExpressionsEvaluator.GetInstance.Evaluate(mProp.values[i], this.document, true, true);
+                                    //mProp.values[i] = ExpressionsEvaluator.GetInstance.Evaluate(mProp.values[i], this.document, true, true);
+                                    //Do TEST-Evaluation WITHOUT setting value on new document-contract.
+                                    ExpressionsEvaluator.GetInstance.Evaluate(mProp.values[i], this.document, true, true);
+                                    
                                 }
                             }
                             DateTime end = DateTime.Now;

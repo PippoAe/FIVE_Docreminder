@@ -44,14 +44,13 @@
             this.toolStripStatusPlatzHalter = new System.Windows.Forms.ToolStripStatusLabel();
             this.toolStripStatusLabel2 = new System.Windows.Forms.ToolStripStatusLabel();
             this.toolStripStatusCountdown = new System.Windows.Forms.ToolStripStatusLabel();
-            this.processDocumentsWorker = new System.ComponentModel.BackgroundWorker();
             this.btnSearchMore = new System.Windows.Forms.Button();
             this.timerShutDown = new System.Windows.Forms.Timer(this.components);
             this.progressBar1 = new System.Windows.Forms.ProgressBar();
             this.groupBox2 = new System.Windows.Forms.GroupBox();
             this.dgwDocuments = new System.Windows.Forms.DataGridView();
             this.GetDocumentsWorker = new System.ComponentModel.BackgroundWorker();
-            this.NEWProcessDocumentsWorker = new System.ComponentModel.BackgroundWorker();
+            this.ProcessDocumentsWorker = new System.ComponentModel.BackgroundWorker();
             this.cBShowConsole = new System.Windows.Forms.CheckBox();
             this.menuStrip1.SuspendLayout();
             this.statusStrip1.SuspendLayout();
@@ -173,13 +172,6 @@
             this.toolStripStatusCountdown.Name = "toolStripStatusCountdown";
             this.toolStripStatusCountdown.Size = new System.Drawing.Size(0, 17);
             // 
-            // processDocumentsWorker
-            // 
-            //this.processDocumentsWorker.WorkerReportsProgress = true;
-            //this.processDocumentsWorker.DoWork += new System.ComponentModel.DoWorkEventHandler(this.processDocumentsWorker_DoWork);
-            //this.processDocumentsWorker.ProgressChanged += new System.ComponentModel.ProgressChangedEventHandler(this.processDocumentsWorker_ProgressChanged);
-            //this.processDocumentsWorker.RunWorkerCompleted += new System.ComponentModel.RunWorkerCompletedEventHandler(this.processDocumentsWorker_RunWorkerCompleted);
-            // 
             // btnSearchMore
             // 
             this.btnSearchMore.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Left)));
@@ -245,12 +237,12 @@
             this.GetDocumentsWorker.ProgressChanged += new System.ComponentModel.ProgressChangedEventHandler(this.GetDocumentsWorker_ProgressChanged);
             this.GetDocumentsWorker.RunWorkerCompleted += new System.ComponentModel.RunWorkerCompletedEventHandler(this.GetDocumentsWorker_RunWorkerCompleted);
             // 
-            // NEWProcessDocumentsWorker
+            // ProcessDocumentsWorker
             // 
-            this.NEWProcessDocumentsWorker.WorkerReportsProgress = true;
-            this.NEWProcessDocumentsWorker.DoWork += new System.ComponentModel.DoWorkEventHandler(this.NEWProcessDocumentsWorker_DoWork);
-            this.NEWProcessDocumentsWorker.ProgressChanged += new System.ComponentModel.ProgressChangedEventHandler(this.NEWProcessDocumentsWorker_ProgressChanged);
-            this.NEWProcessDocumentsWorker.RunWorkerCompleted += new System.ComponentModel.RunWorkerCompletedEventHandler(this.NEWProcessDocumentsWorker_RunWorkerCompleted);
+            this.ProcessDocumentsWorker.WorkerReportsProgress = true;
+            this.ProcessDocumentsWorker.DoWork += new System.ComponentModel.DoWorkEventHandler(this.ProcessDocumentsWorker_DoWork);
+            this.ProcessDocumentsWorker.ProgressChanged += new System.ComponentModel.ProgressChangedEventHandler(this.ProcessDocumentsWorker_ProgressChanged);
+            this.ProcessDocumentsWorker.RunWorkerCompleted += new System.ComponentModel.RunWorkerCompletedEventHandler(this.ProcessDocumentsWorker_RunWorkerCompleted);
             // 
             // cBShowConsole
             // 
@@ -304,7 +296,6 @@
         private System.Windows.Forms.StatusStrip statusStrip1;
         private System.Windows.Forms.ToolStripStatusLabel toolStripStatusConfig;
         private System.Windows.Forms.ToolStripProgressBar toolStripProgressBar1;
-        private System.ComponentModel.BackgroundWorker processDocumentsWorker;
         private System.Windows.Forms.Button btnSearchMore;
         private System.Windows.Forms.ToolStripMenuItem ScheduleStripMenuItem;
         private System.Windows.Forms.ToolStripStatusLabel toolStripStatusLabel2;
@@ -316,7 +307,7 @@
         private System.Windows.Forms.GroupBox groupBox2;
         private System.Windows.Forms.DataGridView dgwDocuments;
         private System.ComponentModel.BackgroundWorker GetDocumentsWorker;
-        private System.ComponentModel.BackgroundWorker NEWProcessDocumentsWorker;
+        private System.ComponentModel.BackgroundWorker ProcessDocumentsWorker;
         private System.Windows.Forms.CheckBox cBShowConsole;
     }
 }

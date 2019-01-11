@@ -235,285 +235,6 @@ namespace docreminder
             }
         }
 
-        //OLD way of sending documents
-        //public async Task<bool> SendDocumentMail(byte[] document, KXWS.SDocument docinfo, DataGridViewRow row, List<KXWS.SUserInfoExt> lUsers = null, string tempDirectory = "")
-        //{
-        //    ExpressionsEvaluator expVal = new ExpressionsEvaluator();
-
-        //    //PrepareMail
-        //    MailMessage mail = new MailMessage
-        //    {
-        //        Sender = new MailAddress(Properties.Settings.Default.SMTPSender),
-        //        From = new MailAddress(Properties.Settings.Default.SMTPSender)
-        //    };
-
-        //    //Prepare Recipients
-        //    string[] recipientsInput = Properties.Settings.Default.EBillSendTo.Split(new[] { ";" }, StringSplitOptions.RemoveEmptyEntries);
-        //    string[] validRecipients = new string[recipientsInput.Length];
-        //    try
-        //    {
-        //        for (int i = 0; i < recipientsInput.Length; i++)
-        //        {
-        //            //AEPH 11.02.2016 - check if recipient may be a username.
-        //            recipientsInput[i] = expVal.Evaluate(recipientsInput[i], row);
-        //        }
-
-
-
-        //        for (int i = 0; i < recipientsInput.Length; i++)
-        //        {
-        //            if (FileHelper.IsValidMail(recipientsInput[i]))
-        //                validRecipients[i] = recipientsInput[i];
-        //            else
-        //            {
-        //                string evaluatedRecipient = recipientsInput[i].ToLower();
-        //                foreach (KXWS.SUserInfoExt uInf in lUsers)
-        //                {
-        //                    if (uInf.displayName.ToLower() == evaluatedRecipient || uInf.logonName.ToLower() == evaluatedRecipient)
-        //                    {
-        //                        if (uInf.emailAddress != null)
-        //                        {
-        //                            evaluatedRecipient = uInf.emailAddress.ToString();
-        //                            if (FileHelper.IsValidMail(evaluatedRecipient.ToString()))
-        //                            {
-        //                                validRecipients[i] = evaluatedRecipient;
-        //                                break;
-        //                            }
-        //                        }
-        //                        else
-        //                            log4.Info(string.Format("No valid E-Mail could be resolved for recipient: '{0}'.", evaluatedRecipient));
-        //                    }
-        //                }
-        //            }
-
-        //        }
-
-        //    }
-        //    catch (Exception e)
-        //    {
-        //        throw new Exception("An Error happened during preparation of the e-mail recipients." + e.Message);
-        //    }
-
-
-        //    //Add Recipients to mail.
-        //    foreach (string address in validRecipients)
-        //    {
-        //        if (address != null)
-        //            mail.To.Add(address);
-        //    }
-
-        //    if (mail.To.Count == 0)
-        //        throw new Exception("No valid E-mail could be extracted from configured recipients:" + string.Join(";", recipientsInput));
-
-        //    //Evaluate  MailSubject
-        //    string mailSubject = Properties.Settings.Default.EBillSubject;
-        //    try
-        //    {
-        //        mailSubject = expVal.Evaluate(mailSubject, row);
-        //    }
-        //    catch (Exception e)
-        //    {
-        //        log4.Info("Ignoring expression in Subject-line. Error: " + e.Message);
-        //    }
-        //    mail.Subject = mailSubject;
-
-        //    string mailBody = "";
-
-        //    //Check if MulitlanguageTemplateSupport is Active
-        //    if (Properties.Settings.Default.MultiLanguageTemplateProperty == "")
-        //    {
-        //        Encoding enc;
-        //        using (StreamReader reader = new StreamReader(Properties.Settings.Default.EmailTemplatePath, Encoding.GetEncoding(1252), true))
-        //        {
-        //            reader.Peek(); // you need this!
-        //            enc = reader.CurrentEncoding;
-        //        }
-
-        //        //TODO Maybe read as HTML here to maintain format of all expressions.
-        //        mailBody = File.ReadAllText(Properties.Settings.Default.EmailTemplatePath, enc);
-        //    }
-        //    else
-        //    {
-        //        string usedTemplatePath = Properties.Settings.Default.EmailTemplatePath;
-        //        string sMultiLangPropVal = expVal.Evaluate(Properties.Settings.Default.MultiLanguageTemplateProperty, row);
-        //        string sMLPath = Properties.Settings.Default.EmailTemplatePath + "." + sMultiLangPropVal;
-
-        //        if (sMultiLangPropVal == "" || !File.Exists(sMLPath))
-        //            log4.Info("MultiLanguage prop not on document, or template not found! Using standard template instead.");
-        //        else
-        //            usedTemplatePath = sMLPath;
-
-        //        Encoding enc;
-        //        using (StreamReader reader = new StreamReader(usedTemplatePath, Encoding.GetEncoding(1252), true))
-        //        {
-        //            reader.Peek(); // you need this!
-        //            enc = reader.CurrentEncoding;
-        //        }
-        //        mailBody = File.ReadAllText(usedTemplatePath, enc);
-        //    }
-
-        //    //AEPH 10.02.2016 Multiline Support for Regex Match.
-        //    //But replace new-line char.
-        //    string[] IndexHits = Regex.Matches(mailBody, @"(?<=\$\[)(.|\s)*?(?=\]\$)").Cast<Match>().Select(m => m.Value).ToArray();
-
-        //    foreach (string expression in IndexHits)
-        //    {
-        //        string expressionNewLineEscaped = expression.Replace(System.Environment.NewLine, "");
-
-        //        string rep = "$[" + expression + "]$";
-        //        string with = "$[" + expression + "]$";
-        //        try
-        //        {
-        //            with = expVal.Evaluate(expressionNewLineEscaped, row);
-        //        }
-        //        catch (Exception e)
-        //        {
-        //            log4.Info("Ignoring expression in Template. Expression:'" + rep + "'. Error: " + e.Message);
-        //        }
-
-        //        with = WebUtility.HtmlEncode(with);
-        //        mailBody = mailBody.Replace(rep, with);
-        //    }
-
-        //    //Check for HTML
-        //    Regex tagRegex = new Regex(@"<\s*([^ >]+)[^>]*>.*?<\s*/\s*\1\s*>");
-        //    if (tagRegex.IsMatch(mailBody))
-        //    {
-        //        mail.IsBodyHtml = true;
-        //    }
-
-        //    mail.Body = mailBody;
-
-
-
-        //    //Attachement
-        //    if (Properties.Settings.Default.AttachDocument)
-        //    {
-
-        //        //Add all documents from tempdirectory if original files will be sent.
-        //        if (Properties.Settings.Default.GroupingActive && tempDirectory != "")
-        //        {
-        //            //DONE - SwissRe Sorting functionality.
-        //            //AEPH 23.03.2017 - Getting Files in Alphabetical Order.
-        //            //string[] files = Directory.GetFiles(tempDirectory,"*",SearchOption.AllDirectories);
-        //            var files = Directory.GetFiles(tempDirectory, "*", SearchOption.AllDirectories).OrderBy(f => f);
-        //            foreach (string file in files)
-        //            {
-        //                mail.Attachments.Add(new Attachment(file));
-        //            }
-        //            //Dont delete Directory yet or attachements will not be sent.
-        //            //Directory.Delete(tempDirectory,true);
-        //        }
-        //        else
-        //        {
-        //            MemoryStream ms = new MemoryStream(document);
-
-        //            //create the attachment from a stream. Be sure to name the data 
-        //            //with a file and 
-        //            //media type that is respective of the data
-        //            mail.Attachments.Add(new Attachment(ms, docinfo.fileName));
-        //        }
-
-        //    }
-
-
-        //    if (Properties.Settings.Default.AttachLnkFile && !Properties.Settings.Default.GroupingActive)
-        //    {
-        //        //Get some binary data
-        //        string sFileContent = "";
-        //        string templateFilePath = "";
-        //        string docID = "";
-        //        string storeID = "";
-        //        string docname = "";
-
-        //        //AEPH 09.02.2016
-        //        if (docinfo.documentID != null)
-        //        {
-        //            docID = docinfo.documentID.ToString();
-        //            storeID = docinfo.storeID.ToString();
-        //            docname = docinfo.name;
-        //        }
-        //        else
-        //        {
-        //            docname = row.Cells[0].Value.ToString();
-        //            docID = row.Cells[1].Value.ToString();
-        //            storeID = row.Cells["storeID"].Value.ToString();
-        //        }
-
-
-        //        if (Properties.Settings.Default.LnkFilePath != "")
-        //        {
-        //            templateFilePath = Properties.Settings.Default.LnkFilePath;
-        //        }
-        //        else
-        //        {
-        //            string progPath = System.IO.Path.GetDirectoryName(System.Reflection.Assembly.GetExecutingAssembly().Location);
-        //            templateFilePath = Path.Combine(progPath, "standard_linkfile_template.dlk");
-        //        }
-
-
-        //        if (File.Exists(templateFilePath))
-        //        {
-        //            try
-        //            {
-        //                XmlDocument doc = new XmlDocument();
-        //                doc.Load(templateFilePath);
-        //                XmlNode nodeDocID = doc.SelectSingleNode("/InfoShareLink/InfoShareFiles/InfoShareFile/InfoObjectID");
-        //                XmlNode nodeStoreID = doc.SelectSingleNode("/InfoShareLink/InfoShareFiles/InfoShareFile/InfoStoreID");
-
-        //                nodeDocID.InnerText = docID;
-        //                nodeStoreID.InnerText = storeID;
-
-        //                sFileContent = doc.InnerXml;
-        //            }
-        //            catch (Exception e)
-        //            {
-        //                log4.Info("Error happened during preparation of the linkfile. Ignoring template." + e.Message);
-        //                //AEPH 09.02.2016
-        //                sFileContent = "<InfoShareLink><InfoShareFiles><InfoShareFile><InfoObjectID>" + docID + "</InfoObjectID><InfoStoreID>" + storeID + "</InfoStoreID></InfoShareFile></InfoShareFiles><InfoShareFolderConfiguration><GroupedListViewColumns /></InfoShareFolderConfiguration></InfoShareLink>";
-        //            }
-        //        }
-        //        else
-        //        {
-        //            //AEPH 09.02.2016
-        //            log4.Info("No template path for linkfile defined, using standard link-file template instead.");
-        //            sFileContent = "<InfoShareLink><InfoShareFiles><InfoShareFile><InfoObjectID>" + docID + "</InfoObjectID><InfoStoreID>" + storeID + "</InfoStoreID></InfoShareFile></InfoShareFiles><InfoShareFolderConfiguration><GroupedListViewColumns /></InfoShareFolderConfiguration></InfoShareLink>";
-        //        }
-
-
-        //        byte[] data = new byte[sFileContent.Length * sizeof(char)];
-        //        System.Buffer.BlockCopy(sFileContent.ToCharArray(), 0, data, 0, data.Length);
-
-        //        //save the data to a memory stream
-        //        MemoryStream ms = new MemoryStream(data);
-
-        //        //create the attachment from a stream. Be sure to name the data 
-        //        //with a file and 
-        //        //media type that is respective of the data
-        //        mail.Attachments.Add(new Attachment(ms, docname + ".dlk", "text/plain"));
-        //    }
-
-
-        //    //AEPH 25.01.2017
-        //    bool result = false;
-        //    log4.Info(string.Format("Trying to send Mail. Recipient:'{0}'", mail.To.ToString()));
-        //    try
-        //    {
-        //        Task<bool> AsyncTaskSendMail = SendEmailAsync(mail, row);
-        //        await AsyncTaskSendMail;
-        //        result = AsyncTaskSendMail.Result;
-        //        log4.Info(string.Format("Positive answer from mail server. Recipient:'{0}'", mail.To.ToString()));
-        //    }
-        //    catch (Exception exp)
-        //    {
-        //        throw new Exception(string.Format("Error happened while sending mail! Recipient:'{0}', Message:{1}", mail.To.ToString(), exp.ToString()));
-        //    }
-
-        //    mail.Dispose();
-
-        //    return result;
-        //}
-
         public async Task<string> SendDocumentMail(DocumentContract doc, string tempDirectory)
         {
             //PrepareMail
@@ -767,7 +488,7 @@ namespace docreminder
             }
         }
 
-        public void SendErrorMail()
+        public void SendErrorMail(bool suppressattachment = false)
         {
 
             MailMessage mail = new MailMessage
@@ -803,9 +524,14 @@ namespace docreminder
             {
                 log4.Info("There was a problem while gathering system-information." + e.Message);
             }
+            
+            //Add notice that Log has to be supressed!
+            if(suppressattachment)
+                mail.Body += "*!WARNING!* Error-Log could not be attached to this E-Mail due to a file-size constraints of the SMTP server!";
 
 
-            if (Properties.Settings.Default.ErrorMailIncludeLog)
+
+            if (Properties.Settings.Default.ErrorMailIncludeLog && !suppressattachment)
             {
                 mail.Attachments.Add(new Attachment(GetTemporaryLogFileName()));
             }
@@ -821,7 +547,14 @@ namespace docreminder
                   ? e.InnerException.Message
                   : "";
 
-                log4.Info("Problem with sending mail: " + e.Message + "\r\n" + innerMessage);
+                log4.Error("Problem while sending Error-Mail: " + e.Message + "\r\n" + innerMessage);
+
+                SmtpException me = e as SmtpException;
+                if (me.StatusCode == SmtpStatusCode.ExceededStorageAllocation)
+                {
+                    log4.Warn("Error mail could not be sent due to file-size limitations! Sending Error-Mail without log file!");
+                    SendErrorMail(true);
+                } 
             }
         }
 
@@ -912,6 +645,7 @@ namespace docreminder
                   ? e.InnerException.Message
                   : "";
                 log4.Info("Problem occured while sending report: " + e.Message + "\r\n" + innerMessage);
+
                 return false;
             }
         }
@@ -958,7 +692,7 @@ namespace docreminder
 
             using (var stream = System.IO.File.Open(filename, FileMode.Open, FileAccess.Read, FileShare.ReadWrite))
             {
-                using (FileStream fs = System.IO.File.OpenWrite(tempLogFile))
+                using (FileStream fs = System.IO.File.Open(tempLogFile,FileMode.Create))
                 {
                     stream.CopyTo(fs);
                 }

@@ -47,14 +47,14 @@
             this.btnSearchMore = new System.Windows.Forms.Button();
             this.timerShutDown = new System.Windows.Forms.Timer(this.components);
             this.progressBar1 = new System.Windows.Forms.ProgressBar();
-            this.groupBox2 = new System.Windows.Forms.GroupBox();
+            this.groupBoxDocuments = new System.Windows.Forms.GroupBox();
             this.dgwDocuments = new System.Windows.Forms.DataGridView();
             this.GetDocumentsWorker = new System.ComponentModel.BackgroundWorker();
             this.ProcessDocumentsWorker = new System.ComponentModel.BackgroundWorker();
             this.cBShowConsole = new System.Windows.Forms.CheckBox();
             this.menuStrip1.SuspendLayout();
             this.statusStrip1.SuspendLayout();
-            this.groupBox2.SuspendLayout();
+            this.groupBoxDocuments.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.dgwDocuments)).BeginInit();
             this.SuspendLayout();
             // 
@@ -199,18 +199,18 @@
             this.progressBar1.Style = System.Windows.Forms.ProgressBarStyle.Continuous;
             this.progressBar1.TabIndex = 13;
             // 
-            // groupBox2
+            // groupBoxDocuments
             // 
-            this.groupBox2.Anchor = ((System.Windows.Forms.AnchorStyles)((((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Bottom) 
+            this.groupBoxDocuments.Anchor = ((System.Windows.Forms.AnchorStyles)((((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Bottom) 
             | System.Windows.Forms.AnchorStyles.Left) 
             | System.Windows.Forms.AnchorStyles.Right)));
-            this.groupBox2.Controls.Add(this.dgwDocuments);
-            this.groupBox2.Location = new System.Drawing.Point(3, 27);
-            this.groupBox2.Name = "groupBox2";
-            this.groupBox2.Size = new System.Drawing.Size(661, 315);
-            this.groupBox2.TabIndex = 10;
-            this.groupBox2.TabStop = false;
-            this.groupBox2.Text = "Gefundene Dokumente:";
+            this.groupBoxDocuments.Controls.Add(this.dgwDocuments);
+            this.groupBoxDocuments.Location = new System.Drawing.Point(3, 27);
+            this.groupBoxDocuments.Name = "groupBoxDocuments";
+            this.groupBoxDocuments.Size = new System.Drawing.Size(661, 315);
+            this.groupBoxDocuments.TabIndex = 10;
+            this.groupBoxDocuments.TabStop = false;
+            this.groupBoxDocuments.Text = "Gefundene Dokumente:";
             // 
             // dgwDocuments
             // 
@@ -263,7 +263,7 @@
             this.ClientSize = new System.Drawing.Size(664, 402);
             this.Controls.Add(this.cBShowConsole);
             this.Controls.Add(this.bGetDocumentsDocuments);
-            this.Controls.Add(this.groupBox2);
+            this.Controls.Add(this.groupBoxDocuments);
             this.Controls.Add(this.progressBar1);
             this.Controls.Add(this.btnSearchMore);
             this.Controls.Add(this.statusStrip1);
@@ -278,7 +278,7 @@
             this.menuStrip1.PerformLayout();
             this.statusStrip1.ResumeLayout(false);
             this.statusStrip1.PerformLayout();
-            this.groupBox2.ResumeLayout(false);
+            this.groupBoxDocuments.ResumeLayout(false);
             ((System.ComponentModel.ISupportInitialize)(this.dgwDocuments)).EndInit();
             this.ResumeLayout(false);
             this.PerformLayout();
@@ -304,7 +304,7 @@
         private System.Windows.Forms.ToolStripStatusLabel toolStripStatusCountdown;
         private System.Windows.Forms.ToolStripMenuItem EvaluatorToolStripMenuItem;
         private System.Windows.Forms.ProgressBar progressBar1;
-        private System.Windows.Forms.GroupBox groupBox2;
+        private System.Windows.Forms.GroupBox groupBoxDocuments;
         private System.Windows.Forms.DataGridView dgwDocuments;
         private System.ComponentModel.BackgroundWorker GetDocumentsWorker;
         private System.ComponentModel.BackgroundWorker ProcessDocumentsWorker;

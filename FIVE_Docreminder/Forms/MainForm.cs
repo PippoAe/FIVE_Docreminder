@@ -127,7 +127,8 @@ namespace docreminder
 
             if (Program.automode)
             {
-                log4.Info("Application started in Automode.");
+                log4.Info("Application started in Automode. Hiding Mainform.");
+                this.Hide();
                 CheckForDocuments();
             }
         }
@@ -333,23 +334,25 @@ namespace docreminder
                     documents = WCFHandler.GetInstance.SearchForDocuments();
                     GetDocumentsWorker.ReportProgress(20);
 
+
+                    //int done = 0;
+                    GetDocumentsWorker.ReportProgress(60);
                     List<BO.WorkObject> workObjects = new List<BO.WorkObject>();
-                    int done = 0;
                     foreach (DocumentSimpleContract siCo in documents)
                     {
                         workObjects.Add(new BO.WorkObject(siCo.Id));
-
                         //ReportProgress
-                        done++;
-                        var total = workObjects.Count();
-                        double progress = ((double)done / total) * 100;
-                        GetDocumentsWorker.ReportProgress(Convert.ToInt32(progress));
+                        //done++;
+                        //var total = workObjects.Count();
+                        //double progress = ((double)done / total) * 100;
+                        //GetDocumentsWorker.ReportProgress(Convert.ToInt32(progress));
                     }
                     GetDocumentsWorker.ReportProgress(80);
 
                     //Check for cross-referenced child documents if child documents inherit parent document markerproperties.
                     if (Properties.Settings.Default.GroupingActive && Properties.Settings.Default.GroupingInheritMarkerProperties)
-                    { 
+                    {
+                        DateTime start = DateTime.Now;
                         List<DocumentContract> allAffectedDocs = new List<DocumentContract>();
                         foreach (BO.WorkObject wo in workObjects)
                         {
@@ -362,7 +365,10 @@ namespace docreminder
                             if(numberOfdupesForDoc > 0)
                                 wo.AbortProcessing(string.Format("Some child-documents of this document ({0}) are referenced by other parent-documents. This is not allowed if markerproperties are inherited to child-documents.", numberOfdupesForDoc));
                         }
+                        DateTime end = DateTime.Now;
+                        log4.Debug(string.Format("Checking cross-references for documents took {0}ms.", (end - start).TotalMilliseconds.ToString()));
                     }
+
                     GetDocumentsWorker.ReportProgress(100);
 
                     e.Result = workObjects;
@@ -390,6 +396,17 @@ namespace docreminder
             dgwDocuments.SuspendLayout();
             dgwDocuments.DataSource = currentWorkObjects;
             dgwDocuments.ResumeLayout();
+
+            //Set Info to Groupbox-Text.
+            int found;
+            int ready;
+            found = currentWorkObjects.Count();
+            ready = currentWorkObjects.Where(x => x.ready == true).Count();
+            groupBoxDocuments.Text = string.Format("Gefundene Dokumente: ({0}/{1})", ready, found);
+            //Log found and ready document amounts.
+            log4.Info(string.Format("{0} of {1} documents are ready for processing.", ready, found));
+
+
 
             progressBar1.Value = 0;
             bProcessDocuments.Enabled = true;
@@ -471,10 +488,13 @@ namespace docreminder
             nOofErrors += currentWorkObjects.Where(x => x.error).Count();
 
 
+
+
+
             //If automode and NoMore Documents. Close!
             if ((Program.automode && !WCFHandler.GetInstance.hasMore) || scheduledTimeLeft.TotalSeconds < 0)
             {
-                log4.Info(string.Format("No more documents or scheduled shutdown-time has been reached. Shutting down."));
+                log4.Info(string.Format("No more documents left or scheduled shutdown-time has been reached. Shutting down."));
                 Exit();
             }
             //If automode and more Documents searchMore.

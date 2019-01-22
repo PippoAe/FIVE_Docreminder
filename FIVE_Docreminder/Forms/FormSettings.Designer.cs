@@ -976,7 +976,6 @@
             | System.Windows.Forms.AnchorStyles.Right)));
             this.groupBox8.Controls.Add(this.btnConfigureDocSafe);
             this.groupBox8.Controls.Add(this.cBDocSafeActive);
-            this.groupBox8.Enabled = false;
             this.groupBox8.Location = new System.Drawing.Point(8, 310);
             this.groupBox8.Name = "groupBox8";
             this.groupBox8.Size = new System.Drawing.Size(392, 64);
@@ -986,6 +985,8 @@
             // 
             // btnConfigureDocSafe
             // 
+            this.btnConfigureDocSafe.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Left) 
+            | System.Windows.Forms.AnchorStyles.Right)));
             this.btnConfigureDocSafe.Location = new System.Drawing.Point(8, 32);
             this.btnConfigureDocSafe.Name = "btnConfigureDocSafe";
             this.btnConfigureDocSafe.Size = new System.Drawing.Size(376, 23);

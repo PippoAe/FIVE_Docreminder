@@ -61,7 +61,7 @@
             this.gBSQL.Controls.Add(this.label1);
             this.gBSQL.Location = new System.Drawing.Point(8, 64);
             this.gBSQL.Name = "gBSQL";
-            this.gBSQL.Size = new System.Drawing.Size(660, 136);
+            this.gBSQL.Size = new System.Drawing.Size(619, 136);
             this.gBSQL.TabIndex = 3;
             this.gBSQL.TabStop = false;
             this.gBSQL.Text = "SQL Connections:";
@@ -78,7 +78,7 @@
             this.dataGridView1.Location = new System.Drawing.Point(8, 40);
             this.dataGridView1.Name = "dataGridView1";
             this.dataGridView1.RowHeadersWidth = 20;
-            this.dataGridView1.Size = new System.Drawing.Size(644, 88);
+            this.dataGridView1.Size = new System.Drawing.Size(603, 88);
             this.dataGridView1.TabIndex = 4;
             this.dataGridView1.CellClick += new System.Windows.Forms.DataGridViewCellEventHandler(this.dataGridView1_CellClick);
             // 
@@ -123,7 +123,7 @@
             this.groupBox2.Controls.Add(this.dgwExpressionVariables);
             this.groupBox2.Location = new System.Drawing.Point(8, 208);
             this.groupBox2.Name = "groupBox2";
-            this.groupBox2.Size = new System.Drawing.Size(660, 184);
+            this.groupBox2.Size = new System.Drawing.Size(619, 147);
             this.groupBox2.TabIndex = 4;
             this.groupBox2.TabStop = false;
             this.groupBox2.Text = "Variables:";
@@ -132,7 +132,7 @@
             // 
             this.label3.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Left)));
             this.label3.AutoSize = true;
-            this.label3.Location = new System.Drawing.Point(6, 166);
+            this.label3.Location = new System.Drawing.Point(6, 129);
             this.label3.Name = "label3";
             this.label3.Size = new System.Drawing.Size(144, 13);
             this.label3.TabIndex = 3;
@@ -158,7 +158,7 @@
             this.dgwExpressionVariables.Location = new System.Drawing.Point(9, 40);
             this.dgwExpressionVariables.Name = "dgwExpressionVariables";
             this.dgwExpressionVariables.RowHeadersWidth = 20;
-            this.dgwExpressionVariables.Size = new System.Drawing.Size(644, 118);
+            this.dgwExpressionVariables.Size = new System.Drawing.Size(603, 81);
             this.dgwExpressionVariables.TabIndex = 1;
             // 
             // VarName
@@ -176,7 +176,7 @@
             // bOK
             // 
             this.bOK.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Right)));
-            this.bOK.Location = new System.Drawing.Point(500, 400);
+            this.bOK.Location = new System.Drawing.Point(459, 363);
             this.bOK.Name = "bOK";
             this.bOK.Size = new System.Drawing.Size(75, 23);
             this.bOK.TabIndex = 6;
@@ -187,7 +187,7 @@
             // bSave
             // 
             this.bSave.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Right)));
-            this.bSave.Location = new System.Drawing.Point(588, 400);
+            this.bSave.Location = new System.Drawing.Point(547, 363);
             this.bSave.Name = "bSave";
             this.bSave.Size = new System.Drawing.Size(75, 23);
             this.bSave.TabIndex = 5;
@@ -203,7 +203,7 @@
             this.gbTestExpression.Controls.Add(this.txtBxExpressionTest);
             this.gbTestExpression.Location = new System.Drawing.Point(8, 8);
             this.gbTestExpression.Name = "gbTestExpression";
-            this.gbTestExpression.Size = new System.Drawing.Size(660, 48);
+            this.gbTestExpression.Size = new System.Drawing.Size(619, 48);
             this.gbTestExpression.TabIndex = 5;
             this.gbTestExpression.TabStop = false;
             this.gbTestExpression.Text = "Test Expression:";
@@ -211,7 +211,7 @@
             // bTestExpression
             // 
             this.bTestExpression.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Right)));
-            this.bTestExpression.Location = new System.Drawing.Point(600, 15);
+            this.bTestExpression.Location = new System.Drawing.Point(559, 15);
             this.bTestExpression.Name = "bTestExpression";
             this.bTestExpression.Size = new System.Drawing.Size(50, 22);
             this.bTestExpression.TabIndex = 4;
@@ -225,20 +225,21 @@
             | System.Windows.Forms.AnchorStyles.Right)));
             this.txtBxExpressionTest.Location = new System.Drawing.Point(8, 16);
             this.txtBxExpressionTest.Name = "txtBxExpressionTest";
-            this.txtBxExpressionTest.Size = new System.Drawing.Size(592, 20);
+            this.txtBxExpressionTest.Size = new System.Drawing.Size(551, 20);
             this.txtBxExpressionTest.TabIndex = 1;
             // 
             // ExpressionVariablesForm
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
-            this.ClientSize = new System.Drawing.Size(675, 438);
+            this.ClientSize = new System.Drawing.Size(634, 401);
             this.Controls.Add(this.gbTestExpression);
             this.Controls.Add(this.bOK);
             this.Controls.Add(this.bSave);
             this.Controls.Add(this.groupBox2);
             this.Controls.Add(this.gBSQL);
             this.Icon = ((System.Drawing.Icon)(resources.GetObject("$this.Icon")));
+            this.MinimumSize = new System.Drawing.Size(475, 440);
             this.Name = "ExpressionVariablesForm";
             this.StartPosition = System.Windows.Forms.FormStartPosition.CenterParent;
             this.Text = "Expression Variables";

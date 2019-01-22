@@ -497,6 +497,7 @@
             this.Controls.Add(this.groupBox2);
             this.Controls.Add(this.groupBox1);
             this.Icon = ((System.Drawing.Icon)(resources.GetObject("$this.Icon")));
+            this.MinimumSize = new System.Drawing.Size(433, 643);
             this.Name = "FormDocSafeSettings";
             this.Text = "DocSafe Settings";
             this.groupBox1.ResumeLayout(false);

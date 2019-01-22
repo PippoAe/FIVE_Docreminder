@@ -65,7 +65,7 @@
             this.EvaluatorToolStripMenuItem});
             this.menuStrip1.Location = new System.Drawing.Point(0, 0);
             this.menuStrip1.Name = "menuStrip1";
-            this.menuStrip1.Size = new System.Drawing.Size(664, 24);
+            this.menuStrip1.Size = new System.Drawing.Size(519, 24);
             this.menuStrip1.TabIndex = 0;
             this.menuStrip1.Text = "menuStrip1";
             // 
@@ -110,7 +110,7 @@
             // bGetDocumentsDocuments
             // 
             this.bGetDocumentsDocuments.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Left)));
-            this.bGetDocumentsDocuments.Location = new System.Drawing.Point(3, 348);
+            this.bGetDocumentsDocuments.Location = new System.Drawing.Point(3, 272);
             this.bGetDocumentsDocuments.Name = "bGetDocumentsDocuments";
             this.bGetDocumentsDocuments.Size = new System.Drawing.Size(124, 23);
             this.bGetDocumentsDocuments.TabIndex = 2;
@@ -121,7 +121,7 @@
             // bProcessDocuments
             // 
             this.bProcessDocuments.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Left)));
-            this.bProcessDocuments.Location = new System.Drawing.Point(185, 348);
+            this.bProcessDocuments.Location = new System.Drawing.Point(185, 272);
             this.bProcessDocuments.Name = "bProcessDocuments";
             this.bProcessDocuments.Size = new System.Drawing.Size(186, 23);
             this.bProcessDocuments.TabIndex = 6;
@@ -137,9 +137,9 @@
             this.toolStripStatusPlatzHalter,
             this.toolStripStatusLabel2,
             this.toolStripStatusCountdown});
-            this.statusStrip1.Location = new System.Drawing.Point(0, 380);
+            this.statusStrip1.Location = new System.Drawing.Point(0, 304);
             this.statusStrip1.Name = "statusStrip1";
-            this.statusStrip1.Size = new System.Drawing.Size(664, 22);
+            this.statusStrip1.Size = new System.Drawing.Size(519, 22);
             this.statusStrip1.TabIndex = 11;
             this.statusStrip1.Text = "statusStrip1";
             // 
@@ -158,7 +158,7 @@
             // toolStripStatusPlatzHalter
             // 
             this.toolStripStatusPlatzHalter.Name = "toolStripStatusPlatzHalter";
-            this.toolStripStatusPlatzHalter.Size = new System.Drawing.Size(420, 17);
+            this.toolStripStatusPlatzHalter.Size = new System.Drawing.Size(275, 17);
             this.toolStripStatusPlatzHalter.Spring = true;
             // 
             // toolStripStatusLabel2
@@ -176,7 +176,7 @@
             // 
             this.btnSearchMore.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Left)));
             this.btnSearchMore.Enabled = false;
-            this.btnSearchMore.Location = new System.Drawing.Point(125, 348);
+            this.btnSearchMore.Location = new System.Drawing.Point(125, 272);
             this.btnSearchMore.Name = "btnSearchMore";
             this.btnSearchMore.Size = new System.Drawing.Size(56, 23);
             this.btnSearchMore.TabIndex = 12;
@@ -193,9 +193,9 @@
             // 
             this.progressBar1.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Left) 
             | System.Windows.Forms.AnchorStyles.Right)));
-            this.progressBar1.Location = new System.Drawing.Point(-1, 377);
+            this.progressBar1.Location = new System.Drawing.Point(-1, 301);
             this.progressBar1.Name = "progressBar1";
-            this.progressBar1.Size = new System.Drawing.Size(666, 3);
+            this.progressBar1.Size = new System.Drawing.Size(521, 3);
             this.progressBar1.Style = System.Windows.Forms.ProgressBarStyle.Continuous;
             this.progressBar1.TabIndex = 13;
             // 
@@ -207,7 +207,7 @@
             this.groupBoxDocuments.Controls.Add(this.dgwDocuments);
             this.groupBoxDocuments.Location = new System.Drawing.Point(3, 27);
             this.groupBoxDocuments.Name = "groupBoxDocuments";
-            this.groupBoxDocuments.Size = new System.Drawing.Size(661, 315);
+            this.groupBoxDocuments.Size = new System.Drawing.Size(516, 239);
             this.groupBoxDocuments.TabIndex = 10;
             this.groupBoxDocuments.TabStop = false;
             this.groupBoxDocuments.Text = "Gefundene Dokumente:";
@@ -224,7 +224,7 @@
             this.dgwDocuments.ReadOnly = true;
             this.dgwDocuments.RowHeadersVisible = false;
             this.dgwDocuments.SelectionMode = System.Windows.Forms.DataGridViewSelectionMode.FullRowSelect;
-            this.dgwDocuments.Size = new System.Drawing.Size(649, 293);
+            this.dgwDocuments.Size = new System.Drawing.Size(504, 217);
             this.dgwDocuments.TabIndex = 5;
             this.dgwDocuments.CellFormatting += new System.Windows.Forms.DataGridViewCellFormattingEventHandler(this.dgwDocuments_CellFormatting);
             this.dgwDocuments.DataBindingComplete += new System.Windows.Forms.DataGridViewBindingCompleteEventHandler(this.dgwDocuments_DataBindingComplete);
@@ -248,7 +248,7 @@
             // 
             this.cBShowConsole.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Right)));
             this.cBShowConsole.AutoSize = true;
-            this.cBShowConsole.Location = new System.Drawing.Point(594, 360);
+            this.cBShowConsole.Location = new System.Drawing.Point(449, 284);
             this.cBShowConsole.Name = "cBShowConsole";
             this.cBShowConsole.Size = new System.Drawing.Size(64, 17);
             this.cBShowConsole.TabIndex = 14;
@@ -260,7 +260,7 @@
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
-            this.ClientSize = new System.Drawing.Size(664, 402);
+            this.ClientSize = new System.Drawing.Size(519, 326);
             this.Controls.Add(this.cBShowConsole);
             this.Controls.Add(this.bGetDocumentsDocuments);
             this.Controls.Add(this.groupBoxDocuments);
@@ -271,6 +271,7 @@
             this.Controls.Add(this.menuStrip1);
             this.Icon = ((System.Drawing.Icon)(resources.GetObject("$this.Icon")));
             this.MainMenuStrip = this.menuStrip1;
+            this.MinimumSize = new System.Drawing.Size(535, 365);
             this.Name = "MainForm";
             this.Text = "Five Informatik AG - Document Reminder";
             this.Shown += new System.EventHandler(this.MainForm_Shown);

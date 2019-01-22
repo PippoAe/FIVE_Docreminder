@@ -1179,9 +1179,9 @@
             // 
             // cBGroupingActive
             // 
-            this.cBGroupingActive.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Right)));
+            this.cBGroupingActive.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Left)));
             this.cBGroupingActive.AutoSize = true;
-            this.cBGroupingActive.Location = new System.Drawing.Point(90, 143);
+            this.cBGroupingActive.Location = new System.Drawing.Point(88, 143);
             this.cBGroupingActive.Margin = new System.Windows.Forms.Padding(2);
             this.cBGroupingActive.Name = "cBGroupingActive";
             this.cBGroupingActive.Size = new System.Drawing.Size(102, 17);
@@ -1191,11 +1191,12 @@
             // 
             // btnConfigureGrouping
             // 
-            this.btnConfigureGrouping.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Right)));
-            this.btnConfigureGrouping.Location = new System.Drawing.Point(192, 143);
+            this.btnConfigureGrouping.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Left) 
+            | System.Windows.Forms.AnchorStyles.Right)));
+            this.btnConfigureGrouping.Location = new System.Drawing.Point(191, 143);
             this.btnConfigureGrouping.Margin = new System.Windows.Forms.Padding(2);
             this.btnConfigureGrouping.Name = "btnConfigureGrouping";
-            this.btnConfigureGrouping.Size = new System.Drawing.Size(198, 19);
+            this.btnConfigureGrouping.Size = new System.Drawing.Size(199, 19);
             this.btnConfigureGrouping.TabIndex = 40;
             this.btnConfigureGrouping.Text = "Grouping...";
             this.btnConfigureGrouping.UseVisualStyleBackColor = true;
@@ -1321,7 +1322,7 @@
             // 
             this.cBKxLinkFile.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Left)));
             this.cBKxLinkFile.AutoSize = true;
-            this.cBKxLinkFile.Location = new System.Drawing.Point(90, 169);
+            this.cBKxLinkFile.Location = new System.Drawing.Point(88, 168);
             this.cBKxLinkFile.Name = "cBKxLinkFile";
             this.cBKxLinkFile.Size = new System.Drawing.Size(104, 17);
             this.cBKxLinkFile.TabIndex = 14;
@@ -1342,7 +1343,7 @@
             // 
             this.cBAttFile.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Left)));
             this.cBAttFile.AutoSize = true;
-            this.cBAttFile.Location = new System.Drawing.Point(90, 117);
+            this.cBAttFile.Location = new System.Drawing.Point(88, 117);
             this.cBAttFile.Name = "cBAttFile";
             this.cBAttFile.Size = new System.Drawing.Size(75, 17);
             this.cBAttFile.TabIndex = 12;

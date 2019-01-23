@@ -100,6 +100,7 @@
     <Compile Include="BO\FileService.cs" />
     <Compile Include="BO\MarkerProperty.cs" />
     <Compile Include="BO\NotFoundException.cs" />
+    <Compile Include="BO\ProcessService.cs" />
     <Compile Include="BO\SearchService.cs" />
     <Compile Include="BO\Utility.cs" />
     <Compile Include="DocSafe\DocSafeHandler.cs" />
@@ -250,6 +251,12 @@
     <None Include="Service References\InfoShareService\docreminder.InfoShareService.AuditConfigurationContract.datasource">
       <DependentUpon>Reference.svcmap</DependentUpon>
     </None>
+    <None Include="Service References\InfoShareService\docreminder.InfoShareService.AuditDocumentContract.datasource">
+      <DependentUpon>Reference.svcmap</DependentUpon>
+    </None>
+    <None Include="Service References\InfoShareService\docreminder.InfoShareService.AuditDocumentPropertyContract.datasource">
+      <DependentUpon>Reference.svcmap</DependentUpon>
+    </None>
     <None Include="Service References\InfoShareService\docreminder.InfoShareService.AuditLogonContract.datasource">
       <DependentUpon>Reference.svcmap</DependentUpon>
     </None>
@@ -262,13 +269,31 @@
     <None Include="Service References\InfoShareService\docreminder.InfoShareService.CloudSchemaStoreContract.datasource">
       <DependentUpon>Reference.svcmap</DependentUpon>
     </None>
+    <None Include="Service References\InfoShareService\docreminder.InfoShareService.CultureInfoContract.datasource">
+      <DependentUpon>Reference.svcmap</DependentUpon>
+    </None>
+    <None Include="Service References\InfoShareService\docreminder.InfoShareService.CustomStoredProcedureResultContract.datasource">
+      <DependentUpon>Reference.svcmap</DependentUpon>
+    </None>
     <None Include="Service References\InfoShareService\docreminder.InfoShareService.DatabaseInfoContract.datasource">
+      <DependentUpon>Reference.svcmap</DependentUpon>
+    </None>
+    <None Include="Service References\InfoShareService\docreminder.InfoShareService.DataTableContract.datasource">
       <DependentUpon>Reference.svcmap</DependentUpon>
     </None>
     <None Include="Service References\InfoShareService\docreminder.InfoShareService.DocumentContract.datasource">
       <DependentUpon>Reference.svcmap</DependentUpon>
     </None>
+    <None Include="Service References\InfoShareService\docreminder.InfoShareService.DocumentConvertingContract.datasource">
+      <DependentUpon>Reference.svcmap</DependentUpon>
+    </None>
     <None Include="Service References\InfoShareService\docreminder.InfoShareService.DocumentShareContract.datasource">
+      <DependentUpon>Reference.svcmap</DependentUpon>
+    </None>
+    <None Include="Service References\InfoShareService\docreminder.InfoShareService.DocumentToAnalyzeContract.datasource">
+      <DependentUpon>Reference.svcmap</DependentUpon>
+    </None>
+    <None Include="Service References\InfoShareService\docreminder.InfoShareService.DocumentTransformationContract.datasource">
       <DependentUpon>Reference.svcmap</DependentUpon>
     </None>
     <None Include="Service References\InfoShareService\docreminder.InfoShareService.FolderContract.datasource">
@@ -313,6 +338,9 @@
     <None Include="Service References\InfoShareService\docreminder.InfoShareService.ProcessUserTaskParameterContract.datasource">
       <DependentUpon>Reference.svcmap</DependentUpon>
     </None>
+    <None Include="Service References\InfoShareService\docreminder.InfoShareService.ProposalResultContract.datasource">
+      <DependentUpon>Reference.svcmap</DependentUpon>
+    </None>
     <None Include="Service References\InfoShareService\docreminder.InfoShareService.RemoteConnectionContract.datasource">
       <DependentUpon>Reference.svcmap</DependentUpon>
     </None>
@@ -349,6 +377,9 @@
     <None Include="Service References\InfoShareService\docreminder.InfoShareService.SMTPSettingsContract.datasource">
       <DependentUpon>Reference.svcmap</DependentUpon>
     </None>
+    <None Include="Service References\InfoShareService\docreminder.InfoShareService.StartProcessResultContract.datasource">
+      <DependentUpon>Reference.svcmap</DependentUpon>
+    </None>
     <None Include="Service References\InfoShareService\docreminder.InfoShareService.StatisticCounterConfigurationContract.datasource">
       <DependentUpon>Reference.svcmap</DependentUpon>
     </None>
@@ -356,6 +387,9 @@
       <DependentUpon>Reference.svcmap</DependentUpon>
     </None>
     <None Include="Service References\InfoShareService\docreminder.InfoShareService.StatisticCounterItemContract.datasource">
+      <DependentUpon>Reference.svcmap</DependentUpon>
+    </None>
+    <None Include="Service References\InfoShareService\docreminder.InfoShareService.TimeSpanContract.datasource">
       <DependentUpon>Reference.svcmap</DependentUpon>
     </None>
     <None Include="Service References\InfoShareService\docreminder.InfoShareService.UserLogEntryContract.datasource">
@@ -368,6 +402,21 @@
       <DependentUpon>Reference.svcmap</DependentUpon>
     </None>
     <None Include="Service References\InfoShareService\docreminder.InfoShareService.VersionItemContract.datasource">
+      <DependentUpon>Reference.svcmap</DependentUpon>
+    </None>
+    <None Include="Service References\InfoShareService\docreminder.InfoShareService.WDP_ProcessDataDocumentArchivedContract.datasource">
+      <DependentUpon>Reference.svcmap</DependentUpon>
+    </None>
+    <None Include="Service References\InfoShareService\docreminder.InfoShareService.WDP_ProcessDataGetExternalListContract.datasource">
+      <DependentUpon>Reference.svcmap</DependentUpon>
+    </None>
+    <None Include="Service References\InfoShareService\docreminder.InfoShareService.WDP_ProcessDataInitContract.datasource">
+      <DependentUpon>Reference.svcmap</DependentUpon>
+    </None>
+    <None Include="Service References\InfoShareService\docreminder.InfoShareService.WDP_ProcessDataValidateContract.datasource">
+      <DependentUpon>Reference.svcmap</DependentUpon>
+    </None>
+    <None Include="Service References\InfoShareService\docreminder.InfoShareService.WorkspaceContract.datasource">
       <DependentUpon>Reference.svcmap</DependentUpon>
     </None>
     <None Include="Service References\InfoShareService\InfoShare.wsdl" />

@@ -9,6 +9,8 @@
 //------------------------------------------------------------------------------
 
 namespace docreminder.InfoShareService {
+    using System.Runtime.Serialization;
+    using System;
     
     
     [System.Diagnostics.DebuggerStepThroughAttribute()]
@@ -34,6 +36,12 @@ namespace docreminder.InfoShareService {
         
         [System.Runtime.Serialization.OptionalFieldAttribute()]
         private bool IsNamedLicenceField;
+        
+        [System.Runtime.Serialization.OptionalFieldAttribute()]
+        private bool IsVerificationCodeNeededField;
+        
+        [System.Runtime.Serialization.OptionalFieldAttribute()]
+        private string PossibleTwoWayAuthenticationTypeField;
         
         [global::System.ComponentModel.BrowsableAttribute(false)]
         public System.Runtime.Serialization.ExtensionDataObject ExtensionData {
@@ -106,6 +114,32 @@ namespace docreminder.InfoShareService {
                 if ((this.IsNamedLicenceField.Equals(value) != true)) {
                     this.IsNamedLicenceField = value;
                     this.RaisePropertyChanged("IsNamedLicence");
+                }
+            }
+        }
+        
+        [System.Runtime.Serialization.DataMemberAttribute()]
+        public bool IsVerificationCodeNeeded {
+            get {
+                return this.IsVerificationCodeNeededField;
+            }
+            set {
+                if ((this.IsVerificationCodeNeededField.Equals(value) != true)) {
+                    this.IsVerificationCodeNeededField = value;
+                    this.RaisePropertyChanged("IsVerificationCodeNeeded");
+                }
+            }
+        }
+        
+        [System.Runtime.Serialization.DataMemberAttribute()]
+        public string PossibleTwoWayAuthenticationType {
+            get {
+                return this.PossibleTwoWayAuthenticationTypeField;
+            }
+            set {
+                if ((object.ReferenceEquals(this.PossibleTwoWayAuthenticationTypeField, value) != true)) {
+                    this.PossibleTwoWayAuthenticationTypeField = value;
+                    this.RaisePropertyChanged("PossibleTwoWayAuthenticationType");
                 }
             }
         }
@@ -335,6 +369,9 @@ namespace docreminder.InfoShareService {
         private string ComparisonEnumField;
         
         [System.Runtime.Serialization.OptionalFieldAttribute()]
+        private string IdField;
+        
+        [System.Runtime.Serialization.OptionalFieldAttribute()]
         private string PlaceHolderField;
         
         [System.Runtime.Serialization.OptionalFieldAttribute()]
@@ -365,6 +402,19 @@ namespace docreminder.InfoShareService {
                 if ((object.ReferenceEquals(this.ComparisonEnumField, value) != true)) {
                     this.ComparisonEnumField = value;
                     this.RaisePropertyChanged("ComparisonEnum");
+                }
+            }
+        }
+        
+        [System.Runtime.Serialization.DataMemberAttribute()]
+        public string Id {
+            get {
+                return this.IdField;
+            }
+            set {
+                if ((object.ReferenceEquals(this.IdField, value) != true)) {
+                    this.IdField = value;
+                    this.RaisePropertyChanged("Id");
                 }
             }
         }
@@ -1100,6 +1150,67 @@ namespace docreminder.InfoShareService {
                 if ((object.ReferenceEquals(this.ResumePointField, value) != true)) {
                     this.ResumePointField = value;
                     this.RaisePropertyChanged("ResumePoint");
+                }
+            }
+        }
+        
+        public event System.ComponentModel.PropertyChangedEventHandler PropertyChanged;
+        
+        protected void RaisePropertyChanged(string propertyName) {
+            System.ComponentModel.PropertyChangedEventHandler propertyChanged = this.PropertyChanged;
+            if ((propertyChanged != null)) {
+                propertyChanged(this, new System.ComponentModel.PropertyChangedEventArgs(propertyName));
+            }
+        }
+    }
+    
+    [System.Diagnostics.DebuggerStepThroughAttribute()]
+    [System.CodeDom.Compiler.GeneratedCodeAttribute("System.Runtime.Serialization", "4.0.0.0")]
+    [System.Runtime.Serialization.DataContractAttribute(Name="ProposalResultContract", Namespace="http://www.kendox.com/InfoShare")]
+    [System.SerializableAttribute()]
+    public partial class ProposalResultContract : object, System.Runtime.Serialization.IExtensibleDataObject, System.ComponentModel.INotifyPropertyChanged {
+        
+        [System.NonSerializedAttribute()]
+        private System.Runtime.Serialization.ExtensionDataObject extensionDataField;
+        
+        [System.Runtime.Serialization.OptionalFieldAttribute()]
+        private string IdField;
+        
+        [System.Runtime.Serialization.OptionalFieldAttribute()]
+        private docreminder.InfoShareService.StringGlobalContract ValuesField;
+        
+        [global::System.ComponentModel.BrowsableAttribute(false)]
+        public System.Runtime.Serialization.ExtensionDataObject ExtensionData {
+            get {
+                return this.extensionDataField;
+            }
+            set {
+                this.extensionDataField = value;
+            }
+        }
+        
+        [System.Runtime.Serialization.DataMemberAttribute()]
+        public string Id {
+            get {
+                return this.IdField;
+            }
+            set {
+                if ((object.ReferenceEquals(this.IdField, value) != true)) {
+                    this.IdField = value;
+                    this.RaisePropertyChanged("Id");
+                }
+            }
+        }
+        
+        [System.Runtime.Serialization.DataMemberAttribute()]
+        public docreminder.InfoShareService.StringGlobalContract Values {
+            get {
+                return this.ValuesField;
+            }
+            set {
+                if ((object.ReferenceEquals(this.ValuesField, value) != true)) {
+                    this.ValuesField = value;
+                    this.RaisePropertyChanged("Values");
                 }
             }
         }
@@ -2787,6 +2898,9 @@ namespace docreminder.InfoShareService {
         private bool ShowCommentWindowField;
         
         [System.Runtime.Serialization.OptionalFieldAttribute()]
+        private string StartTaskTemplateIdField;
+        
+        [System.Runtime.Serialization.OptionalFieldAttribute()]
         private docreminder.InfoShareService.TaskTemplateConditionContract[] TaskTemplateConditionsField;
         
         [System.Runtime.Serialization.OptionalFieldAttribute()]
@@ -3009,6 +3123,19 @@ namespace docreminder.InfoShareService {
                 if ((this.ShowCommentWindowField.Equals(value) != true)) {
                     this.ShowCommentWindowField = value;
                     this.RaisePropertyChanged("ShowCommentWindow");
+                }
+            }
+        }
+        
+        [System.Runtime.Serialization.DataMemberAttribute()]
+        public string StartTaskTemplateId {
+            get {
+                return this.StartTaskTemplateIdField;
+            }
+            set {
+                if ((object.ReferenceEquals(this.StartTaskTemplateIdField, value) != true)) {
+                    this.StartTaskTemplateIdField = value;
+                    this.RaisePropertyChanged("StartTaskTemplateId");
                 }
             }
         }
@@ -5878,6 +6005,9 @@ namespace docreminder.InfoShareService {
         [System.Runtime.Serialization.OptionalFieldAttribute()]
         private string PhoneNumberField;
         
+        [System.Runtime.Serialization.OptionalFieldAttribute()]
+        private string PossibleTwoWayAuthenticationTypeField;
+        
         [global::System.ComponentModel.BrowsableAttribute(false)]
         public System.Runtime.Serialization.ExtensionDataObject ExtensionData {
             get {
@@ -6131,6 +6261,19 @@ namespace docreminder.InfoShareService {
                 if ((object.ReferenceEquals(this.PhoneNumberField, value) != true)) {
                     this.PhoneNumberField = value;
                     this.RaisePropertyChanged("PhoneNumber");
+                }
+            }
+        }
+        
+        [System.Runtime.Serialization.DataMemberAttribute()]
+        public string PossibleTwoWayAuthenticationType {
+            get {
+                return this.PossibleTwoWayAuthenticationTypeField;
+            }
+            set {
+                if ((object.ReferenceEquals(this.PossibleTwoWayAuthenticationTypeField, value) != true)) {
+                    this.PossibleTwoWayAuthenticationTypeField = value;
+                    this.RaisePropertyChanged("PossibleTwoWayAuthenticationType");
                 }
             }
         }
@@ -7402,6 +7545,9 @@ namespace docreminder.InfoShareService {
         private docreminder.InfoShareService.FolderPathContract ProcessStoreSearchesField;
         
         [System.Runtime.Serialization.OptionalFieldAttribute()]
+        private bool RespectImportTemplateInEditPropertiesField;
+        
+        [System.Runtime.Serialization.OptionalFieldAttribute()]
         private bool ShowTemplateChangeOptionsDialogKeyField;
         
         [System.Runtime.Serialization.OptionalFieldAttribute()]
@@ -7421,6 +7567,9 @@ namespace docreminder.InfoShareService {
         
         [System.Runtime.Serialization.OptionalFieldAttribute()]
         private bool UsePasswordProtectionForZipField;
+        
+        [System.Runtime.Serialization.OptionalFieldAttribute()]
+        private string VerificationCodeMailTemplateIdField;
         
         [global::System.ComponentModel.BrowsableAttribute(false)]
         public System.Runtime.Serialization.ExtensionDataObject ExtensionData {
@@ -7641,6 +7790,19 @@ namespace docreminder.InfoShareService {
         }
         
         [System.Runtime.Serialization.DataMemberAttribute()]
+        public bool RespectImportTemplateInEditProperties {
+            get {
+                return this.RespectImportTemplateInEditPropertiesField;
+            }
+            set {
+                if ((this.RespectImportTemplateInEditPropertiesField.Equals(value) != true)) {
+                    this.RespectImportTemplateInEditPropertiesField = value;
+                    this.RaisePropertyChanged("RespectImportTemplateInEditProperties");
+                }
+            }
+        }
+        
+        [System.Runtime.Serialization.DataMemberAttribute()]
         public bool ShowTemplateChangeOptionsDialogKey {
             get {
                 return this.ShowTemplateChangeOptionsDialogKeyField;
@@ -7727,6 +7889,19 @@ namespace docreminder.InfoShareService {
                 if ((this.UsePasswordProtectionForZipField.Equals(value) != true)) {
                     this.UsePasswordProtectionForZipField = value;
                     this.RaisePropertyChanged("UsePasswordProtectionForZip");
+                }
+            }
+        }
+        
+        [System.Runtime.Serialization.DataMemberAttribute()]
+        public string VerificationCodeMailTemplateId {
+            get {
+                return this.VerificationCodeMailTemplateIdField;
+            }
+            set {
+                if ((object.ReferenceEquals(this.VerificationCodeMailTemplateIdField, value) != true)) {
+                    this.VerificationCodeMailTemplateIdField = value;
+                    this.RaisePropertyChanged("VerificationCodeMailTemplateId");
                 }
             }
         }
@@ -8094,7 +8269,19 @@ namespace docreminder.InfoShareService {
         private System.Runtime.Serialization.ExtensionDataObject extensionDataField;
         
         [System.Runtime.Serialization.OptionalFieldAttribute()]
+        private docreminder.InfoShareService.FolderPathContract FolderForPrivateSearchesField;
+        
+        [System.Runtime.Serialization.OptionalFieldAttribute()]
+        private docreminder.InfoShareService.FolderPathContract FolderForPublicSearchesField;
+        
+        [System.Runtime.Serialization.OptionalFieldAttribute()]
         private docreminder.InfoShareService.FolderPathContract LastSelectedFolderPathField;
+        
+        [System.Runtime.Serialization.OptionalFieldAttribute()]
+        private string PossibleTwoWayAuthenticationTypeField;
+        
+        [System.Runtime.Serialization.OptionalFieldAttribute()]
+        private bool ShowSearchOptionButtonField;
         
         [global::System.ComponentModel.BrowsableAttribute(false)]
         public System.Runtime.Serialization.ExtensionDataObject ExtensionData {
@@ -8107,6 +8294,32 @@ namespace docreminder.InfoShareService {
         }
         
         [System.Runtime.Serialization.DataMemberAttribute()]
+        public docreminder.InfoShareService.FolderPathContract FolderForPrivateSearches {
+            get {
+                return this.FolderForPrivateSearchesField;
+            }
+            set {
+                if ((object.ReferenceEquals(this.FolderForPrivateSearchesField, value) != true)) {
+                    this.FolderForPrivateSearchesField = value;
+                    this.RaisePropertyChanged("FolderForPrivateSearches");
+                }
+            }
+        }
+        
+        [System.Runtime.Serialization.DataMemberAttribute()]
+        public docreminder.InfoShareService.FolderPathContract FolderForPublicSearches {
+            get {
+                return this.FolderForPublicSearchesField;
+            }
+            set {
+                if ((object.ReferenceEquals(this.FolderForPublicSearchesField, value) != true)) {
+                    this.FolderForPublicSearchesField = value;
+                    this.RaisePropertyChanged("FolderForPublicSearches");
+                }
+            }
+        }
+        
+        [System.Runtime.Serialization.DataMemberAttribute()]
         public docreminder.InfoShareService.FolderPathContract LastSelectedFolderPath {
             get {
                 return this.LastSelectedFolderPathField;
@@ -8115,6 +8328,32 @@ namespace docreminder.InfoShareService {
                 if ((object.ReferenceEquals(this.LastSelectedFolderPathField, value) != true)) {
                     this.LastSelectedFolderPathField = value;
                     this.RaisePropertyChanged("LastSelectedFolderPath");
+                }
+            }
+        }
+        
+        [System.Runtime.Serialization.DataMemberAttribute()]
+        public string PossibleTwoWayAuthenticationType {
+            get {
+                return this.PossibleTwoWayAuthenticationTypeField;
+            }
+            set {
+                if ((object.ReferenceEquals(this.PossibleTwoWayAuthenticationTypeField, value) != true)) {
+                    this.PossibleTwoWayAuthenticationTypeField = value;
+                    this.RaisePropertyChanged("PossibleTwoWayAuthenticationType");
+                }
+            }
+        }
+        
+        [System.Runtime.Serialization.DataMemberAttribute()]
+        public bool ShowSearchOptionButton {
+            get {
+                return this.ShowSearchOptionButtonField;
+            }
+            set {
+                if ((this.ShowSearchOptionButtonField.Equals(value) != true)) {
+                    this.ShowSearchOptionButtonField = value;
+                    this.RaisePropertyChanged("ShowSearchOptionButton");
                 }
             }
         }
@@ -8418,6 +8657,12 @@ namespace docreminder.InfoShareService {
         private System.Runtime.Serialization.ExtensionDataObject extensionDataField;
         
         [System.Runtime.Serialization.OptionalFieldAttribute()]
+        private bool AddAnnotationsField;
+        
+        [System.Runtime.Serialization.OptionalFieldAttribute()]
+        private bool AddOverlaysField;
+        
+        [System.Runtime.Serialization.OptionalFieldAttribute()]
         private string CultureField;
         
         [System.Runtime.Serialization.OptionalFieldAttribute()]
@@ -8454,6 +8699,32 @@ namespace docreminder.InfoShareService {
             }
             set {
                 this.extensionDataField = value;
+            }
+        }
+        
+        [System.Runtime.Serialization.DataMemberAttribute()]
+        public bool AddAnnotations {
+            get {
+                return this.AddAnnotationsField;
+            }
+            set {
+                if ((this.AddAnnotationsField.Equals(value) != true)) {
+                    this.AddAnnotationsField = value;
+                    this.RaisePropertyChanged("AddAnnotations");
+                }
+            }
+        }
+        
+        [System.Runtime.Serialization.DataMemberAttribute()]
+        public bool AddOverlays {
+            get {
+                return this.AddOverlaysField;
+            }
+            set {
+                if ((this.AddOverlaysField.Equals(value) != true)) {
+                    this.AddOverlaysField = value;
+                    this.RaisePropertyChanged("AddOverlays");
+                }
             }
         }
         
@@ -8610,6 +8881,9 @@ namespace docreminder.InfoShareService {
         private bool EnableIndexDownloadField;
         
         [System.Runtime.Serialization.OptionalFieldAttribute()]
+        private string IdField;
+        
+        [System.Runtime.Serialization.OptionalFieldAttribute()]
         private string IndexDownloadPluginField;
         
         [System.Runtime.Serialization.OptionalFieldAttribute()]
@@ -8637,6 +8911,19 @@ namespace docreminder.InfoShareService {
                 if ((this.EnableIndexDownloadField.Equals(value) != true)) {
                     this.EnableIndexDownloadField = value;
                     this.RaisePropertyChanged("EnableIndexDownload");
+                }
+            }
+        }
+        
+        [System.Runtime.Serialization.DataMemberAttribute()]
+        public string Id {
+            get {
+                return this.IdField;
+            }
+            set {
+                if ((object.ReferenceEquals(this.IdField, value) != true)) {
+                    this.IdField = value;
+                    this.RaisePropertyChanged("Id");
                 }
             }
         }
@@ -8703,6 +8990,9 @@ namespace docreminder.InfoShareService {
         private string FileExtensionField;
         
         [System.Runtime.Serialization.OptionalFieldAttribute()]
+        private string IdField;
+        
+        [System.Runtime.Serialization.OptionalFieldAttribute()]
         private string MimeTypeField;
         
         [global::System.ComponentModel.BrowsableAttribute(false)]
@@ -8724,6 +9014,19 @@ namespace docreminder.InfoShareService {
                 if ((object.ReferenceEquals(this.FileExtensionField, value) != true)) {
                     this.FileExtensionField = value;
                     this.RaisePropertyChanged("FileExtension");
+                }
+            }
+        }
+        
+        [System.Runtime.Serialization.DataMemberAttribute()]
+        public string Id {
+            get {
+                return this.IdField;
+            }
+            set {
+                if ((object.ReferenceEquals(this.IdField, value) != true)) {
+                    this.IdField = value;
+                    this.RaisePropertyChanged("Id");
                 }
             }
         }
@@ -8768,6 +9071,9 @@ namespace docreminder.InfoShareService {
         
         [System.Runtime.Serialization.OptionalFieldAttribute()]
         private bool DeleteTerminatingSpacesField;
+        
+        [System.Runtime.Serialization.OptionalFieldAttribute()]
+        private string IdField;
         
         [System.Runtime.Serialization.OptionalFieldAttribute()]
         private string InfoSharePropertyNameField;
@@ -8820,6 +9126,19 @@ namespace docreminder.InfoShareService {
                 if ((this.DeleteTerminatingSpacesField.Equals(value) != true)) {
                     this.DeleteTerminatingSpacesField = value;
                     this.RaisePropertyChanged("DeleteTerminatingSpaces");
+                }
+            }
+        }
+        
+        [System.Runtime.Serialization.DataMemberAttribute()]
+        public string Id {
+            get {
+                return this.IdField;
+            }
+            set {
+                if ((object.ReferenceEquals(this.IdField, value) != true)) {
+                    this.IdField = value;
+                    this.RaisePropertyChanged("Id");
                 }
             }
         }
@@ -9463,13 +9782,19 @@ namespace docreminder.InfoShareService {
         private System.Runtime.Serialization.ExtensionDataObject extensionDataField;
         
         [System.Runtime.Serialization.OptionalFieldAttribute()]
-        private string DefaultInfoStoreNameSourceField;
-        
-        [System.Runtime.Serialization.OptionalFieldAttribute()]
-        private string DefaultInfoStoreNameTargetField;
+        private bool FoldersField;
         
         [System.Runtime.Serialization.OptionalFieldAttribute()]
         private bool GlobalSettingsField;
+        
+        [System.Runtime.Serialization.OptionalFieldAttribute()]
+        private bool ProcessTemplatesField;
+        
+        [System.Runtime.Serialization.OptionalFieldAttribute()]
+        private bool RemoteFoldersField;
+        
+        [System.Runtime.Serialization.OptionalFieldAttribute()]
+        private bool UsersAndGroupsField;
         
         [global::System.ComponentModel.BrowsableAttribute(false)]
         public System.Runtime.Serialization.ExtensionDataObject ExtensionData {
@@ -9482,27 +9807,14 @@ namespace docreminder.InfoShareService {
         }
         
         [System.Runtime.Serialization.DataMemberAttribute()]
-        public string DefaultInfoStoreNameSource {
+        public bool Folders {
             get {
-                return this.DefaultInfoStoreNameSourceField;
+                return this.FoldersField;
             }
             set {
-                if ((object.ReferenceEquals(this.DefaultInfoStoreNameSourceField, value) != true)) {
-                    this.DefaultInfoStoreNameSourceField = value;
-                    this.RaisePropertyChanged("DefaultInfoStoreNameSource");
-                }
-            }
-        }
-        
-        [System.Runtime.Serialization.DataMemberAttribute()]
-        public string DefaultInfoStoreNameTarget {
-            get {
-                return this.DefaultInfoStoreNameTargetField;
-            }
-            set {
-                if ((object.ReferenceEquals(this.DefaultInfoStoreNameTargetField, value) != true)) {
-                    this.DefaultInfoStoreNameTargetField = value;
-                    this.RaisePropertyChanged("DefaultInfoStoreNameTarget");
+                if ((this.FoldersField.Equals(value) != true)) {
+                    this.FoldersField = value;
+                    this.RaisePropertyChanged("Folders");
                 }
             }
         }
@@ -9516,6 +9828,45 @@ namespace docreminder.InfoShareService {
                 if ((this.GlobalSettingsField.Equals(value) != true)) {
                     this.GlobalSettingsField = value;
                     this.RaisePropertyChanged("GlobalSettings");
+                }
+            }
+        }
+        
+        [System.Runtime.Serialization.DataMemberAttribute()]
+        public bool ProcessTemplates {
+            get {
+                return this.ProcessTemplatesField;
+            }
+            set {
+                if ((this.ProcessTemplatesField.Equals(value) != true)) {
+                    this.ProcessTemplatesField = value;
+                    this.RaisePropertyChanged("ProcessTemplates");
+                }
+            }
+        }
+        
+        [System.Runtime.Serialization.DataMemberAttribute()]
+        public bool RemoteFolders {
+            get {
+                return this.RemoteFoldersField;
+            }
+            set {
+                if ((this.RemoteFoldersField.Equals(value) != true)) {
+                    this.RemoteFoldersField = value;
+                    this.RaisePropertyChanged("RemoteFolders");
+                }
+            }
+        }
+        
+        [System.Runtime.Serialization.DataMemberAttribute()]
+        public bool UsersAndGroups {
+            get {
+                return this.UsersAndGroupsField;
+            }
+            set {
+                if ((this.UsersAndGroupsField.Equals(value) != true)) {
+                    this.UsersAndGroupsField = value;
+                    this.RaisePropertyChanged("UsersAndGroups");
                 }
             }
         }
@@ -10109,6 +10460,1278 @@ namespace docreminder.InfoShareService {
                 if ((object.ReferenceEquals(this.ProtectFromDeleteActivationDateTimeField, value) != true)) {
                     this.ProtectFromDeleteActivationDateTimeField = value;
                     this.RaisePropertyChanged("ProtectFromDeleteActivationDateTime");
+                }
+            }
+        }
+        
+        public event System.ComponentModel.PropertyChangedEventHandler PropertyChanged;
+        
+        protected void RaisePropertyChanged(string propertyName) {
+            System.ComponentModel.PropertyChangedEventHandler propertyChanged = this.PropertyChanged;
+            if ((propertyChanged != null)) {
+                propertyChanged(this, new System.ComponentModel.PropertyChangedEventArgs(propertyName));
+            }
+        }
+    }
+    
+    [System.Diagnostics.DebuggerStepThroughAttribute()]
+    [System.CodeDom.Compiler.GeneratedCodeAttribute("System.Runtime.Serialization", "4.0.0.0")]
+    [System.Runtime.Serialization.DataContractAttribute(Name="WorkspacePreloadOptionsContract", Namespace="http://www.kendox.com/InfoShare")]
+    [System.SerializableAttribute()]
+    public partial class WorkspacePreloadOptionsContract : object, System.Runtime.Serialization.IExtensibleDataObject, System.ComponentModel.INotifyPropertyChanged {
+        
+        [System.NonSerializedAttribute()]
+        private System.Runtime.Serialization.ExtensionDataObject extensionDataField;
+        
+        [System.Runtime.Serialization.OptionalFieldAttribute()]
+        private bool BlobStoreProvidersField;
+        
+        [System.Runtime.Serialization.OptionalFieldAttribute()]
+        private bool CloudSchemaStoreField;
+        
+        [System.Runtime.Serialization.OptionalFieldAttribute()]
+        private bool CurrentlyAllowedImportTemplatesForCreatingField;
+        
+        [System.Runtime.Serialization.OptionalFieldAttribute()]
+        private bool CurrentlyAllowedInfoStoresForCreatingField;
+        
+        [System.Runtime.Serialization.OptionalFieldAttribute()]
+        private bool CurrentlyAllowedProtectionDomainsForCreatingField;
+        
+        [System.Runtime.Serialization.OptionalFieldAttribute()]
+        private bool DocumentConvertingSettingsField;
+        
+        [System.Runtime.Serialization.OptionalFieldAttribute()]
+        private bool GlobalSettingsField;
+        
+        [System.Runtime.Serialization.OptionalFieldAttribute()]
+        private bool InfoStoresField;
+        
+        [System.Runtime.Serialization.OptionalFieldAttribute()]
+        private bool PreloadAllField;
+        
+        [System.Runtime.Serialization.OptionalFieldAttribute()]
+        private bool SchemaStoreField;
+        
+        [System.Runtime.Serialization.OptionalFieldAttribute()]
+        private bool SecurityStoreField;
+        
+        [System.Runtime.Serialization.OptionalFieldAttribute()]
+        private bool ServerInfoField;
+        
+        [System.Runtime.Serialization.OptionalFieldAttribute()]
+        private bool UserAdminAccessRightsField;
+        
+        [System.Runtime.Serialization.OptionalFieldAttribute()]
+        private bool UserStoreField;
+        
+        [global::System.ComponentModel.BrowsableAttribute(false)]
+        public System.Runtime.Serialization.ExtensionDataObject ExtensionData {
+            get {
+                return this.extensionDataField;
+            }
+            set {
+                this.extensionDataField = value;
+            }
+        }
+        
+        [System.Runtime.Serialization.DataMemberAttribute()]
+        public bool BlobStoreProviders {
+            get {
+                return this.BlobStoreProvidersField;
+            }
+            set {
+                if ((this.BlobStoreProvidersField.Equals(value) != true)) {
+                    this.BlobStoreProvidersField = value;
+                    this.RaisePropertyChanged("BlobStoreProviders");
+                }
+            }
+        }
+        
+        [System.Runtime.Serialization.DataMemberAttribute()]
+        public bool CloudSchemaStore {
+            get {
+                return this.CloudSchemaStoreField;
+            }
+            set {
+                if ((this.CloudSchemaStoreField.Equals(value) != true)) {
+                    this.CloudSchemaStoreField = value;
+                    this.RaisePropertyChanged("CloudSchemaStore");
+                }
+            }
+        }
+        
+        [System.Runtime.Serialization.DataMemberAttribute()]
+        public bool CurrentlyAllowedImportTemplatesForCreating {
+            get {
+                return this.CurrentlyAllowedImportTemplatesForCreatingField;
+            }
+            set {
+                if ((this.CurrentlyAllowedImportTemplatesForCreatingField.Equals(value) != true)) {
+                    this.CurrentlyAllowedImportTemplatesForCreatingField = value;
+                    this.RaisePropertyChanged("CurrentlyAllowedImportTemplatesForCreating");
+                }
+            }
+        }
+        
+        [System.Runtime.Serialization.DataMemberAttribute()]
+        public bool CurrentlyAllowedInfoStoresForCreating {
+            get {
+                return this.CurrentlyAllowedInfoStoresForCreatingField;
+            }
+            set {
+                if ((this.CurrentlyAllowedInfoStoresForCreatingField.Equals(value) != true)) {
+                    this.CurrentlyAllowedInfoStoresForCreatingField = value;
+                    this.RaisePropertyChanged("CurrentlyAllowedInfoStoresForCreating");
+                }
+            }
+        }
+        
+        [System.Runtime.Serialization.DataMemberAttribute()]
+        public bool CurrentlyAllowedProtectionDomainsForCreating {
+            get {
+                return this.CurrentlyAllowedProtectionDomainsForCreatingField;
+            }
+            set {
+                if ((this.CurrentlyAllowedProtectionDomainsForCreatingField.Equals(value) != true)) {
+                    this.CurrentlyAllowedProtectionDomainsForCreatingField = value;
+                    this.RaisePropertyChanged("CurrentlyAllowedProtectionDomainsForCreating");
+                }
+            }
+        }
+        
+        [System.Runtime.Serialization.DataMemberAttribute()]
+        public bool DocumentConvertingSettings {
+            get {
+                return this.DocumentConvertingSettingsField;
+            }
+            set {
+                if ((this.DocumentConvertingSettingsField.Equals(value) != true)) {
+                    this.DocumentConvertingSettingsField = value;
+                    this.RaisePropertyChanged("DocumentConvertingSettings");
+                }
+            }
+        }
+        
+        [System.Runtime.Serialization.DataMemberAttribute()]
+        public bool GlobalSettings {
+            get {
+                return this.GlobalSettingsField;
+            }
+            set {
+                if ((this.GlobalSettingsField.Equals(value) != true)) {
+                    this.GlobalSettingsField = value;
+                    this.RaisePropertyChanged("GlobalSettings");
+                }
+            }
+        }
+        
+        [System.Runtime.Serialization.DataMemberAttribute()]
+        public bool InfoStores {
+            get {
+                return this.InfoStoresField;
+            }
+            set {
+                if ((this.InfoStoresField.Equals(value) != true)) {
+                    this.InfoStoresField = value;
+                    this.RaisePropertyChanged("InfoStores");
+                }
+            }
+        }
+        
+        [System.Runtime.Serialization.DataMemberAttribute()]
+        public bool PreloadAll {
+            get {
+                return this.PreloadAllField;
+            }
+            set {
+                if ((this.PreloadAllField.Equals(value) != true)) {
+                    this.PreloadAllField = value;
+                    this.RaisePropertyChanged("PreloadAll");
+                }
+            }
+        }
+        
+        [System.Runtime.Serialization.DataMemberAttribute()]
+        public bool SchemaStore {
+            get {
+                return this.SchemaStoreField;
+            }
+            set {
+                if ((this.SchemaStoreField.Equals(value) != true)) {
+                    this.SchemaStoreField = value;
+                    this.RaisePropertyChanged("SchemaStore");
+                }
+            }
+        }
+        
+        [System.Runtime.Serialization.DataMemberAttribute()]
+        public bool SecurityStore {
+            get {
+                return this.SecurityStoreField;
+            }
+            set {
+                if ((this.SecurityStoreField.Equals(value) != true)) {
+                    this.SecurityStoreField = value;
+                    this.RaisePropertyChanged("SecurityStore");
+                }
+            }
+        }
+        
+        [System.Runtime.Serialization.DataMemberAttribute()]
+        public bool ServerInfo {
+            get {
+                return this.ServerInfoField;
+            }
+            set {
+                if ((this.ServerInfoField.Equals(value) != true)) {
+                    this.ServerInfoField = value;
+                    this.RaisePropertyChanged("ServerInfo");
+                }
+            }
+        }
+        
+        [System.Runtime.Serialization.DataMemberAttribute()]
+        public bool UserAdminAccessRights {
+            get {
+                return this.UserAdminAccessRightsField;
+            }
+            set {
+                if ((this.UserAdminAccessRightsField.Equals(value) != true)) {
+                    this.UserAdminAccessRightsField = value;
+                    this.RaisePropertyChanged("UserAdminAccessRights");
+                }
+            }
+        }
+        
+        [System.Runtime.Serialization.DataMemberAttribute()]
+        public bool UserStore {
+            get {
+                return this.UserStoreField;
+            }
+            set {
+                if ((this.UserStoreField.Equals(value) != true)) {
+                    this.UserStoreField = value;
+                    this.RaisePropertyChanged("UserStore");
+                }
+            }
+        }
+        
+        public event System.ComponentModel.PropertyChangedEventHandler PropertyChanged;
+        
+        protected void RaisePropertyChanged(string propertyName) {
+            System.ComponentModel.PropertyChangedEventHandler propertyChanged = this.PropertyChanged;
+            if ((propertyChanged != null)) {
+                propertyChanged(this, new System.ComponentModel.PropertyChangedEventArgs(propertyName));
+            }
+        }
+    }
+    
+    [System.Diagnostics.DebuggerStepThroughAttribute()]
+    [System.CodeDom.Compiler.GeneratedCodeAttribute("System.Runtime.Serialization", "4.0.0.0")]
+    [System.Runtime.Serialization.DataContractAttribute(Name="WorkspaceContract", Namespace="http://www.kendox.com/InfoShare")]
+    [System.SerializableAttribute()]
+    public partial class WorkspaceContract : object, System.Runtime.Serialization.IExtensibleDataObject, System.ComponentModel.INotifyPropertyChanged {
+        
+        [System.NonSerializedAttribute()]
+        private System.Runtime.Serialization.ExtensionDataObject extensionDataField;
+        
+        [System.Runtime.Serialization.OptionalFieldAttribute()]
+        private docreminder.InfoShareService.BlobStoreProviderContract[] BlobStoreProvidersField;
+        
+        [System.Runtime.Serialization.OptionalFieldAttribute()]
+        private docreminder.InfoShareService.CloudSchemaStoreContract CloudSchemaStoreField;
+        
+        [System.Runtime.Serialization.OptionalFieldAttribute()]
+        private docreminder.InfoShareService.ImportTemplateContract[] CurrentlyAllowedImportTemplatesForCreatingField;
+        
+        [System.Runtime.Serialization.OptionalFieldAttribute()]
+        private docreminder.InfoShareService.InfoStoreContract[] CurrentlyAllowedInfoStoresForCreatingField;
+        
+        [System.Runtime.Serialization.OptionalFieldAttribute()]
+        private docreminder.InfoShareService.ProtectionDomainContract[] CurrentlyAllowedProtectionDomainsForCreatingField;
+        
+        [System.Runtime.Serialization.OptionalFieldAttribute()]
+        private docreminder.InfoShareService.DocumentConvertingContract[] DocumentConvertingSettingsField;
+        
+        [System.Runtime.Serialization.OptionalFieldAttribute()]
+        private docreminder.InfoShareService.GlobalSettingsContract GlobalSettingsField;
+        
+        [System.Runtime.Serialization.OptionalFieldAttribute()]
+        private docreminder.InfoShareService.InfoStoreContract[] InfoStoresField;
+        
+        [System.Runtime.Serialization.OptionalFieldAttribute()]
+        private docreminder.InfoShareService.SchemaStoreContract SchemaStoreField;
+        
+        [System.Runtime.Serialization.OptionalFieldAttribute()]
+        private docreminder.InfoShareService.SecurityStoreContract SecurityStoreField;
+        
+        [System.Runtime.Serialization.OptionalFieldAttribute()]
+        private docreminder.InfoShareService.ServerInfoContract ServerInfoField;
+        
+        [System.Runtime.Serialization.OptionalFieldAttribute()]
+        private string[] UserAdminAccessRightsField;
+        
+        [System.Runtime.Serialization.OptionalFieldAttribute()]
+        private docreminder.InfoShareService.UserStoreContract UserStoreField;
+        
+        [global::System.ComponentModel.BrowsableAttribute(false)]
+        public System.Runtime.Serialization.ExtensionDataObject ExtensionData {
+            get {
+                return this.extensionDataField;
+            }
+            set {
+                this.extensionDataField = value;
+            }
+        }
+        
+        [System.Runtime.Serialization.DataMemberAttribute()]
+        public docreminder.InfoShareService.BlobStoreProviderContract[] BlobStoreProviders {
+            get {
+                return this.BlobStoreProvidersField;
+            }
+            set {
+                if ((object.ReferenceEquals(this.BlobStoreProvidersField, value) != true)) {
+                    this.BlobStoreProvidersField = value;
+                    this.RaisePropertyChanged("BlobStoreProviders");
+                }
+            }
+        }
+        
+        [System.Runtime.Serialization.DataMemberAttribute()]
+        public docreminder.InfoShareService.CloudSchemaStoreContract CloudSchemaStore {
+            get {
+                return this.CloudSchemaStoreField;
+            }
+            set {
+                if ((object.ReferenceEquals(this.CloudSchemaStoreField, value) != true)) {
+                    this.CloudSchemaStoreField = value;
+                    this.RaisePropertyChanged("CloudSchemaStore");
+                }
+            }
+        }
+        
+        [System.Runtime.Serialization.DataMemberAttribute()]
+        public docreminder.InfoShareService.ImportTemplateContract[] CurrentlyAllowedImportTemplatesForCreating {
+            get {
+                return this.CurrentlyAllowedImportTemplatesForCreatingField;
+            }
+            set {
+                if ((object.ReferenceEquals(this.CurrentlyAllowedImportTemplatesForCreatingField, value) != true)) {
+                    this.CurrentlyAllowedImportTemplatesForCreatingField = value;
+                    this.RaisePropertyChanged("CurrentlyAllowedImportTemplatesForCreating");
+                }
+            }
+        }
+        
+        [System.Runtime.Serialization.DataMemberAttribute()]
+        public docreminder.InfoShareService.InfoStoreContract[] CurrentlyAllowedInfoStoresForCreating {
+            get {
+                return this.CurrentlyAllowedInfoStoresForCreatingField;
+            }
+            set {
+                if ((object.ReferenceEquals(this.CurrentlyAllowedInfoStoresForCreatingField, value) != true)) {
+                    this.CurrentlyAllowedInfoStoresForCreatingField = value;
+                    this.RaisePropertyChanged("CurrentlyAllowedInfoStoresForCreating");
+                }
+            }
+        }
+        
+        [System.Runtime.Serialization.DataMemberAttribute()]
+        public docreminder.InfoShareService.ProtectionDomainContract[] CurrentlyAllowedProtectionDomainsForCreating {
+            get {
+                return this.CurrentlyAllowedProtectionDomainsForCreatingField;
+            }
+            set {
+                if ((object.ReferenceEquals(this.CurrentlyAllowedProtectionDomainsForCreatingField, value) != true)) {
+                    this.CurrentlyAllowedProtectionDomainsForCreatingField = value;
+                    this.RaisePropertyChanged("CurrentlyAllowedProtectionDomainsForCreating");
+                }
+            }
+        }
+        
+        [System.Runtime.Serialization.DataMemberAttribute()]
+        public docreminder.InfoShareService.DocumentConvertingContract[] DocumentConvertingSettings {
+            get {
+                return this.DocumentConvertingSettingsField;
+            }
+            set {
+                if ((object.ReferenceEquals(this.DocumentConvertingSettingsField, value) != true)) {
+                    this.DocumentConvertingSettingsField = value;
+                    this.RaisePropertyChanged("DocumentConvertingSettings");
+                }
+            }
+        }
+        
+        [System.Runtime.Serialization.DataMemberAttribute()]
+        public docreminder.InfoShareService.GlobalSettingsContract GlobalSettings {
+            get {
+                return this.GlobalSettingsField;
+            }
+            set {
+                if ((object.ReferenceEquals(this.GlobalSettingsField, value) != true)) {
+                    this.GlobalSettingsField = value;
+                    this.RaisePropertyChanged("GlobalSettings");
+                }
+            }
+        }
+        
+        [System.Runtime.Serialization.DataMemberAttribute()]
+        public docreminder.InfoShareService.InfoStoreContract[] InfoStores {
+            get {
+                return this.InfoStoresField;
+            }
+            set {
+                if ((object.ReferenceEquals(this.InfoStoresField, value) != true)) {
+                    this.InfoStoresField = value;
+                    this.RaisePropertyChanged("InfoStores");
+                }
+            }
+        }
+        
+        [System.Runtime.Serialization.DataMemberAttribute()]
+        public docreminder.InfoShareService.SchemaStoreContract SchemaStore {
+            get {
+                return this.SchemaStoreField;
+            }
+            set {
+                if ((object.ReferenceEquals(this.SchemaStoreField, value) != true)) {
+                    this.SchemaStoreField = value;
+                    this.RaisePropertyChanged("SchemaStore");
+                }
+            }
+        }
+        
+        [System.Runtime.Serialization.DataMemberAttribute()]
+        public docreminder.InfoShareService.SecurityStoreContract SecurityStore {
+            get {
+                return this.SecurityStoreField;
+            }
+            set {
+                if ((object.ReferenceEquals(this.SecurityStoreField, value) != true)) {
+                    this.SecurityStoreField = value;
+                    this.RaisePropertyChanged("SecurityStore");
+                }
+            }
+        }
+        
+        [System.Runtime.Serialization.DataMemberAttribute()]
+        public docreminder.InfoShareService.ServerInfoContract ServerInfo {
+            get {
+                return this.ServerInfoField;
+            }
+            set {
+                if ((object.ReferenceEquals(this.ServerInfoField, value) != true)) {
+                    this.ServerInfoField = value;
+                    this.RaisePropertyChanged("ServerInfo");
+                }
+            }
+        }
+        
+        [System.Runtime.Serialization.DataMemberAttribute()]
+        public string[] UserAdminAccessRights {
+            get {
+                return this.UserAdminAccessRightsField;
+            }
+            set {
+                if ((object.ReferenceEquals(this.UserAdminAccessRightsField, value) != true)) {
+                    this.UserAdminAccessRightsField = value;
+                    this.RaisePropertyChanged("UserAdminAccessRights");
+                }
+            }
+        }
+        
+        [System.Runtime.Serialization.DataMemberAttribute()]
+        public docreminder.InfoShareService.UserStoreContract UserStore {
+            get {
+                return this.UserStoreField;
+            }
+            set {
+                if ((object.ReferenceEquals(this.UserStoreField, value) != true)) {
+                    this.UserStoreField = value;
+                    this.RaisePropertyChanged("UserStore");
+                }
+            }
+        }
+        
+        public event System.ComponentModel.PropertyChangedEventHandler PropertyChanged;
+        
+        protected void RaisePropertyChanged(string propertyName) {
+            System.ComponentModel.PropertyChangedEventHandler propertyChanged = this.PropertyChanged;
+            if ((propertyChanged != null)) {
+                propertyChanged(this, new System.ComponentModel.PropertyChangedEventArgs(propertyName));
+            }
+        }
+    }
+    
+    [System.Diagnostics.DebuggerStepThroughAttribute()]
+    [System.CodeDom.Compiler.GeneratedCodeAttribute("System.Runtime.Serialization", "4.0.0.0")]
+    [System.Runtime.Serialization.DataContractAttribute(Name="ServerInfoContract", Namespace="http://www.kendox.com/InfoShare")]
+    [System.SerializableAttribute()]
+    public partial class ServerInfoContract : object, System.Runtime.Serialization.IExtensibleDataObject, System.ComponentModel.INotifyPropertyChanged {
+        
+        [System.NonSerializedAttribute()]
+        private System.Runtime.Serialization.ExtensionDataObject extensionDataField;
+        
+        [System.Runtime.Serialization.OptionalFieldAttribute()]
+        private string ApplicationUserField;
+        
+        [System.Runtime.Serialization.OptionalFieldAttribute()]
+        private long AvailableSystemMemoryField;
+        
+        [System.Runtime.Serialization.OptionalFieldAttribute()]
+        private string CultureField;
+        
+        [System.Runtime.Serialization.OptionalFieldAttribute()]
+        private string FrameworkVersionField;
+        
+        [System.Runtime.Serialization.OptionalFieldAttribute()]
+        private string[] IPField;
+        
+        [System.Runtime.Serialization.OptionalFieldAttribute()]
+        private long InstalledMemoryField;
+        
+        [System.Runtime.Serialization.OptionalFieldAttribute()]
+        private bool Is64BitProcessField;
+        
+        [System.Runtime.Serialization.OptionalFieldAttribute()]
+        private bool Is64BitSystemField;
+        
+        [System.Runtime.Serialization.OptionalFieldAttribute()]
+        private string OperatingSystemField;
+        
+        [System.Runtime.Serialization.OptionalFieldAttribute()]
+        private string ProcessorCoresField;
+        
+        [System.Runtime.Serialization.OptionalFieldAttribute()]
+        private string ProcessorNameField;
+        
+        [System.Runtime.Serialization.OptionalFieldAttribute()]
+        private docreminder.InfoShareService.SecurityPluginInfoContract SecuritPluginInfoField;
+        
+        [System.Runtime.Serialization.OptionalFieldAttribute()]
+        private string ServerDateField;
+        
+        [System.Runtime.Serialization.OptionalFieldAttribute()]
+        private string ServerDomainField;
+        
+        [System.Runtime.Serialization.OptionalFieldAttribute()]
+        private string ServerNameField;
+        
+        [System.Runtime.Serialization.OptionalFieldAttribute()]
+        private docreminder.InfoShareService.AssemblyInfoContract[] StatisticPluginsField;
+        
+        [System.Runtime.Serialization.OptionalFieldAttribute()]
+        private docreminder.InfoShareService.TenantInfoContract[] TenantInfosField;
+        
+        [System.Runtime.Serialization.OptionalFieldAttribute()]
+        private string TimeZoneDisplayNameField;
+        
+        [System.Runtime.Serialization.OptionalFieldAttribute()]
+        private int TimeZoneUtcOffsetMinutesField;
+        
+        [System.Runtime.Serialization.OptionalFieldAttribute()]
+        private string UICultureField;
+        
+        [System.Runtime.Serialization.OptionalFieldAttribute()]
+        private long UsedMemoryField;
+        
+        [System.Runtime.Serialization.OptionalFieldAttribute()]
+        private string VersionField;
+        
+        [System.Runtime.Serialization.OptionalFieldAttribute()]
+        private docreminder.InfoShareService.WCFEndpointContract[] WCFEndpointsField;
+        
+        [global::System.ComponentModel.BrowsableAttribute(false)]
+        public System.Runtime.Serialization.ExtensionDataObject ExtensionData {
+            get {
+                return this.extensionDataField;
+            }
+            set {
+                this.extensionDataField = value;
+            }
+        }
+        
+        [System.Runtime.Serialization.DataMemberAttribute()]
+        public string ApplicationUser {
+            get {
+                return this.ApplicationUserField;
+            }
+            set {
+                if ((object.ReferenceEquals(this.ApplicationUserField, value) != true)) {
+                    this.ApplicationUserField = value;
+                    this.RaisePropertyChanged("ApplicationUser");
+                }
+            }
+        }
+        
+        [System.Runtime.Serialization.DataMemberAttribute()]
+        public long AvailableSystemMemory {
+            get {
+                return this.AvailableSystemMemoryField;
+            }
+            set {
+                if ((this.AvailableSystemMemoryField.Equals(value) != true)) {
+                    this.AvailableSystemMemoryField = value;
+                    this.RaisePropertyChanged("AvailableSystemMemory");
+                }
+            }
+        }
+        
+        [System.Runtime.Serialization.DataMemberAttribute()]
+        public string Culture {
+            get {
+                return this.CultureField;
+            }
+            set {
+                if ((object.ReferenceEquals(this.CultureField, value) != true)) {
+                    this.CultureField = value;
+                    this.RaisePropertyChanged("Culture");
+                }
+            }
+        }
+        
+        [System.Runtime.Serialization.DataMemberAttribute()]
+        public string FrameworkVersion {
+            get {
+                return this.FrameworkVersionField;
+            }
+            set {
+                if ((object.ReferenceEquals(this.FrameworkVersionField, value) != true)) {
+                    this.FrameworkVersionField = value;
+                    this.RaisePropertyChanged("FrameworkVersion");
+                }
+            }
+        }
+        
+        [System.Runtime.Serialization.DataMemberAttribute()]
+        public string[] IP {
+            get {
+                return this.IPField;
+            }
+            set {
+                if ((object.ReferenceEquals(this.IPField, value) != true)) {
+                    this.IPField = value;
+                    this.RaisePropertyChanged("IP");
+                }
+            }
+        }
+        
+        [System.Runtime.Serialization.DataMemberAttribute()]
+        public long InstalledMemory {
+            get {
+                return this.InstalledMemoryField;
+            }
+            set {
+                if ((this.InstalledMemoryField.Equals(value) != true)) {
+                    this.InstalledMemoryField = value;
+                    this.RaisePropertyChanged("InstalledMemory");
+                }
+            }
+        }
+        
+        [System.Runtime.Serialization.DataMemberAttribute()]
+        public bool Is64BitProcess {
+            get {
+                return this.Is64BitProcessField;
+            }
+            set {
+                if ((this.Is64BitProcessField.Equals(value) != true)) {
+                    this.Is64BitProcessField = value;
+                    this.RaisePropertyChanged("Is64BitProcess");
+                }
+            }
+        }
+        
+        [System.Runtime.Serialization.DataMemberAttribute()]
+        public bool Is64BitSystem {
+            get {
+                return this.Is64BitSystemField;
+            }
+            set {
+                if ((this.Is64BitSystemField.Equals(value) != true)) {
+                    this.Is64BitSystemField = value;
+                    this.RaisePropertyChanged("Is64BitSystem");
+                }
+            }
+        }
+        
+        [System.Runtime.Serialization.DataMemberAttribute()]
+        public string OperatingSystem {
+            get {
+                return this.OperatingSystemField;
+            }
+            set {
+                if ((object.ReferenceEquals(this.OperatingSystemField, value) != true)) {
+                    this.OperatingSystemField = value;
+                    this.RaisePropertyChanged("OperatingSystem");
+                }
+            }
+        }
+        
+        [System.Runtime.Serialization.DataMemberAttribute()]
+        public string ProcessorCores {
+            get {
+                return this.ProcessorCoresField;
+            }
+            set {
+                if ((object.ReferenceEquals(this.ProcessorCoresField, value) != true)) {
+                    this.ProcessorCoresField = value;
+                    this.RaisePropertyChanged("ProcessorCores");
+                }
+            }
+        }
+        
+        [System.Runtime.Serialization.DataMemberAttribute()]
+        public string ProcessorName {
+            get {
+                return this.ProcessorNameField;
+            }
+            set {
+                if ((object.ReferenceEquals(this.ProcessorNameField, value) != true)) {
+                    this.ProcessorNameField = value;
+                    this.RaisePropertyChanged("ProcessorName");
+                }
+            }
+        }
+        
+        [System.Runtime.Serialization.DataMemberAttribute()]
+        public docreminder.InfoShareService.SecurityPluginInfoContract SecuritPluginInfo {
+            get {
+                return this.SecuritPluginInfoField;
+            }
+            set {
+                if ((object.ReferenceEquals(this.SecuritPluginInfoField, value) != true)) {
+                    this.SecuritPluginInfoField = value;
+                    this.RaisePropertyChanged("SecuritPluginInfo");
+                }
+            }
+        }
+        
+        [System.Runtime.Serialization.DataMemberAttribute()]
+        public string ServerDate {
+            get {
+                return this.ServerDateField;
+            }
+            set {
+                if ((object.ReferenceEquals(this.ServerDateField, value) != true)) {
+                    this.ServerDateField = value;
+                    this.RaisePropertyChanged("ServerDate");
+                }
+            }
+        }
+        
+        [System.Runtime.Serialization.DataMemberAttribute()]
+        public string ServerDomain {
+            get {
+                return this.ServerDomainField;
+            }
+            set {
+                if ((object.ReferenceEquals(this.ServerDomainField, value) != true)) {
+                    this.ServerDomainField = value;
+                    this.RaisePropertyChanged("ServerDomain");
+                }
+            }
+        }
+        
+        [System.Runtime.Serialization.DataMemberAttribute()]
+        public string ServerName {
+            get {
+                return this.ServerNameField;
+            }
+            set {
+                if ((object.ReferenceEquals(this.ServerNameField, value) != true)) {
+                    this.ServerNameField = value;
+                    this.RaisePropertyChanged("ServerName");
+                }
+            }
+        }
+        
+        [System.Runtime.Serialization.DataMemberAttribute()]
+        public docreminder.InfoShareService.AssemblyInfoContract[] StatisticPlugins {
+            get {
+                return this.StatisticPluginsField;
+            }
+            set {
+                if ((object.ReferenceEquals(this.StatisticPluginsField, value) != true)) {
+                    this.StatisticPluginsField = value;
+                    this.RaisePropertyChanged("StatisticPlugins");
+                }
+            }
+        }
+        
+        [System.Runtime.Serialization.DataMemberAttribute()]
+        public docreminder.InfoShareService.TenantInfoContract[] TenantInfos {
+            get {
+                return this.TenantInfosField;
+            }
+            set {
+                if ((object.ReferenceEquals(this.TenantInfosField, value) != true)) {
+                    this.TenantInfosField = value;
+                    this.RaisePropertyChanged("TenantInfos");
+                }
+            }
+        }
+        
+        [System.Runtime.Serialization.DataMemberAttribute()]
+        public string TimeZoneDisplayName {
+            get {
+                return this.TimeZoneDisplayNameField;
+            }
+            set {
+                if ((object.ReferenceEquals(this.TimeZoneDisplayNameField, value) != true)) {
+                    this.TimeZoneDisplayNameField = value;
+                    this.RaisePropertyChanged("TimeZoneDisplayName");
+                }
+            }
+        }
+        
+        [System.Runtime.Serialization.DataMemberAttribute()]
+        public int TimeZoneUtcOffsetMinutes {
+            get {
+                return this.TimeZoneUtcOffsetMinutesField;
+            }
+            set {
+                if ((this.TimeZoneUtcOffsetMinutesField.Equals(value) != true)) {
+                    this.TimeZoneUtcOffsetMinutesField = value;
+                    this.RaisePropertyChanged("TimeZoneUtcOffsetMinutes");
+                }
+            }
+        }
+        
+        [System.Runtime.Serialization.DataMemberAttribute()]
+        public string UICulture {
+            get {
+                return this.UICultureField;
+            }
+            set {
+                if ((object.ReferenceEquals(this.UICultureField, value) != true)) {
+                    this.UICultureField = value;
+                    this.RaisePropertyChanged("UICulture");
+                }
+            }
+        }
+        
+        [System.Runtime.Serialization.DataMemberAttribute()]
+        public long UsedMemory {
+            get {
+                return this.UsedMemoryField;
+            }
+            set {
+                if ((this.UsedMemoryField.Equals(value) != true)) {
+                    this.UsedMemoryField = value;
+                    this.RaisePropertyChanged("UsedMemory");
+                }
+            }
+        }
+        
+        [System.Runtime.Serialization.DataMemberAttribute()]
+        public string Version {
+            get {
+                return this.VersionField;
+            }
+            set {
+                if ((object.ReferenceEquals(this.VersionField, value) != true)) {
+                    this.VersionField = value;
+                    this.RaisePropertyChanged("Version");
+                }
+            }
+        }
+        
+        [System.Runtime.Serialization.DataMemberAttribute()]
+        public docreminder.InfoShareService.WCFEndpointContract[] WCFEndpoints {
+            get {
+                return this.WCFEndpointsField;
+            }
+            set {
+                if ((object.ReferenceEquals(this.WCFEndpointsField, value) != true)) {
+                    this.WCFEndpointsField = value;
+                    this.RaisePropertyChanged("WCFEndpoints");
+                }
+            }
+        }
+        
+        public event System.ComponentModel.PropertyChangedEventHandler PropertyChanged;
+        
+        protected void RaisePropertyChanged(string propertyName) {
+            System.ComponentModel.PropertyChangedEventHandler propertyChanged = this.PropertyChanged;
+            if ((propertyChanged != null)) {
+                propertyChanged(this, new System.ComponentModel.PropertyChangedEventArgs(propertyName));
+            }
+        }
+    }
+    
+    [System.Diagnostics.DebuggerStepThroughAttribute()]
+    [System.CodeDom.Compiler.GeneratedCodeAttribute("System.Runtime.Serialization", "4.0.0.0")]
+    [System.Runtime.Serialization.DataContractAttribute(Name="DocumentConvertingContract", Namespace="http://www.kendox.com/InfoShare")]
+    [System.SerializableAttribute()]
+    public partial class DocumentConvertingContract : object, System.Runtime.Serialization.IExtensibleDataObject, System.ComponentModel.INotifyPropertyChanged {
+        
+        [System.NonSerializedAttribute()]
+        private System.Runtime.Serialization.ExtensionDataObject extensionDataField;
+        
+        [System.Runtime.Serialization.OptionalFieldAttribute()]
+        private string SourceBaseExtensionField;
+        
+        [System.Runtime.Serialization.OptionalFieldAttribute()]
+        private string SourceExtensionField;
+        
+        [System.Runtime.Serialization.OptionalFieldAttribute()]
+        private string TargetExtensionField;
+        
+        [global::System.ComponentModel.BrowsableAttribute(false)]
+        public System.Runtime.Serialization.ExtensionDataObject ExtensionData {
+            get {
+                return this.extensionDataField;
+            }
+            set {
+                this.extensionDataField = value;
+            }
+        }
+        
+        [System.Runtime.Serialization.DataMemberAttribute()]
+        public string SourceBaseExtension {
+            get {
+                return this.SourceBaseExtensionField;
+            }
+            set {
+                if ((object.ReferenceEquals(this.SourceBaseExtensionField, value) != true)) {
+                    this.SourceBaseExtensionField = value;
+                    this.RaisePropertyChanged("SourceBaseExtension");
+                }
+            }
+        }
+        
+        [System.Runtime.Serialization.DataMemberAttribute()]
+        public string SourceExtension {
+            get {
+                return this.SourceExtensionField;
+            }
+            set {
+                if ((object.ReferenceEquals(this.SourceExtensionField, value) != true)) {
+                    this.SourceExtensionField = value;
+                    this.RaisePropertyChanged("SourceExtension");
+                }
+            }
+        }
+        
+        [System.Runtime.Serialization.DataMemberAttribute()]
+        public string TargetExtension {
+            get {
+                return this.TargetExtensionField;
+            }
+            set {
+                if ((object.ReferenceEquals(this.TargetExtensionField, value) != true)) {
+                    this.TargetExtensionField = value;
+                    this.RaisePropertyChanged("TargetExtension");
+                }
+            }
+        }
+        
+        public event System.ComponentModel.PropertyChangedEventHandler PropertyChanged;
+        
+        protected void RaisePropertyChanged(string propertyName) {
+            System.ComponentModel.PropertyChangedEventHandler propertyChanged = this.PropertyChanged;
+            if ((propertyChanged != null)) {
+                propertyChanged(this, new System.ComponentModel.PropertyChangedEventArgs(propertyName));
+            }
+        }
+    }
+    
+    [System.Diagnostics.DebuggerStepThroughAttribute()]
+    [System.CodeDom.Compiler.GeneratedCodeAttribute("System.Runtime.Serialization", "4.0.0.0")]
+    [System.Runtime.Serialization.DataContractAttribute(Name="SecurityPluginInfoContract", Namespace="http://www.kendox.com/InfoShare")]
+    [System.SerializableAttribute()]
+    public partial class SecurityPluginInfoContract : object, System.Runtime.Serialization.IExtensibleDataObject, System.ComponentModel.INotifyPropertyChanged {
+        
+        [System.NonSerializedAttribute()]
+        private System.Runtime.Serialization.ExtensionDataObject extensionDataField;
+        
+        [System.Runtime.Serialization.OptionalFieldAttribute()]
+        private string AssemblyNameField;
+        
+        [System.Runtime.Serialization.OptionalFieldAttribute()]
+        private string ClassNameField;
+        
+        [System.Runtime.Serialization.OptionalFieldAttribute()]
+        private bool DefaultPluginField;
+        
+        [System.Runtime.Serialization.OptionalFieldAttribute()]
+        private string VersionField;
+        
+        [global::System.ComponentModel.BrowsableAttribute(false)]
+        public System.Runtime.Serialization.ExtensionDataObject ExtensionData {
+            get {
+                return this.extensionDataField;
+            }
+            set {
+                this.extensionDataField = value;
+            }
+        }
+        
+        [System.Runtime.Serialization.DataMemberAttribute()]
+        public string AssemblyName {
+            get {
+                return this.AssemblyNameField;
+            }
+            set {
+                if ((object.ReferenceEquals(this.AssemblyNameField, value) != true)) {
+                    this.AssemblyNameField = value;
+                    this.RaisePropertyChanged("AssemblyName");
+                }
+            }
+        }
+        
+        [System.Runtime.Serialization.DataMemberAttribute()]
+        public string ClassName {
+            get {
+                return this.ClassNameField;
+            }
+            set {
+                if ((object.ReferenceEquals(this.ClassNameField, value) != true)) {
+                    this.ClassNameField = value;
+                    this.RaisePropertyChanged("ClassName");
+                }
+            }
+        }
+        
+        [System.Runtime.Serialization.DataMemberAttribute()]
+        public bool DefaultPlugin {
+            get {
+                return this.DefaultPluginField;
+            }
+            set {
+                if ((this.DefaultPluginField.Equals(value) != true)) {
+                    this.DefaultPluginField = value;
+                    this.RaisePropertyChanged("DefaultPlugin");
+                }
+            }
+        }
+        
+        [System.Runtime.Serialization.DataMemberAttribute()]
+        public string Version {
+            get {
+                return this.VersionField;
+            }
+            set {
+                if ((object.ReferenceEquals(this.VersionField, value) != true)) {
+                    this.VersionField = value;
+                    this.RaisePropertyChanged("Version");
+                }
+            }
+        }
+        
+        public event System.ComponentModel.PropertyChangedEventHandler PropertyChanged;
+        
+        protected void RaisePropertyChanged(string propertyName) {
+            System.ComponentModel.PropertyChangedEventHandler propertyChanged = this.PropertyChanged;
+            if ((propertyChanged != null)) {
+                propertyChanged(this, new System.ComponentModel.PropertyChangedEventArgs(propertyName));
+            }
+        }
+    }
+    
+    [System.Diagnostics.DebuggerStepThroughAttribute()]
+    [System.CodeDom.Compiler.GeneratedCodeAttribute("System.Runtime.Serialization", "4.0.0.0")]
+    [System.Runtime.Serialization.DataContractAttribute(Name="AssemblyInfoContract", Namespace="http://www.kendox.com/InfoShare")]
+    [System.SerializableAttribute()]
+    public partial class AssemblyInfoContract : object, System.Runtime.Serialization.IExtensibleDataObject, System.ComponentModel.INotifyPropertyChanged {
+        
+        [System.NonSerializedAttribute()]
+        private System.Runtime.Serialization.ExtensionDataObject extensionDataField;
+        
+        [System.Runtime.Serialization.OptionalFieldAttribute()]
+        private string ClassNameField;
+        
+        [System.Runtime.Serialization.OptionalFieldAttribute()]
+        private string NameField;
+        
+        [System.Runtime.Serialization.OptionalFieldAttribute()]
+        private string VersionField;
+        
+        [global::System.ComponentModel.BrowsableAttribute(false)]
+        public System.Runtime.Serialization.ExtensionDataObject ExtensionData {
+            get {
+                return this.extensionDataField;
+            }
+            set {
+                this.extensionDataField = value;
+            }
+        }
+        
+        [System.Runtime.Serialization.DataMemberAttribute()]
+        public string ClassName {
+            get {
+                return this.ClassNameField;
+            }
+            set {
+                if ((object.ReferenceEquals(this.ClassNameField, value) != true)) {
+                    this.ClassNameField = value;
+                    this.RaisePropertyChanged("ClassName");
+                }
+            }
+        }
+        
+        [System.Runtime.Serialization.DataMemberAttribute()]
+        public string Name {
+            get {
+                return this.NameField;
+            }
+            set {
+                if ((object.ReferenceEquals(this.NameField, value) != true)) {
+                    this.NameField = value;
+                    this.RaisePropertyChanged("Name");
+                }
+            }
+        }
+        
+        [System.Runtime.Serialization.DataMemberAttribute()]
+        public string Version {
+            get {
+                return this.VersionField;
+            }
+            set {
+                if ((object.ReferenceEquals(this.VersionField, value) != true)) {
+                    this.VersionField = value;
+                    this.RaisePropertyChanged("Version");
+                }
+            }
+        }
+        
+        public event System.ComponentModel.PropertyChangedEventHandler PropertyChanged;
+        
+        protected void RaisePropertyChanged(string propertyName) {
+            System.ComponentModel.PropertyChangedEventHandler propertyChanged = this.PropertyChanged;
+            if ((propertyChanged != null)) {
+                propertyChanged(this, new System.ComponentModel.PropertyChangedEventArgs(propertyName));
+            }
+        }
+    }
+    
+    [System.Diagnostics.DebuggerStepThroughAttribute()]
+    [System.CodeDom.Compiler.GeneratedCodeAttribute("System.Runtime.Serialization", "4.0.0.0")]
+    [System.Runtime.Serialization.DataContractAttribute(Name="TenantInfoContract", Namespace="http://www.kendox.com/InfoShare")]
+    [System.SerializableAttribute()]
+    public partial class TenantInfoContract : object, System.Runtime.Serialization.IExtensibleDataObject, System.ComponentModel.INotifyPropertyChanged {
+        
+        [System.NonSerializedAttribute()]
+        private System.Runtime.Serialization.ExtensionDataObject extensionDataField;
+        
+        [System.Runtime.Serialization.OptionalFieldAttribute()]
+        private string NameField;
+        
+        [System.Runtime.Serialization.OptionalFieldAttribute()]
+        private int ServerPortField;
+        
+        [global::System.ComponentModel.BrowsableAttribute(false)]
+        public System.Runtime.Serialization.ExtensionDataObject ExtensionData {
+            get {
+                return this.extensionDataField;
+            }
+            set {
+                this.extensionDataField = value;
+            }
+        }
+        
+        [System.Runtime.Serialization.DataMemberAttribute()]
+        public string Name {
+            get {
+                return this.NameField;
+            }
+            set {
+                if ((object.ReferenceEquals(this.NameField, value) != true)) {
+                    this.NameField = value;
+                    this.RaisePropertyChanged("Name");
+                }
+            }
+        }
+        
+        [System.Runtime.Serialization.DataMemberAttribute()]
+        public int ServerPort {
+            get {
+                return this.ServerPortField;
+            }
+            set {
+                if ((this.ServerPortField.Equals(value) != true)) {
+                    this.ServerPortField = value;
+                    this.RaisePropertyChanged("ServerPort");
+                }
+            }
+        }
+        
+        public event System.ComponentModel.PropertyChangedEventHandler PropertyChanged;
+        
+        protected void RaisePropertyChanged(string propertyName) {
+            System.ComponentModel.PropertyChangedEventHandler propertyChanged = this.PropertyChanged;
+            if ((propertyChanged != null)) {
+                propertyChanged(this, new System.ComponentModel.PropertyChangedEventArgs(propertyName));
+            }
+        }
+    }
+    
+    [System.Diagnostics.DebuggerStepThroughAttribute()]
+    [System.CodeDom.Compiler.GeneratedCodeAttribute("System.Runtime.Serialization", "4.0.0.0")]
+    [System.Runtime.Serialization.DataContractAttribute(Name="WCFEndpointContract", Namespace="http://www.kendox.com/InfoShare")]
+    [System.SerializableAttribute()]
+    public partial class WCFEndpointContract : object, System.Runtime.Serialization.IExtensibleDataObject, System.ComponentModel.INotifyPropertyChanged {
+        
+        [System.NonSerializedAttribute()]
+        private System.Runtime.Serialization.ExtensionDataObject extensionDataField;
+        
+        [System.Runtime.Serialization.OptionalFieldAttribute()]
+        private bool RestServiceField;
+        
+        [System.Runtime.Serialization.OptionalFieldAttribute()]
+        private string URLField;
+        
+        [System.Runtime.Serialization.OptionalFieldAttribute()]
+        private bool WindowsAuthenticationField;
+        
+        [global::System.ComponentModel.BrowsableAttribute(false)]
+        public System.Runtime.Serialization.ExtensionDataObject ExtensionData {
+            get {
+                return this.extensionDataField;
+            }
+            set {
+                this.extensionDataField = value;
+            }
+        }
+        
+        [System.Runtime.Serialization.DataMemberAttribute()]
+        public bool RestService {
+            get {
+                return this.RestServiceField;
+            }
+            set {
+                if ((this.RestServiceField.Equals(value) != true)) {
+                    this.RestServiceField = value;
+                    this.RaisePropertyChanged("RestService");
+                }
+            }
+        }
+        
+        [System.Runtime.Serialization.DataMemberAttribute()]
+        public string URL {
+            get {
+                return this.URLField;
+            }
+            set {
+                if ((object.ReferenceEquals(this.URLField, value) != true)) {
+                    this.URLField = value;
+                    this.RaisePropertyChanged("URL");
+                }
+            }
+        }
+        
+        [System.Runtime.Serialization.DataMemberAttribute()]
+        public bool WindowsAuthentication {
+            get {
+                return this.WindowsAuthenticationField;
+            }
+            set {
+                if ((this.WindowsAuthenticationField.Equals(value) != true)) {
+                    this.WindowsAuthenticationField = value;
+                    this.RaisePropertyChanged("WindowsAuthentication");
                 }
             }
         }
@@ -13132,10 +14755,16 @@ namespace docreminder.InfoShareService {
         private System.Runtime.Serialization.ExtensionDataObject extensionDataField;
         
         [System.Runtime.Serialization.OptionalFieldAttribute()]
+        private string CommentField;
+        
+        [System.Runtime.Serialization.OptionalFieldAttribute()]
         private bool CreateAsSAPDocumentField;
         
         [System.Runtime.Serialization.OptionalFieldAttribute()]
         private bool MergePropertiesIntoDocumentField;
+        
+        [System.Runtime.Serialization.OptionalFieldAttribute()]
+        private string VersionField;
         
         [global::System.ComponentModel.BrowsableAttribute(false)]
         public System.Runtime.Serialization.ExtensionDataObject ExtensionData {
@@ -13144,6 +14773,19 @@ namespace docreminder.InfoShareService {
             }
             set {
                 this.extensionDataField = value;
+            }
+        }
+        
+        [System.Runtime.Serialization.DataMemberAttribute()]
+        public string Comment {
+            get {
+                return this.CommentField;
+            }
+            set {
+                if ((object.ReferenceEquals(this.CommentField, value) != true)) {
+                    this.CommentField = value;
+                    this.RaisePropertyChanged("Comment");
+                }
             }
         }
         
@@ -13169,6 +14811,19 @@ namespace docreminder.InfoShareService {
                 if ((this.MergePropertiesIntoDocumentField.Equals(value) != true)) {
                     this.MergePropertiesIntoDocumentField = value;
                     this.RaisePropertyChanged("MergePropertiesIntoDocument");
+                }
+            }
+        }
+        
+        [System.Runtime.Serialization.DataMemberAttribute()]
+        public string Version {
+            get {
+                return this.VersionField;
+            }
+            set {
+                if ((object.ReferenceEquals(this.VersionField, value) != true)) {
+                    this.VersionField = value;
+                    this.RaisePropertyChanged("Version");
                 }
             }
         }
@@ -14294,6 +15949,67 @@ namespace docreminder.InfoShareService {
     
     [System.Diagnostics.DebuggerStepThroughAttribute()]
     [System.CodeDom.Compiler.GeneratedCodeAttribute("System.Runtime.Serialization", "4.0.0.0")]
+    [System.Runtime.Serialization.DataContractAttribute(Name="DocumentTransformationContract", Namespace="http://www.kendox.com/InfoShare")]
+    [System.SerializableAttribute()]
+    public partial class DocumentTransformationContract : object, System.Runtime.Serialization.IExtensibleDataObject, System.ComponentModel.INotifyPropertyChanged {
+        
+        [System.NonSerializedAttribute()]
+        private System.Runtime.Serialization.ExtensionDataObject extensionDataField;
+        
+        [System.Runtime.Serialization.OptionalFieldAttribute()]
+        private string SourceExtensionField;
+        
+        [System.Runtime.Serialization.OptionalFieldAttribute()]
+        private string TargetExtensionField;
+        
+        [global::System.ComponentModel.BrowsableAttribute(false)]
+        public System.Runtime.Serialization.ExtensionDataObject ExtensionData {
+            get {
+                return this.extensionDataField;
+            }
+            set {
+                this.extensionDataField = value;
+            }
+        }
+        
+        [System.Runtime.Serialization.DataMemberAttribute()]
+        public string SourceExtension {
+            get {
+                return this.SourceExtensionField;
+            }
+            set {
+                if ((object.ReferenceEquals(this.SourceExtensionField, value) != true)) {
+                    this.SourceExtensionField = value;
+                    this.RaisePropertyChanged("SourceExtension");
+                }
+            }
+        }
+        
+        [System.Runtime.Serialization.DataMemberAttribute()]
+        public string TargetExtension {
+            get {
+                return this.TargetExtensionField;
+            }
+            set {
+                if ((object.ReferenceEquals(this.TargetExtensionField, value) != true)) {
+                    this.TargetExtensionField = value;
+                    this.RaisePropertyChanged("TargetExtension");
+                }
+            }
+        }
+        
+        public event System.ComponentModel.PropertyChangedEventHandler PropertyChanged;
+        
+        protected void RaisePropertyChanged(string propertyName) {
+            System.ComponentModel.PropertyChangedEventHandler propertyChanged = this.PropertyChanged;
+            if ((propertyChanged != null)) {
+                propertyChanged(this, new System.ComponentModel.PropertyChangedEventArgs(propertyName));
+            }
+        }
+    }
+    
+    [System.Diagnostics.DebuggerStepThroughAttribute()]
+    [System.CodeDom.Compiler.GeneratedCodeAttribute("System.Runtime.Serialization", "4.0.0.0")]
     [System.Runtime.Serialization.DataContractAttribute(Name="ProcessContract", Namespace="http://www.kendox.com/InfoShare")]
     [System.SerializableAttribute()]
     public partial class ProcessContract : object, System.Runtime.Serialization.IExtensibleDataObject, System.ComponentModel.INotifyPropertyChanged {
@@ -14633,6 +16349,9 @@ namespace docreminder.InfoShareService {
         private string IdField;
         
         [System.Runtime.Serialization.OptionalFieldAttribute()]
+        private string[] IntendedUserIdsField;
+        
+        [System.Runtime.Serialization.OptionalFieldAttribute()]
         private string ReminderDateField;
         
         [System.Runtime.Serialization.OptionalFieldAttribute()]
@@ -14783,6 +16502,19 @@ namespace docreminder.InfoShareService {
                 if ((object.ReferenceEquals(this.IdField, value) != true)) {
                     this.IdField = value;
                     this.RaisePropertyChanged("Id");
+                }
+            }
+        }
+        
+        [System.Runtime.Serialization.DataMemberAttribute()]
+        public string[] IntendedUserIds {
+            get {
+                return this.IntendedUserIdsField;
+            }
+            set {
+                if ((object.ReferenceEquals(this.IntendedUserIdsField, value) != true)) {
+                    this.IntendedUserIdsField = value;
+                    this.RaisePropertyChanged("IntendedUserIds");
                 }
             }
         }
@@ -15146,6 +16878,362 @@ namespace docreminder.InfoShareService {
                 if ((object.ReferenceEquals(this.TaskDueDateField, value) != true)) {
                     this.TaskDueDateField = value;
                     this.RaisePropertyChanged("TaskDueDate");
+                }
+            }
+        }
+        
+        public event System.ComponentModel.PropertyChangedEventHandler PropertyChanged;
+        
+        protected void RaisePropertyChanged(string propertyName) {
+            System.ComponentModel.PropertyChangedEventHandler propertyChanged = this.PropertyChanged;
+            if ((propertyChanged != null)) {
+                propertyChanged(this, new System.ComponentModel.PropertyChangedEventArgs(propertyName));
+            }
+        }
+    }
+    
+    [System.Diagnostics.DebuggerStepThroughAttribute()]
+    [System.CodeDom.Compiler.GeneratedCodeAttribute("System.Runtime.Serialization", "4.0.0.0")]
+    [System.Runtime.Serialization.DataContractAttribute(Name="StartProcessResultContract", Namespace="http://www.kendox.com/InfoShare")]
+    [System.SerializableAttribute()]
+    public partial class StartProcessResultContract : object, System.Runtime.Serialization.IExtensibleDataObject, System.ComponentModel.INotifyPropertyChanged {
+        
+        [System.NonSerializedAttribute()]
+        private System.Runtime.Serialization.ExtensionDataObject extensionDataField;
+        
+        [System.Runtime.Serialization.OptionalFieldAttribute()]
+        private docreminder.InfoShareService.ProcessContract ProcessField;
+        
+        [System.Runtime.Serialization.OptionalFieldAttribute()]
+        private string[] SubjectIdListField;
+        
+        [global::System.ComponentModel.BrowsableAttribute(false)]
+        public System.Runtime.Serialization.ExtensionDataObject ExtensionData {
+            get {
+                return this.extensionDataField;
+            }
+            set {
+                this.extensionDataField = value;
+            }
+        }
+        
+        [System.Runtime.Serialization.DataMemberAttribute()]
+        public docreminder.InfoShareService.ProcessContract Process {
+            get {
+                return this.ProcessField;
+            }
+            set {
+                if ((object.ReferenceEquals(this.ProcessField, value) != true)) {
+                    this.ProcessField = value;
+                    this.RaisePropertyChanged("Process");
+                }
+            }
+        }
+        
+        [System.Runtime.Serialization.DataMemberAttribute()]
+        public string[] SubjectIdList {
+            get {
+                return this.SubjectIdListField;
+            }
+            set {
+                if ((object.ReferenceEquals(this.SubjectIdListField, value) != true)) {
+                    this.SubjectIdListField = value;
+                    this.RaisePropertyChanged("SubjectIdList");
+                }
+            }
+        }
+        
+        public event System.ComponentModel.PropertyChangedEventHandler PropertyChanged;
+        
+        protected void RaisePropertyChanged(string propertyName) {
+            System.ComponentModel.PropertyChangedEventHandler propertyChanged = this.PropertyChanged;
+            if ((propertyChanged != null)) {
+                propertyChanged(this, new System.ComponentModel.PropertyChangedEventArgs(propertyName));
+            }
+        }
+    }
+    
+    [System.Diagnostics.DebuggerStepThroughAttribute()]
+    [System.CodeDom.Compiler.GeneratedCodeAttribute("System.Runtime.Serialization", "4.0.0.0")]
+    [System.Runtime.Serialization.DataContractAttribute(Name="DBParameterContract", Namespace="http://www.kendox.com/InfoShare")]
+    [System.SerializableAttribute()]
+    public partial class DBParameterContract : object, System.Runtime.Serialization.IExtensibleDataObject, System.ComponentModel.INotifyPropertyChanged {
+        
+        [System.NonSerializedAttribute()]
+        private System.Runtime.Serialization.ExtensionDataObject extensionDataField;
+        
+        [System.Runtime.Serialization.OptionalFieldAttribute()]
+        private string DataTypeField;
+        
+        [System.Runtime.Serialization.OptionalFieldAttribute()]
+        private string DirectionField;
+        
+        [System.Runtime.Serialization.OptionalFieldAttribute()]
+        private string NameField;
+        
+        [System.Runtime.Serialization.OptionalFieldAttribute()]
+        private int PrecisionField;
+        
+        [System.Runtime.Serialization.OptionalFieldAttribute()]
+        private int ScaleField;
+        
+        [System.Runtime.Serialization.OptionalFieldAttribute()]
+        private string SizeField;
+        
+        [System.Runtime.Serialization.OptionalFieldAttribute()]
+        private string ValueField;
+        
+        [global::System.ComponentModel.BrowsableAttribute(false)]
+        public System.Runtime.Serialization.ExtensionDataObject ExtensionData {
+            get {
+                return this.extensionDataField;
+            }
+            set {
+                this.extensionDataField = value;
+            }
+        }
+        
+        [System.Runtime.Serialization.DataMemberAttribute()]
+        public string DataType {
+            get {
+                return this.DataTypeField;
+            }
+            set {
+                if ((object.ReferenceEquals(this.DataTypeField, value) != true)) {
+                    this.DataTypeField = value;
+                    this.RaisePropertyChanged("DataType");
+                }
+            }
+        }
+        
+        [System.Runtime.Serialization.DataMemberAttribute()]
+        public string Direction {
+            get {
+                return this.DirectionField;
+            }
+            set {
+                if ((object.ReferenceEquals(this.DirectionField, value) != true)) {
+                    this.DirectionField = value;
+                    this.RaisePropertyChanged("Direction");
+                }
+            }
+        }
+        
+        [System.Runtime.Serialization.DataMemberAttribute()]
+        public string Name {
+            get {
+                return this.NameField;
+            }
+            set {
+                if ((object.ReferenceEquals(this.NameField, value) != true)) {
+                    this.NameField = value;
+                    this.RaisePropertyChanged("Name");
+                }
+            }
+        }
+        
+        [System.Runtime.Serialization.DataMemberAttribute()]
+        public int Precision {
+            get {
+                return this.PrecisionField;
+            }
+            set {
+                if ((this.PrecisionField.Equals(value) != true)) {
+                    this.PrecisionField = value;
+                    this.RaisePropertyChanged("Precision");
+                }
+            }
+        }
+        
+        [System.Runtime.Serialization.DataMemberAttribute()]
+        public int Scale {
+            get {
+                return this.ScaleField;
+            }
+            set {
+                if ((this.ScaleField.Equals(value) != true)) {
+                    this.ScaleField = value;
+                    this.RaisePropertyChanged("Scale");
+                }
+            }
+        }
+        
+        [System.Runtime.Serialization.DataMemberAttribute()]
+        public string Size {
+            get {
+                return this.SizeField;
+            }
+            set {
+                if ((object.ReferenceEquals(this.SizeField, value) != true)) {
+                    this.SizeField = value;
+                    this.RaisePropertyChanged("Size");
+                }
+            }
+        }
+        
+        [System.Runtime.Serialization.DataMemberAttribute()]
+        public string Value {
+            get {
+                return this.ValueField;
+            }
+            set {
+                if ((object.ReferenceEquals(this.ValueField, value) != true)) {
+                    this.ValueField = value;
+                    this.RaisePropertyChanged("Value");
+                }
+            }
+        }
+        
+        public event System.ComponentModel.PropertyChangedEventHandler PropertyChanged;
+        
+        protected void RaisePropertyChanged(string propertyName) {
+            System.ComponentModel.PropertyChangedEventHandler propertyChanged = this.PropertyChanged;
+            if ((propertyChanged != null)) {
+                propertyChanged(this, new System.ComponentModel.PropertyChangedEventArgs(propertyName));
+            }
+        }
+    }
+    
+    [System.Diagnostics.DebuggerStepThroughAttribute()]
+    [System.CodeDom.Compiler.GeneratedCodeAttribute("System.Runtime.Serialization", "4.0.0.0")]
+    [System.Runtime.Serialization.DataContractAttribute(Name="CustomStoredProcedureResultContract", Namespace="http://www.kendox.com/InfoShare")]
+    [System.SerializableAttribute()]
+    public partial class CustomStoredProcedureResultContract : object, System.Runtime.Serialization.IExtensibleDataObject, System.ComponentModel.INotifyPropertyChanged {
+        
+        [System.NonSerializedAttribute()]
+        private System.Runtime.Serialization.ExtensionDataObject extensionDataField;
+        
+        [System.Runtime.Serialization.OptionalFieldAttribute()]
+        private string[][] DataTableResultField;
+        
+        [System.Runtime.Serialization.OptionalFieldAttribute()]
+        private docreminder.InfoShareService.OutputParameterResultContract[] OutputParameterResultField;
+        
+        [System.Runtime.Serialization.OptionalFieldAttribute()]
+        private string ReturnValueField;
+        
+        [System.Runtime.Serialization.OptionalFieldAttribute()]
+        private string ScalarResultField;
+        
+        [global::System.ComponentModel.BrowsableAttribute(false)]
+        public System.Runtime.Serialization.ExtensionDataObject ExtensionData {
+            get {
+                return this.extensionDataField;
+            }
+            set {
+                this.extensionDataField = value;
+            }
+        }
+        
+        [System.Runtime.Serialization.DataMemberAttribute()]
+        public string[][] DataTableResult {
+            get {
+                return this.DataTableResultField;
+            }
+            set {
+                if ((object.ReferenceEquals(this.DataTableResultField, value) != true)) {
+                    this.DataTableResultField = value;
+                    this.RaisePropertyChanged("DataTableResult");
+                }
+            }
+        }
+        
+        [System.Runtime.Serialization.DataMemberAttribute()]
+        public docreminder.InfoShareService.OutputParameterResultContract[] OutputParameterResult {
+            get {
+                return this.OutputParameterResultField;
+            }
+            set {
+                if ((object.ReferenceEquals(this.OutputParameterResultField, value) != true)) {
+                    this.OutputParameterResultField = value;
+                    this.RaisePropertyChanged("OutputParameterResult");
+                }
+            }
+        }
+        
+        [System.Runtime.Serialization.DataMemberAttribute()]
+        public string ReturnValue {
+            get {
+                return this.ReturnValueField;
+            }
+            set {
+                if ((object.ReferenceEquals(this.ReturnValueField, value) != true)) {
+                    this.ReturnValueField = value;
+                    this.RaisePropertyChanged("ReturnValue");
+                }
+            }
+        }
+        
+        [System.Runtime.Serialization.DataMemberAttribute()]
+        public string ScalarResult {
+            get {
+                return this.ScalarResultField;
+            }
+            set {
+                if ((object.ReferenceEquals(this.ScalarResultField, value) != true)) {
+                    this.ScalarResultField = value;
+                    this.RaisePropertyChanged("ScalarResult");
+                }
+            }
+        }
+        
+        public event System.ComponentModel.PropertyChangedEventHandler PropertyChanged;
+        
+        protected void RaisePropertyChanged(string propertyName) {
+            System.ComponentModel.PropertyChangedEventHandler propertyChanged = this.PropertyChanged;
+            if ((propertyChanged != null)) {
+                propertyChanged(this, new System.ComponentModel.PropertyChangedEventArgs(propertyName));
+            }
+        }
+    }
+    
+    [System.Diagnostics.DebuggerStepThroughAttribute()]
+    [System.CodeDom.Compiler.GeneratedCodeAttribute("System.Runtime.Serialization", "4.0.0.0")]
+    [System.Runtime.Serialization.DataContractAttribute(Name="OutputParameterResultContract", Namespace="http://www.kendox.com/InfoShare")]
+    [System.SerializableAttribute()]
+    public partial class OutputParameterResultContract : object, System.Runtime.Serialization.IExtensibleDataObject, System.ComponentModel.INotifyPropertyChanged {
+        
+        [System.NonSerializedAttribute()]
+        private System.Runtime.Serialization.ExtensionDataObject extensionDataField;
+        
+        [System.Runtime.Serialization.OptionalFieldAttribute()]
+        private string NameField;
+        
+        [System.Runtime.Serialization.OptionalFieldAttribute()]
+        private string ValueField;
+        
+        [global::System.ComponentModel.BrowsableAttribute(false)]
+        public System.Runtime.Serialization.ExtensionDataObject ExtensionData {
+            get {
+                return this.extensionDataField;
+            }
+            set {
+                this.extensionDataField = value;
+            }
+        }
+        
+        [System.Runtime.Serialization.DataMemberAttribute()]
+        public string Name {
+            get {
+                return this.NameField;
+            }
+            set {
+                if ((object.ReferenceEquals(this.NameField, value) != true)) {
+                    this.NameField = value;
+                    this.RaisePropertyChanged("Name");
+                }
+            }
+        }
+        
+        [System.Runtime.Serialization.DataMemberAttribute()]
+        public string Value {
+            get {
+                return this.ValueField;
+            }
+            set {
+                if ((object.ReferenceEquals(this.ValueField, value) != true)) {
+                    this.ValueField = value;
+                    this.RaisePropertyChanged("Value");
                 }
             }
         }
@@ -16354,711 +18442,6 @@ namespace docreminder.InfoShareService {
     
     [System.Diagnostics.DebuggerStepThroughAttribute()]
     [System.CodeDom.Compiler.GeneratedCodeAttribute("System.Runtime.Serialization", "4.0.0.0")]
-    [System.Runtime.Serialization.DataContractAttribute(Name="ServerInfoContract", Namespace="http://www.kendox.com/InfoShare")]
-    [System.SerializableAttribute()]
-    public partial class ServerInfoContract : object, System.Runtime.Serialization.IExtensibleDataObject, System.ComponentModel.INotifyPropertyChanged {
-        
-        [System.NonSerializedAttribute()]
-        private System.Runtime.Serialization.ExtensionDataObject extensionDataField;
-        
-        [System.Runtime.Serialization.OptionalFieldAttribute()]
-        private string ApplicationUserField;
-        
-        [System.Runtime.Serialization.OptionalFieldAttribute()]
-        private long AvailableSystemMemoryField;
-        
-        [System.Runtime.Serialization.OptionalFieldAttribute()]
-        private string CultureField;
-        
-        [System.Runtime.Serialization.OptionalFieldAttribute()]
-        private string FrameworkVersionField;
-        
-        [System.Runtime.Serialization.OptionalFieldAttribute()]
-        private string[] IPField;
-        
-        [System.Runtime.Serialization.OptionalFieldAttribute()]
-        private long InstalledMemoryField;
-        
-        [System.Runtime.Serialization.OptionalFieldAttribute()]
-        private bool Is64BitProcessField;
-        
-        [System.Runtime.Serialization.OptionalFieldAttribute()]
-        private bool Is64BitSystemField;
-        
-        [System.Runtime.Serialization.OptionalFieldAttribute()]
-        private string OperatingSystemField;
-        
-        [System.Runtime.Serialization.OptionalFieldAttribute()]
-        private string ProcessorCoresField;
-        
-        [System.Runtime.Serialization.OptionalFieldAttribute()]
-        private string ProcessorNameField;
-        
-        [System.Runtime.Serialization.OptionalFieldAttribute()]
-        private docreminder.InfoShareService.SecurityPluginInfoContract SecuritPluginInfoField;
-        
-        [System.Runtime.Serialization.OptionalFieldAttribute()]
-        private string ServerDateField;
-        
-        [System.Runtime.Serialization.OptionalFieldAttribute()]
-        private string ServerDomainField;
-        
-        [System.Runtime.Serialization.OptionalFieldAttribute()]
-        private string ServerNameField;
-        
-        [System.Runtime.Serialization.OptionalFieldAttribute()]
-        private docreminder.InfoShareService.AssemblyInfoContract[] StatisticPluginsField;
-        
-        [System.Runtime.Serialization.OptionalFieldAttribute()]
-        private docreminder.InfoShareService.TenantInfoContract[] TenantInfosField;
-        
-        [System.Runtime.Serialization.OptionalFieldAttribute()]
-        private string TimeZoneDisplayNameField;
-        
-        [System.Runtime.Serialization.OptionalFieldAttribute()]
-        private int TimeZoneUtcOffsetMinutesField;
-        
-        [System.Runtime.Serialization.OptionalFieldAttribute()]
-        private string UICultureField;
-        
-        [System.Runtime.Serialization.OptionalFieldAttribute()]
-        private long UsedMemoryField;
-        
-        [System.Runtime.Serialization.OptionalFieldAttribute()]
-        private string VersionField;
-        
-        [System.Runtime.Serialization.OptionalFieldAttribute()]
-        private docreminder.InfoShareService.WCFEndpointContract[] WCFEndpointsField;
-        
-        [global::System.ComponentModel.BrowsableAttribute(false)]
-        public System.Runtime.Serialization.ExtensionDataObject ExtensionData {
-            get {
-                return this.extensionDataField;
-            }
-            set {
-                this.extensionDataField = value;
-            }
-        }
-        
-        [System.Runtime.Serialization.DataMemberAttribute()]
-        public string ApplicationUser {
-            get {
-                return this.ApplicationUserField;
-            }
-            set {
-                if ((object.ReferenceEquals(this.ApplicationUserField, value) != true)) {
-                    this.ApplicationUserField = value;
-                    this.RaisePropertyChanged("ApplicationUser");
-                }
-            }
-        }
-        
-        [System.Runtime.Serialization.DataMemberAttribute()]
-        public long AvailableSystemMemory {
-            get {
-                return this.AvailableSystemMemoryField;
-            }
-            set {
-                if ((this.AvailableSystemMemoryField.Equals(value) != true)) {
-                    this.AvailableSystemMemoryField = value;
-                    this.RaisePropertyChanged("AvailableSystemMemory");
-                }
-            }
-        }
-        
-        [System.Runtime.Serialization.DataMemberAttribute()]
-        public string Culture {
-            get {
-                return this.CultureField;
-            }
-            set {
-                if ((object.ReferenceEquals(this.CultureField, value) != true)) {
-                    this.CultureField = value;
-                    this.RaisePropertyChanged("Culture");
-                }
-            }
-        }
-        
-        [System.Runtime.Serialization.DataMemberAttribute()]
-        public string FrameworkVersion {
-            get {
-                return this.FrameworkVersionField;
-            }
-            set {
-                if ((object.ReferenceEquals(this.FrameworkVersionField, value) != true)) {
-                    this.FrameworkVersionField = value;
-                    this.RaisePropertyChanged("FrameworkVersion");
-                }
-            }
-        }
-        
-        [System.Runtime.Serialization.DataMemberAttribute()]
-        public string[] IP {
-            get {
-                return this.IPField;
-            }
-            set {
-                if ((object.ReferenceEquals(this.IPField, value) != true)) {
-                    this.IPField = value;
-                    this.RaisePropertyChanged("IP");
-                }
-            }
-        }
-        
-        [System.Runtime.Serialization.DataMemberAttribute()]
-        public long InstalledMemory {
-            get {
-                return this.InstalledMemoryField;
-            }
-            set {
-                if ((this.InstalledMemoryField.Equals(value) != true)) {
-                    this.InstalledMemoryField = value;
-                    this.RaisePropertyChanged("InstalledMemory");
-                }
-            }
-        }
-        
-        [System.Runtime.Serialization.DataMemberAttribute()]
-        public bool Is64BitProcess {
-            get {
-                return this.Is64BitProcessField;
-            }
-            set {
-                if ((this.Is64BitProcessField.Equals(value) != true)) {
-                    this.Is64BitProcessField = value;
-                    this.RaisePropertyChanged("Is64BitProcess");
-                }
-            }
-        }
-        
-        [System.Runtime.Serialization.DataMemberAttribute()]
-        public bool Is64BitSystem {
-            get {
-                return this.Is64BitSystemField;
-            }
-            set {
-                if ((this.Is64BitSystemField.Equals(value) != true)) {
-                    this.Is64BitSystemField = value;
-                    this.RaisePropertyChanged("Is64BitSystem");
-                }
-            }
-        }
-        
-        [System.Runtime.Serialization.DataMemberAttribute()]
-        public string OperatingSystem {
-            get {
-                return this.OperatingSystemField;
-            }
-            set {
-                if ((object.ReferenceEquals(this.OperatingSystemField, value) != true)) {
-                    this.OperatingSystemField = value;
-                    this.RaisePropertyChanged("OperatingSystem");
-                }
-            }
-        }
-        
-        [System.Runtime.Serialization.DataMemberAttribute()]
-        public string ProcessorCores {
-            get {
-                return this.ProcessorCoresField;
-            }
-            set {
-                if ((object.ReferenceEquals(this.ProcessorCoresField, value) != true)) {
-                    this.ProcessorCoresField = value;
-                    this.RaisePropertyChanged("ProcessorCores");
-                }
-            }
-        }
-        
-        [System.Runtime.Serialization.DataMemberAttribute()]
-        public string ProcessorName {
-            get {
-                return this.ProcessorNameField;
-            }
-            set {
-                if ((object.ReferenceEquals(this.ProcessorNameField, value) != true)) {
-                    this.ProcessorNameField = value;
-                    this.RaisePropertyChanged("ProcessorName");
-                }
-            }
-        }
-        
-        [System.Runtime.Serialization.DataMemberAttribute()]
-        public docreminder.InfoShareService.SecurityPluginInfoContract SecuritPluginInfo {
-            get {
-                return this.SecuritPluginInfoField;
-            }
-            set {
-                if ((object.ReferenceEquals(this.SecuritPluginInfoField, value) != true)) {
-                    this.SecuritPluginInfoField = value;
-                    this.RaisePropertyChanged("SecuritPluginInfo");
-                }
-            }
-        }
-        
-        [System.Runtime.Serialization.DataMemberAttribute()]
-        public string ServerDate {
-            get {
-                return this.ServerDateField;
-            }
-            set {
-                if ((object.ReferenceEquals(this.ServerDateField, value) != true)) {
-                    this.ServerDateField = value;
-                    this.RaisePropertyChanged("ServerDate");
-                }
-            }
-        }
-        
-        [System.Runtime.Serialization.DataMemberAttribute()]
-        public string ServerDomain {
-            get {
-                return this.ServerDomainField;
-            }
-            set {
-                if ((object.ReferenceEquals(this.ServerDomainField, value) != true)) {
-                    this.ServerDomainField = value;
-                    this.RaisePropertyChanged("ServerDomain");
-                }
-            }
-        }
-        
-        [System.Runtime.Serialization.DataMemberAttribute()]
-        public string ServerName {
-            get {
-                return this.ServerNameField;
-            }
-            set {
-                if ((object.ReferenceEquals(this.ServerNameField, value) != true)) {
-                    this.ServerNameField = value;
-                    this.RaisePropertyChanged("ServerName");
-                }
-            }
-        }
-        
-        [System.Runtime.Serialization.DataMemberAttribute()]
-        public docreminder.InfoShareService.AssemblyInfoContract[] StatisticPlugins {
-            get {
-                return this.StatisticPluginsField;
-            }
-            set {
-                if ((object.ReferenceEquals(this.StatisticPluginsField, value) != true)) {
-                    this.StatisticPluginsField = value;
-                    this.RaisePropertyChanged("StatisticPlugins");
-                }
-            }
-        }
-        
-        [System.Runtime.Serialization.DataMemberAttribute()]
-        public docreminder.InfoShareService.TenantInfoContract[] TenantInfos {
-            get {
-                return this.TenantInfosField;
-            }
-            set {
-                if ((object.ReferenceEquals(this.TenantInfosField, value) != true)) {
-                    this.TenantInfosField = value;
-                    this.RaisePropertyChanged("TenantInfos");
-                }
-            }
-        }
-        
-        [System.Runtime.Serialization.DataMemberAttribute()]
-        public string TimeZoneDisplayName {
-            get {
-                return this.TimeZoneDisplayNameField;
-            }
-            set {
-                if ((object.ReferenceEquals(this.TimeZoneDisplayNameField, value) != true)) {
-                    this.TimeZoneDisplayNameField = value;
-                    this.RaisePropertyChanged("TimeZoneDisplayName");
-                }
-            }
-        }
-        
-        [System.Runtime.Serialization.DataMemberAttribute()]
-        public int TimeZoneUtcOffsetMinutes {
-            get {
-                return this.TimeZoneUtcOffsetMinutesField;
-            }
-            set {
-                if ((this.TimeZoneUtcOffsetMinutesField.Equals(value) != true)) {
-                    this.TimeZoneUtcOffsetMinutesField = value;
-                    this.RaisePropertyChanged("TimeZoneUtcOffsetMinutes");
-                }
-            }
-        }
-        
-        [System.Runtime.Serialization.DataMemberAttribute()]
-        public string UICulture {
-            get {
-                return this.UICultureField;
-            }
-            set {
-                if ((object.ReferenceEquals(this.UICultureField, value) != true)) {
-                    this.UICultureField = value;
-                    this.RaisePropertyChanged("UICulture");
-                }
-            }
-        }
-        
-        [System.Runtime.Serialization.DataMemberAttribute()]
-        public long UsedMemory {
-            get {
-                return this.UsedMemoryField;
-            }
-            set {
-                if ((this.UsedMemoryField.Equals(value) != true)) {
-                    this.UsedMemoryField = value;
-                    this.RaisePropertyChanged("UsedMemory");
-                }
-            }
-        }
-        
-        [System.Runtime.Serialization.DataMemberAttribute()]
-        public string Version {
-            get {
-                return this.VersionField;
-            }
-            set {
-                if ((object.ReferenceEquals(this.VersionField, value) != true)) {
-                    this.VersionField = value;
-                    this.RaisePropertyChanged("Version");
-                }
-            }
-        }
-        
-        [System.Runtime.Serialization.DataMemberAttribute()]
-        public docreminder.InfoShareService.WCFEndpointContract[] WCFEndpoints {
-            get {
-                return this.WCFEndpointsField;
-            }
-            set {
-                if ((object.ReferenceEquals(this.WCFEndpointsField, value) != true)) {
-                    this.WCFEndpointsField = value;
-                    this.RaisePropertyChanged("WCFEndpoints");
-                }
-            }
-        }
-        
-        public event System.ComponentModel.PropertyChangedEventHandler PropertyChanged;
-        
-        protected void RaisePropertyChanged(string propertyName) {
-            System.ComponentModel.PropertyChangedEventHandler propertyChanged = this.PropertyChanged;
-            if ((propertyChanged != null)) {
-                propertyChanged(this, new System.ComponentModel.PropertyChangedEventArgs(propertyName));
-            }
-        }
-    }
-    
-    [System.Diagnostics.DebuggerStepThroughAttribute()]
-    [System.CodeDom.Compiler.GeneratedCodeAttribute("System.Runtime.Serialization", "4.0.0.0")]
-    [System.Runtime.Serialization.DataContractAttribute(Name="SecurityPluginInfoContract", Namespace="http://www.kendox.com/InfoShare")]
-    [System.SerializableAttribute()]
-    public partial class SecurityPluginInfoContract : object, System.Runtime.Serialization.IExtensibleDataObject, System.ComponentModel.INotifyPropertyChanged {
-        
-        [System.NonSerializedAttribute()]
-        private System.Runtime.Serialization.ExtensionDataObject extensionDataField;
-        
-        [System.Runtime.Serialization.OptionalFieldAttribute()]
-        private string AssemblyNameField;
-        
-        [System.Runtime.Serialization.OptionalFieldAttribute()]
-        private string ClassNameField;
-        
-        [System.Runtime.Serialization.OptionalFieldAttribute()]
-        private bool DefaultPluginField;
-        
-        [System.Runtime.Serialization.OptionalFieldAttribute()]
-        private string VersionField;
-        
-        [global::System.ComponentModel.BrowsableAttribute(false)]
-        public System.Runtime.Serialization.ExtensionDataObject ExtensionData {
-            get {
-                return this.extensionDataField;
-            }
-            set {
-                this.extensionDataField = value;
-            }
-        }
-        
-        [System.Runtime.Serialization.DataMemberAttribute()]
-        public string AssemblyName {
-            get {
-                return this.AssemblyNameField;
-            }
-            set {
-                if ((object.ReferenceEquals(this.AssemblyNameField, value) != true)) {
-                    this.AssemblyNameField = value;
-                    this.RaisePropertyChanged("AssemblyName");
-                }
-            }
-        }
-        
-        [System.Runtime.Serialization.DataMemberAttribute()]
-        public string ClassName {
-            get {
-                return this.ClassNameField;
-            }
-            set {
-                if ((object.ReferenceEquals(this.ClassNameField, value) != true)) {
-                    this.ClassNameField = value;
-                    this.RaisePropertyChanged("ClassName");
-                }
-            }
-        }
-        
-        [System.Runtime.Serialization.DataMemberAttribute()]
-        public bool DefaultPlugin {
-            get {
-                return this.DefaultPluginField;
-            }
-            set {
-                if ((this.DefaultPluginField.Equals(value) != true)) {
-                    this.DefaultPluginField = value;
-                    this.RaisePropertyChanged("DefaultPlugin");
-                }
-            }
-        }
-        
-        [System.Runtime.Serialization.DataMemberAttribute()]
-        public string Version {
-            get {
-                return this.VersionField;
-            }
-            set {
-                if ((object.ReferenceEquals(this.VersionField, value) != true)) {
-                    this.VersionField = value;
-                    this.RaisePropertyChanged("Version");
-                }
-            }
-        }
-        
-        public event System.ComponentModel.PropertyChangedEventHandler PropertyChanged;
-        
-        protected void RaisePropertyChanged(string propertyName) {
-            System.ComponentModel.PropertyChangedEventHandler propertyChanged = this.PropertyChanged;
-            if ((propertyChanged != null)) {
-                propertyChanged(this, new System.ComponentModel.PropertyChangedEventArgs(propertyName));
-            }
-        }
-    }
-    
-    [System.Diagnostics.DebuggerStepThroughAttribute()]
-    [System.CodeDom.Compiler.GeneratedCodeAttribute("System.Runtime.Serialization", "4.0.0.0")]
-    [System.Runtime.Serialization.DataContractAttribute(Name="AssemblyInfoContract", Namespace="http://www.kendox.com/InfoShare")]
-    [System.SerializableAttribute()]
-    public partial class AssemblyInfoContract : object, System.Runtime.Serialization.IExtensibleDataObject, System.ComponentModel.INotifyPropertyChanged {
-        
-        [System.NonSerializedAttribute()]
-        private System.Runtime.Serialization.ExtensionDataObject extensionDataField;
-        
-        [System.Runtime.Serialization.OptionalFieldAttribute()]
-        private string ClassNameField;
-        
-        [System.Runtime.Serialization.OptionalFieldAttribute()]
-        private string NameField;
-        
-        [System.Runtime.Serialization.OptionalFieldAttribute()]
-        private string VersionField;
-        
-        [global::System.ComponentModel.BrowsableAttribute(false)]
-        public System.Runtime.Serialization.ExtensionDataObject ExtensionData {
-            get {
-                return this.extensionDataField;
-            }
-            set {
-                this.extensionDataField = value;
-            }
-        }
-        
-        [System.Runtime.Serialization.DataMemberAttribute()]
-        public string ClassName {
-            get {
-                return this.ClassNameField;
-            }
-            set {
-                if ((object.ReferenceEquals(this.ClassNameField, value) != true)) {
-                    this.ClassNameField = value;
-                    this.RaisePropertyChanged("ClassName");
-                }
-            }
-        }
-        
-        [System.Runtime.Serialization.DataMemberAttribute()]
-        public string Name {
-            get {
-                return this.NameField;
-            }
-            set {
-                if ((object.ReferenceEquals(this.NameField, value) != true)) {
-                    this.NameField = value;
-                    this.RaisePropertyChanged("Name");
-                }
-            }
-        }
-        
-        [System.Runtime.Serialization.DataMemberAttribute()]
-        public string Version {
-            get {
-                return this.VersionField;
-            }
-            set {
-                if ((object.ReferenceEquals(this.VersionField, value) != true)) {
-                    this.VersionField = value;
-                    this.RaisePropertyChanged("Version");
-                }
-            }
-        }
-        
-        public event System.ComponentModel.PropertyChangedEventHandler PropertyChanged;
-        
-        protected void RaisePropertyChanged(string propertyName) {
-            System.ComponentModel.PropertyChangedEventHandler propertyChanged = this.PropertyChanged;
-            if ((propertyChanged != null)) {
-                propertyChanged(this, new System.ComponentModel.PropertyChangedEventArgs(propertyName));
-            }
-        }
-    }
-    
-    [System.Diagnostics.DebuggerStepThroughAttribute()]
-    [System.CodeDom.Compiler.GeneratedCodeAttribute("System.Runtime.Serialization", "4.0.0.0")]
-    [System.Runtime.Serialization.DataContractAttribute(Name="TenantInfoContract", Namespace="http://www.kendox.com/InfoShare")]
-    [System.SerializableAttribute()]
-    public partial class TenantInfoContract : object, System.Runtime.Serialization.IExtensibleDataObject, System.ComponentModel.INotifyPropertyChanged {
-        
-        [System.NonSerializedAttribute()]
-        private System.Runtime.Serialization.ExtensionDataObject extensionDataField;
-        
-        [System.Runtime.Serialization.OptionalFieldAttribute()]
-        private string NameField;
-        
-        [System.Runtime.Serialization.OptionalFieldAttribute()]
-        private int ServerPortField;
-        
-        [global::System.ComponentModel.BrowsableAttribute(false)]
-        public System.Runtime.Serialization.ExtensionDataObject ExtensionData {
-            get {
-                return this.extensionDataField;
-            }
-            set {
-                this.extensionDataField = value;
-            }
-        }
-        
-        [System.Runtime.Serialization.DataMemberAttribute()]
-        public string Name {
-            get {
-                return this.NameField;
-            }
-            set {
-                if ((object.ReferenceEquals(this.NameField, value) != true)) {
-                    this.NameField = value;
-                    this.RaisePropertyChanged("Name");
-                }
-            }
-        }
-        
-        [System.Runtime.Serialization.DataMemberAttribute()]
-        public int ServerPort {
-            get {
-                return this.ServerPortField;
-            }
-            set {
-                if ((this.ServerPortField.Equals(value) != true)) {
-                    this.ServerPortField = value;
-                    this.RaisePropertyChanged("ServerPort");
-                }
-            }
-        }
-        
-        public event System.ComponentModel.PropertyChangedEventHandler PropertyChanged;
-        
-        protected void RaisePropertyChanged(string propertyName) {
-            System.ComponentModel.PropertyChangedEventHandler propertyChanged = this.PropertyChanged;
-            if ((propertyChanged != null)) {
-                propertyChanged(this, new System.ComponentModel.PropertyChangedEventArgs(propertyName));
-            }
-        }
-    }
-    
-    [System.Diagnostics.DebuggerStepThroughAttribute()]
-    [System.CodeDom.Compiler.GeneratedCodeAttribute("System.Runtime.Serialization", "4.0.0.0")]
-    [System.Runtime.Serialization.DataContractAttribute(Name="WCFEndpointContract", Namespace="http://www.kendox.com/InfoShare")]
-    [System.SerializableAttribute()]
-    public partial class WCFEndpointContract : object, System.Runtime.Serialization.IExtensibleDataObject, System.ComponentModel.INotifyPropertyChanged {
-        
-        [System.NonSerializedAttribute()]
-        private System.Runtime.Serialization.ExtensionDataObject extensionDataField;
-        
-        [System.Runtime.Serialization.OptionalFieldAttribute()]
-        private bool RestServiceField;
-        
-        [System.Runtime.Serialization.OptionalFieldAttribute()]
-        private string URLField;
-        
-        [System.Runtime.Serialization.OptionalFieldAttribute()]
-        private bool WindowsAuthenticationField;
-        
-        [global::System.ComponentModel.BrowsableAttribute(false)]
-        public System.Runtime.Serialization.ExtensionDataObject ExtensionData {
-            get {
-                return this.extensionDataField;
-            }
-            set {
-                this.extensionDataField = value;
-            }
-        }
-        
-        [System.Runtime.Serialization.DataMemberAttribute()]
-        public bool RestService {
-            get {
-                return this.RestServiceField;
-            }
-            set {
-                if ((this.RestServiceField.Equals(value) != true)) {
-                    this.RestServiceField = value;
-                    this.RaisePropertyChanged("RestService");
-                }
-            }
-        }
-        
-        [System.Runtime.Serialization.DataMemberAttribute()]
-        public string URL {
-            get {
-                return this.URLField;
-            }
-            set {
-                if ((object.ReferenceEquals(this.URLField, value) != true)) {
-                    this.URLField = value;
-                    this.RaisePropertyChanged("URL");
-                }
-            }
-        }
-        
-        [System.Runtime.Serialization.DataMemberAttribute()]
-        public bool WindowsAuthentication {
-            get {
-                return this.WindowsAuthenticationField;
-            }
-            set {
-                if ((this.WindowsAuthenticationField.Equals(value) != true)) {
-                    this.WindowsAuthenticationField = value;
-                    this.RaisePropertyChanged("WindowsAuthentication");
-                }
-            }
-        }
-        
-        public event System.ComponentModel.PropertyChangedEventHandler PropertyChanged;
-        
-        protected void RaisePropertyChanged(string propertyName) {
-            System.ComponentModel.PropertyChangedEventHandler propertyChanged = this.PropertyChanged;
-            if ((propertyChanged != null)) {
-                propertyChanged(this, new System.ComponentModel.PropertyChangedEventArgs(propertyName));
-            }
-        }
-    }
-    
-    [System.Diagnostics.DebuggerStepThroughAttribute()]
-    [System.CodeDom.Compiler.GeneratedCodeAttribute("System.Runtime.Serialization", "4.0.0.0")]
     [System.Runtime.Serialization.DataContractAttribute(Name="LicenceInfoContract", Namespace="http://www.kendox.com/InfoShare")]
     [System.SerializableAttribute()]
     public partial class LicenceInfoContract : object, System.Runtime.Serialization.IExtensibleDataObject, System.ComponentModel.INotifyPropertyChanged {
@@ -18043,6 +19426,413 @@ namespace docreminder.InfoShareService {
     
     [System.Diagnostics.DebuggerStepThroughAttribute()]
     [System.CodeDom.Compiler.GeneratedCodeAttribute("System.Runtime.Serialization", "4.0.0.0")]
+    [System.Runtime.Serialization.DataContractAttribute(Name="DocumentToAnalyzeContract", Namespace="http://www.kendox.com/InfoShare")]
+    [System.SerializableAttribute()]
+    public partial class DocumentToAnalyzeContract : object, System.Runtime.Serialization.IExtensibleDataObject, System.ComponentModel.INotifyPropertyChanged {
+        
+        [System.NonSerializedAttribute()]
+        private System.Runtime.Serialization.ExtensionDataObject extensionDataField;
+        
+        [System.Runtime.Serialization.OptionalFieldAttribute()]
+        private bool AutoSuggestField;
+        
+        [System.Runtime.Serialization.OptionalFieldAttribute()]
+        private string EntryDateField;
+        
+        [System.Runtime.Serialization.OptionalFieldAttribute()]
+        private bool FulltextField;
+        
+        [System.Runtime.Serialization.OptionalFieldAttribute()]
+        private bool FulltextPropertiesField;
+        
+        [System.Runtime.Serialization.OptionalFieldAttribute()]
+        private string IdField;
+        
+        [System.Runtime.Serialization.OptionalFieldAttribute()]
+        private bool MailAttributesField;
+        
+        [System.Runtime.Serialization.OptionalFieldAttribute()]
+        private bool PageCountField;
+        
+        [System.Runtime.Serialization.OptionalFieldAttribute()]
+        private bool PdfAField;
+        
+        [System.Runtime.Serialization.OptionalFieldAttribute()]
+        private bool SearchablePdfField;
+        
+        [System.Runtime.Serialization.OptionalFieldAttribute()]
+        private bool ThumbnailField;
+        
+        [System.Runtime.Serialization.OptionalFieldAttribute()]
+        private string ThumbnailBlobStoreIdField;
+        
+        [System.Runtime.Serialization.OptionalFieldAttribute()]
+        private string ThumbnailBlobStoreProviderIdField;
+        
+        [System.Runtime.Serialization.OptionalFieldAttribute()]
+        private int ThumbnailSizeField;
+        
+        [System.Runtime.Serialization.OptionalFieldAttribute()]
+        private bool WriteFulltextToPropertyField;
+        
+        [global::System.ComponentModel.BrowsableAttribute(false)]
+        public System.Runtime.Serialization.ExtensionDataObject ExtensionData {
+            get {
+                return this.extensionDataField;
+            }
+            set {
+                this.extensionDataField = value;
+            }
+        }
+        
+        [System.Runtime.Serialization.DataMemberAttribute()]
+        public bool AutoSuggest {
+            get {
+                return this.AutoSuggestField;
+            }
+            set {
+                if ((this.AutoSuggestField.Equals(value) != true)) {
+                    this.AutoSuggestField = value;
+                    this.RaisePropertyChanged("AutoSuggest");
+                }
+            }
+        }
+        
+        [System.Runtime.Serialization.DataMemberAttribute()]
+        public string EntryDate {
+            get {
+                return this.EntryDateField;
+            }
+            set {
+                if ((object.ReferenceEquals(this.EntryDateField, value) != true)) {
+                    this.EntryDateField = value;
+                    this.RaisePropertyChanged("EntryDate");
+                }
+            }
+        }
+        
+        [System.Runtime.Serialization.DataMemberAttribute()]
+        public bool Fulltext {
+            get {
+                return this.FulltextField;
+            }
+            set {
+                if ((this.FulltextField.Equals(value) != true)) {
+                    this.FulltextField = value;
+                    this.RaisePropertyChanged("Fulltext");
+                }
+            }
+        }
+        
+        [System.Runtime.Serialization.DataMemberAttribute()]
+        public bool FulltextProperties {
+            get {
+                return this.FulltextPropertiesField;
+            }
+            set {
+                if ((this.FulltextPropertiesField.Equals(value) != true)) {
+                    this.FulltextPropertiesField = value;
+                    this.RaisePropertyChanged("FulltextProperties");
+                }
+            }
+        }
+        
+        [System.Runtime.Serialization.DataMemberAttribute()]
+        public string Id {
+            get {
+                return this.IdField;
+            }
+            set {
+                if ((object.ReferenceEquals(this.IdField, value) != true)) {
+                    this.IdField = value;
+                    this.RaisePropertyChanged("Id");
+                }
+            }
+        }
+        
+        [System.Runtime.Serialization.DataMemberAttribute()]
+        public bool MailAttributes {
+            get {
+                return this.MailAttributesField;
+            }
+            set {
+                if ((this.MailAttributesField.Equals(value) != true)) {
+                    this.MailAttributesField = value;
+                    this.RaisePropertyChanged("MailAttributes");
+                }
+            }
+        }
+        
+        [System.Runtime.Serialization.DataMemberAttribute()]
+        public bool PageCount {
+            get {
+                return this.PageCountField;
+            }
+            set {
+                if ((this.PageCountField.Equals(value) != true)) {
+                    this.PageCountField = value;
+                    this.RaisePropertyChanged("PageCount");
+                }
+            }
+        }
+        
+        [System.Runtime.Serialization.DataMemberAttribute()]
+        public bool PdfA {
+            get {
+                return this.PdfAField;
+            }
+            set {
+                if ((this.PdfAField.Equals(value) != true)) {
+                    this.PdfAField = value;
+                    this.RaisePropertyChanged("PdfA");
+                }
+            }
+        }
+        
+        [System.Runtime.Serialization.DataMemberAttribute()]
+        public bool SearchablePdf {
+            get {
+                return this.SearchablePdfField;
+            }
+            set {
+                if ((this.SearchablePdfField.Equals(value) != true)) {
+                    this.SearchablePdfField = value;
+                    this.RaisePropertyChanged("SearchablePdf");
+                }
+            }
+        }
+        
+        [System.Runtime.Serialization.DataMemberAttribute()]
+        public bool Thumbnail {
+            get {
+                return this.ThumbnailField;
+            }
+            set {
+                if ((this.ThumbnailField.Equals(value) != true)) {
+                    this.ThumbnailField = value;
+                    this.RaisePropertyChanged("Thumbnail");
+                }
+            }
+        }
+        
+        [System.Runtime.Serialization.DataMemberAttribute()]
+        public string ThumbnailBlobStoreId {
+            get {
+                return this.ThumbnailBlobStoreIdField;
+            }
+            set {
+                if ((object.ReferenceEquals(this.ThumbnailBlobStoreIdField, value) != true)) {
+                    this.ThumbnailBlobStoreIdField = value;
+                    this.RaisePropertyChanged("ThumbnailBlobStoreId");
+                }
+            }
+        }
+        
+        [System.Runtime.Serialization.DataMemberAttribute()]
+        public string ThumbnailBlobStoreProviderId {
+            get {
+                return this.ThumbnailBlobStoreProviderIdField;
+            }
+            set {
+                if ((object.ReferenceEquals(this.ThumbnailBlobStoreProviderIdField, value) != true)) {
+                    this.ThumbnailBlobStoreProviderIdField = value;
+                    this.RaisePropertyChanged("ThumbnailBlobStoreProviderId");
+                }
+            }
+        }
+        
+        [System.Runtime.Serialization.DataMemberAttribute()]
+        public int ThumbnailSize {
+            get {
+                return this.ThumbnailSizeField;
+            }
+            set {
+                if ((this.ThumbnailSizeField.Equals(value) != true)) {
+                    this.ThumbnailSizeField = value;
+                    this.RaisePropertyChanged("ThumbnailSize");
+                }
+            }
+        }
+        
+        [System.Runtime.Serialization.DataMemberAttribute()]
+        public bool WriteFulltextToProperty {
+            get {
+                return this.WriteFulltextToPropertyField;
+            }
+            set {
+                if ((this.WriteFulltextToPropertyField.Equals(value) != true)) {
+                    this.WriteFulltextToPropertyField = value;
+                    this.RaisePropertyChanged("WriteFulltextToProperty");
+                }
+            }
+        }
+        
+        public event System.ComponentModel.PropertyChangedEventHandler PropertyChanged;
+        
+        protected void RaisePropertyChanged(string propertyName) {
+            System.ComponentModel.PropertyChangedEventHandler propertyChanged = this.PropertyChanged;
+            if ((propertyChanged != null)) {
+                propertyChanged(this, new System.ComponentModel.PropertyChangedEventArgs(propertyName));
+            }
+        }
+    }
+    
+    [System.Diagnostics.DebuggerStepThroughAttribute()]
+    [System.CodeDom.Compiler.GeneratedCodeAttribute("System.Runtime.Serialization", "4.0.0.0")]
+    [System.Runtime.Serialization.DataContractAttribute(Name="CultureInfoContract", Namespace="http://www.kendox.com/InfoShare")]
+    [System.SerializableAttribute()]
+    public partial class CultureInfoContract : object, System.Runtime.Serialization.IExtensibleDataObject, System.ComponentModel.INotifyPropertyChanged {
+        
+        [System.NonSerializedAttribute()]
+        private System.Runtime.Serialization.ExtensionDataObject extensionDataField;
+        
+        [System.Runtime.Serialization.OptionalFieldAttribute()]
+        private string DisplayNameField;
+        
+        [System.Runtime.Serialization.OptionalFieldAttribute()]
+        private string NameField;
+        
+        [global::System.ComponentModel.BrowsableAttribute(false)]
+        public System.Runtime.Serialization.ExtensionDataObject ExtensionData {
+            get {
+                return this.extensionDataField;
+            }
+            set {
+                this.extensionDataField = value;
+            }
+        }
+        
+        [System.Runtime.Serialization.DataMemberAttribute()]
+        public string DisplayName {
+            get {
+                return this.DisplayNameField;
+            }
+            set {
+                if ((object.ReferenceEquals(this.DisplayNameField, value) != true)) {
+                    this.DisplayNameField = value;
+                    this.RaisePropertyChanged("DisplayName");
+                }
+            }
+        }
+        
+        [System.Runtime.Serialization.DataMemberAttribute()]
+        public string Name {
+            get {
+                return this.NameField;
+            }
+            set {
+                if ((object.ReferenceEquals(this.NameField, value) != true)) {
+                    this.NameField = value;
+                    this.RaisePropertyChanged("Name");
+                }
+            }
+        }
+        
+        public event System.ComponentModel.PropertyChangedEventHandler PropertyChanged;
+        
+        protected void RaisePropertyChanged(string propertyName) {
+            System.ComponentModel.PropertyChangedEventHandler propertyChanged = this.PropertyChanged;
+            if ((propertyChanged != null)) {
+                propertyChanged(this, new System.ComponentModel.PropertyChangedEventArgs(propertyName));
+            }
+        }
+    }
+    
+    [System.Diagnostics.DebuggerStepThroughAttribute()]
+    [System.CodeDom.Compiler.GeneratedCodeAttribute("System.Runtime.Serialization", "4.0.0.0")]
+    [System.Runtime.Serialization.DataContractAttribute(Name="TimeSpanContract", Namespace="http://www.kendox.com/InfoShare")]
+    [System.SerializableAttribute()]
+    public partial class TimeSpanContract : object, System.Runtime.Serialization.IExtensibleDataObject, System.ComponentModel.INotifyPropertyChanged {
+        
+        [System.NonSerializedAttribute()]
+        private System.Runtime.Serialization.ExtensionDataObject extensionDataField;
+        
+        [System.Runtime.Serialization.OptionalFieldAttribute()]
+        private long TicksField;
+        
+        [System.Runtime.Serialization.OptionalFieldAttribute()]
+        private double TimeInDaysField;
+        
+        [System.Runtime.Serialization.OptionalFieldAttribute()]
+        private double TimeInMinutesField;
+        
+        [System.Runtime.Serialization.OptionalFieldAttribute()]
+        private double TimeInYearsField;
+        
+        [global::System.ComponentModel.BrowsableAttribute(false)]
+        public System.Runtime.Serialization.ExtensionDataObject ExtensionData {
+            get {
+                return this.extensionDataField;
+            }
+            set {
+                this.extensionDataField = value;
+            }
+        }
+        
+        [System.Runtime.Serialization.DataMemberAttribute()]
+        public long Ticks {
+            get {
+                return this.TicksField;
+            }
+            set {
+                if ((this.TicksField.Equals(value) != true)) {
+                    this.TicksField = value;
+                    this.RaisePropertyChanged("Ticks");
+                }
+            }
+        }
+        
+        [System.Runtime.Serialization.DataMemberAttribute()]
+        public double TimeInDays {
+            get {
+                return this.TimeInDaysField;
+            }
+            set {
+                if ((this.TimeInDaysField.Equals(value) != true)) {
+                    this.TimeInDaysField = value;
+                    this.RaisePropertyChanged("TimeInDays");
+                }
+            }
+        }
+        
+        [System.Runtime.Serialization.DataMemberAttribute()]
+        public double TimeInMinutes {
+            get {
+                return this.TimeInMinutesField;
+            }
+            set {
+                if ((this.TimeInMinutesField.Equals(value) != true)) {
+                    this.TimeInMinutesField = value;
+                    this.RaisePropertyChanged("TimeInMinutes");
+                }
+            }
+        }
+        
+        [System.Runtime.Serialization.DataMemberAttribute()]
+        public double TimeInYears {
+            get {
+                return this.TimeInYearsField;
+            }
+            set {
+                if ((this.TimeInYearsField.Equals(value) != true)) {
+                    this.TimeInYearsField = value;
+                    this.RaisePropertyChanged("TimeInYears");
+                }
+            }
+        }
+        
+        public event System.ComponentModel.PropertyChangedEventHandler PropertyChanged;
+        
+        protected void RaisePropertyChanged(string propertyName) {
+            System.ComponentModel.PropertyChangedEventHandler propertyChanged = this.PropertyChanged;
+            if ((propertyChanged != null)) {
+                propertyChanged(this, new System.ComponentModel.PropertyChangedEventArgs(propertyName));
+            }
+        }
+    }
+    
+    [System.Diagnostics.DebuggerStepThroughAttribute()]
+    [System.CodeDom.Compiler.GeneratedCodeAttribute("System.Runtime.Serialization", "4.0.0.0")]
     [System.Runtime.Serialization.DataContractAttribute(Name="LogEntryContract", Namespace="http://www.kendox.com/InfoShare")]
     [System.SerializableAttribute()]
     public partial class LogEntryContract : object, System.Runtime.Serialization.IExtensibleDataObject, System.ComponentModel.INotifyPropertyChanged {
@@ -18546,6 +20336,240 @@ namespace docreminder.InfoShareService {
     
     [System.Diagnostics.DebuggerStepThroughAttribute()]
     [System.CodeDom.Compiler.GeneratedCodeAttribute("System.Runtime.Serialization", "4.0.0.0")]
+    [System.Runtime.Serialization.DataContractAttribute(Name="AuditDocumentContract", Namespace="http://www.kendox.com/InfoShare")]
+    [System.SerializableAttribute()]
+    public partial class AuditDocumentContract : object, System.Runtime.Serialization.IExtensibleDataObject, System.ComponentModel.INotifyPropertyChanged {
+        
+        [System.NonSerializedAttribute()]
+        private System.Runtime.Serialization.ExtensionDataObject extensionDataField;
+        
+        [System.Runtime.Serialization.OptionalFieldAttribute()]
+        private string DocumentIdField;
+        
+        [System.Runtime.Serialization.OptionalFieldAttribute()]
+        private long IdField;
+        
+        [System.Runtime.Serialization.OptionalFieldAttribute()]
+        private string LogDateField;
+        
+        [System.Runtime.Serialization.OptionalFieldAttribute()]
+        private int ModificationCountField;
+        
+        [System.Runtime.Serialization.OptionalFieldAttribute()]
+        private string ModificationTypeField;
+        
+        [System.Runtime.Serialization.OptionalFieldAttribute()]
+        private string UserIdField;
+        
+        [System.Runtime.Serialization.OptionalFieldAttribute()]
+        private string VersionCommentField;
+        
+        [System.Runtime.Serialization.OptionalFieldAttribute()]
+        private int VersionNoField;
+        
+        [global::System.ComponentModel.BrowsableAttribute(false)]
+        public System.Runtime.Serialization.ExtensionDataObject ExtensionData {
+            get {
+                return this.extensionDataField;
+            }
+            set {
+                this.extensionDataField = value;
+            }
+        }
+        
+        [System.Runtime.Serialization.DataMemberAttribute()]
+        public string DocumentId {
+            get {
+                return this.DocumentIdField;
+            }
+            set {
+                if ((object.ReferenceEquals(this.DocumentIdField, value) != true)) {
+                    this.DocumentIdField = value;
+                    this.RaisePropertyChanged("DocumentId");
+                }
+            }
+        }
+        
+        [System.Runtime.Serialization.DataMemberAttribute()]
+        public long Id {
+            get {
+                return this.IdField;
+            }
+            set {
+                if ((this.IdField.Equals(value) != true)) {
+                    this.IdField = value;
+                    this.RaisePropertyChanged("Id");
+                }
+            }
+        }
+        
+        [System.Runtime.Serialization.DataMemberAttribute()]
+        public string LogDate {
+            get {
+                return this.LogDateField;
+            }
+            set {
+                if ((object.ReferenceEquals(this.LogDateField, value) != true)) {
+                    this.LogDateField = value;
+                    this.RaisePropertyChanged("LogDate");
+                }
+            }
+        }
+        
+        [System.Runtime.Serialization.DataMemberAttribute()]
+        public int ModificationCount {
+            get {
+                return this.ModificationCountField;
+            }
+            set {
+                if ((this.ModificationCountField.Equals(value) != true)) {
+                    this.ModificationCountField = value;
+                    this.RaisePropertyChanged("ModificationCount");
+                }
+            }
+        }
+        
+        [System.Runtime.Serialization.DataMemberAttribute()]
+        public string ModificationType {
+            get {
+                return this.ModificationTypeField;
+            }
+            set {
+                if ((object.ReferenceEquals(this.ModificationTypeField, value) != true)) {
+                    this.ModificationTypeField = value;
+                    this.RaisePropertyChanged("ModificationType");
+                }
+            }
+        }
+        
+        [System.Runtime.Serialization.DataMemberAttribute()]
+        public string UserId {
+            get {
+                return this.UserIdField;
+            }
+            set {
+                if ((object.ReferenceEquals(this.UserIdField, value) != true)) {
+                    this.UserIdField = value;
+                    this.RaisePropertyChanged("UserId");
+                }
+            }
+        }
+        
+        [System.Runtime.Serialization.DataMemberAttribute()]
+        public string VersionComment {
+            get {
+                return this.VersionCommentField;
+            }
+            set {
+                if ((object.ReferenceEquals(this.VersionCommentField, value) != true)) {
+                    this.VersionCommentField = value;
+                    this.RaisePropertyChanged("VersionComment");
+                }
+            }
+        }
+        
+        [System.Runtime.Serialization.DataMemberAttribute()]
+        public int VersionNo {
+            get {
+                return this.VersionNoField;
+            }
+            set {
+                if ((this.VersionNoField.Equals(value) != true)) {
+                    this.VersionNoField = value;
+                    this.RaisePropertyChanged("VersionNo");
+                }
+            }
+        }
+        
+        public event System.ComponentModel.PropertyChangedEventHandler PropertyChanged;
+        
+        protected void RaisePropertyChanged(string propertyName) {
+            System.ComponentModel.PropertyChangedEventHandler propertyChanged = this.PropertyChanged;
+            if ((propertyChanged != null)) {
+                propertyChanged(this, new System.ComponentModel.PropertyChangedEventArgs(propertyName));
+            }
+        }
+    }
+    
+    [System.Diagnostics.DebuggerStepThroughAttribute()]
+    [System.CodeDom.Compiler.GeneratedCodeAttribute("System.Runtime.Serialization", "4.0.0.0")]
+    [System.Runtime.Serialization.DataContractAttribute(Name="AuditDocumentPropertyContract", Namespace="http://www.kendox.com/InfoShare")]
+    [System.SerializableAttribute()]
+    public partial class AuditDocumentPropertyContract : object, System.Runtime.Serialization.IExtensibleDataObject, System.ComponentModel.INotifyPropertyChanged {
+        
+        [System.NonSerializedAttribute()]
+        private System.Runtime.Serialization.ExtensionDataObject extensionDataField;
+        
+        [System.Runtime.Serialization.OptionalFieldAttribute()]
+        private long AuditDocumentIdField;
+        
+        [System.Runtime.Serialization.OptionalFieldAttribute()]
+        private string PropertyTypeIdField;
+        
+        [System.Runtime.Serialization.OptionalFieldAttribute()]
+        private string ValueField;
+        
+        [global::System.ComponentModel.BrowsableAttribute(false)]
+        public System.Runtime.Serialization.ExtensionDataObject ExtensionData {
+            get {
+                return this.extensionDataField;
+            }
+            set {
+                this.extensionDataField = value;
+            }
+        }
+        
+        [System.Runtime.Serialization.DataMemberAttribute()]
+        public long AuditDocumentId {
+            get {
+                return this.AuditDocumentIdField;
+            }
+            set {
+                if ((this.AuditDocumentIdField.Equals(value) != true)) {
+                    this.AuditDocumentIdField = value;
+                    this.RaisePropertyChanged("AuditDocumentId");
+                }
+            }
+        }
+        
+        [System.Runtime.Serialization.DataMemberAttribute()]
+        public string PropertyTypeId {
+            get {
+                return this.PropertyTypeIdField;
+            }
+            set {
+                if ((object.ReferenceEquals(this.PropertyTypeIdField, value) != true)) {
+                    this.PropertyTypeIdField = value;
+                    this.RaisePropertyChanged("PropertyTypeId");
+                }
+            }
+        }
+        
+        [System.Runtime.Serialization.DataMemberAttribute()]
+        public string Value {
+            get {
+                return this.ValueField;
+            }
+            set {
+                if ((object.ReferenceEquals(this.ValueField, value) != true)) {
+                    this.ValueField = value;
+                    this.RaisePropertyChanged("Value");
+                }
+            }
+        }
+        
+        public event System.ComponentModel.PropertyChangedEventHandler PropertyChanged;
+        
+        protected void RaisePropertyChanged(string propertyName) {
+            System.ComponentModel.PropertyChangedEventHandler propertyChanged = this.PropertyChanged;
+            if ((propertyChanged != null)) {
+                propertyChanged(this, new System.ComponentModel.PropertyChangedEventArgs(propertyName));
+            }
+        }
+    }
+    
+    [System.Diagnostics.DebuggerStepThroughAttribute()]
+    [System.CodeDom.Compiler.GeneratedCodeAttribute("System.Runtime.Serialization", "4.0.0.0")]
     [System.Runtime.Serialization.DataContractAttribute(Name="ListItemContract", Namespace="http://www.kendox.com/InfoShare")]
     [System.SerializableAttribute()]
     public partial class ListItemContract : object, System.Runtime.Serialization.IExtensibleDataObject, System.ComponentModel.INotifyPropertyChanged {
@@ -18591,6 +20615,2379 @@ namespace docreminder.InfoShareService {
                 if ((object.ReferenceEquals(this.ValueField, value) != true)) {
                     this.ValueField = value;
                     this.RaisePropertyChanged("Value");
+                }
+            }
+        }
+        
+        public event System.ComponentModel.PropertyChangedEventHandler PropertyChanged;
+        
+        protected void RaisePropertyChanged(string propertyName) {
+            System.ComponentModel.PropertyChangedEventHandler propertyChanged = this.PropertyChanged;
+            if ((propertyChanged != null)) {
+                propertyChanged(this, new System.ComponentModel.PropertyChangedEventArgs(propertyName));
+            }
+        }
+    }
+    
+    [System.Diagnostics.DebuggerStepThroughAttribute()]
+    [System.CodeDom.Compiler.GeneratedCodeAttribute("System.Runtime.Serialization", "4.0.0.0")]
+    [System.Runtime.Serialization.DataContractAttribute(Name="DataTableContract", Namespace="http://www.kendox.com/InfoShare")]
+    [System.SerializableAttribute()]
+    public partial class DataTableContract : object, System.Runtime.Serialization.IExtensibleDataObject, System.ComponentModel.INotifyPropertyChanged {
+        
+        [System.NonSerializedAttribute()]
+        private System.Runtime.Serialization.ExtensionDataObject extensionDataField;
+        
+        [System.Runtime.Serialization.OptionalFieldAttribute()]
+        private string KeyField;
+        
+        [System.Runtime.Serialization.OptionalFieldAttribute()]
+        private docreminder.InfoShareService.KeyValuePairContract[] ValuesField;
+        
+        [global::System.ComponentModel.BrowsableAttribute(false)]
+        public System.Runtime.Serialization.ExtensionDataObject ExtensionData {
+            get {
+                return this.extensionDataField;
+            }
+            set {
+                this.extensionDataField = value;
+            }
+        }
+        
+        [System.Runtime.Serialization.DataMemberAttribute()]
+        public string Key {
+            get {
+                return this.KeyField;
+            }
+            set {
+                if ((object.ReferenceEquals(this.KeyField, value) != true)) {
+                    this.KeyField = value;
+                    this.RaisePropertyChanged("Key");
+                }
+            }
+        }
+        
+        [System.Runtime.Serialization.DataMemberAttribute()]
+        public docreminder.InfoShareService.KeyValuePairContract[] Values {
+            get {
+                return this.ValuesField;
+            }
+            set {
+                if ((object.ReferenceEquals(this.ValuesField, value) != true)) {
+                    this.ValuesField = value;
+                    this.RaisePropertyChanged("Values");
+                }
+            }
+        }
+        
+        public event System.ComponentModel.PropertyChangedEventHandler PropertyChanged;
+        
+        protected void RaisePropertyChanged(string propertyName) {
+            System.ComponentModel.PropertyChangedEventHandler propertyChanged = this.PropertyChanged;
+            if ((propertyChanged != null)) {
+                propertyChanged(this, new System.ComponentModel.PropertyChangedEventArgs(propertyName));
+            }
+        }
+    }
+    
+    [System.Diagnostics.DebuggerStepThroughAttribute()]
+    [System.CodeDom.Compiler.GeneratedCodeAttribute("System.Runtime.Serialization", "4.0.0.0")]
+    [System.Runtime.Serialization.DataContractAttribute(Name="KeyValuePairContract", Namespace="http://www.kendox.com/InfoShare")]
+    [System.SerializableAttribute()]
+    public partial class KeyValuePairContract : object, System.Runtime.Serialization.IExtensibleDataObject, System.ComponentModel.INotifyPropertyChanged {
+        
+        [System.NonSerializedAttribute()]
+        private System.Runtime.Serialization.ExtensionDataObject extensionDataField;
+        
+        [System.Runtime.Serialization.OptionalFieldAttribute()]
+        private string KeyField;
+        
+        [System.Runtime.Serialization.OptionalFieldAttribute()]
+        private string[] ValuesField;
+        
+        [global::System.ComponentModel.BrowsableAttribute(false)]
+        public System.Runtime.Serialization.ExtensionDataObject ExtensionData {
+            get {
+                return this.extensionDataField;
+            }
+            set {
+                this.extensionDataField = value;
+            }
+        }
+        
+        [System.Runtime.Serialization.DataMemberAttribute()]
+        public string Key {
+            get {
+                return this.KeyField;
+            }
+            set {
+                if ((object.ReferenceEquals(this.KeyField, value) != true)) {
+                    this.KeyField = value;
+                    this.RaisePropertyChanged("Key");
+                }
+            }
+        }
+        
+        [System.Runtime.Serialization.DataMemberAttribute()]
+        public string[] Values {
+            get {
+                return this.ValuesField;
+            }
+            set {
+                if ((object.ReferenceEquals(this.ValuesField, value) != true)) {
+                    this.ValuesField = value;
+                    this.RaisePropertyChanged("Values");
+                }
+            }
+        }
+        
+        public event System.ComponentModel.PropertyChangedEventHandler PropertyChanged;
+        
+        protected void RaisePropertyChanged(string propertyName) {
+            System.ComponentModel.PropertyChangedEventHandler propertyChanged = this.PropertyChanged;
+            if ((propertyChanged != null)) {
+                propertyChanged(this, new System.ComponentModel.PropertyChangedEventArgs(propertyName));
+            }
+        }
+    }
+    
+    [System.Diagnostics.DebuggerStepThroughAttribute()]
+    [System.CodeDom.Compiler.GeneratedCodeAttribute("System.Runtime.Serialization", "4.0.0.0")]
+    [System.Runtime.Serialization.DataContractAttribute(Name="WDP_ProcessDataInitContract", Namespace="http://www.kendox.com/InfoShare")]
+    [System.SerializableAttribute()]
+    public partial class WDP_ProcessDataInitContract : object, System.Runtime.Serialization.IExtensibleDataObject, System.ComponentModel.INotifyPropertyChanged {
+        
+        [System.NonSerializedAttribute()]
+        private System.Runtime.Serialization.ExtensionDataObject extensionDataField;
+        
+        [System.Runtime.Serialization.OptionalFieldAttribute()]
+        private string ActionField;
+        
+        [System.Runtime.Serialization.OptionalFieldAttribute()]
+        private docreminder.InfoShareService.WDP_ValueContract[] CheckInSettingsField;
+        
+        [System.Runtime.Serialization.OptionalFieldAttribute()]
+        private string CurrentCultureField;
+        
+        [System.Runtime.Serialization.OptionalFieldAttribute()]
+        private docreminder.InfoShareService.WDP_EnvironmentValuesContract EnvironmentValuesField;
+        
+        [System.Runtime.Serialization.OptionalFieldAttribute()]
+        private docreminder.InfoShareService.WDP_ErrorContract[] ErrorsField;
+        
+        [System.Runtime.Serialization.OptionalFieldAttribute()]
+        private docreminder.InfoShareService.WDP_ImportValuesContract ImportValuesField;
+        
+        [System.Runtime.Serialization.OptionalFieldAttribute()]
+        private docreminder.InfoShareService.WDP_PropertiesForActionContract PropertiesForActionField;
+        
+        [System.Runtime.Serialization.OptionalFieldAttribute()]
+        private string SourceApplicationField;
+        
+        [System.Runtime.Serialization.OptionalFieldAttribute()]
+        private string SourceDialogField;
+        
+        [System.Runtime.Serialization.OptionalFieldAttribute()]
+        private string UICultureField;
+        
+        [global::System.ComponentModel.BrowsableAttribute(false)]
+        public System.Runtime.Serialization.ExtensionDataObject ExtensionData {
+            get {
+                return this.extensionDataField;
+            }
+            set {
+                this.extensionDataField = value;
+            }
+        }
+        
+        [System.Runtime.Serialization.DataMemberAttribute()]
+        public string Action {
+            get {
+                return this.ActionField;
+            }
+            set {
+                if ((object.ReferenceEquals(this.ActionField, value) != true)) {
+                    this.ActionField = value;
+                    this.RaisePropertyChanged("Action");
+                }
+            }
+        }
+        
+        [System.Runtime.Serialization.DataMemberAttribute()]
+        public docreminder.InfoShareService.WDP_ValueContract[] CheckInSettings {
+            get {
+                return this.CheckInSettingsField;
+            }
+            set {
+                if ((object.ReferenceEquals(this.CheckInSettingsField, value) != true)) {
+                    this.CheckInSettingsField = value;
+                    this.RaisePropertyChanged("CheckInSettings");
+                }
+            }
+        }
+        
+        [System.Runtime.Serialization.DataMemberAttribute()]
+        public string CurrentCulture {
+            get {
+                return this.CurrentCultureField;
+            }
+            set {
+                if ((object.ReferenceEquals(this.CurrentCultureField, value) != true)) {
+                    this.CurrentCultureField = value;
+                    this.RaisePropertyChanged("CurrentCulture");
+                }
+            }
+        }
+        
+        [System.Runtime.Serialization.DataMemberAttribute()]
+        public docreminder.InfoShareService.WDP_EnvironmentValuesContract EnvironmentValues {
+            get {
+                return this.EnvironmentValuesField;
+            }
+            set {
+                if ((object.ReferenceEquals(this.EnvironmentValuesField, value) != true)) {
+                    this.EnvironmentValuesField = value;
+                    this.RaisePropertyChanged("EnvironmentValues");
+                }
+            }
+        }
+        
+        [System.Runtime.Serialization.DataMemberAttribute()]
+        public docreminder.InfoShareService.WDP_ErrorContract[] Errors {
+            get {
+                return this.ErrorsField;
+            }
+            set {
+                if ((object.ReferenceEquals(this.ErrorsField, value) != true)) {
+                    this.ErrorsField = value;
+                    this.RaisePropertyChanged("Errors");
+                }
+            }
+        }
+        
+        [System.Runtime.Serialization.DataMemberAttribute()]
+        public docreminder.InfoShareService.WDP_ImportValuesContract ImportValues {
+            get {
+                return this.ImportValuesField;
+            }
+            set {
+                if ((object.ReferenceEquals(this.ImportValuesField, value) != true)) {
+                    this.ImportValuesField = value;
+                    this.RaisePropertyChanged("ImportValues");
+                }
+            }
+        }
+        
+        [System.Runtime.Serialization.DataMemberAttribute()]
+        public docreminder.InfoShareService.WDP_PropertiesForActionContract PropertiesForAction {
+            get {
+                return this.PropertiesForActionField;
+            }
+            set {
+                if ((object.ReferenceEquals(this.PropertiesForActionField, value) != true)) {
+                    this.PropertiesForActionField = value;
+                    this.RaisePropertyChanged("PropertiesForAction");
+                }
+            }
+        }
+        
+        [System.Runtime.Serialization.DataMemberAttribute()]
+        public string SourceApplication {
+            get {
+                return this.SourceApplicationField;
+            }
+            set {
+                if ((object.ReferenceEquals(this.SourceApplicationField, value) != true)) {
+                    this.SourceApplicationField = value;
+                    this.RaisePropertyChanged("SourceApplication");
+                }
+            }
+        }
+        
+        [System.Runtime.Serialization.DataMemberAttribute()]
+        public string SourceDialog {
+            get {
+                return this.SourceDialogField;
+            }
+            set {
+                if ((object.ReferenceEquals(this.SourceDialogField, value) != true)) {
+                    this.SourceDialogField = value;
+                    this.RaisePropertyChanged("SourceDialog");
+                }
+            }
+        }
+        
+        [System.Runtime.Serialization.DataMemberAttribute()]
+        public string UICulture {
+            get {
+                return this.UICultureField;
+            }
+            set {
+                if ((object.ReferenceEquals(this.UICultureField, value) != true)) {
+                    this.UICultureField = value;
+                    this.RaisePropertyChanged("UICulture");
+                }
+            }
+        }
+        
+        public event System.ComponentModel.PropertyChangedEventHandler PropertyChanged;
+        
+        protected void RaisePropertyChanged(string propertyName) {
+            System.ComponentModel.PropertyChangedEventHandler propertyChanged = this.PropertyChanged;
+            if ((propertyChanged != null)) {
+                propertyChanged(this, new System.ComponentModel.PropertyChangedEventArgs(propertyName));
+            }
+        }
+    }
+    
+    [System.Diagnostics.DebuggerStepThroughAttribute()]
+    [System.CodeDom.Compiler.GeneratedCodeAttribute("System.Runtime.Serialization", "4.0.0.0")]
+    [System.Runtime.Serialization.DataContractAttribute(Name="WDP_EnvironmentValuesContract", Namespace="http://www.kendox.com/InfoShare")]
+    [System.SerializableAttribute()]
+    public partial class WDP_EnvironmentValuesContract : object, System.Runtime.Serialization.IExtensibleDataObject, System.ComponentModel.INotifyPropertyChanged {
+        
+        [System.NonSerializedAttribute()]
+        private System.Runtime.Serialization.ExtensionDataObject extensionDataField;
+        
+        [System.Runtime.Serialization.OptionalFieldAttribute()]
+        private docreminder.InfoShareService.WDP_AdditionalContract AdditionalField;
+        
+        [System.Runtime.Serialization.OptionalFieldAttribute()]
+        private docreminder.InfoShareService.WDP_CommonContract CommonField;
+        
+        [global::System.ComponentModel.BrowsableAttribute(false)]
+        public System.Runtime.Serialization.ExtensionDataObject ExtensionData {
+            get {
+                return this.extensionDataField;
+            }
+            set {
+                this.extensionDataField = value;
+            }
+        }
+        
+        [System.Runtime.Serialization.DataMemberAttribute()]
+        public docreminder.InfoShareService.WDP_AdditionalContract Additional {
+            get {
+                return this.AdditionalField;
+            }
+            set {
+                if ((object.ReferenceEquals(this.AdditionalField, value) != true)) {
+                    this.AdditionalField = value;
+                    this.RaisePropertyChanged("Additional");
+                }
+            }
+        }
+        
+        [System.Runtime.Serialization.DataMemberAttribute()]
+        public docreminder.InfoShareService.WDP_CommonContract Common {
+            get {
+                return this.CommonField;
+            }
+            set {
+                if ((object.ReferenceEquals(this.CommonField, value) != true)) {
+                    this.CommonField = value;
+                    this.RaisePropertyChanged("Common");
+                }
+            }
+        }
+        
+        public event System.ComponentModel.PropertyChangedEventHandler PropertyChanged;
+        
+        protected void RaisePropertyChanged(string propertyName) {
+            System.ComponentModel.PropertyChangedEventHandler propertyChanged = this.PropertyChanged;
+            if ((propertyChanged != null)) {
+                propertyChanged(this, new System.ComponentModel.PropertyChangedEventArgs(propertyName));
+            }
+        }
+    }
+    
+    [System.Diagnostics.DebuggerStepThroughAttribute()]
+    [System.CodeDom.Compiler.GeneratedCodeAttribute("System.Runtime.Serialization", "4.0.0.0")]
+    [System.Runtime.Serialization.DataContractAttribute(Name="WDP_ImportValuesContract", Namespace="http://www.kendox.com/InfoShare")]
+    [System.SerializableAttribute()]
+    public partial class WDP_ImportValuesContract : object, System.Runtime.Serialization.IExtensibleDataObject, System.ComponentModel.INotifyPropertyChanged {
+        
+        [System.NonSerializedAttribute()]
+        private System.Runtime.Serialization.ExtensionDataObject extensionDataField;
+        
+        [System.Runtime.Serialization.OptionalFieldAttribute()]
+        private docreminder.InfoShareService.WDP_CurrentDocumentContract CurrentDocumentField;
+        
+        [global::System.ComponentModel.BrowsableAttribute(false)]
+        public System.Runtime.Serialization.ExtensionDataObject ExtensionData {
+            get {
+                return this.extensionDataField;
+            }
+            set {
+                this.extensionDataField = value;
+            }
+        }
+        
+        [System.Runtime.Serialization.DataMemberAttribute()]
+        public docreminder.InfoShareService.WDP_CurrentDocumentContract CurrentDocument {
+            get {
+                return this.CurrentDocumentField;
+            }
+            set {
+                if ((object.ReferenceEquals(this.CurrentDocumentField, value) != true)) {
+                    this.CurrentDocumentField = value;
+                    this.RaisePropertyChanged("CurrentDocument");
+                }
+            }
+        }
+        
+        public event System.ComponentModel.PropertyChangedEventHandler PropertyChanged;
+        
+        protected void RaisePropertyChanged(string propertyName) {
+            System.ComponentModel.PropertyChangedEventHandler propertyChanged = this.PropertyChanged;
+            if ((propertyChanged != null)) {
+                propertyChanged(this, new System.ComponentModel.PropertyChangedEventArgs(propertyName));
+            }
+        }
+    }
+    
+    [System.Diagnostics.DebuggerStepThroughAttribute()]
+    [System.CodeDom.Compiler.GeneratedCodeAttribute("System.Runtime.Serialization", "4.0.0.0")]
+    [System.Runtime.Serialization.DataContractAttribute(Name="WDP_PropertiesForActionContract", Namespace="http://www.kendox.com/InfoShare")]
+    [System.SerializableAttribute()]
+    public partial class WDP_PropertiesForActionContract : object, System.Runtime.Serialization.IExtensibleDataObject, System.ComponentModel.INotifyPropertyChanged {
+        
+        [System.NonSerializedAttribute()]
+        private System.Runtime.Serialization.ExtensionDataObject extensionDataField;
+        
+        [System.Runtime.Serialization.OptionalFieldAttribute()]
+        private docreminder.InfoShareService.PropertyContract PropertyField;
+        
+        [global::System.ComponentModel.BrowsableAttribute(false)]
+        public System.Runtime.Serialization.ExtensionDataObject ExtensionData {
+            get {
+                return this.extensionDataField;
+            }
+            set {
+                this.extensionDataField = value;
+            }
+        }
+        
+        [System.Runtime.Serialization.DataMemberAttribute()]
+        public docreminder.InfoShareService.PropertyContract Property {
+            get {
+                return this.PropertyField;
+            }
+            set {
+                if ((object.ReferenceEquals(this.PropertyField, value) != true)) {
+                    this.PropertyField = value;
+                    this.RaisePropertyChanged("Property");
+                }
+            }
+        }
+        
+        public event System.ComponentModel.PropertyChangedEventHandler PropertyChanged;
+        
+        protected void RaisePropertyChanged(string propertyName) {
+            System.ComponentModel.PropertyChangedEventHandler propertyChanged = this.PropertyChanged;
+            if ((propertyChanged != null)) {
+                propertyChanged(this, new System.ComponentModel.PropertyChangedEventArgs(propertyName));
+            }
+        }
+    }
+    
+    [System.Diagnostics.DebuggerStepThroughAttribute()]
+    [System.CodeDom.Compiler.GeneratedCodeAttribute("System.Runtime.Serialization", "4.0.0.0")]
+    [System.Runtime.Serialization.DataContractAttribute(Name="WDP_ValueContract", Namespace="http://www.kendox.com/InfoShare")]
+    [System.SerializableAttribute()]
+    public partial class WDP_ValueContract : object, System.Runtime.Serialization.IExtensibleDataObject, System.ComponentModel.INotifyPropertyChanged {
+        
+        [System.NonSerializedAttribute()]
+        private System.Runtime.Serialization.ExtensionDataObject extensionDataField;
+        
+        [System.Runtime.Serialization.OptionalFieldAttribute()]
+        private string IdField;
+        
+        [System.Runtime.Serialization.OptionalFieldAttribute()]
+        private string IsEnabledField;
+        
+        [System.Runtime.Serialization.OptionalFieldAttribute()]
+        private string IsVisibleField;
+        
+        [System.Runtime.Serialization.OptionalFieldAttribute()]
+        private string NameField;
+        
+        [System.Runtime.Serialization.OptionalFieldAttribute()]
+        private string TextField;
+        
+        [global::System.ComponentModel.BrowsableAttribute(false)]
+        public System.Runtime.Serialization.ExtensionDataObject ExtensionData {
+            get {
+                return this.extensionDataField;
+            }
+            set {
+                this.extensionDataField = value;
+            }
+        }
+        
+        [System.Runtime.Serialization.DataMemberAttribute()]
+        public string Id {
+            get {
+                return this.IdField;
+            }
+            set {
+                if ((object.ReferenceEquals(this.IdField, value) != true)) {
+                    this.IdField = value;
+                    this.RaisePropertyChanged("Id");
+                }
+            }
+        }
+        
+        [System.Runtime.Serialization.DataMemberAttribute()]
+        public string IsEnabled {
+            get {
+                return this.IsEnabledField;
+            }
+            set {
+                if ((object.ReferenceEquals(this.IsEnabledField, value) != true)) {
+                    this.IsEnabledField = value;
+                    this.RaisePropertyChanged("IsEnabled");
+                }
+            }
+        }
+        
+        [System.Runtime.Serialization.DataMemberAttribute()]
+        public string IsVisible {
+            get {
+                return this.IsVisibleField;
+            }
+            set {
+                if ((object.ReferenceEquals(this.IsVisibleField, value) != true)) {
+                    this.IsVisibleField = value;
+                    this.RaisePropertyChanged("IsVisible");
+                }
+            }
+        }
+        
+        [System.Runtime.Serialization.DataMemberAttribute()]
+        public string Name {
+            get {
+                return this.NameField;
+            }
+            set {
+                if ((object.ReferenceEquals(this.NameField, value) != true)) {
+                    this.NameField = value;
+                    this.RaisePropertyChanged("Name");
+                }
+            }
+        }
+        
+        [System.Runtime.Serialization.DataMemberAttribute()]
+        public string Text {
+            get {
+                return this.TextField;
+            }
+            set {
+                if ((object.ReferenceEquals(this.TextField, value) != true)) {
+                    this.TextField = value;
+                    this.RaisePropertyChanged("Text");
+                }
+            }
+        }
+        
+        public event System.ComponentModel.PropertyChangedEventHandler PropertyChanged;
+        
+        protected void RaisePropertyChanged(string propertyName) {
+            System.ComponentModel.PropertyChangedEventHandler propertyChanged = this.PropertyChanged;
+            if ((propertyChanged != null)) {
+                propertyChanged(this, new System.ComponentModel.PropertyChangedEventArgs(propertyName));
+            }
+        }
+    }
+    
+    [System.Diagnostics.DebuggerStepThroughAttribute()]
+    [System.CodeDom.Compiler.GeneratedCodeAttribute("System.Runtime.Serialization", "4.0.0.0")]
+    [System.Runtime.Serialization.DataContractAttribute(Name="WDP_ErrorContract", Namespace="http://www.kendox.com/InfoShare")]
+    [System.SerializableAttribute()]
+    public partial class WDP_ErrorContract : object, System.Runtime.Serialization.IExtensibleDataObject, System.ComponentModel.INotifyPropertyChanged {
+        
+        [System.NonSerializedAttribute()]
+        private System.Runtime.Serialization.ExtensionDataObject extensionDataField;
+        
+        [System.Runtime.Serialization.OptionalFieldAttribute()]
+        private string IdField;
+        
+        [System.Runtime.Serialization.OptionalFieldAttribute()]
+        private string NameField;
+        
+        [System.Runtime.Serialization.OptionalFieldAttribute()]
+        private string TextField;
+        
+        [global::System.ComponentModel.BrowsableAttribute(false)]
+        public System.Runtime.Serialization.ExtensionDataObject ExtensionData {
+            get {
+                return this.extensionDataField;
+            }
+            set {
+                this.extensionDataField = value;
+            }
+        }
+        
+        [System.Runtime.Serialization.DataMemberAttribute()]
+        public string Id {
+            get {
+                return this.IdField;
+            }
+            set {
+                if ((object.ReferenceEquals(this.IdField, value) != true)) {
+                    this.IdField = value;
+                    this.RaisePropertyChanged("Id");
+                }
+            }
+        }
+        
+        [System.Runtime.Serialization.DataMemberAttribute()]
+        public string Name {
+            get {
+                return this.NameField;
+            }
+            set {
+                if ((object.ReferenceEquals(this.NameField, value) != true)) {
+                    this.NameField = value;
+                    this.RaisePropertyChanged("Name");
+                }
+            }
+        }
+        
+        [System.Runtime.Serialization.DataMemberAttribute()]
+        public string Text {
+            get {
+                return this.TextField;
+            }
+            set {
+                if ((object.ReferenceEquals(this.TextField, value) != true)) {
+                    this.TextField = value;
+                    this.RaisePropertyChanged("Text");
+                }
+            }
+        }
+        
+        public event System.ComponentModel.PropertyChangedEventHandler PropertyChanged;
+        
+        protected void RaisePropertyChanged(string propertyName) {
+            System.ComponentModel.PropertyChangedEventHandler propertyChanged = this.PropertyChanged;
+            if ((propertyChanged != null)) {
+                propertyChanged(this, new System.ComponentModel.PropertyChangedEventArgs(propertyName));
+            }
+        }
+    }
+    
+    [System.Diagnostics.DebuggerStepThroughAttribute()]
+    [System.CodeDom.Compiler.GeneratedCodeAttribute("System.Runtime.Serialization", "4.0.0.0")]
+    [System.Runtime.Serialization.DataContractAttribute(Name="WDP_AdditionalContract", Namespace="http://www.kendox.com/InfoShare")]
+    [System.SerializableAttribute()]
+    public partial class WDP_AdditionalContract : object, System.Runtime.Serialization.IExtensibleDataObject, System.ComponentModel.INotifyPropertyChanged {
+        
+        [System.NonSerializedAttribute()]
+        private System.Runtime.Serialization.ExtensionDataObject extensionDataField;
+        
+        [System.Runtime.Serialization.OptionalFieldAttribute()]
+        private string FileChangeDateField;
+        
+        [System.Runtime.Serialization.OptionalFieldAttribute()]
+        private string FileCreationDateField;
+        
+        [System.Runtime.Serialization.OptionalFieldAttribute()]
+        private string FileLastAccessField;
+        
+        [System.Runtime.Serialization.OptionalFieldAttribute()]
+        private string FilePathField;
+        
+        [System.Runtime.Serialization.OptionalFieldAttribute()]
+        private string WebServiceSessionIDField;
+        
+        [System.Runtime.Serialization.OptionalFieldAttribute()]
+        private string WebServiceURLField;
+        
+        [global::System.ComponentModel.BrowsableAttribute(false)]
+        public System.Runtime.Serialization.ExtensionDataObject ExtensionData {
+            get {
+                return this.extensionDataField;
+            }
+            set {
+                this.extensionDataField = value;
+            }
+        }
+        
+        [System.Runtime.Serialization.DataMemberAttribute()]
+        public string FileChangeDate {
+            get {
+                return this.FileChangeDateField;
+            }
+            set {
+                if ((object.ReferenceEquals(this.FileChangeDateField, value) != true)) {
+                    this.FileChangeDateField = value;
+                    this.RaisePropertyChanged("FileChangeDate");
+                }
+            }
+        }
+        
+        [System.Runtime.Serialization.DataMemberAttribute()]
+        public string FileCreationDate {
+            get {
+                return this.FileCreationDateField;
+            }
+            set {
+                if ((object.ReferenceEquals(this.FileCreationDateField, value) != true)) {
+                    this.FileCreationDateField = value;
+                    this.RaisePropertyChanged("FileCreationDate");
+                }
+            }
+        }
+        
+        [System.Runtime.Serialization.DataMemberAttribute()]
+        public string FileLastAccess {
+            get {
+                return this.FileLastAccessField;
+            }
+            set {
+                if ((object.ReferenceEquals(this.FileLastAccessField, value) != true)) {
+                    this.FileLastAccessField = value;
+                    this.RaisePropertyChanged("FileLastAccess");
+                }
+            }
+        }
+        
+        [System.Runtime.Serialization.DataMemberAttribute()]
+        public string FilePath {
+            get {
+                return this.FilePathField;
+            }
+            set {
+                if ((object.ReferenceEquals(this.FilePathField, value) != true)) {
+                    this.FilePathField = value;
+                    this.RaisePropertyChanged("FilePath");
+                }
+            }
+        }
+        
+        [System.Runtime.Serialization.DataMemberAttribute()]
+        public string WebServiceSessionID {
+            get {
+                return this.WebServiceSessionIDField;
+            }
+            set {
+                if ((object.ReferenceEquals(this.WebServiceSessionIDField, value) != true)) {
+                    this.WebServiceSessionIDField = value;
+                    this.RaisePropertyChanged("WebServiceSessionID");
+                }
+            }
+        }
+        
+        [System.Runtime.Serialization.DataMemberAttribute()]
+        public string WebServiceURL {
+            get {
+                return this.WebServiceURLField;
+            }
+            set {
+                if ((object.ReferenceEquals(this.WebServiceURLField, value) != true)) {
+                    this.WebServiceURLField = value;
+                    this.RaisePropertyChanged("WebServiceURL");
+                }
+            }
+        }
+        
+        public event System.ComponentModel.PropertyChangedEventHandler PropertyChanged;
+        
+        protected void RaisePropertyChanged(string propertyName) {
+            System.ComponentModel.PropertyChangedEventHandler propertyChanged = this.PropertyChanged;
+            if ((propertyChanged != null)) {
+                propertyChanged(this, new System.ComponentModel.PropertyChangedEventArgs(propertyName));
+            }
+        }
+    }
+    
+    [System.Diagnostics.DebuggerStepThroughAttribute()]
+    [System.CodeDom.Compiler.GeneratedCodeAttribute("System.Runtime.Serialization", "4.0.0.0")]
+    [System.Runtime.Serialization.DataContractAttribute(Name="WDP_CommonContract", Namespace="http://www.kendox.com/InfoShare")]
+    [System.SerializableAttribute()]
+    public partial class WDP_CommonContract : object, System.Runtime.Serialization.IExtensibleDataObject, System.ComponentModel.INotifyPropertyChanged {
+        
+        [System.NonSerializedAttribute()]
+        private System.Runtime.Serialization.ExtensionDataObject extensionDataField;
+        
+        [System.Runtime.Serialization.OptionalFieldAttribute()]
+        private docreminder.InfoShareService.GroupContract[] AssignedGroupsField;
+        
+        [System.Runtime.Serialization.OptionalFieldAttribute()]
+        private string ClientIPAddressField;
+        
+        [System.Runtime.Serialization.OptionalFieldAttribute()]
+        private string FileExtensionField;
+        
+        [System.Runtime.Serialization.OptionalFieldAttribute()]
+        private string FileNameField;
+        
+        [System.Runtime.Serialization.OptionalFieldAttribute()]
+        private string FileSizeInBytesField;
+        
+        [System.Runtime.Serialization.OptionalFieldAttribute()]
+        private string IsFirstDocumentField;
+        
+        [System.Runtime.Serialization.OptionalFieldAttribute()]
+        private string LoggedInUserDisplayNameField;
+        
+        [System.Runtime.Serialization.OptionalFieldAttribute()]
+        private string LoggedInUserIdField;
+        
+        [System.Runtime.Serialization.OptionalFieldAttribute()]
+        private string LoggedInUserNameField;
+        
+        [System.Runtime.Serialization.OptionalFieldAttribute()]
+        private string PortField;
+        
+        [System.Runtime.Serialization.OptionalFieldAttribute()]
+        private string ServerNameField;
+        
+        [System.Runtime.Serialization.OptionalFieldAttribute()]
+        private string TenantField;
+        
+        [System.Runtime.Serialization.OptionalFieldAttribute()]
+        private string UsePreviousImportValuesField;
+        
+        [global::System.ComponentModel.BrowsableAttribute(false)]
+        public System.Runtime.Serialization.ExtensionDataObject ExtensionData {
+            get {
+                return this.extensionDataField;
+            }
+            set {
+                this.extensionDataField = value;
+            }
+        }
+        
+        [System.Runtime.Serialization.DataMemberAttribute()]
+        public docreminder.InfoShareService.GroupContract[] AssignedGroups {
+            get {
+                return this.AssignedGroupsField;
+            }
+            set {
+                if ((object.ReferenceEquals(this.AssignedGroupsField, value) != true)) {
+                    this.AssignedGroupsField = value;
+                    this.RaisePropertyChanged("AssignedGroups");
+                }
+            }
+        }
+        
+        [System.Runtime.Serialization.DataMemberAttribute()]
+        public string ClientIPAddress {
+            get {
+                return this.ClientIPAddressField;
+            }
+            set {
+                if ((object.ReferenceEquals(this.ClientIPAddressField, value) != true)) {
+                    this.ClientIPAddressField = value;
+                    this.RaisePropertyChanged("ClientIPAddress");
+                }
+            }
+        }
+        
+        [System.Runtime.Serialization.DataMemberAttribute()]
+        public string FileExtension {
+            get {
+                return this.FileExtensionField;
+            }
+            set {
+                if ((object.ReferenceEquals(this.FileExtensionField, value) != true)) {
+                    this.FileExtensionField = value;
+                    this.RaisePropertyChanged("FileExtension");
+                }
+            }
+        }
+        
+        [System.Runtime.Serialization.DataMemberAttribute()]
+        public string FileName {
+            get {
+                return this.FileNameField;
+            }
+            set {
+                if ((object.ReferenceEquals(this.FileNameField, value) != true)) {
+                    this.FileNameField = value;
+                    this.RaisePropertyChanged("FileName");
+                }
+            }
+        }
+        
+        [System.Runtime.Serialization.DataMemberAttribute()]
+        public string FileSizeInBytes {
+            get {
+                return this.FileSizeInBytesField;
+            }
+            set {
+                if ((object.ReferenceEquals(this.FileSizeInBytesField, value) != true)) {
+                    this.FileSizeInBytesField = value;
+                    this.RaisePropertyChanged("FileSizeInBytes");
+                }
+            }
+        }
+        
+        [System.Runtime.Serialization.DataMemberAttribute()]
+        public string IsFirstDocument {
+            get {
+                return this.IsFirstDocumentField;
+            }
+            set {
+                if ((object.ReferenceEquals(this.IsFirstDocumentField, value) != true)) {
+                    this.IsFirstDocumentField = value;
+                    this.RaisePropertyChanged("IsFirstDocument");
+                }
+            }
+        }
+        
+        [System.Runtime.Serialization.DataMemberAttribute()]
+        public string LoggedInUserDisplayName {
+            get {
+                return this.LoggedInUserDisplayNameField;
+            }
+            set {
+                if ((object.ReferenceEquals(this.LoggedInUserDisplayNameField, value) != true)) {
+                    this.LoggedInUserDisplayNameField = value;
+                    this.RaisePropertyChanged("LoggedInUserDisplayName");
+                }
+            }
+        }
+        
+        [System.Runtime.Serialization.DataMemberAttribute()]
+        public string LoggedInUserId {
+            get {
+                return this.LoggedInUserIdField;
+            }
+            set {
+                if ((object.ReferenceEquals(this.LoggedInUserIdField, value) != true)) {
+                    this.LoggedInUserIdField = value;
+                    this.RaisePropertyChanged("LoggedInUserId");
+                }
+            }
+        }
+        
+        [System.Runtime.Serialization.DataMemberAttribute()]
+        public string LoggedInUserName {
+            get {
+                return this.LoggedInUserNameField;
+            }
+            set {
+                if ((object.ReferenceEquals(this.LoggedInUserNameField, value) != true)) {
+                    this.LoggedInUserNameField = value;
+                    this.RaisePropertyChanged("LoggedInUserName");
+                }
+            }
+        }
+        
+        [System.Runtime.Serialization.DataMemberAttribute()]
+        public string Port {
+            get {
+                return this.PortField;
+            }
+            set {
+                if ((object.ReferenceEquals(this.PortField, value) != true)) {
+                    this.PortField = value;
+                    this.RaisePropertyChanged("Port");
+                }
+            }
+        }
+        
+        [System.Runtime.Serialization.DataMemberAttribute()]
+        public string ServerName {
+            get {
+                return this.ServerNameField;
+            }
+            set {
+                if ((object.ReferenceEquals(this.ServerNameField, value) != true)) {
+                    this.ServerNameField = value;
+                    this.RaisePropertyChanged("ServerName");
+                }
+            }
+        }
+        
+        [System.Runtime.Serialization.DataMemberAttribute()]
+        public string Tenant {
+            get {
+                return this.TenantField;
+            }
+            set {
+                if ((object.ReferenceEquals(this.TenantField, value) != true)) {
+                    this.TenantField = value;
+                    this.RaisePropertyChanged("Tenant");
+                }
+            }
+        }
+        
+        [System.Runtime.Serialization.DataMemberAttribute()]
+        public string UsePreviousImportValues {
+            get {
+                return this.UsePreviousImportValuesField;
+            }
+            set {
+                if ((object.ReferenceEquals(this.UsePreviousImportValuesField, value) != true)) {
+                    this.UsePreviousImportValuesField = value;
+                    this.RaisePropertyChanged("UsePreviousImportValues");
+                }
+            }
+        }
+        
+        public event System.ComponentModel.PropertyChangedEventHandler PropertyChanged;
+        
+        protected void RaisePropertyChanged(string propertyName) {
+            System.ComponentModel.PropertyChangedEventHandler propertyChanged = this.PropertyChanged;
+            if ((propertyChanged != null)) {
+                propertyChanged(this, new System.ComponentModel.PropertyChangedEventArgs(propertyName));
+            }
+        }
+    }
+    
+    [System.Diagnostics.DebuggerStepThroughAttribute()]
+    [System.CodeDom.Compiler.GeneratedCodeAttribute("System.Runtime.Serialization", "4.0.0.0")]
+    [System.Runtime.Serialization.DataContractAttribute(Name="WDP_CurrentDocumentContract", Namespace="http://www.kendox.com/InfoShare")]
+    [System.SerializableAttribute()]
+    public partial class WDP_CurrentDocumentContract : object, System.Runtime.Serialization.IExtensibleDataObject, System.ComponentModel.INotifyPropertyChanged {
+        
+        [System.NonSerializedAttribute()]
+        private System.Runtime.Serialization.ExtensionDataObject extensionDataField;
+        
+        [System.Runtime.Serialization.OptionalFieldAttribute()]
+        private string CanChangePropertiesField;
+        
+        [System.Runtime.Serialization.OptionalFieldAttribute()]
+        private docreminder.InfoShareService.WDP_ValueContract[] FilingValuesField;
+        
+        [System.Runtime.Serialization.OptionalFieldAttribute()]
+        private docreminder.InfoShareService.PropertyContract[] PropertiesField;
+        
+        [global::System.ComponentModel.BrowsableAttribute(false)]
+        public System.Runtime.Serialization.ExtensionDataObject ExtensionData {
+            get {
+                return this.extensionDataField;
+            }
+            set {
+                this.extensionDataField = value;
+            }
+        }
+        
+        [System.Runtime.Serialization.DataMemberAttribute()]
+        public string CanChangeProperties {
+            get {
+                return this.CanChangePropertiesField;
+            }
+            set {
+                if ((object.ReferenceEquals(this.CanChangePropertiesField, value) != true)) {
+                    this.CanChangePropertiesField = value;
+                    this.RaisePropertyChanged("CanChangeProperties");
+                }
+            }
+        }
+        
+        [System.Runtime.Serialization.DataMemberAttribute()]
+        public docreminder.InfoShareService.WDP_ValueContract[] FilingValues {
+            get {
+                return this.FilingValuesField;
+            }
+            set {
+                if ((object.ReferenceEquals(this.FilingValuesField, value) != true)) {
+                    this.FilingValuesField = value;
+                    this.RaisePropertyChanged("FilingValues");
+                }
+            }
+        }
+        
+        [System.Runtime.Serialization.DataMemberAttribute()]
+        public docreminder.InfoShareService.PropertyContract[] Properties {
+            get {
+                return this.PropertiesField;
+            }
+            set {
+                if ((object.ReferenceEquals(this.PropertiesField, value) != true)) {
+                    this.PropertiesField = value;
+                    this.RaisePropertyChanged("Properties");
+                }
+            }
+        }
+        
+        public event System.ComponentModel.PropertyChangedEventHandler PropertyChanged;
+        
+        protected void RaisePropertyChanged(string propertyName) {
+            System.ComponentModel.PropertyChangedEventHandler propertyChanged = this.PropertyChanged;
+            if ((propertyChanged != null)) {
+                propertyChanged(this, new System.ComponentModel.PropertyChangedEventArgs(propertyName));
+            }
+        }
+    }
+    
+    [System.Diagnostics.DebuggerStepThroughAttribute()]
+    [System.CodeDom.Compiler.GeneratedCodeAttribute("System.Runtime.Serialization", "4.0.0.0")]
+    [System.Runtime.Serialization.DataContractAttribute(Name="WDP_ProcessDataValidateContract", Namespace="http://www.kendox.com/InfoShare")]
+    [System.SerializableAttribute()]
+    public partial class WDP_ProcessDataValidateContract : object, System.Runtime.Serialization.IExtensibleDataObject, System.ComponentModel.INotifyPropertyChanged {
+        
+        [System.NonSerializedAttribute()]
+        private System.Runtime.Serialization.ExtensionDataObject extensionDataField;
+        
+        [System.Runtime.Serialization.OptionalFieldAttribute()]
+        private string ActionField;
+        
+        [System.Runtime.Serialization.OptionalFieldAttribute()]
+        private string CurrentCultureField;
+        
+        [System.Runtime.Serialization.OptionalFieldAttribute()]
+        private docreminder.InfoShareService.WDP_EnvironmentValuesContract EnvironmentValuesField;
+        
+        [System.Runtime.Serialization.OptionalFieldAttribute()]
+        private docreminder.InfoShareService.WDP_ErrorContract[] ErrorsField;
+        
+        [System.Runtime.Serialization.OptionalFieldAttribute()]
+        private docreminder.InfoShareService.WDP_ImportValuesContract ImportValuesField;
+        
+        [System.Runtime.Serialization.OptionalFieldAttribute()]
+        private docreminder.InfoShareService.WDP_PropertiesForActionContract PropertiesForActionField;
+        
+        [System.Runtime.Serialization.OptionalFieldAttribute()]
+        private string SourceApplicationField;
+        
+        [System.Runtime.Serialization.OptionalFieldAttribute()]
+        private string SourceDialogField;
+        
+        [System.Runtime.Serialization.OptionalFieldAttribute()]
+        private string UICultureField;
+        
+        [global::System.ComponentModel.BrowsableAttribute(false)]
+        public System.Runtime.Serialization.ExtensionDataObject ExtensionData {
+            get {
+                return this.extensionDataField;
+            }
+            set {
+                this.extensionDataField = value;
+            }
+        }
+        
+        [System.Runtime.Serialization.DataMemberAttribute()]
+        public string Action {
+            get {
+                return this.ActionField;
+            }
+            set {
+                if ((object.ReferenceEquals(this.ActionField, value) != true)) {
+                    this.ActionField = value;
+                    this.RaisePropertyChanged("Action");
+                }
+            }
+        }
+        
+        [System.Runtime.Serialization.DataMemberAttribute()]
+        public string CurrentCulture {
+            get {
+                return this.CurrentCultureField;
+            }
+            set {
+                if ((object.ReferenceEquals(this.CurrentCultureField, value) != true)) {
+                    this.CurrentCultureField = value;
+                    this.RaisePropertyChanged("CurrentCulture");
+                }
+            }
+        }
+        
+        [System.Runtime.Serialization.DataMemberAttribute()]
+        public docreminder.InfoShareService.WDP_EnvironmentValuesContract EnvironmentValues {
+            get {
+                return this.EnvironmentValuesField;
+            }
+            set {
+                if ((object.ReferenceEquals(this.EnvironmentValuesField, value) != true)) {
+                    this.EnvironmentValuesField = value;
+                    this.RaisePropertyChanged("EnvironmentValues");
+                }
+            }
+        }
+        
+        [System.Runtime.Serialization.DataMemberAttribute()]
+        public docreminder.InfoShareService.WDP_ErrorContract[] Errors {
+            get {
+                return this.ErrorsField;
+            }
+            set {
+                if ((object.ReferenceEquals(this.ErrorsField, value) != true)) {
+                    this.ErrorsField = value;
+                    this.RaisePropertyChanged("Errors");
+                }
+            }
+        }
+        
+        [System.Runtime.Serialization.DataMemberAttribute()]
+        public docreminder.InfoShareService.WDP_ImportValuesContract ImportValues {
+            get {
+                return this.ImportValuesField;
+            }
+            set {
+                if ((object.ReferenceEquals(this.ImportValuesField, value) != true)) {
+                    this.ImportValuesField = value;
+                    this.RaisePropertyChanged("ImportValues");
+                }
+            }
+        }
+        
+        [System.Runtime.Serialization.DataMemberAttribute()]
+        public docreminder.InfoShareService.WDP_PropertiesForActionContract PropertiesForAction {
+            get {
+                return this.PropertiesForActionField;
+            }
+            set {
+                if ((object.ReferenceEquals(this.PropertiesForActionField, value) != true)) {
+                    this.PropertiesForActionField = value;
+                    this.RaisePropertyChanged("PropertiesForAction");
+                }
+            }
+        }
+        
+        [System.Runtime.Serialization.DataMemberAttribute()]
+        public string SourceApplication {
+            get {
+                return this.SourceApplicationField;
+            }
+            set {
+                if ((object.ReferenceEquals(this.SourceApplicationField, value) != true)) {
+                    this.SourceApplicationField = value;
+                    this.RaisePropertyChanged("SourceApplication");
+                }
+            }
+        }
+        
+        [System.Runtime.Serialization.DataMemberAttribute()]
+        public string SourceDialog {
+            get {
+                return this.SourceDialogField;
+            }
+            set {
+                if ((object.ReferenceEquals(this.SourceDialogField, value) != true)) {
+                    this.SourceDialogField = value;
+                    this.RaisePropertyChanged("SourceDialog");
+                }
+            }
+        }
+        
+        [System.Runtime.Serialization.DataMemberAttribute()]
+        public string UICulture {
+            get {
+                return this.UICultureField;
+            }
+            set {
+                if ((object.ReferenceEquals(this.UICultureField, value) != true)) {
+                    this.UICultureField = value;
+                    this.RaisePropertyChanged("UICulture");
+                }
+            }
+        }
+        
+        public event System.ComponentModel.PropertyChangedEventHandler PropertyChanged;
+        
+        protected void RaisePropertyChanged(string propertyName) {
+            System.ComponentModel.PropertyChangedEventHandler propertyChanged = this.PropertyChanged;
+            if ((propertyChanged != null)) {
+                propertyChanged(this, new System.ComponentModel.PropertyChangedEventArgs(propertyName));
+            }
+        }
+    }
+    
+    [System.Diagnostics.DebuggerStepThroughAttribute()]
+    [System.CodeDom.Compiler.GeneratedCodeAttribute("System.Runtime.Serialization", "4.0.0.0")]
+    [System.Runtime.Serialization.DataContractAttribute(Name="WDP_ProcessDataGetExternalListContract", Namespace="http://www.kendox.com/InfoShare")]
+    [System.SerializableAttribute()]
+    public partial class WDP_ProcessDataGetExternalListContract : object, System.Runtime.Serialization.IExtensibleDataObject, System.ComponentModel.INotifyPropertyChanged {
+        
+        [System.NonSerializedAttribute()]
+        private System.Runtime.Serialization.ExtensionDataObject extensionDataField;
+        
+        [System.Runtime.Serialization.OptionalFieldAttribute()]
+        private string ActionField;
+        
+        [System.Runtime.Serialization.OptionalFieldAttribute()]
+        private string CurrentCultureField;
+        
+        [System.Runtime.Serialization.OptionalFieldAttribute()]
+        private docreminder.InfoShareService.WDP_EnvironmentValuesContract EnvironmentValuesField;
+        
+        [System.Runtime.Serialization.OptionalFieldAttribute()]
+        private docreminder.InfoShareService.WDP_ErrorContract[] ErrorsField;
+        
+        [System.Runtime.Serialization.OptionalFieldAttribute()]
+        private docreminder.InfoShareService.WDP_ExternalListContainerContract ExternalListContainerField;
+        
+        [System.Runtime.Serialization.OptionalFieldAttribute()]
+        private docreminder.InfoShareService.WDP_ImportValuesContract ImportValuesField;
+        
+        [System.Runtime.Serialization.OptionalFieldAttribute()]
+        private docreminder.InfoShareService.WDP_PropertiesForActionContract PropertiesForActionField;
+        
+        [System.Runtime.Serialization.OptionalFieldAttribute()]
+        private string SourceApplicationField;
+        
+        [System.Runtime.Serialization.OptionalFieldAttribute()]
+        private string SourceDialogField;
+        
+        [System.Runtime.Serialization.OptionalFieldAttribute()]
+        private string UICultureField;
+        
+        [global::System.ComponentModel.BrowsableAttribute(false)]
+        public System.Runtime.Serialization.ExtensionDataObject ExtensionData {
+            get {
+                return this.extensionDataField;
+            }
+            set {
+                this.extensionDataField = value;
+            }
+        }
+        
+        [System.Runtime.Serialization.DataMemberAttribute()]
+        public string Action {
+            get {
+                return this.ActionField;
+            }
+            set {
+                if ((object.ReferenceEquals(this.ActionField, value) != true)) {
+                    this.ActionField = value;
+                    this.RaisePropertyChanged("Action");
+                }
+            }
+        }
+        
+        [System.Runtime.Serialization.DataMemberAttribute()]
+        public string CurrentCulture {
+            get {
+                return this.CurrentCultureField;
+            }
+            set {
+                if ((object.ReferenceEquals(this.CurrentCultureField, value) != true)) {
+                    this.CurrentCultureField = value;
+                    this.RaisePropertyChanged("CurrentCulture");
+                }
+            }
+        }
+        
+        [System.Runtime.Serialization.DataMemberAttribute()]
+        public docreminder.InfoShareService.WDP_EnvironmentValuesContract EnvironmentValues {
+            get {
+                return this.EnvironmentValuesField;
+            }
+            set {
+                if ((object.ReferenceEquals(this.EnvironmentValuesField, value) != true)) {
+                    this.EnvironmentValuesField = value;
+                    this.RaisePropertyChanged("EnvironmentValues");
+                }
+            }
+        }
+        
+        [System.Runtime.Serialization.DataMemberAttribute()]
+        public docreminder.InfoShareService.WDP_ErrorContract[] Errors {
+            get {
+                return this.ErrorsField;
+            }
+            set {
+                if ((object.ReferenceEquals(this.ErrorsField, value) != true)) {
+                    this.ErrorsField = value;
+                    this.RaisePropertyChanged("Errors");
+                }
+            }
+        }
+        
+        [System.Runtime.Serialization.DataMemberAttribute()]
+        public docreminder.InfoShareService.WDP_ExternalListContainerContract ExternalListContainer {
+            get {
+                return this.ExternalListContainerField;
+            }
+            set {
+                if ((object.ReferenceEquals(this.ExternalListContainerField, value) != true)) {
+                    this.ExternalListContainerField = value;
+                    this.RaisePropertyChanged("ExternalListContainer");
+                }
+            }
+        }
+        
+        [System.Runtime.Serialization.DataMemberAttribute()]
+        public docreminder.InfoShareService.WDP_ImportValuesContract ImportValues {
+            get {
+                return this.ImportValuesField;
+            }
+            set {
+                if ((object.ReferenceEquals(this.ImportValuesField, value) != true)) {
+                    this.ImportValuesField = value;
+                    this.RaisePropertyChanged("ImportValues");
+                }
+            }
+        }
+        
+        [System.Runtime.Serialization.DataMemberAttribute()]
+        public docreminder.InfoShareService.WDP_PropertiesForActionContract PropertiesForAction {
+            get {
+                return this.PropertiesForActionField;
+            }
+            set {
+                if ((object.ReferenceEquals(this.PropertiesForActionField, value) != true)) {
+                    this.PropertiesForActionField = value;
+                    this.RaisePropertyChanged("PropertiesForAction");
+                }
+            }
+        }
+        
+        [System.Runtime.Serialization.DataMemberAttribute()]
+        public string SourceApplication {
+            get {
+                return this.SourceApplicationField;
+            }
+            set {
+                if ((object.ReferenceEquals(this.SourceApplicationField, value) != true)) {
+                    this.SourceApplicationField = value;
+                    this.RaisePropertyChanged("SourceApplication");
+                }
+            }
+        }
+        
+        [System.Runtime.Serialization.DataMemberAttribute()]
+        public string SourceDialog {
+            get {
+                return this.SourceDialogField;
+            }
+            set {
+                if ((object.ReferenceEquals(this.SourceDialogField, value) != true)) {
+                    this.SourceDialogField = value;
+                    this.RaisePropertyChanged("SourceDialog");
+                }
+            }
+        }
+        
+        [System.Runtime.Serialization.DataMemberAttribute()]
+        public string UICulture {
+            get {
+                return this.UICultureField;
+            }
+            set {
+                if ((object.ReferenceEquals(this.UICultureField, value) != true)) {
+                    this.UICultureField = value;
+                    this.RaisePropertyChanged("UICulture");
+                }
+            }
+        }
+        
+        public event System.ComponentModel.PropertyChangedEventHandler PropertyChanged;
+        
+        protected void RaisePropertyChanged(string propertyName) {
+            System.ComponentModel.PropertyChangedEventHandler propertyChanged = this.PropertyChanged;
+            if ((propertyChanged != null)) {
+                propertyChanged(this, new System.ComponentModel.PropertyChangedEventArgs(propertyName));
+            }
+        }
+    }
+    
+    [System.Diagnostics.DebuggerStepThroughAttribute()]
+    [System.CodeDom.Compiler.GeneratedCodeAttribute("System.Runtime.Serialization", "4.0.0.0")]
+    [System.Runtime.Serialization.DataContractAttribute(Name="WDP_ExternalListContainerContract", Namespace="http://www.kendox.com/InfoShare")]
+    [System.SerializableAttribute()]
+    public partial class WDP_ExternalListContainerContract : object, System.Runtime.Serialization.IExtensibleDataObject, System.ComponentModel.INotifyPropertyChanged {
+        
+        [System.NonSerializedAttribute()]
+        private System.Runtime.Serialization.ExtensionDataObject extensionDataField;
+        
+        [System.Runtime.Serialization.OptionalFieldAttribute()]
+        private docreminder.InfoShareService.WDP_BindingColumnContract[] BindingsField;
+        
+        [System.Runtime.Serialization.OptionalFieldAttribute()]
+        private docreminder.InfoShareService.WDP_ColumnContract[] ColumnsField;
+        
+        [System.Runtime.Serialization.OptionalFieldAttribute()]
+        private docreminder.InfoShareService.WDP_DataContract DataField;
+        
+        [System.Runtime.Serialization.OptionalFieldAttribute()]
+        private docreminder.InfoShareService.WDP_DialogTitleContract DialogTitleField;
+        
+        [System.Runtime.Serialization.OptionalFieldAttribute()]
+        private docreminder.InfoShareService.WDP_QueryPropertyContract[] QueryPropertiesField;
+        
+        [global::System.ComponentModel.BrowsableAttribute(false)]
+        public System.Runtime.Serialization.ExtensionDataObject ExtensionData {
+            get {
+                return this.extensionDataField;
+            }
+            set {
+                this.extensionDataField = value;
+            }
+        }
+        
+        [System.Runtime.Serialization.DataMemberAttribute()]
+        public docreminder.InfoShareService.WDP_BindingColumnContract[] Bindings {
+            get {
+                return this.BindingsField;
+            }
+            set {
+                if ((object.ReferenceEquals(this.BindingsField, value) != true)) {
+                    this.BindingsField = value;
+                    this.RaisePropertyChanged("Bindings");
+                }
+            }
+        }
+        
+        [System.Runtime.Serialization.DataMemberAttribute()]
+        public docreminder.InfoShareService.WDP_ColumnContract[] Columns {
+            get {
+                return this.ColumnsField;
+            }
+            set {
+                if ((object.ReferenceEquals(this.ColumnsField, value) != true)) {
+                    this.ColumnsField = value;
+                    this.RaisePropertyChanged("Columns");
+                }
+            }
+        }
+        
+        [System.Runtime.Serialization.DataMemberAttribute()]
+        public docreminder.InfoShareService.WDP_DataContract Data {
+            get {
+                return this.DataField;
+            }
+            set {
+                if ((object.ReferenceEquals(this.DataField, value) != true)) {
+                    this.DataField = value;
+                    this.RaisePropertyChanged("Data");
+                }
+            }
+        }
+        
+        [System.Runtime.Serialization.DataMemberAttribute()]
+        public docreminder.InfoShareService.WDP_DialogTitleContract DialogTitle {
+            get {
+                return this.DialogTitleField;
+            }
+            set {
+                if ((object.ReferenceEquals(this.DialogTitleField, value) != true)) {
+                    this.DialogTitleField = value;
+                    this.RaisePropertyChanged("DialogTitle");
+                }
+            }
+        }
+        
+        [System.Runtime.Serialization.DataMemberAttribute()]
+        public docreminder.InfoShareService.WDP_QueryPropertyContract[] QueryProperties {
+            get {
+                return this.QueryPropertiesField;
+            }
+            set {
+                if ((object.ReferenceEquals(this.QueryPropertiesField, value) != true)) {
+                    this.QueryPropertiesField = value;
+                    this.RaisePropertyChanged("QueryProperties");
+                }
+            }
+        }
+        
+        public event System.ComponentModel.PropertyChangedEventHandler PropertyChanged;
+        
+        protected void RaisePropertyChanged(string propertyName) {
+            System.ComponentModel.PropertyChangedEventHandler propertyChanged = this.PropertyChanged;
+            if ((propertyChanged != null)) {
+                propertyChanged(this, new System.ComponentModel.PropertyChangedEventArgs(propertyName));
+            }
+        }
+    }
+    
+    [System.Diagnostics.DebuggerStepThroughAttribute()]
+    [System.CodeDom.Compiler.GeneratedCodeAttribute("System.Runtime.Serialization", "4.0.0.0")]
+    [System.Runtime.Serialization.DataContractAttribute(Name="WDP_DataContract", Namespace="http://www.kendox.com/InfoShare")]
+    [System.SerializableAttribute()]
+    public partial class WDP_DataContract : object, System.Runtime.Serialization.IExtensibleDataObject, System.ComponentModel.INotifyPropertyChanged {
+        
+        [System.NonSerializedAttribute()]
+        private System.Runtime.Serialization.ExtensionDataObject extensionDataField;
+        
+        [System.Runtime.Serialization.OptionalFieldAttribute()]
+        private docreminder.InfoShareService.WDP_RowContract[] RowField;
+        
+        [global::System.ComponentModel.BrowsableAttribute(false)]
+        public System.Runtime.Serialization.ExtensionDataObject ExtensionData {
+            get {
+                return this.extensionDataField;
+            }
+            set {
+                this.extensionDataField = value;
+            }
+        }
+        
+        [System.Runtime.Serialization.DataMemberAttribute()]
+        public docreminder.InfoShareService.WDP_RowContract[] Row {
+            get {
+                return this.RowField;
+            }
+            set {
+                if ((object.ReferenceEquals(this.RowField, value) != true)) {
+                    this.RowField = value;
+                    this.RaisePropertyChanged("Row");
+                }
+            }
+        }
+        
+        public event System.ComponentModel.PropertyChangedEventHandler PropertyChanged;
+        
+        protected void RaisePropertyChanged(string propertyName) {
+            System.ComponentModel.PropertyChangedEventHandler propertyChanged = this.PropertyChanged;
+            if ((propertyChanged != null)) {
+                propertyChanged(this, new System.ComponentModel.PropertyChangedEventArgs(propertyName));
+            }
+        }
+    }
+    
+    [System.Diagnostics.DebuggerStepThroughAttribute()]
+    [System.CodeDom.Compiler.GeneratedCodeAttribute("System.Runtime.Serialization", "4.0.0.0")]
+    [System.Runtime.Serialization.DataContractAttribute(Name="WDP_DialogTitleContract", Namespace="http://www.kendox.com/InfoShare")]
+    [System.SerializableAttribute()]
+    public partial class WDP_DialogTitleContract : object, System.Runtime.Serialization.IExtensibleDataObject, System.ComponentModel.INotifyPropertyChanged {
+        
+        [System.NonSerializedAttribute()]
+        private System.Runtime.Serialization.ExtensionDataObject extensionDataField;
+        
+        [System.Runtime.Serialization.OptionalFieldAttribute()]
+        private string TextField;
+        
+        [global::System.ComponentModel.BrowsableAttribute(false)]
+        public System.Runtime.Serialization.ExtensionDataObject ExtensionData {
+            get {
+                return this.extensionDataField;
+            }
+            set {
+                this.extensionDataField = value;
+            }
+        }
+        
+        [System.Runtime.Serialization.DataMemberAttribute()]
+        public string Text {
+            get {
+                return this.TextField;
+            }
+            set {
+                if ((object.ReferenceEquals(this.TextField, value) != true)) {
+                    this.TextField = value;
+                    this.RaisePropertyChanged("Text");
+                }
+            }
+        }
+        
+        public event System.ComponentModel.PropertyChangedEventHandler PropertyChanged;
+        
+        protected void RaisePropertyChanged(string propertyName) {
+            System.ComponentModel.PropertyChangedEventHandler propertyChanged = this.PropertyChanged;
+            if ((propertyChanged != null)) {
+                propertyChanged(this, new System.ComponentModel.PropertyChangedEventArgs(propertyName));
+            }
+        }
+    }
+    
+    [System.Diagnostics.DebuggerStepThroughAttribute()]
+    [System.CodeDom.Compiler.GeneratedCodeAttribute("System.Runtime.Serialization", "4.0.0.0")]
+    [System.Runtime.Serialization.DataContractAttribute(Name="WDP_BindingColumnContract", Namespace="http://www.kendox.com/InfoShare")]
+    [System.SerializableAttribute()]
+    public partial class WDP_BindingColumnContract : object, System.Runtime.Serialization.IExtensibleDataObject, System.ComponentModel.INotifyPropertyChanged {
+        
+        [System.NonSerializedAttribute()]
+        private System.Runtime.Serialization.ExtensionDataObject extensionDataField;
+        
+        [System.Runtime.Serialization.OptionalFieldAttribute()]
+        private string ColumnIdField;
+        
+        [System.Runtime.Serialization.OptionalFieldAttribute()]
+        private string TextField;
+        
+        [global::System.ComponentModel.BrowsableAttribute(false)]
+        public System.Runtime.Serialization.ExtensionDataObject ExtensionData {
+            get {
+                return this.extensionDataField;
+            }
+            set {
+                this.extensionDataField = value;
+            }
+        }
+        
+        [System.Runtime.Serialization.DataMemberAttribute()]
+        public string ColumnId {
+            get {
+                return this.ColumnIdField;
+            }
+            set {
+                if ((object.ReferenceEquals(this.ColumnIdField, value) != true)) {
+                    this.ColumnIdField = value;
+                    this.RaisePropertyChanged("ColumnId");
+                }
+            }
+        }
+        
+        [System.Runtime.Serialization.DataMemberAttribute()]
+        public string Text {
+            get {
+                return this.TextField;
+            }
+            set {
+                if ((object.ReferenceEquals(this.TextField, value) != true)) {
+                    this.TextField = value;
+                    this.RaisePropertyChanged("Text");
+                }
+            }
+        }
+        
+        public event System.ComponentModel.PropertyChangedEventHandler PropertyChanged;
+        
+        protected void RaisePropertyChanged(string propertyName) {
+            System.ComponentModel.PropertyChangedEventHandler propertyChanged = this.PropertyChanged;
+            if ((propertyChanged != null)) {
+                propertyChanged(this, new System.ComponentModel.PropertyChangedEventArgs(propertyName));
+            }
+        }
+    }
+    
+    [System.Diagnostics.DebuggerStepThroughAttribute()]
+    [System.CodeDom.Compiler.GeneratedCodeAttribute("System.Runtime.Serialization", "4.0.0.0")]
+    [System.Runtime.Serialization.DataContractAttribute(Name="WDP_ColumnContract", Namespace="http://www.kendox.com/InfoShare")]
+    [System.SerializableAttribute()]
+    public partial class WDP_ColumnContract : object, System.Runtime.Serialization.IExtensibleDataObject, System.ComponentModel.INotifyPropertyChanged {
+        
+        [System.NonSerializedAttribute()]
+        private System.Runtime.Serialization.ExtensionDataObject extensionDataField;
+        
+        [System.Runtime.Serialization.OptionalFieldAttribute()]
+        private string AlignmentField;
+        
+        [System.Runtime.Serialization.OptionalFieldAttribute()]
+        private string FormatField;
+        
+        [System.Runtime.Serialization.OptionalFieldAttribute()]
+        private string IdField;
+        
+        [System.Runtime.Serialization.OptionalFieldAttribute()]
+        private string IsVisibleField;
+        
+        [System.Runtime.Serialization.OptionalFieldAttribute()]
+        private string TextField;
+        
+        [System.Runtime.Serialization.OptionalFieldAttribute()]
+        private string TypeField;
+        
+        [global::System.ComponentModel.BrowsableAttribute(false)]
+        public System.Runtime.Serialization.ExtensionDataObject ExtensionData {
+            get {
+                return this.extensionDataField;
+            }
+            set {
+                this.extensionDataField = value;
+            }
+        }
+        
+        [System.Runtime.Serialization.DataMemberAttribute()]
+        public string Alignment {
+            get {
+                return this.AlignmentField;
+            }
+            set {
+                if ((object.ReferenceEquals(this.AlignmentField, value) != true)) {
+                    this.AlignmentField = value;
+                    this.RaisePropertyChanged("Alignment");
+                }
+            }
+        }
+        
+        [System.Runtime.Serialization.DataMemberAttribute()]
+        public string Format {
+            get {
+                return this.FormatField;
+            }
+            set {
+                if ((object.ReferenceEquals(this.FormatField, value) != true)) {
+                    this.FormatField = value;
+                    this.RaisePropertyChanged("Format");
+                }
+            }
+        }
+        
+        [System.Runtime.Serialization.DataMemberAttribute()]
+        public string Id {
+            get {
+                return this.IdField;
+            }
+            set {
+                if ((object.ReferenceEquals(this.IdField, value) != true)) {
+                    this.IdField = value;
+                    this.RaisePropertyChanged("Id");
+                }
+            }
+        }
+        
+        [System.Runtime.Serialization.DataMemberAttribute()]
+        public string IsVisible {
+            get {
+                return this.IsVisibleField;
+            }
+            set {
+                if ((object.ReferenceEquals(this.IsVisibleField, value) != true)) {
+                    this.IsVisibleField = value;
+                    this.RaisePropertyChanged("IsVisible");
+                }
+            }
+        }
+        
+        [System.Runtime.Serialization.DataMemberAttribute()]
+        public string Text {
+            get {
+                return this.TextField;
+            }
+            set {
+                if ((object.ReferenceEquals(this.TextField, value) != true)) {
+                    this.TextField = value;
+                    this.RaisePropertyChanged("Text");
+                }
+            }
+        }
+        
+        [System.Runtime.Serialization.DataMemberAttribute()]
+        public string Type {
+            get {
+                return this.TypeField;
+            }
+            set {
+                if ((object.ReferenceEquals(this.TypeField, value) != true)) {
+                    this.TypeField = value;
+                    this.RaisePropertyChanged("Type");
+                }
+            }
+        }
+        
+        public event System.ComponentModel.PropertyChangedEventHandler PropertyChanged;
+        
+        protected void RaisePropertyChanged(string propertyName) {
+            System.ComponentModel.PropertyChangedEventHandler propertyChanged = this.PropertyChanged;
+            if ((propertyChanged != null)) {
+                propertyChanged(this, new System.ComponentModel.PropertyChangedEventArgs(propertyName));
+            }
+        }
+    }
+    
+    [System.Diagnostics.DebuggerStepThroughAttribute()]
+    [System.CodeDom.Compiler.GeneratedCodeAttribute("System.Runtime.Serialization", "4.0.0.0")]
+    [System.Runtime.Serialization.DataContractAttribute(Name="WDP_QueryPropertyContract", Namespace="http://www.kendox.com/InfoShare")]
+    [System.SerializableAttribute()]
+    public partial class WDP_QueryPropertyContract : object, System.Runtime.Serialization.IExtensibleDataObject, System.ComponentModel.INotifyPropertyChanged {
+        
+        [System.NonSerializedAttribute()]
+        private System.Runtime.Serialization.ExtensionDataObject extensionDataField;
+        
+        [System.Runtime.Serialization.OptionalFieldAttribute()]
+        private string ColumnIdField;
+        
+        [System.Runtime.Serialization.OptionalFieldAttribute()]
+        private string DisplayNameField;
+        
+        [System.Runtime.Serialization.OptionalFieldAttribute()]
+        private string IdField;
+        
+        [System.Runtime.Serialization.OptionalFieldAttribute()]
+        private string MaxInputLengthField;
+        
+        [System.Runtime.Serialization.OptionalFieldAttribute()]
+        private string TextField;
+        
+        [global::System.ComponentModel.BrowsableAttribute(false)]
+        public System.Runtime.Serialization.ExtensionDataObject ExtensionData {
+            get {
+                return this.extensionDataField;
+            }
+            set {
+                this.extensionDataField = value;
+            }
+        }
+        
+        [System.Runtime.Serialization.DataMemberAttribute()]
+        public string ColumnId {
+            get {
+                return this.ColumnIdField;
+            }
+            set {
+                if ((object.ReferenceEquals(this.ColumnIdField, value) != true)) {
+                    this.ColumnIdField = value;
+                    this.RaisePropertyChanged("ColumnId");
+                }
+            }
+        }
+        
+        [System.Runtime.Serialization.DataMemberAttribute()]
+        public string DisplayName {
+            get {
+                return this.DisplayNameField;
+            }
+            set {
+                if ((object.ReferenceEquals(this.DisplayNameField, value) != true)) {
+                    this.DisplayNameField = value;
+                    this.RaisePropertyChanged("DisplayName");
+                }
+            }
+        }
+        
+        [System.Runtime.Serialization.DataMemberAttribute()]
+        public string Id {
+            get {
+                return this.IdField;
+            }
+            set {
+                if ((object.ReferenceEquals(this.IdField, value) != true)) {
+                    this.IdField = value;
+                    this.RaisePropertyChanged("Id");
+                }
+            }
+        }
+        
+        [System.Runtime.Serialization.DataMemberAttribute()]
+        public string MaxInputLength {
+            get {
+                return this.MaxInputLengthField;
+            }
+            set {
+                if ((object.ReferenceEquals(this.MaxInputLengthField, value) != true)) {
+                    this.MaxInputLengthField = value;
+                    this.RaisePropertyChanged("MaxInputLength");
+                }
+            }
+        }
+        
+        [System.Runtime.Serialization.DataMemberAttribute()]
+        public string Text {
+            get {
+                return this.TextField;
+            }
+            set {
+                if ((object.ReferenceEquals(this.TextField, value) != true)) {
+                    this.TextField = value;
+                    this.RaisePropertyChanged("Text");
+                }
+            }
+        }
+        
+        public event System.ComponentModel.PropertyChangedEventHandler PropertyChanged;
+        
+        protected void RaisePropertyChanged(string propertyName) {
+            System.ComponentModel.PropertyChangedEventHandler propertyChanged = this.PropertyChanged;
+            if ((propertyChanged != null)) {
+                propertyChanged(this, new System.ComponentModel.PropertyChangedEventArgs(propertyName));
+            }
+        }
+    }
+    
+    [System.Diagnostics.DebuggerStepThroughAttribute()]
+    [System.CodeDom.Compiler.GeneratedCodeAttribute("System.Runtime.Serialization", "4.0.0.0")]
+    [System.Runtime.Serialization.DataContractAttribute(Name="WDP_RowContract", Namespace="http://www.kendox.com/InfoShare")]
+    [System.SerializableAttribute()]
+    public partial class WDP_RowContract : object, System.Runtime.Serialization.IExtensibleDataObject, System.ComponentModel.INotifyPropertyChanged {
+        
+        [System.NonSerializedAttribute()]
+        private System.Runtime.Serialization.ExtensionDataObject extensionDataField;
+        
+        [System.Runtime.Serialization.OptionalFieldAttribute()]
+        private string SelectedField;
+        
+        [System.Runtime.Serialization.OptionalFieldAttribute()]
+        private docreminder.InfoShareService.WDP_RowValueContract[] ValueField;
+        
+        [global::System.ComponentModel.BrowsableAttribute(false)]
+        public System.Runtime.Serialization.ExtensionDataObject ExtensionData {
+            get {
+                return this.extensionDataField;
+            }
+            set {
+                this.extensionDataField = value;
+            }
+        }
+        
+        [System.Runtime.Serialization.DataMemberAttribute()]
+        public string Selected {
+            get {
+                return this.SelectedField;
+            }
+            set {
+                if ((object.ReferenceEquals(this.SelectedField, value) != true)) {
+                    this.SelectedField = value;
+                    this.RaisePropertyChanged("Selected");
+                }
+            }
+        }
+        
+        [System.Runtime.Serialization.DataMemberAttribute()]
+        public docreminder.InfoShareService.WDP_RowValueContract[] Value {
+            get {
+                return this.ValueField;
+            }
+            set {
+                if ((object.ReferenceEquals(this.ValueField, value) != true)) {
+                    this.ValueField = value;
+                    this.RaisePropertyChanged("Value");
+                }
+            }
+        }
+        
+        public event System.ComponentModel.PropertyChangedEventHandler PropertyChanged;
+        
+        protected void RaisePropertyChanged(string propertyName) {
+            System.ComponentModel.PropertyChangedEventHandler propertyChanged = this.PropertyChanged;
+            if ((propertyChanged != null)) {
+                propertyChanged(this, new System.ComponentModel.PropertyChangedEventArgs(propertyName));
+            }
+        }
+    }
+    
+    [System.Diagnostics.DebuggerStepThroughAttribute()]
+    [System.CodeDom.Compiler.GeneratedCodeAttribute("System.Runtime.Serialization", "4.0.0.0")]
+    [System.Runtime.Serialization.DataContractAttribute(Name="WDP_RowValueContract", Namespace="http://www.kendox.com/InfoShare")]
+    [System.SerializableAttribute()]
+    public partial class WDP_RowValueContract : object, System.Runtime.Serialization.IExtensibleDataObject, System.ComponentModel.INotifyPropertyChanged {
+        
+        [System.NonSerializedAttribute()]
+        private System.Runtime.Serialization.ExtensionDataObject extensionDataField;
+        
+        [System.Runtime.Serialization.OptionalFieldAttribute()]
+        private string ColumnIdField;
+        
+        [System.Runtime.Serialization.OptionalFieldAttribute()]
+        private string TextField;
+        
+        [global::System.ComponentModel.BrowsableAttribute(false)]
+        public System.Runtime.Serialization.ExtensionDataObject ExtensionData {
+            get {
+                return this.extensionDataField;
+            }
+            set {
+                this.extensionDataField = value;
+            }
+        }
+        
+        [System.Runtime.Serialization.DataMemberAttribute()]
+        public string ColumnId {
+            get {
+                return this.ColumnIdField;
+            }
+            set {
+                if ((object.ReferenceEquals(this.ColumnIdField, value) != true)) {
+                    this.ColumnIdField = value;
+                    this.RaisePropertyChanged("ColumnId");
+                }
+            }
+        }
+        
+        [System.Runtime.Serialization.DataMemberAttribute()]
+        public string Text {
+            get {
+                return this.TextField;
+            }
+            set {
+                if ((object.ReferenceEquals(this.TextField, value) != true)) {
+                    this.TextField = value;
+                    this.RaisePropertyChanged("Text");
+                }
+            }
+        }
+        
+        public event System.ComponentModel.PropertyChangedEventHandler PropertyChanged;
+        
+        protected void RaisePropertyChanged(string propertyName) {
+            System.ComponentModel.PropertyChangedEventHandler propertyChanged = this.PropertyChanged;
+            if ((propertyChanged != null)) {
+                propertyChanged(this, new System.ComponentModel.PropertyChangedEventArgs(propertyName));
+            }
+        }
+    }
+    
+    [System.Diagnostics.DebuggerStepThroughAttribute()]
+    [System.CodeDom.Compiler.GeneratedCodeAttribute("System.Runtime.Serialization", "4.0.0.0")]
+    [System.Runtime.Serialization.DataContractAttribute(Name="WDP_ProcessDataDocumentArchivedContract", Namespace="http://www.kendox.com/InfoShare")]
+    [System.SerializableAttribute()]
+    public partial class WDP_ProcessDataDocumentArchivedContract : object, System.Runtime.Serialization.IExtensibleDataObject, System.ComponentModel.INotifyPropertyChanged {
+        
+        [System.NonSerializedAttribute()]
+        private System.Runtime.Serialization.ExtensionDataObject extensionDataField;
+        
+        [System.Runtime.Serialization.OptionalFieldAttribute()]
+        private string ActionField;
+        
+        [System.Runtime.Serialization.OptionalFieldAttribute()]
+        private string CurrentCultureField;
+        
+        [System.Runtime.Serialization.OptionalFieldAttribute()]
+        private docreminder.InfoShareService.WDP_EnvironmentValuesContract EnvironmentValuesField;
+        
+        [System.Runtime.Serialization.OptionalFieldAttribute()]
+        private docreminder.InfoShareService.WDP_FilingInformationContract FilingInformationField;
+        
+        [System.Runtime.Serialization.OptionalFieldAttribute()]
+        private docreminder.InfoShareService.WDP_ImportValuesContract ImportValuesField;
+        
+        [System.Runtime.Serialization.OptionalFieldAttribute()]
+        private string SourceApplicationField;
+        
+        [System.Runtime.Serialization.OptionalFieldAttribute()]
+        private string SourceDialogField;
+        
+        [System.Runtime.Serialization.OptionalFieldAttribute()]
+        private string UICultureField;
+        
+        [global::System.ComponentModel.BrowsableAttribute(false)]
+        public System.Runtime.Serialization.ExtensionDataObject ExtensionData {
+            get {
+                return this.extensionDataField;
+            }
+            set {
+                this.extensionDataField = value;
+            }
+        }
+        
+        [System.Runtime.Serialization.DataMemberAttribute()]
+        public string Action {
+            get {
+                return this.ActionField;
+            }
+            set {
+                if ((object.ReferenceEquals(this.ActionField, value) != true)) {
+                    this.ActionField = value;
+                    this.RaisePropertyChanged("Action");
+                }
+            }
+        }
+        
+        [System.Runtime.Serialization.DataMemberAttribute()]
+        public string CurrentCulture {
+            get {
+                return this.CurrentCultureField;
+            }
+            set {
+                if ((object.ReferenceEquals(this.CurrentCultureField, value) != true)) {
+                    this.CurrentCultureField = value;
+                    this.RaisePropertyChanged("CurrentCulture");
+                }
+            }
+        }
+        
+        [System.Runtime.Serialization.DataMemberAttribute()]
+        public docreminder.InfoShareService.WDP_EnvironmentValuesContract EnvironmentValues {
+            get {
+                return this.EnvironmentValuesField;
+            }
+            set {
+                if ((object.ReferenceEquals(this.EnvironmentValuesField, value) != true)) {
+                    this.EnvironmentValuesField = value;
+                    this.RaisePropertyChanged("EnvironmentValues");
+                }
+            }
+        }
+        
+        [System.Runtime.Serialization.DataMemberAttribute()]
+        public docreminder.InfoShareService.WDP_FilingInformationContract FilingInformation {
+            get {
+                return this.FilingInformationField;
+            }
+            set {
+                if ((object.ReferenceEquals(this.FilingInformationField, value) != true)) {
+                    this.FilingInformationField = value;
+                    this.RaisePropertyChanged("FilingInformation");
+                }
+            }
+        }
+        
+        [System.Runtime.Serialization.DataMemberAttribute()]
+        public docreminder.InfoShareService.WDP_ImportValuesContract ImportValues {
+            get {
+                return this.ImportValuesField;
+            }
+            set {
+                if ((object.ReferenceEquals(this.ImportValuesField, value) != true)) {
+                    this.ImportValuesField = value;
+                    this.RaisePropertyChanged("ImportValues");
+                }
+            }
+        }
+        
+        [System.Runtime.Serialization.DataMemberAttribute()]
+        public string SourceApplication {
+            get {
+                return this.SourceApplicationField;
+            }
+            set {
+                if ((object.ReferenceEquals(this.SourceApplicationField, value) != true)) {
+                    this.SourceApplicationField = value;
+                    this.RaisePropertyChanged("SourceApplication");
+                }
+            }
+        }
+        
+        [System.Runtime.Serialization.DataMemberAttribute()]
+        public string SourceDialog {
+            get {
+                return this.SourceDialogField;
+            }
+            set {
+                if ((object.ReferenceEquals(this.SourceDialogField, value) != true)) {
+                    this.SourceDialogField = value;
+                    this.RaisePropertyChanged("SourceDialog");
+                }
+            }
+        }
+        
+        [System.Runtime.Serialization.DataMemberAttribute()]
+        public string UICulture {
+            get {
+                return this.UICultureField;
+            }
+            set {
+                if ((object.ReferenceEquals(this.UICultureField, value) != true)) {
+                    this.UICultureField = value;
+                    this.RaisePropertyChanged("UICulture");
+                }
+            }
+        }
+        
+        public event System.ComponentModel.PropertyChangedEventHandler PropertyChanged;
+        
+        protected void RaisePropertyChanged(string propertyName) {
+            System.ComponentModel.PropertyChangedEventHandler propertyChanged = this.PropertyChanged;
+            if ((propertyChanged != null)) {
+                propertyChanged(this, new System.ComponentModel.PropertyChangedEventArgs(propertyName));
+            }
+        }
+    }
+    
+    [System.Diagnostics.DebuggerStepThroughAttribute()]
+    [System.CodeDom.Compiler.GeneratedCodeAttribute("System.Runtime.Serialization", "4.0.0.0")]
+    [System.Runtime.Serialization.DataContractAttribute(Name="WDP_FilingInformationContract", Namespace="http://www.kendox.com/InfoShare")]
+    [System.SerializableAttribute()]
+    public partial class WDP_FilingInformationContract : object, System.Runtime.Serialization.IExtensibleDataObject, System.ComponentModel.INotifyPropertyChanged {
+        
+        [System.NonSerializedAttribute()]
+        private System.Runtime.Serialization.ExtensionDataObject extensionDataField;
+        
+        [System.Runtime.Serialization.OptionalFieldAttribute()]
+        private docreminder.InfoShareService.WDP_DocumentIdContract DocumentIdField;
+        
+        [System.Runtime.Serialization.OptionalFieldAttribute()]
+        private docreminder.InfoShareService.WDP_StoreIdContract StoreIdField;
+        
+        [global::System.ComponentModel.BrowsableAttribute(false)]
+        public System.Runtime.Serialization.ExtensionDataObject ExtensionData {
+            get {
+                return this.extensionDataField;
+            }
+            set {
+                this.extensionDataField = value;
+            }
+        }
+        
+        [System.Runtime.Serialization.DataMemberAttribute()]
+        public docreminder.InfoShareService.WDP_DocumentIdContract DocumentId {
+            get {
+                return this.DocumentIdField;
+            }
+            set {
+                if ((object.ReferenceEquals(this.DocumentIdField, value) != true)) {
+                    this.DocumentIdField = value;
+                    this.RaisePropertyChanged("DocumentId");
+                }
+            }
+        }
+        
+        [System.Runtime.Serialization.DataMemberAttribute()]
+        public docreminder.InfoShareService.WDP_StoreIdContract StoreId {
+            get {
+                return this.StoreIdField;
+            }
+            set {
+                if ((object.ReferenceEquals(this.StoreIdField, value) != true)) {
+                    this.StoreIdField = value;
+                    this.RaisePropertyChanged("StoreId");
+                }
+            }
+        }
+        
+        public event System.ComponentModel.PropertyChangedEventHandler PropertyChanged;
+        
+        protected void RaisePropertyChanged(string propertyName) {
+            System.ComponentModel.PropertyChangedEventHandler propertyChanged = this.PropertyChanged;
+            if ((propertyChanged != null)) {
+                propertyChanged(this, new System.ComponentModel.PropertyChangedEventArgs(propertyName));
+            }
+        }
+    }
+    
+    [System.Diagnostics.DebuggerStepThroughAttribute()]
+    [System.CodeDom.Compiler.GeneratedCodeAttribute("System.Runtime.Serialization", "4.0.0.0")]
+    [System.Runtime.Serialization.DataContractAttribute(Name="WDP_DocumentIdContract", Namespace="http://www.kendox.com/InfoShare")]
+    [System.SerializableAttribute()]
+    public partial class WDP_DocumentIdContract : object, System.Runtime.Serialization.IExtensibleDataObject, System.ComponentModel.INotifyPropertyChanged {
+        
+        [System.NonSerializedAttribute()]
+        private System.Runtime.Serialization.ExtensionDataObject extensionDataField;
+        
+        [System.Runtime.Serialization.OptionalFieldAttribute()]
+        private string DocumentIdField;
+        
+        [global::System.ComponentModel.BrowsableAttribute(false)]
+        public System.Runtime.Serialization.ExtensionDataObject ExtensionData {
+            get {
+                return this.extensionDataField;
+            }
+            set {
+                this.extensionDataField = value;
+            }
+        }
+        
+        [System.Runtime.Serialization.DataMemberAttribute()]
+        public string DocumentId {
+            get {
+                return this.DocumentIdField;
+            }
+            set {
+                if ((object.ReferenceEquals(this.DocumentIdField, value) != true)) {
+                    this.DocumentIdField = value;
+                    this.RaisePropertyChanged("DocumentId");
+                }
+            }
+        }
+        
+        public event System.ComponentModel.PropertyChangedEventHandler PropertyChanged;
+        
+        protected void RaisePropertyChanged(string propertyName) {
+            System.ComponentModel.PropertyChangedEventHandler propertyChanged = this.PropertyChanged;
+            if ((propertyChanged != null)) {
+                propertyChanged(this, new System.ComponentModel.PropertyChangedEventArgs(propertyName));
+            }
+        }
+    }
+    
+    [System.Diagnostics.DebuggerStepThroughAttribute()]
+    [System.CodeDom.Compiler.GeneratedCodeAttribute("System.Runtime.Serialization", "4.0.0.0")]
+    [System.Runtime.Serialization.DataContractAttribute(Name="WDP_StoreIdContract", Namespace="http://www.kendox.com/InfoShare")]
+    [System.SerializableAttribute()]
+    public partial class WDP_StoreIdContract : object, System.Runtime.Serialization.IExtensibleDataObject, System.ComponentModel.INotifyPropertyChanged {
+        
+        [System.NonSerializedAttribute()]
+        private System.Runtime.Serialization.ExtensionDataObject extensionDataField;
+        
+        [System.Runtime.Serialization.OptionalFieldAttribute()]
+        private string StoreIdField;
+        
+        [global::System.ComponentModel.BrowsableAttribute(false)]
+        public System.Runtime.Serialization.ExtensionDataObject ExtensionData {
+            get {
+                return this.extensionDataField;
+            }
+            set {
+                this.extensionDataField = value;
+            }
+        }
+        
+        [System.Runtime.Serialization.DataMemberAttribute()]
+        public string StoreId {
+            get {
+                return this.StoreIdField;
+            }
+            set {
+                if ((object.ReferenceEquals(this.StoreIdField, value) != true)) {
+                    this.StoreIdField = value;
+                    this.RaisePropertyChanged("StoreId");
                 }
             }
         }
@@ -18653,6 +23050,26 @@ namespace docreminder.InfoShareService {
         
         [System.ServiceModel.OperationContractAttribute(Action="http://www.kendox.com/InfoShare/Authentication/LogonWithToken", ReplyAction="http://www.kendox.com/InfoShare/Authentication/LogonWithTokenResponse")]
         System.Threading.Tasks.Task<docreminder.InfoShareService.LogonResultContract> LogonWithTokenAsync(string tenantName, string token, string tokenType, string clientId, int timeZoneOffsetMinutes);
+        
+        [System.ServiceModel.OperationContractAttribute(Action="http://www.kendox.com/InfoShare/Authentication/SendConnectionVerificationCode", ReplyAction="http://www.kendox.com/InfoShare/Authentication/SendConnectionVerificationCodeResp" +
+            "onse")]
+        [System.ServiceModel.FaultContractAttribute(typeof(docreminder.InfoShareService.ServiceException), Action="http://www.kendox.com/InfoShare/Authentication/SendConnectionVerificationCodeServ" +
+            "iceExceptionFault", Name="ServiceException", Namespace="http://schemas.datacontract.org/2004/07/Com.Kendox.Dcis.SubSystem.Service.Fault")]
+        void SendConnectionVerificationCode(string connectionId, string twoWayAuthenticationType);
+        
+        [System.ServiceModel.OperationContractAttribute(Action="http://www.kendox.com/InfoShare/Authentication/SendConnectionVerificationCode", ReplyAction="http://www.kendox.com/InfoShare/Authentication/SendConnectionVerificationCodeResp" +
+            "onse")]
+        System.Threading.Tasks.Task SendConnectionVerificationCodeAsync(string connectionId, string twoWayAuthenticationType);
+        
+        [System.ServiceModel.OperationContractAttribute(Action="http://www.kendox.com/InfoShare/Authentication/SetConnectionVerificationCode", ReplyAction="http://www.kendox.com/InfoShare/Authentication/SetConnectionVerificationCodeRespo" +
+            "nse")]
+        [System.ServiceModel.FaultContractAttribute(typeof(docreminder.InfoShareService.ServiceException), Action="http://www.kendox.com/InfoShare/Authentication/SetConnectionVerificationCodeServi" +
+            "ceExceptionFault", Name="ServiceException", Namespace="http://schemas.datacontract.org/2004/07/Com.Kendox.Dcis.SubSystem.Service.Fault")]
+        void SetConnectionVerificationCode(string connectionId, string verificationCode);
+        
+        [System.ServiceModel.OperationContractAttribute(Action="http://www.kendox.com/InfoShare/Authentication/SetConnectionVerificationCode", ReplyAction="http://www.kendox.com/InfoShare/Authentication/SetConnectionVerificationCodeRespo" +
+            "nse")]
+        System.Threading.Tasks.Task SetConnectionVerificationCodeAsync(string connectionId, string verificationCode);
     }
     
     [System.CodeDom.Compiler.GeneratedCodeAttribute("System.ServiceModel", "4.0.0.0")]
@@ -18729,6 +23146,22 @@ namespace docreminder.InfoShareService {
         public System.Threading.Tasks.Task<docreminder.InfoShareService.LogonResultContract> LogonWithTokenAsync(string tenantName, string token, string tokenType, string clientId, int timeZoneOffsetMinutes) {
             return base.Channel.LogonWithTokenAsync(tenantName, token, tokenType, clientId, timeZoneOffsetMinutes);
         }
+        
+        public void SendConnectionVerificationCode(string connectionId, string twoWayAuthenticationType) {
+            base.Channel.SendConnectionVerificationCode(connectionId, twoWayAuthenticationType);
+        }
+        
+        public System.Threading.Tasks.Task SendConnectionVerificationCodeAsync(string connectionId, string twoWayAuthenticationType) {
+            return base.Channel.SendConnectionVerificationCodeAsync(connectionId, twoWayAuthenticationType);
+        }
+        
+        public void SetConnectionVerificationCode(string connectionId, string verificationCode) {
+            base.Channel.SetConnectionVerificationCode(connectionId, verificationCode);
+        }
+        
+        public System.Threading.Tasks.Task SetConnectionVerificationCodeAsync(string connectionId, string verificationCode) {
+            return base.Channel.SetConnectionVerificationCodeAsync(connectionId, verificationCode);
+        }
     }
     
     [System.CodeDom.Compiler.GeneratedCodeAttribute("System.ServiceModel", "4.0.0.0")]
@@ -18762,6 +23195,20 @@ namespace docreminder.InfoShareService {
         
         [System.ServiceModel.OperationContractAttribute(Action="http://www.kendox.com/InfoShare/Search/SearchCount", ReplyAction="http://www.kendox.com/InfoShare/Search/SearchCountResponse")]
         System.Threading.Tasks.Task<long> SearchCountAsync(string connectionId, docreminder.InfoShareService.SearchDefinitionContract searchDefinition);
+        
+        [System.ServiceModel.OperationContractAttribute(Action="http://www.kendox.com/InfoShare/Search/SearchProposal", ReplyAction="http://www.kendox.com/InfoShare/Search/SearchProposalResponse")]
+        [System.ServiceModel.FaultContractAttribute(typeof(docreminder.InfoShareService.ServiceException), Action="http://www.kendox.com/InfoShare/Search/SearchProposalServiceExceptionFault", Name="ServiceException", Namespace="http://schemas.datacontract.org/2004/07/Com.Kendox.Dcis.SubSystem.Service.Fault")]
+        string[] SearchProposal(string connectionId, docreminder.InfoShareService.SearchDefinitionContract searchDefinition, string propertyTypeId, string inputValue, int maxCount);
+        
+        [System.ServiceModel.OperationContractAttribute(Action="http://www.kendox.com/InfoShare/Search/SearchProposal", ReplyAction="http://www.kendox.com/InfoShare/Search/SearchProposalResponse")]
+        System.Threading.Tasks.Task<string[]> SearchProposalAsync(string connectionId, docreminder.InfoShareService.SearchDefinitionContract searchDefinition, string propertyTypeId, string inputValue, int maxCount);
+        
+        [System.ServiceModel.OperationContractAttribute(Action="http://www.kendox.com/InfoShare/Search/SearchProposalGlobal", ReplyAction="http://www.kendox.com/InfoShare/Search/SearchProposalGlobalResponse")]
+        [System.ServiceModel.FaultContractAttribute(typeof(docreminder.InfoShareService.ServiceException), Action="http://www.kendox.com/InfoShare/Search/SearchProposalGlobalServiceExceptionFault", Name="ServiceException", Namespace="http://schemas.datacontract.org/2004/07/Com.Kendox.Dcis.SubSystem.Service.Fault")]
+        docreminder.InfoShareService.ProposalResultContract[] SearchProposalGlobal(string connectionId, docreminder.InfoShareService.SearchDefinitionContract searchDefinition, string propertyTypeId, string inputValue, int maxCount, string searchCulture);
+        
+        [System.ServiceModel.OperationContractAttribute(Action="http://www.kendox.com/InfoShare/Search/SearchProposalGlobal", ReplyAction="http://www.kendox.com/InfoShare/Search/SearchProposalGlobalResponse")]
+        System.Threading.Tasks.Task<docreminder.InfoShareService.ProposalResultContract[]> SearchProposalGlobalAsync(string connectionId, docreminder.InfoShareService.SearchDefinitionContract searchDefinition, string propertyTypeId, string inputValue, int maxCount, string searchCulture);
     }
     
     [System.CodeDom.Compiler.GeneratedCodeAttribute("System.ServiceModel", "4.0.0.0")]
@@ -18821,6 +23268,22 @@ namespace docreminder.InfoShareService {
         
         public System.Threading.Tasks.Task<long> SearchCountAsync(string connectionId, docreminder.InfoShareService.SearchDefinitionContract searchDefinition) {
             return base.Channel.SearchCountAsync(connectionId, searchDefinition);
+        }
+        
+        public string[] SearchProposal(string connectionId, docreminder.InfoShareService.SearchDefinitionContract searchDefinition, string propertyTypeId, string inputValue, int maxCount) {
+            return base.Channel.SearchProposal(connectionId, searchDefinition, propertyTypeId, inputValue, maxCount);
+        }
+        
+        public System.Threading.Tasks.Task<string[]> SearchProposalAsync(string connectionId, docreminder.InfoShareService.SearchDefinitionContract searchDefinition, string propertyTypeId, string inputValue, int maxCount) {
+            return base.Channel.SearchProposalAsync(connectionId, searchDefinition, propertyTypeId, inputValue, maxCount);
+        }
+        
+        public docreminder.InfoShareService.ProposalResultContract[] SearchProposalGlobal(string connectionId, docreminder.InfoShareService.SearchDefinitionContract searchDefinition, string propertyTypeId, string inputValue, int maxCount, string searchCulture) {
+            return base.Channel.SearchProposalGlobal(connectionId, searchDefinition, propertyTypeId, inputValue, maxCount, searchCulture);
+        }
+        
+        public System.Threading.Tasks.Task<docreminder.InfoShareService.ProposalResultContract[]> SearchProposalGlobalAsync(string connectionId, docreminder.InfoShareService.SearchDefinitionContract searchDefinition, string propertyTypeId, string inputValue, int maxCount, string searchCulture) {
+            return base.Channel.SearchProposalGlobalAsync(connectionId, searchDefinition, propertyTypeId, inputValue, maxCount, searchCulture);
         }
     }
     
@@ -19615,6 +24078,13 @@ namespace docreminder.InfoShareService {
         
         [System.ServiceModel.OperationContractAttribute(Action="http://www.kendox.com/InfoShare/Common/SetAuditConfiguration", ReplyAction="http://www.kendox.com/InfoShare/Common/SetAuditConfigurationResponse")]
         System.Threading.Tasks.Task SetAuditConfigurationAsync(string connectionId, docreminder.InfoShareService.AuditConfigurationContract auditConfiguration);
+        
+        [System.ServiceModel.OperationContractAttribute(Action="http://www.kendox.com/InfoShare/Common/GetWorkspace", ReplyAction="http://www.kendox.com/InfoShare/Common/GetWorkspaceResponse")]
+        [System.ServiceModel.FaultContractAttribute(typeof(docreminder.InfoShareService.ServiceException), Action="http://www.kendox.com/InfoShare/Common/GetWorkspaceServiceExceptionFault", Name="ServiceException", Namespace="http://schemas.datacontract.org/2004/07/Com.Kendox.Dcis.SubSystem.Service.Fault")]
+        docreminder.InfoShareService.WorkspaceContract GetWorkspace(string connectionId, docreminder.InfoShareService.WorkspacePreloadOptionsContract preLoadOptions);
+        
+        [System.ServiceModel.OperationContractAttribute(Action="http://www.kendox.com/InfoShare/Common/GetWorkspace", ReplyAction="http://www.kendox.com/InfoShare/Common/GetWorkspaceResponse")]
+        System.Threading.Tasks.Task<docreminder.InfoShareService.WorkspaceContract> GetWorkspaceAsync(string connectionId, docreminder.InfoShareService.WorkspacePreloadOptionsContract preLoadOptions);
     }
     
     [System.CodeDom.Compiler.GeneratedCodeAttribute("System.ServiceModel", "4.0.0.0")]
@@ -20491,6 +24961,14 @@ namespace docreminder.InfoShareService {
         public System.Threading.Tasks.Task SetAuditConfigurationAsync(string connectionId, docreminder.InfoShareService.AuditConfigurationContract auditConfiguration) {
             return base.Channel.SetAuditConfigurationAsync(connectionId, auditConfiguration);
         }
+        
+        public docreminder.InfoShareService.WorkspaceContract GetWorkspace(string connectionId, docreminder.InfoShareService.WorkspacePreloadOptionsContract preLoadOptions) {
+            return base.Channel.GetWorkspace(connectionId, preLoadOptions);
+        }
+        
+        public System.Threading.Tasks.Task<docreminder.InfoShareService.WorkspaceContract> GetWorkspaceAsync(string connectionId, docreminder.InfoShareService.WorkspacePreloadOptionsContract preLoadOptions) {
+            return base.Channel.GetWorkspaceAsync(connectionId, preLoadOptions);
+        }
     }
     
     [System.CodeDom.Compiler.GeneratedCodeAttribute("System.ServiceModel", "4.0.0.0")]
@@ -20506,17 +24984,17 @@ namespace docreminder.InfoShareService {
         
         [System.ServiceModel.OperationContractAttribute(Action="http://www.kendox.com/InfoShare/Document/DeleteDocument", ReplyAction="http://www.kendox.com/InfoShare/Document/DeleteDocumentResponse")]
         [System.ServiceModel.FaultContractAttribute(typeof(docreminder.InfoShareService.ServiceException), Action="http://www.kendox.com/InfoShare/Document/DeleteDocumentServiceExceptionFault", Name="ServiceException", Namespace="http://schemas.datacontract.org/2004/07/Com.Kendox.Dcis.SubSystem.Service.Fault")]
-        void DeleteDocument(string connectionId, string documentId, bool ignoreRecycleBin);
+        void DeleteDocument(string connectionId, string documentId, bool ignoreRecycleBin, bool doNotDeletePhysicalFiles);
         
         [System.ServiceModel.OperationContractAttribute(Action="http://www.kendox.com/InfoShare/Document/DeleteDocument", ReplyAction="http://www.kendox.com/InfoShare/Document/DeleteDocumentResponse")]
-        System.Threading.Tasks.Task DeleteDocumentAsync(string connectionId, string documentId, bool ignoreRecycleBin);
+        System.Threading.Tasks.Task DeleteDocumentAsync(string connectionId, string documentId, bool ignoreRecycleBin, bool doNotDeletePhysicalFiles);
         
         [System.ServiceModel.OperationContractAttribute(Action="http://www.kendox.com/InfoShare/Document/DeleteDocuments", ReplyAction="http://www.kendox.com/InfoShare/Document/DeleteDocumentsResponse")]
         [System.ServiceModel.FaultContractAttribute(typeof(docreminder.InfoShareService.ServiceException), Action="http://www.kendox.com/InfoShare/Document/DeleteDocumentsServiceExceptionFault", Name="ServiceException", Namespace="http://schemas.datacontract.org/2004/07/Com.Kendox.Dcis.SubSystem.Service.Fault")]
-        string[] DeleteDocuments(string connectionId, string[] documentIds, bool ignoreRecycleBin);
+        string[] DeleteDocuments(string connectionId, string[] documentIds, bool ignoreRecycleBin, bool doNotDeletePhysicalFiles);
         
         [System.ServiceModel.OperationContractAttribute(Action="http://www.kendox.com/InfoShare/Document/DeleteDocuments", ReplyAction="http://www.kendox.com/InfoShare/Document/DeleteDocumentsResponse")]
-        System.Threading.Tasks.Task<string[]> DeleteDocumentsAsync(string connectionId, string[] documentIds, bool ignoreRecycleBin);
+        System.Threading.Tasks.Task<string[]> DeleteDocumentsAsync(string connectionId, string[] documentIds, bool ignoreRecycleBin, bool doNotDeletePhysicalFiles);
         
         [System.ServiceModel.OperationContractAttribute(Action="http://www.kendox.com/InfoShare/Document/MoveDocument", ReplyAction="http://www.kendox.com/InfoShare/Document/MoveDocumentResponse")]
         [System.ServiceModel.FaultContractAttribute(typeof(docreminder.InfoShareService.ServiceException), Action="http://www.kendox.com/InfoShare/Document/MoveDocumentServiceExceptionFault", Name="ServiceException", Namespace="http://schemas.datacontract.org/2004/07/Com.Kendox.Dcis.SubSystem.Service.Fault")]
@@ -20866,20 +25344,20 @@ namespace docreminder.InfoShareService {
             return base.Channel.GetDocumentAsync(connectionId, documentId);
         }
         
-        public void DeleteDocument(string connectionId, string documentId, bool ignoreRecycleBin) {
-            base.Channel.DeleteDocument(connectionId, documentId, ignoreRecycleBin);
+        public void DeleteDocument(string connectionId, string documentId, bool ignoreRecycleBin, bool doNotDeletePhysicalFiles) {
+            base.Channel.DeleteDocument(connectionId, documentId, ignoreRecycleBin, doNotDeletePhysicalFiles);
         }
         
-        public System.Threading.Tasks.Task DeleteDocumentAsync(string connectionId, string documentId, bool ignoreRecycleBin) {
-            return base.Channel.DeleteDocumentAsync(connectionId, documentId, ignoreRecycleBin);
+        public System.Threading.Tasks.Task DeleteDocumentAsync(string connectionId, string documentId, bool ignoreRecycleBin, bool doNotDeletePhysicalFiles) {
+            return base.Channel.DeleteDocumentAsync(connectionId, documentId, ignoreRecycleBin, doNotDeletePhysicalFiles);
         }
         
-        public string[] DeleteDocuments(string connectionId, string[] documentIds, bool ignoreRecycleBin) {
-            return base.Channel.DeleteDocuments(connectionId, documentIds, ignoreRecycleBin);
+        public string[] DeleteDocuments(string connectionId, string[] documentIds, bool ignoreRecycleBin, bool doNotDeletePhysicalFiles) {
+            return base.Channel.DeleteDocuments(connectionId, documentIds, ignoreRecycleBin, doNotDeletePhysicalFiles);
         }
         
-        public System.Threading.Tasks.Task<string[]> DeleteDocumentsAsync(string connectionId, string[] documentIds, bool ignoreRecycleBin) {
-            return base.Channel.DeleteDocumentsAsync(connectionId, documentIds, ignoreRecycleBin);
+        public System.Threading.Tasks.Task<string[]> DeleteDocumentsAsync(string connectionId, string[] documentIds, bool ignoreRecycleBin, bool doNotDeletePhysicalFiles) {
+            return base.Channel.DeleteDocumentsAsync(connectionId, documentIds, ignoreRecycleBin, doNotDeletePhysicalFiles);
         }
         
         public docreminder.InfoShareService.DocumentContract MoveDocument(string connectionId, string documentId, string newInfoStoreId, bool doNotDeleteFiles, bool doNotMoveFilesPhysically) {
@@ -21323,6 +25801,86 @@ namespace docreminder.InfoShareService {
         
         [System.ServiceModel.OperationContractAttribute(Action="http://www.kendox.com/InfoShare/File/ReleaseFile", ReplyAction="http://www.kendox.com/InfoShare/File/ReleaseFileResponse")]
         System.Threading.Tasks.Task ReleaseFileAsync(string connectionId, string fileId);
+        
+        [System.ServiceModel.OperationContractAttribute(Action="http://www.kendox.com/InfoShare/File/GetFileFromDocument", ReplyAction="http://www.kendox.com/InfoShare/File/GetFileFromDocumentResponse")]
+        [System.ServiceModel.FaultContractAttribute(typeof(docreminder.InfoShareService.ServiceException), Action="http://www.kendox.com/InfoShare/File/GetFileFromDocumentServiceExceptionFault", Name="ServiceException", Namespace="http://schemas.datacontract.org/2004/07/Com.Kendox.Dcis.SubSystem.Service.Fault")]
+        string GetFileFromDocument(string connectionId, string documentId, string versionId, string documentDataId, string renditionId, string accessTypeEnum);
+        
+        [System.ServiceModel.OperationContractAttribute(Action="http://www.kendox.com/InfoShare/File/GetFileFromDocument", ReplyAction="http://www.kendox.com/InfoShare/File/GetFileFromDocumentResponse")]
+        System.Threading.Tasks.Task<string> GetFileFromDocumentAsync(string connectionId, string documentId, string versionId, string documentDataId, string renditionId, string accessTypeEnum);
+        
+        [System.ServiceModel.OperationContractAttribute(Action="http://www.kendox.com/InfoShare/File/GetDocumentTransformation", ReplyAction="http://www.kendox.com/InfoShare/File/GetDocumentTransformationResponse")]
+        [System.ServiceModel.FaultContractAttribute(typeof(docreminder.InfoShareService.ServiceException), Action="http://www.kendox.com/InfoShare/File/GetDocumentTransformationServiceExceptionFau" +
+            "lt", Name="ServiceException", Namespace="http://schemas.datacontract.org/2004/07/Com.Kendox.Dcis.SubSystem.Service.Fault")]
+        docreminder.InfoShareService.DocumentTransformationContract[] GetDocumentTransformation(string connectionId);
+        
+        [System.ServiceModel.OperationContractAttribute(Action="http://www.kendox.com/InfoShare/File/GetDocumentTransformation", ReplyAction="http://www.kendox.com/InfoShare/File/GetDocumentTransformationResponse")]
+        System.Threading.Tasks.Task<docreminder.InfoShareService.DocumentTransformationContract[]> GetDocumentTransformationAsync(string connectionId);
+        
+        [System.ServiceModel.OperationContractAttribute(Action="http://www.kendox.com/InfoShare/File/GetDocumentConvertingSettings", ReplyAction="http://www.kendox.com/InfoShare/File/GetDocumentConvertingSettingsResponse")]
+        [System.ServiceModel.FaultContractAttribute(typeof(docreminder.InfoShareService.ServiceException), Action="http://www.kendox.com/InfoShare/File/GetDocumentConvertingSettingsServiceExceptio" +
+            "nFault", Name="ServiceException", Namespace="http://schemas.datacontract.org/2004/07/Com.Kendox.Dcis.SubSystem.Service.Fault")]
+        docreminder.InfoShareService.DocumentConvertingContract[] GetDocumentConvertingSettings(string connectionId);
+        
+        [System.ServiceModel.OperationContractAttribute(Action="http://www.kendox.com/InfoShare/File/GetDocumentConvertingSettings", ReplyAction="http://www.kendox.com/InfoShare/File/GetDocumentConvertingSettingsResponse")]
+        System.Threading.Tasks.Task<docreminder.InfoShareService.DocumentConvertingContract[]> GetDocumentConvertingSettingsAsync(string connectionId);
+        
+        [System.ServiceModel.OperationContractAttribute(Action="http://www.kendox.com/InfoShare/File/SetDocumentConvertingSettings", ReplyAction="http://www.kendox.com/InfoShare/File/SetDocumentConvertingSettingsResponse")]
+        [System.ServiceModel.FaultContractAttribute(typeof(docreminder.InfoShareService.ServiceException), Action="http://www.kendox.com/InfoShare/File/SetDocumentConvertingSettingsServiceExceptio" +
+            "nFault", Name="ServiceException", Namespace="http://schemas.datacontract.org/2004/07/Com.Kendox.Dcis.SubSystem.Service.Fault")]
+        void SetDocumentConvertingSettings(string connectionId, docreminder.InfoShareService.DocumentConvertingContract[] documentConvertingList);
+        
+        [System.ServiceModel.OperationContractAttribute(Action="http://www.kendox.com/InfoShare/File/SetDocumentConvertingSettings", ReplyAction="http://www.kendox.com/InfoShare/File/SetDocumentConvertingSettingsResponse")]
+        System.Threading.Tasks.Task SetDocumentConvertingSettingsAsync(string connectionId, docreminder.InfoShareService.DocumentConvertingContract[] documentConvertingList);
+        
+        [System.ServiceModel.OperationContractAttribute(Action="http://www.kendox.com/InfoShare/File/GetFile", ReplyAction="http://www.kendox.com/InfoShare/File/GetFileResponse")]
+        [System.ServiceModel.FaultContractAttribute(typeof(docreminder.InfoShareService.ServiceException), Action="http://www.kendox.com/InfoShare/File/GetFileServiceExceptionFault", Name="ServiceException", Namespace="http://schemas.datacontract.org/2004/07/Com.Kendox.Dcis.SubSystem.Service.Fault")]
+        System.IO.Stream GetFile(string connectionId, string documentId, string versionId, string documentDataId, string renditionId, string accessTypeEnum, bool ignoreHashValidation, string contentType);
+        
+        [System.ServiceModel.OperationContractAttribute(Action="http://www.kendox.com/InfoShare/File/GetFile", ReplyAction="http://www.kendox.com/InfoShare/File/GetFileResponse")]
+        System.Threading.Tasks.Task<System.IO.Stream> GetFileAsync(string connectionId, string documentId, string versionId, string documentDataId, string renditionId, string accessTypeEnum, bool ignoreHashValidation, string contentType);
+        
+        [System.ServiceModel.OperationContractAttribute(Action="http://www.kendox.com/InfoShare/File/GetFileConverted", ReplyAction="http://www.kendox.com/InfoShare/File/GetFileConvertedResponse")]
+        [System.ServiceModel.FaultContractAttribute(typeof(docreminder.InfoShareService.ServiceException), Action="http://www.kendox.com/InfoShare/File/GetFileConvertedServiceExceptionFault", Name="ServiceException", Namespace="http://schemas.datacontract.org/2004/07/Com.Kendox.Dcis.SubSystem.Service.Fault")]
+        System.IO.Stream GetFileConverted(string connectionId, string documentId, string versionId, string documentDataId, string renditionId, string accessTypeEnum, string targetFormat, bool addAnnotatins, bool addOverlay, string contentType);
+        
+        [System.ServiceModel.OperationContractAttribute(Action="http://www.kendox.com/InfoShare/File/GetFileConverted", ReplyAction="http://www.kendox.com/InfoShare/File/GetFileConvertedResponse")]
+        System.Threading.Tasks.Task<System.IO.Stream> GetFileConvertedAsync(string connectionId, string documentId, string versionId, string documentDataId, string renditionId, string accessTypeEnum, string targetFormat, bool addAnnotatins, bool addOverlay, string contentType);
+        
+        [System.ServiceModel.OperationContractAttribute(Action="http://www.kendox.com/InfoShare/File/GetThumbnail", ReplyAction="http://www.kendox.com/InfoShare/File/GetThumbnailResponse")]
+        [System.ServiceModel.FaultContractAttribute(typeof(docreminder.InfoShareService.ServiceException), Action="http://www.kendox.com/InfoShare/File/GetThumbnailServiceExceptionFault", Name="ServiceException", Namespace="http://schemas.datacontract.org/2004/07/Com.Kendox.Dcis.SubSystem.Service.Fault")]
+        System.IO.Stream GetThumbnail(string connectionId, string documentId, string documentDataId, string renditionId, int pageNumber);
+        
+        [System.ServiceModel.OperationContractAttribute(Action="http://www.kendox.com/InfoShare/File/GetThumbnail", ReplyAction="http://www.kendox.com/InfoShare/File/GetThumbnailResponse")]
+        System.Threading.Tasks.Task<System.IO.Stream> GetThumbnailAsync(string connectionId, string documentId, string documentDataId, string renditionId, int pageNumber);
+        
+        [System.ServiceModel.OperationContractAttribute(Action="http://www.kendox.com/InfoShare/File/DownloadTempFileBytes", ReplyAction="http://www.kendox.com/InfoShare/File/DownloadTempFileBytesResponse")]
+        [System.ServiceModel.FaultContractAttribute(typeof(docreminder.InfoShareService.ServiceException), Action="http://www.kendox.com/InfoShare/File/DownloadTempFileBytesServiceExceptionFault", Name="ServiceException", Namespace="http://schemas.datacontract.org/2004/07/Com.Kendox.Dcis.SubSystem.Service.Fault")]
+        byte[] DownloadTempFileBytes(string connectionId, string fileId, long from, int count);
+        
+        [System.ServiceModel.OperationContractAttribute(Action="http://www.kendox.com/InfoShare/File/DownloadTempFileBytes", ReplyAction="http://www.kendox.com/InfoShare/File/DownloadTempFileBytesResponse")]
+        System.Threading.Tasks.Task<byte[]> DownloadTempFileBytesAsync(string connectionId, string fileId, long from, int count);
+        
+        [System.ServiceModel.OperationContractAttribute(Action="http://www.kendox.com/InfoShare/File/DownloadTempFile", ReplyAction="http://www.kendox.com/InfoShare/File/DownloadTempFileResponse")]
+        [System.ServiceModel.FaultContractAttribute(typeof(docreminder.InfoShareService.ServiceException), Action="http://www.kendox.com/InfoShare/File/DownloadTempFileServiceExceptionFault", Name="ServiceException", Namespace="http://schemas.datacontract.org/2004/07/Com.Kendox.Dcis.SubSystem.Service.Fault")]
+        System.IO.Stream DownloadTempFile(string connectionId, string fileId);
+        
+        [System.ServiceModel.OperationContractAttribute(Action="http://www.kendox.com/InfoShare/File/DownloadTempFile", ReplyAction="http://www.kendox.com/InfoShare/File/DownloadTempFileResponse")]
+        System.Threading.Tasks.Task<System.IO.Stream> DownloadTempFileAsync(string connectionId, string fileId);
+        
+        [System.ServiceModel.OperationContractAttribute(Action="http://www.kendox.com/InfoShare/File/GetTempFile", ReplyAction="http://www.kendox.com/InfoShare/File/GetTempFileResponse")]
+        [System.ServiceModel.FaultContractAttribute(typeof(docreminder.InfoShareService.ServiceException), Action="http://www.kendox.com/InfoShare/File/GetTempFileServiceExceptionFault", Name="ServiceException", Namespace="http://schemas.datacontract.org/2004/07/Com.Kendox.Dcis.SubSystem.Service.Fault")]
+        System.IO.Stream GetTempFile(string connectionId, string fileId, string contentType);
+        
+        [System.ServiceModel.OperationContractAttribute(Action="http://www.kendox.com/InfoShare/File/GetTempFile", ReplyAction="http://www.kendox.com/InfoShare/File/GetTempFileResponse")]
+        System.Threading.Tasks.Task<System.IO.Stream> GetTempFileAsync(string connectionId, string fileId, string contentType);
+        
+        [System.ServiceModel.OperationContractAttribute(Action="http://www.kendox.com/InfoShare/File/GetFileIdFromDocument", ReplyAction="http://www.kendox.com/InfoShare/File/GetFileIdFromDocumentResponse")]
+        [System.ServiceModel.FaultContractAttribute(typeof(docreminder.InfoShareService.ServiceException), Action="http://www.kendox.com/InfoShare/File/GetFileIdFromDocumentServiceExceptionFault", Name="ServiceException", Namespace="http://schemas.datacontract.org/2004/07/Com.Kendox.Dcis.SubSystem.Service.Fault")]
+        string GetFileIdFromDocument(string connectionId, string documentId, string versionId, string documentDataId, string renditionId, string accessTypeEnum, bool ignoreHashValidation);
+        
+        [System.ServiceModel.OperationContractAttribute(Action="http://www.kendox.com/InfoShare/File/GetFileIdFromDocument", ReplyAction="http://www.kendox.com/InfoShare/File/GetFileIdFromDocumentResponse")]
+        System.Threading.Tasks.Task<string> GetFileIdFromDocumentAsync(string connectionId, string documentId, string versionId, string documentDataId, string renditionId, string accessTypeEnum, bool ignoreHashValidation);
     }
     
     [System.CodeDom.Compiler.GeneratedCodeAttribute("System.ServiceModel", "4.0.0.0")]
@@ -21471,6 +26029,94 @@ namespace docreminder.InfoShareService {
         public System.Threading.Tasks.Task ReleaseFileAsync(string connectionId, string fileId) {
             return base.Channel.ReleaseFileAsync(connectionId, fileId);
         }
+        
+        public string GetFileFromDocument(string connectionId, string documentId, string versionId, string documentDataId, string renditionId, string accessTypeEnum) {
+            return base.Channel.GetFileFromDocument(connectionId, documentId, versionId, documentDataId, renditionId, accessTypeEnum);
+        }
+        
+        public System.Threading.Tasks.Task<string> GetFileFromDocumentAsync(string connectionId, string documentId, string versionId, string documentDataId, string renditionId, string accessTypeEnum) {
+            return base.Channel.GetFileFromDocumentAsync(connectionId, documentId, versionId, documentDataId, renditionId, accessTypeEnum);
+        }
+        
+        public docreminder.InfoShareService.DocumentTransformationContract[] GetDocumentTransformation(string connectionId) {
+            return base.Channel.GetDocumentTransformation(connectionId);
+        }
+        
+        public System.Threading.Tasks.Task<docreminder.InfoShareService.DocumentTransformationContract[]> GetDocumentTransformationAsync(string connectionId) {
+            return base.Channel.GetDocumentTransformationAsync(connectionId);
+        }
+        
+        public docreminder.InfoShareService.DocumentConvertingContract[] GetDocumentConvertingSettings(string connectionId) {
+            return base.Channel.GetDocumentConvertingSettings(connectionId);
+        }
+        
+        public System.Threading.Tasks.Task<docreminder.InfoShareService.DocumentConvertingContract[]> GetDocumentConvertingSettingsAsync(string connectionId) {
+            return base.Channel.GetDocumentConvertingSettingsAsync(connectionId);
+        }
+        
+        public void SetDocumentConvertingSettings(string connectionId, docreminder.InfoShareService.DocumentConvertingContract[] documentConvertingList) {
+            base.Channel.SetDocumentConvertingSettings(connectionId, documentConvertingList);
+        }
+        
+        public System.Threading.Tasks.Task SetDocumentConvertingSettingsAsync(string connectionId, docreminder.InfoShareService.DocumentConvertingContract[] documentConvertingList) {
+            return base.Channel.SetDocumentConvertingSettingsAsync(connectionId, documentConvertingList);
+        }
+        
+        public System.IO.Stream GetFile(string connectionId, string documentId, string versionId, string documentDataId, string renditionId, string accessTypeEnum, bool ignoreHashValidation, string contentType) {
+            return base.Channel.GetFile(connectionId, documentId, versionId, documentDataId, renditionId, accessTypeEnum, ignoreHashValidation, contentType);
+        }
+        
+        public System.Threading.Tasks.Task<System.IO.Stream> GetFileAsync(string connectionId, string documentId, string versionId, string documentDataId, string renditionId, string accessTypeEnum, bool ignoreHashValidation, string contentType) {
+            return base.Channel.GetFileAsync(connectionId, documentId, versionId, documentDataId, renditionId, accessTypeEnum, ignoreHashValidation, contentType);
+        }
+        
+        public System.IO.Stream GetFileConverted(string connectionId, string documentId, string versionId, string documentDataId, string renditionId, string accessTypeEnum, string targetFormat, bool addAnnotatins, bool addOverlay, string contentType) {
+            return base.Channel.GetFileConverted(connectionId, documentId, versionId, documentDataId, renditionId, accessTypeEnum, targetFormat, addAnnotatins, addOverlay, contentType);
+        }
+        
+        public System.Threading.Tasks.Task<System.IO.Stream> GetFileConvertedAsync(string connectionId, string documentId, string versionId, string documentDataId, string renditionId, string accessTypeEnum, string targetFormat, bool addAnnotatins, bool addOverlay, string contentType) {
+            return base.Channel.GetFileConvertedAsync(connectionId, documentId, versionId, documentDataId, renditionId, accessTypeEnum, targetFormat, addAnnotatins, addOverlay, contentType);
+        }
+        
+        public System.IO.Stream GetThumbnail(string connectionId, string documentId, string documentDataId, string renditionId, int pageNumber) {
+            return base.Channel.GetThumbnail(connectionId, documentId, documentDataId, renditionId, pageNumber);
+        }
+        
+        public System.Threading.Tasks.Task<System.IO.Stream> GetThumbnailAsync(string connectionId, string documentId, string documentDataId, string renditionId, int pageNumber) {
+            return base.Channel.GetThumbnailAsync(connectionId, documentId, documentDataId, renditionId, pageNumber);
+        }
+        
+        public byte[] DownloadTempFileBytes(string connectionId, string fileId, long from, int count) {
+            return base.Channel.DownloadTempFileBytes(connectionId, fileId, from, count);
+        }
+        
+        public System.Threading.Tasks.Task<byte[]> DownloadTempFileBytesAsync(string connectionId, string fileId, long from, int count) {
+            return base.Channel.DownloadTempFileBytesAsync(connectionId, fileId, from, count);
+        }
+        
+        public System.IO.Stream DownloadTempFile(string connectionId, string fileId) {
+            return base.Channel.DownloadTempFile(connectionId, fileId);
+        }
+        
+        public System.Threading.Tasks.Task<System.IO.Stream> DownloadTempFileAsync(string connectionId, string fileId) {
+            return base.Channel.DownloadTempFileAsync(connectionId, fileId);
+        }
+        
+        public System.IO.Stream GetTempFile(string connectionId, string fileId, string contentType) {
+            return base.Channel.GetTempFile(connectionId, fileId, contentType);
+        }
+        
+        public System.Threading.Tasks.Task<System.IO.Stream> GetTempFileAsync(string connectionId, string fileId, string contentType) {
+            return base.Channel.GetTempFileAsync(connectionId, fileId, contentType);
+        }
+        
+        public string GetFileIdFromDocument(string connectionId, string documentId, string versionId, string documentDataId, string renditionId, string accessTypeEnum, bool ignoreHashValidation) {
+            return base.Channel.GetFileIdFromDocument(connectionId, documentId, versionId, documentDataId, renditionId, accessTypeEnum, ignoreHashValidation);
+        }
+        
+        public System.Threading.Tasks.Task<string> GetFileIdFromDocumentAsync(string connectionId, string documentId, string versionId, string documentDataId, string renditionId, string accessTypeEnum, bool ignoreHashValidation) {
+            return base.Channel.GetFileIdFromDocumentAsync(connectionId, documentId, versionId, documentDataId, renditionId, accessTypeEnum, ignoreHashValidation);
+        }
     }
     
     [System.CodeDom.Compiler.GeneratedCodeAttribute("System.ServiceModel", "4.0.0.0")]
@@ -21507,10 +26153,10 @@ namespace docreminder.InfoShareService {
         
         [System.ServiceModel.OperationContractAttribute(Action="http://www.kendox.com/InfoShare/Process/CreateProcess", ReplyAction="http://www.kendox.com/InfoShare/Process/CreateProcessResponse")]
         [System.ServiceModel.FaultContractAttribute(typeof(docreminder.InfoShareService.ServiceException), Action="http://www.kendox.com/InfoShare/Process/CreateProcessServiceExceptionFault", Name="ServiceException", Namespace="http://schemas.datacontract.org/2004/07/Com.Kendox.Dcis.SubSystem.Service.Fault")]
-        docreminder.InfoShareService.ProcessContract CreateProcess(string connectionId, docreminder.InfoShareService.ProcessContract process);
+        docreminder.InfoShareService.ProcessContract CreateProcess(string connectionId, docreminder.InfoShareService.ProcessContract process, bool startImmediate);
         
         [System.ServiceModel.OperationContractAttribute(Action="http://www.kendox.com/InfoShare/Process/CreateProcess", ReplyAction="http://www.kendox.com/InfoShare/Process/CreateProcessResponse")]
-        System.Threading.Tasks.Task<docreminder.InfoShareService.ProcessContract> CreateProcessAsync(string connectionId, docreminder.InfoShareService.ProcessContract process);
+        System.Threading.Tasks.Task<docreminder.InfoShareService.ProcessContract> CreateProcessAsync(string connectionId, docreminder.InfoShareService.ProcessContract process, bool startImmediate);
         
         [System.ServiceModel.OperationContractAttribute(Action="http://www.kendox.com/InfoShare/Process/UpdateProcess", ReplyAction="http://www.kendox.com/InfoShare/Process/UpdateProcessResponse")]
         [System.ServiceModel.FaultContractAttribute(typeof(docreminder.InfoShareService.ServiceException), Action="http://www.kendox.com/InfoShare/Process/UpdateProcessServiceExceptionFault", Name="ServiceException", Namespace="http://schemas.datacontract.org/2004/07/Com.Kendox.Dcis.SubSystem.Service.Fault")]
@@ -21521,10 +26167,10 @@ namespace docreminder.InfoShareService {
         
         [System.ServiceModel.OperationContractAttribute(Action="http://www.kendox.com/InfoShare/Process/CloseTask", ReplyAction="http://www.kendox.com/InfoShare/Process/CloseTaskResponse")]
         [System.ServiceModel.FaultContractAttribute(typeof(docreminder.InfoShareService.ServiceException), Action="http://www.kendox.com/InfoShare/Process/CloseTaskServiceExceptionFault", Name="ServiceException", Namespace="http://schemas.datacontract.org/2004/07/Com.Kendox.Dcis.SubSystem.Service.Fault")]
-        docreminder.InfoShareService.ProcessContract CloseTask(string connectionId, string processId, string comment);
+        docreminder.InfoShareService.ProcessContract CloseTask(string connectionId, string processId, string comment, bool assignUsers);
         
         [System.ServiceModel.OperationContractAttribute(Action="http://www.kendox.com/InfoShare/Process/CloseTask", ReplyAction="http://www.kendox.com/InfoShare/Process/CloseTaskResponse")]
-        System.Threading.Tasks.Task<docreminder.InfoShareService.ProcessContract> CloseTaskAsync(string connectionId, string processId, string comment);
+        System.Threading.Tasks.Task<docreminder.InfoShareService.ProcessContract> CloseTaskAsync(string connectionId, string processId, string comment, bool assignUsers);
         
         [System.ServiceModel.OperationContractAttribute(Action="http://www.kendox.com/InfoShare/Process/CloseProcess", ReplyAction="http://www.kendox.com/InfoShare/Process/CloseProcessResponse")]
         [System.ServiceModel.FaultContractAttribute(typeof(docreminder.InfoShareService.ServiceException), Action="http://www.kendox.com/InfoShare/Process/CloseProcessServiceExceptionFault", Name="ServiceException", Namespace="http://schemas.datacontract.org/2004/07/Com.Kendox.Dcis.SubSystem.Service.Fault")]
@@ -21554,6 +26200,13 @@ namespace docreminder.InfoShareService {
         
         [System.ServiceModel.OperationContractAttribute(Action="http://www.kendox.com/InfoShare/Process/ForwardTask", ReplyAction="http://www.kendox.com/InfoShare/Process/ForwardTaskResponse")]
         System.Threading.Tasks.Task<docreminder.InfoShareService.ProcessContract> ForwardTaskAsync(string connectionId, string processId, string[] assignedUserIds);
+        
+        [System.ServiceModel.OperationContractAttribute(Action="http://www.kendox.com/InfoShare/Process/StartProcess", ReplyAction="http://www.kendox.com/InfoShare/Process/StartProcessResponse")]
+        [System.ServiceModel.FaultContractAttribute(typeof(docreminder.InfoShareService.ServiceException), Action="http://www.kendox.com/InfoShare/Process/StartProcessServiceExceptionFault", Name="ServiceException", Namespace="http://schemas.datacontract.org/2004/07/Com.Kendox.Dcis.SubSystem.Service.Fault")]
+        docreminder.InfoShareService.StartProcessResultContract StartProcess(string connectionId, docreminder.InfoShareService.ProcessContract process, bool assignUsers);
+        
+        [System.ServiceModel.OperationContractAttribute(Action="http://www.kendox.com/InfoShare/Process/StartProcess", ReplyAction="http://www.kendox.com/InfoShare/Process/StartProcessResponse")]
+        System.Threading.Tasks.Task<docreminder.InfoShareService.StartProcessResultContract> StartProcessAsync(string connectionId, docreminder.InfoShareService.ProcessContract process, bool assignUsers);
     }
     
     [System.CodeDom.Compiler.GeneratedCodeAttribute("System.ServiceModel", "4.0.0.0")]
@@ -21615,12 +26268,12 @@ namespace docreminder.InfoShareService {
             return base.Channel.DeleteProcessesAsync(connectionId, processIds);
         }
         
-        public docreminder.InfoShareService.ProcessContract CreateProcess(string connectionId, docreminder.InfoShareService.ProcessContract process) {
-            return base.Channel.CreateProcess(connectionId, process);
+        public docreminder.InfoShareService.ProcessContract CreateProcess(string connectionId, docreminder.InfoShareService.ProcessContract process, bool startImmediate) {
+            return base.Channel.CreateProcess(connectionId, process, startImmediate);
         }
         
-        public System.Threading.Tasks.Task<docreminder.InfoShareService.ProcessContract> CreateProcessAsync(string connectionId, docreminder.InfoShareService.ProcessContract process) {
-            return base.Channel.CreateProcessAsync(connectionId, process);
+        public System.Threading.Tasks.Task<docreminder.InfoShareService.ProcessContract> CreateProcessAsync(string connectionId, docreminder.InfoShareService.ProcessContract process, bool startImmediate) {
+            return base.Channel.CreateProcessAsync(connectionId, process, startImmediate);
         }
         
         public docreminder.InfoShareService.ProcessContract UpdateProcess(string connectionId, docreminder.InfoShareService.ProcessContract process) {
@@ -21631,12 +26284,12 @@ namespace docreminder.InfoShareService {
             return base.Channel.UpdateProcessAsync(connectionId, process);
         }
         
-        public docreminder.InfoShareService.ProcessContract CloseTask(string connectionId, string processId, string comment) {
-            return base.Channel.CloseTask(connectionId, processId, comment);
+        public docreminder.InfoShareService.ProcessContract CloseTask(string connectionId, string processId, string comment, bool assignUsers) {
+            return base.Channel.CloseTask(connectionId, processId, comment, assignUsers);
         }
         
-        public System.Threading.Tasks.Task<docreminder.InfoShareService.ProcessContract> CloseTaskAsync(string connectionId, string processId, string comment) {
-            return base.Channel.CloseTaskAsync(connectionId, processId, comment);
+        public System.Threading.Tasks.Task<docreminder.InfoShareService.ProcessContract> CloseTaskAsync(string connectionId, string processId, string comment, bool assignUsers) {
+            return base.Channel.CloseTaskAsync(connectionId, processId, comment, assignUsers);
         }
         
         public docreminder.InfoShareService.ProcessContract CloseProcess(string connectionId, string processId, string comment) {
@@ -21669,6 +26322,14 @@ namespace docreminder.InfoShareService {
         
         public System.Threading.Tasks.Task<docreminder.InfoShareService.ProcessContract> ForwardTaskAsync(string connectionId, string processId, string[] assignedUserIds) {
             return base.Channel.ForwardTaskAsync(connectionId, processId, assignedUserIds);
+        }
+        
+        public docreminder.InfoShareService.StartProcessResultContract StartProcess(string connectionId, docreminder.InfoShareService.ProcessContract process, bool assignUsers) {
+            return base.Channel.StartProcess(connectionId, process, assignUsers);
+        }
+        
+        public System.Threading.Tasks.Task<docreminder.InfoShareService.StartProcessResultContract> StartProcessAsync(string connectionId, docreminder.InfoShareService.ProcessContract process, bool assignUsers) {
+            return base.Channel.StartProcessAsync(connectionId, process, assignUsers);
         }
     }
     
@@ -21731,6 +26392,14 @@ namespace docreminder.InfoShareService {
         
         [System.ServiceModel.OperationContractAttribute(Action="http://www.kendox.com/InfoShare/UserTable/UserTableGetAllTableNames", ReplyAction="http://www.kendox.com/InfoShare/UserTable/UserTableGetAllTableNamesResponse")]
         System.Threading.Tasks.Task<string[]> UserTableGetAllTableNamesAsync(string connectionId);
+        
+        [System.ServiceModel.OperationContractAttribute(Action="http://www.kendox.com/InfoShare/UserTable/ExecuteCustomStoredProcedure", ReplyAction="http://www.kendox.com/InfoShare/UserTable/ExecuteCustomStoredProcedureResponse")]
+        [System.ServiceModel.FaultContractAttribute(typeof(docreminder.InfoShareService.ServiceException), Action="http://www.kendox.com/InfoShare/UserTable/ExecuteCustomStoredProcedureServiceExce" +
+            "ptionFault", Name="ServiceException", Namespace="http://schemas.datacontract.org/2004/07/Com.Kendox.Dcis.SubSystem.Service.Fault")]
+        docreminder.InfoShareService.CustomStoredProcedureResultContract ExecuteCustomStoredProcedure(string connectionId, string storedProcedureName, docreminder.InfoShareService.DBParameterContract[] parameters, string commandType, bool addColumnNamesAsFirstRow);
+        
+        [System.ServiceModel.OperationContractAttribute(Action="http://www.kendox.com/InfoShare/UserTable/ExecuteCustomStoredProcedure", ReplyAction="http://www.kendox.com/InfoShare/UserTable/ExecuteCustomStoredProcedureResponse")]
+        System.Threading.Tasks.Task<docreminder.InfoShareService.CustomStoredProcedureResultContract> ExecuteCustomStoredProcedureAsync(string connectionId, string storedProcedureName, docreminder.InfoShareService.DBParameterContract[] parameters, string commandType, bool addColumnNamesAsFirstRow);
     }
     
     [System.CodeDom.Compiler.GeneratedCodeAttribute("System.ServiceModel", "4.0.0.0")]
@@ -21814,6 +26483,14 @@ namespace docreminder.InfoShareService {
         
         public System.Threading.Tasks.Task<string[]> UserTableGetAllTableNamesAsync(string connectionId) {
             return base.Channel.UserTableGetAllTableNamesAsync(connectionId);
+        }
+        
+        public docreminder.InfoShareService.CustomStoredProcedureResultContract ExecuteCustomStoredProcedure(string connectionId, string storedProcedureName, docreminder.InfoShareService.DBParameterContract[] parameters, string commandType, bool addColumnNamesAsFirstRow) {
+            return base.Channel.ExecuteCustomStoredProcedure(connectionId, storedProcedureName, parameters, commandType, addColumnNamesAsFirstRow);
+        }
+        
+        public System.Threading.Tasks.Task<docreminder.InfoShareService.CustomStoredProcedureResultContract> ExecuteCustomStoredProcedureAsync(string connectionId, string storedProcedureName, docreminder.InfoShareService.DBParameterContract[] parameters, string commandType, bool addColumnNamesAsFirstRow) {
+            return base.Channel.ExecuteCustomStoredProcedureAsync(connectionId, storedProcedureName, parameters, commandType, addColumnNamesAsFirstRow);
         }
     }
     
@@ -22700,6 +27377,35 @@ namespace docreminder.InfoShareService {
         
         [System.ServiceModel.OperationContractAttribute(Action="http://www.kendox.com/InfoShare/Server/DecryptString", ReplyAction="http://www.kendox.com/InfoShare/Server/DecryptStringResponse")]
         System.Threading.Tasks.Task<string> DecryptStringAsync(string tenantName, string input);
+        
+        [System.ServiceModel.OperationContractAttribute(Action="http://www.kendox.com/InfoShare/Server/GetDocumentsToAnalyze", ReplyAction="http://www.kendox.com/InfoShare/Server/GetDocumentsToAnalyzeResponse")]
+        [System.ServiceModel.FaultContractAttribute(typeof(docreminder.InfoShareService.ServiceException), Action="http://www.kendox.com/InfoShare/Server/GetDocumentsToAnalyzeServiceExceptionFault" +
+            "", Name="ServiceException", Namespace="http://schemas.datacontract.org/2004/07/Com.Kendox.Dcis.SubSystem.Service.Fault")]
+        docreminder.InfoShareService.DocumentToAnalyzeContract[] GetDocumentsToAnalyze(string connectionId, int resultCount);
+        
+        [System.ServiceModel.OperationContractAttribute(Action="http://www.kendox.com/InfoShare/Server/GetDocumentsToAnalyze", ReplyAction="http://www.kendox.com/InfoShare/Server/GetDocumentsToAnalyzeResponse")]
+        System.Threading.Tasks.Task<docreminder.InfoShareService.DocumentToAnalyzeContract[]> GetDocumentsToAnalyzeAsync(string connectionId, int resultCount);
+        
+        [System.ServiceModel.OperationContractAttribute(Action="http://www.kendox.com/InfoShare/Server/GetSystemCultures", ReplyAction="http://www.kendox.com/InfoShare/Server/GetSystemCulturesResponse")]
+        [System.ServiceModel.FaultContractAttribute(typeof(docreminder.InfoShareService.ServiceException), Action="http://www.kendox.com/InfoShare/Server/GetSystemCulturesServiceExceptionFault", Name="ServiceException", Namespace="http://schemas.datacontract.org/2004/07/Com.Kendox.Dcis.SubSystem.Service.Fault")]
+        docreminder.InfoShareService.CultureInfoContract[] GetSystemCultures();
+        
+        [System.ServiceModel.OperationContractAttribute(Action="http://www.kendox.com/InfoShare/Server/GetSystemCultures", ReplyAction="http://www.kendox.com/InfoShare/Server/GetSystemCulturesResponse")]
+        System.Threading.Tasks.Task<docreminder.InfoShareService.CultureInfoContract[]> GetSystemCulturesAsync();
+        
+        [System.ServiceModel.OperationContractAttribute(Action="http://www.kendox.com/InfoShare/Server/GetTimeSpanFromTicks", ReplyAction="http://www.kendox.com/InfoShare/Server/GetTimeSpanFromTicksResponse")]
+        [System.ServiceModel.FaultContractAttribute(typeof(docreminder.InfoShareService.ServiceException), Action="http://www.kendox.com/InfoShare/Server/GetTimeSpanFromTicksServiceExceptionFault", Name="ServiceException", Namespace="http://schemas.datacontract.org/2004/07/Com.Kendox.Dcis.SubSystem.Service.Fault")]
+        docreminder.InfoShareService.TimeSpanContract GetTimeSpanFromTicks(long ticks);
+        
+        [System.ServiceModel.OperationContractAttribute(Action="http://www.kendox.com/InfoShare/Server/GetTimeSpanFromTicks", ReplyAction="http://www.kendox.com/InfoShare/Server/GetTimeSpanFromTicksResponse")]
+        System.Threading.Tasks.Task<docreminder.InfoShareService.TimeSpanContract> GetTimeSpanFromTicksAsync(long ticks);
+        
+        [System.ServiceModel.OperationContractAttribute(Action="http://www.kendox.com/InfoShare/Server/GetTimeSpanFromTime", ReplyAction="http://www.kendox.com/InfoShare/Server/GetTimeSpanFromTimeResponse")]
+        [System.ServiceModel.FaultContractAttribute(typeof(docreminder.InfoShareService.ServiceException), Action="http://www.kendox.com/InfoShare/Server/GetTimeSpanFromTimeServiceExceptionFault", Name="ServiceException", Namespace="http://schemas.datacontract.org/2004/07/Com.Kendox.Dcis.SubSystem.Service.Fault")]
+        docreminder.InfoShareService.TimeSpanContract GetTimeSpanFromTime(docreminder.InfoShareService.TimeSpanContract timeSpan);
+        
+        [System.ServiceModel.OperationContractAttribute(Action="http://www.kendox.com/InfoShare/Server/GetTimeSpanFromTime", ReplyAction="http://www.kendox.com/InfoShare/Server/GetTimeSpanFromTimeResponse")]
+        System.Threading.Tasks.Task<docreminder.InfoShareService.TimeSpanContract> GetTimeSpanFromTimeAsync(docreminder.InfoShareService.TimeSpanContract timeSpan);
     }
     
     [System.CodeDom.Compiler.GeneratedCodeAttribute("System.ServiceModel", "4.0.0.0")]
@@ -22904,6 +27610,38 @@ namespace docreminder.InfoShareService {
         public System.Threading.Tasks.Task<string> DecryptStringAsync(string tenantName, string input) {
             return base.Channel.DecryptStringAsync(tenantName, input);
         }
+        
+        public docreminder.InfoShareService.DocumentToAnalyzeContract[] GetDocumentsToAnalyze(string connectionId, int resultCount) {
+            return base.Channel.GetDocumentsToAnalyze(connectionId, resultCount);
+        }
+        
+        public System.Threading.Tasks.Task<docreminder.InfoShareService.DocumentToAnalyzeContract[]> GetDocumentsToAnalyzeAsync(string connectionId, int resultCount) {
+            return base.Channel.GetDocumentsToAnalyzeAsync(connectionId, resultCount);
+        }
+        
+        public docreminder.InfoShareService.CultureInfoContract[] GetSystemCultures() {
+            return base.Channel.GetSystemCultures();
+        }
+        
+        public System.Threading.Tasks.Task<docreminder.InfoShareService.CultureInfoContract[]> GetSystemCulturesAsync() {
+            return base.Channel.GetSystemCulturesAsync();
+        }
+        
+        public docreminder.InfoShareService.TimeSpanContract GetTimeSpanFromTicks(long ticks) {
+            return base.Channel.GetTimeSpanFromTicks(ticks);
+        }
+        
+        public System.Threading.Tasks.Task<docreminder.InfoShareService.TimeSpanContract> GetTimeSpanFromTicksAsync(long ticks) {
+            return base.Channel.GetTimeSpanFromTicksAsync(ticks);
+        }
+        
+        public docreminder.InfoShareService.TimeSpanContract GetTimeSpanFromTime(docreminder.InfoShareService.TimeSpanContract timeSpan) {
+            return base.Channel.GetTimeSpanFromTime(timeSpan);
+        }
+        
+        public System.Threading.Tasks.Task<docreminder.InfoShareService.TimeSpanContract> GetTimeSpanFromTimeAsync(docreminder.InfoShareService.TimeSpanContract timeSpan) {
+            return base.Channel.GetTimeSpanFromTimeAsync(timeSpan);
+        }
     }
     
     [System.CodeDom.Compiler.GeneratedCodeAttribute("System.ServiceModel", "4.0.0.0")]
@@ -22991,20 +27729,62 @@ namespace docreminder.InfoShareService {
         [System.ServiceModel.OperationContractAttribute(Action="http://www.kendox.com/InfoShare/Audit/GetAuditLogonEntriesFiltered", ReplyAction="http://www.kendox.com/InfoShare/Audit/GetAuditLogonEntriesFilteredResponse")]
         [System.ServiceModel.FaultContractAttribute(typeof(docreminder.InfoShareService.ServiceException), Action="http://www.kendox.com/InfoShare/Audit/GetAuditLogonEntriesFilteredServiceExceptio" +
             "nFault", Name="ServiceException", Namespace="http://schemas.datacontract.org/2004/07/Com.Kendox.Dcis.SubSystem.Service.Fault")]
-        docreminder.InfoShareService.AuditLogonContract[] GetAuditLogonEntriesFiltered(string connectionId, string tenantName, string userId, string fromDate, string toDate);
+        docreminder.InfoShareService.AuditLogonContract[] GetAuditLogonEntriesFiltered(string connectionId, string userId, string fromDate, string toDate);
         
         [System.ServiceModel.OperationContractAttribute(Action="http://www.kendox.com/InfoShare/Audit/GetAuditLogonEntriesFiltered", ReplyAction="http://www.kendox.com/InfoShare/Audit/GetAuditLogonEntriesFilteredResponse")]
-        System.Threading.Tasks.Task<docreminder.InfoShareService.AuditLogonContract[]> GetAuditLogonEntriesFilteredAsync(string connectionId, string tenantName, string userId, string fromDate, string toDate);
+        System.Threading.Tasks.Task<docreminder.InfoShareService.AuditLogonContract[]> GetAuditLogonEntriesFilteredAsync(string connectionId, string userId, string fromDate, string toDate);
         
         [System.ServiceModel.OperationContractAttribute(Action="http://www.kendox.com/InfoShare/Audit/GetAuditAdministrationEntriesFiltered", ReplyAction="http://www.kendox.com/InfoShare/Audit/GetAuditAdministrationEntriesFilteredRespon" +
             "se")]
         [System.ServiceModel.FaultContractAttribute(typeof(docreminder.InfoShareService.ServiceException), Action="http://www.kendox.com/InfoShare/Audit/GetAuditAdministrationEntriesFilteredServic" +
             "eExceptionFault", Name="ServiceException", Namespace="http://schemas.datacontract.org/2004/07/Com.Kendox.Dcis.SubSystem.Service.Fault")]
-        docreminder.InfoShareService.AuditAdministrationContract[] GetAuditAdministrationEntriesFiltered(string connectionId, string tenantName, string userId, string methodName, string fromDate, string toDate);
+        docreminder.InfoShareService.AuditAdministrationContract[] GetAuditAdministrationEntriesFiltered(string connectionId, string userId, string methodName, string fromDate, string toDate);
         
         [System.ServiceModel.OperationContractAttribute(Action="http://www.kendox.com/InfoShare/Audit/GetAuditAdministrationEntriesFiltered", ReplyAction="http://www.kendox.com/InfoShare/Audit/GetAuditAdministrationEntriesFilteredRespon" +
             "se")]
-        System.Threading.Tasks.Task<docreminder.InfoShareService.AuditAdministrationContract[]> GetAuditAdministrationEntriesFilteredAsync(string connectionId, string tenantName, string userId, string methodName, string fromDate, string toDate);
+        System.Threading.Tasks.Task<docreminder.InfoShareService.AuditAdministrationContract[]> GetAuditAdministrationEntriesFilteredAsync(string connectionId, string userId, string methodName, string fromDate, string toDate);
+        
+        [System.ServiceModel.OperationContractAttribute(Action="http://www.kendox.com/InfoShare/Audit/GetAuditDocumentEntriesFiltered", ReplyAction="http://www.kendox.com/InfoShare/Audit/GetAuditDocumentEntriesFilteredResponse")]
+        [System.ServiceModel.FaultContractAttribute(typeof(docreminder.InfoShareService.ServiceException), Action="http://www.kendox.com/InfoShare/Audit/GetAuditDocumentEntriesFilteredServiceExcep" +
+            "tionFault", Name="ServiceException", Namespace="http://schemas.datacontract.org/2004/07/Com.Kendox.Dcis.SubSystem.Service.Fault")]
+        docreminder.InfoShareService.AuditDocumentContract[] GetAuditDocumentEntriesFiltered(string connectionId, string documentId, string fromDate, string toDate);
+        
+        [System.ServiceModel.OperationContractAttribute(Action="http://www.kendox.com/InfoShare/Audit/GetAuditDocumentEntriesFiltered", ReplyAction="http://www.kendox.com/InfoShare/Audit/GetAuditDocumentEntriesFilteredResponse")]
+        System.Threading.Tasks.Task<docreminder.InfoShareService.AuditDocumentContract[]> GetAuditDocumentEntriesFilteredAsync(string connectionId, string documentId, string fromDate, string toDate);
+        
+        [System.ServiceModel.OperationContractAttribute(Action="http://www.kendox.com/InfoShare/Audit/GetAuditDocumentPropertyEntriesFiltered", ReplyAction="http://www.kendox.com/InfoShare/Audit/GetAuditDocumentPropertyEntriesFilteredResp" +
+            "onse")]
+        [System.ServiceModel.FaultContractAttribute(typeof(docreminder.InfoShareService.ServiceException), Action="http://www.kendox.com/InfoShare/Audit/GetAuditDocumentPropertyEntriesFilteredServ" +
+            "iceExceptionFault", Name="ServiceException", Namespace="http://schemas.datacontract.org/2004/07/Com.Kendox.Dcis.SubSystem.Service.Fault")]
+        docreminder.InfoShareService.AuditDocumentPropertyContract[] GetAuditDocumentPropertyEntriesFiltered(string connectionId, long auditDocumentId);
+        
+        [System.ServiceModel.OperationContractAttribute(Action="http://www.kendox.com/InfoShare/Audit/GetAuditDocumentPropertyEntriesFiltered", ReplyAction="http://www.kendox.com/InfoShare/Audit/GetAuditDocumentPropertyEntriesFilteredResp" +
+            "onse")]
+        System.Threading.Tasks.Task<docreminder.InfoShareService.AuditDocumentPropertyContract[]> GetAuditDocumentPropertyEntriesFilteredAsync(string connectionId, long auditDocumentId);
+        
+        [System.ServiceModel.OperationContractAttribute(Action="http://www.kendox.com/InfoShare/Audit/DeleteAuditAdministrationEntries", ReplyAction="http://www.kendox.com/InfoShare/Audit/DeleteAuditAdministrationEntriesResponse")]
+        [System.ServiceModel.FaultContractAttribute(typeof(docreminder.InfoShareService.ServiceException), Action="http://www.kendox.com/InfoShare/Audit/DeleteAuditAdministrationEntriesServiceExce" +
+            "ptionFault", Name="ServiceException", Namespace="http://schemas.datacontract.org/2004/07/Com.Kendox.Dcis.SubSystem.Service.Fault")]
+        void DeleteAuditAdministrationEntries(string connectionId, string toDate);
+        
+        [System.ServiceModel.OperationContractAttribute(Action="http://www.kendox.com/InfoShare/Audit/DeleteAuditAdministrationEntries", ReplyAction="http://www.kendox.com/InfoShare/Audit/DeleteAuditAdministrationEntriesResponse")]
+        System.Threading.Tasks.Task DeleteAuditAdministrationEntriesAsync(string connectionId, string toDate);
+        
+        [System.ServiceModel.OperationContractAttribute(Action="http://www.kendox.com/InfoShare/Audit/DeleteAuditLogonEntries", ReplyAction="http://www.kendox.com/InfoShare/Audit/DeleteAuditLogonEntriesResponse")]
+        [System.ServiceModel.FaultContractAttribute(typeof(docreminder.InfoShareService.ServiceException), Action="http://www.kendox.com/InfoShare/Audit/DeleteAuditLogonEntriesServiceExceptionFaul" +
+            "t", Name="ServiceException", Namespace="http://schemas.datacontract.org/2004/07/Com.Kendox.Dcis.SubSystem.Service.Fault")]
+        void DeleteAuditLogonEntries(string connectionId, string toDate);
+        
+        [System.ServiceModel.OperationContractAttribute(Action="http://www.kendox.com/InfoShare/Audit/DeleteAuditLogonEntries", ReplyAction="http://www.kendox.com/InfoShare/Audit/DeleteAuditLogonEntriesResponse")]
+        System.Threading.Tasks.Task DeleteAuditLogonEntriesAsync(string connectionId, string toDate);
+        
+        [System.ServiceModel.OperationContractAttribute(Action="http://www.kendox.com/InfoShare/Audit/DeleteAuditDocumentEntries", ReplyAction="http://www.kendox.com/InfoShare/Audit/DeleteAuditDocumentEntriesResponse")]
+        [System.ServiceModel.FaultContractAttribute(typeof(docreminder.InfoShareService.ServiceException), Action="http://www.kendox.com/InfoShare/Audit/DeleteAuditDocumentEntriesServiceExceptionF" +
+            "ault", Name="ServiceException", Namespace="http://schemas.datacontract.org/2004/07/Com.Kendox.Dcis.SubSystem.Service.Fault")]
+        void DeleteAuditDocumentEntries(string connectionId, string toDate);
+        
+        [System.ServiceModel.OperationContractAttribute(Action="http://www.kendox.com/InfoShare/Audit/DeleteAuditDocumentEntries", ReplyAction="http://www.kendox.com/InfoShare/Audit/DeleteAuditDocumentEntriesResponse")]
+        System.Threading.Tasks.Task DeleteAuditDocumentEntriesAsync(string connectionId, string toDate);
     }
     
     [System.CodeDom.Compiler.GeneratedCodeAttribute("System.ServiceModel", "4.0.0.0")]
@@ -23034,20 +27814,60 @@ namespace docreminder.InfoShareService {
                 base(binding, remoteAddress) {
         }
         
-        public docreminder.InfoShareService.AuditLogonContract[] GetAuditLogonEntriesFiltered(string connectionId, string tenantName, string userId, string fromDate, string toDate) {
-            return base.Channel.GetAuditLogonEntriesFiltered(connectionId, tenantName, userId, fromDate, toDate);
+        public docreminder.InfoShareService.AuditLogonContract[] GetAuditLogonEntriesFiltered(string connectionId, string userId, string fromDate, string toDate) {
+            return base.Channel.GetAuditLogonEntriesFiltered(connectionId, userId, fromDate, toDate);
         }
         
-        public System.Threading.Tasks.Task<docreminder.InfoShareService.AuditLogonContract[]> GetAuditLogonEntriesFilteredAsync(string connectionId, string tenantName, string userId, string fromDate, string toDate) {
-            return base.Channel.GetAuditLogonEntriesFilteredAsync(connectionId, tenantName, userId, fromDate, toDate);
+        public System.Threading.Tasks.Task<docreminder.InfoShareService.AuditLogonContract[]> GetAuditLogonEntriesFilteredAsync(string connectionId, string userId, string fromDate, string toDate) {
+            return base.Channel.GetAuditLogonEntriesFilteredAsync(connectionId, userId, fromDate, toDate);
         }
         
-        public docreminder.InfoShareService.AuditAdministrationContract[] GetAuditAdministrationEntriesFiltered(string connectionId, string tenantName, string userId, string methodName, string fromDate, string toDate) {
-            return base.Channel.GetAuditAdministrationEntriesFiltered(connectionId, tenantName, userId, methodName, fromDate, toDate);
+        public docreminder.InfoShareService.AuditAdministrationContract[] GetAuditAdministrationEntriesFiltered(string connectionId, string userId, string methodName, string fromDate, string toDate) {
+            return base.Channel.GetAuditAdministrationEntriesFiltered(connectionId, userId, methodName, fromDate, toDate);
         }
         
-        public System.Threading.Tasks.Task<docreminder.InfoShareService.AuditAdministrationContract[]> GetAuditAdministrationEntriesFilteredAsync(string connectionId, string tenantName, string userId, string methodName, string fromDate, string toDate) {
-            return base.Channel.GetAuditAdministrationEntriesFilteredAsync(connectionId, tenantName, userId, methodName, fromDate, toDate);
+        public System.Threading.Tasks.Task<docreminder.InfoShareService.AuditAdministrationContract[]> GetAuditAdministrationEntriesFilteredAsync(string connectionId, string userId, string methodName, string fromDate, string toDate) {
+            return base.Channel.GetAuditAdministrationEntriesFilteredAsync(connectionId, userId, methodName, fromDate, toDate);
+        }
+        
+        public docreminder.InfoShareService.AuditDocumentContract[] GetAuditDocumentEntriesFiltered(string connectionId, string documentId, string fromDate, string toDate) {
+            return base.Channel.GetAuditDocumentEntriesFiltered(connectionId, documentId, fromDate, toDate);
+        }
+        
+        public System.Threading.Tasks.Task<docreminder.InfoShareService.AuditDocumentContract[]> GetAuditDocumentEntriesFilteredAsync(string connectionId, string documentId, string fromDate, string toDate) {
+            return base.Channel.GetAuditDocumentEntriesFilteredAsync(connectionId, documentId, fromDate, toDate);
+        }
+        
+        public docreminder.InfoShareService.AuditDocumentPropertyContract[] GetAuditDocumentPropertyEntriesFiltered(string connectionId, long auditDocumentId) {
+            return base.Channel.GetAuditDocumentPropertyEntriesFiltered(connectionId, auditDocumentId);
+        }
+        
+        public System.Threading.Tasks.Task<docreminder.InfoShareService.AuditDocumentPropertyContract[]> GetAuditDocumentPropertyEntriesFilteredAsync(string connectionId, long auditDocumentId) {
+            return base.Channel.GetAuditDocumentPropertyEntriesFilteredAsync(connectionId, auditDocumentId);
+        }
+        
+        public void DeleteAuditAdministrationEntries(string connectionId, string toDate) {
+            base.Channel.DeleteAuditAdministrationEntries(connectionId, toDate);
+        }
+        
+        public System.Threading.Tasks.Task DeleteAuditAdministrationEntriesAsync(string connectionId, string toDate) {
+            return base.Channel.DeleteAuditAdministrationEntriesAsync(connectionId, toDate);
+        }
+        
+        public void DeleteAuditLogonEntries(string connectionId, string toDate) {
+            base.Channel.DeleteAuditLogonEntries(connectionId, toDate);
+        }
+        
+        public System.Threading.Tasks.Task DeleteAuditLogonEntriesAsync(string connectionId, string toDate) {
+            return base.Channel.DeleteAuditLogonEntriesAsync(connectionId, toDate);
+        }
+        
+        public void DeleteAuditDocumentEntries(string connectionId, string toDate) {
+            base.Channel.DeleteAuditDocumentEntries(connectionId, toDate);
+        }
+        
+        public System.Threading.Tasks.Task DeleteAuditDocumentEntriesAsync(string connectionId, string toDate) {
+            return base.Channel.DeleteAuditDocumentEntriesAsync(connectionId, toDate);
         }
     }
     
@@ -23059,11 +27879,11 @@ namespace docreminder.InfoShareService {
             "ponse")]
         [System.ServiceModel.FaultContractAttribute(typeof(docreminder.InfoShareService.ServiceException), Action="http://www.kendox.com/InfoShare/DocumentProcessing/CreateFileFromTemplateBytesSer" +
             "viceExceptionFault", Name="ServiceException", Namespace="http://schemas.datacontract.org/2004/07/Com.Kendox.Dcis.SubSystem.Service.Fault")]
-        byte[] CreateFileFromTemplateBytes(string connectionId, docreminder.InfoShareService.ListItemContract[] properties, string templateDocumentId, string[] moduleDocumentIds);
+        byte[] CreateFileFromTemplateBytes(string connectionId, docreminder.InfoShareService.ListItemContract[] properties, string templateDocumentId, string[] moduleDocumentIds, string dossierDocumentId);
         
         [System.ServiceModel.OperationContractAttribute(Action="http://www.kendox.com/InfoShare/DocumentProcessing/CreateFileFromTemplateBytes", ReplyAction="http://www.kendox.com/InfoShare/DocumentProcessing/CreateFileFromTemplateBytesRes" +
             "ponse")]
-        System.Threading.Tasks.Task<byte[]> CreateFileFromTemplateBytesAsync(string connectionId, docreminder.InfoShareService.ListItemContract[] properties, string templateDocumentId, string[] moduleDocumentIds);
+        System.Threading.Tasks.Task<byte[]> CreateFileFromTemplateBytesAsync(string connectionId, docreminder.InfoShareService.ListItemContract[] properties, string templateDocumentId, string[] moduleDocumentIds, string dossierDocumentId);
         
         [System.ServiceModel.OperationContractAttribute(Action="http://www.kendox.com/InfoShare/DocumentProcessing/InsertValuesIntoDocument", ReplyAction="http://www.kendox.com/InfoShare/DocumentProcessing/InsertValuesIntoDocumentRespon" +
             "se")]
@@ -23074,6 +27894,14 @@ namespace docreminder.InfoShareService {
         [System.ServiceModel.OperationContractAttribute(Action="http://www.kendox.com/InfoShare/DocumentProcessing/InsertValuesIntoDocument", ReplyAction="http://www.kendox.com/InfoShare/DocumentProcessing/InsertValuesIntoDocumentRespon" +
             "se")]
         System.Threading.Tasks.Task<byte[]> InsertValuesIntoDocumentAsync(string connectionId, byte[] input, string fileExtension, docreminder.InfoShareService.ListItemContract[] values);
+        
+        [System.ServiceModel.OperationContractAttribute(Action="http://www.kendox.com/InfoShare/DocumentProcessing/MergeDocuments", ReplyAction="http://www.kendox.com/InfoShare/DocumentProcessing/MergeDocumentsResponse")]
+        [System.ServiceModel.FaultContractAttribute(typeof(docreminder.InfoShareService.ServiceException), Action="http://www.kendox.com/InfoShare/DocumentProcessing/MergeDocumentsServiceException" +
+            "Fault", Name="ServiceException", Namespace="http://schemas.datacontract.org/2004/07/Com.Kendox.Dcis.SubSystem.Service.Fault")]
+        string MergeDocuments(string connectionId, string[] fileIds);
+        
+        [System.ServiceModel.OperationContractAttribute(Action="http://www.kendox.com/InfoShare/DocumentProcessing/MergeDocuments", ReplyAction="http://www.kendox.com/InfoShare/DocumentProcessing/MergeDocumentsResponse")]
+        System.Threading.Tasks.Task<string> MergeDocumentsAsync(string connectionId, string[] fileIds);
     }
     
     [System.CodeDom.Compiler.GeneratedCodeAttribute("System.ServiceModel", "4.0.0.0")]
@@ -23103,12 +27931,12 @@ namespace docreminder.InfoShareService {
                 base(binding, remoteAddress) {
         }
         
-        public byte[] CreateFileFromTemplateBytes(string connectionId, docreminder.InfoShareService.ListItemContract[] properties, string templateDocumentId, string[] moduleDocumentIds) {
-            return base.Channel.CreateFileFromTemplateBytes(connectionId, properties, templateDocumentId, moduleDocumentIds);
+        public byte[] CreateFileFromTemplateBytes(string connectionId, docreminder.InfoShareService.ListItemContract[] properties, string templateDocumentId, string[] moduleDocumentIds, string dossierDocumentId) {
+            return base.Channel.CreateFileFromTemplateBytes(connectionId, properties, templateDocumentId, moduleDocumentIds, dossierDocumentId);
         }
         
-        public System.Threading.Tasks.Task<byte[]> CreateFileFromTemplateBytesAsync(string connectionId, docreminder.InfoShareService.ListItemContract[] properties, string templateDocumentId, string[] moduleDocumentIds) {
-            return base.Channel.CreateFileFromTemplateBytesAsync(connectionId, properties, templateDocumentId, moduleDocumentIds);
+        public System.Threading.Tasks.Task<byte[]> CreateFileFromTemplateBytesAsync(string connectionId, docreminder.InfoShareService.ListItemContract[] properties, string templateDocumentId, string[] moduleDocumentIds, string dossierDocumentId) {
+            return base.Channel.CreateFileFromTemplateBytesAsync(connectionId, properties, templateDocumentId, moduleDocumentIds, dossierDocumentId);
         }
         
         public byte[] InsertValuesIntoDocument(string connectionId, byte[] input, string fileExtension, docreminder.InfoShareService.ListItemContract[] values) {
@@ -23117,6 +27945,180 @@ namespace docreminder.InfoShareService {
         
         public System.Threading.Tasks.Task<byte[]> InsertValuesIntoDocumentAsync(string connectionId, byte[] input, string fileExtension, docreminder.InfoShareService.ListItemContract[] values) {
             return base.Channel.InsertValuesIntoDocumentAsync(connectionId, input, fileExtension, values);
+        }
+        
+        public string MergeDocuments(string connectionId, string[] fileIds) {
+            return base.Channel.MergeDocuments(connectionId, fileIds);
+        }
+        
+        public System.Threading.Tasks.Task<string> MergeDocumentsAsync(string connectionId, string[] fileIds) {
+            return base.Channel.MergeDocumentsAsync(connectionId, fileIds);
+        }
+    }
+    
+    [System.CodeDom.Compiler.GeneratedCodeAttribute("System.ServiceModel", "4.0.0.0")]
+    [System.ServiceModel.ServiceContractAttribute(Namespace="http://www.kendox.com/InfoShare", ConfigurationName="InfoShareService.Invoice")]
+    public interface Invoice {
+        
+        [System.ServiceModel.OperationContractAttribute(Action="http://www.kendox.com/InfoShare/Invoice/ExecuteInvoicePluginCommand", ReplyAction="http://www.kendox.com/InfoShare/Invoice/ExecuteInvoicePluginCommandResponse")]
+        [System.ServiceModel.FaultContractAttribute(typeof(docreminder.InfoShareService.ServiceException), Action="http://www.kendox.com/InfoShare/Invoice/ExecuteInvoicePluginCommandServiceExcepti" +
+            "onFault", Name="ServiceException", Namespace="http://schemas.datacontract.org/2004/07/Com.Kendox.Dcis.SubSystem.Service.Fault")]
+        docreminder.InfoShareService.DataTableContract[] ExecuteInvoicePluginCommand(string connectionId, string pluginName, string processId, string commandName, docreminder.InfoShareService.DataTableContract[] options);
+        
+        [System.ServiceModel.OperationContractAttribute(Action="http://www.kendox.com/InfoShare/Invoice/ExecuteInvoicePluginCommand", ReplyAction="http://www.kendox.com/InfoShare/Invoice/ExecuteInvoicePluginCommandResponse")]
+        System.Threading.Tasks.Task<docreminder.InfoShareService.DataTableContract[]> ExecuteInvoicePluginCommandAsync(string connectionId, string pluginName, string processId, string commandName, docreminder.InfoShareService.DataTableContract[] options);
+    }
+    
+    [System.CodeDom.Compiler.GeneratedCodeAttribute("System.ServiceModel", "4.0.0.0")]
+    public interface InvoiceChannel : docreminder.InfoShareService.Invoice, System.ServiceModel.IClientChannel {
+    }
+    
+    [System.Diagnostics.DebuggerStepThroughAttribute()]
+    [System.CodeDom.Compiler.GeneratedCodeAttribute("System.ServiceModel", "4.0.0.0")]
+    public partial class InvoiceClient : System.ServiceModel.ClientBase<docreminder.InfoShareService.Invoice>, docreminder.InfoShareService.Invoice {
+        
+        public InvoiceClient() {
+        }
+        
+        public InvoiceClient(string endpointConfigurationName) : 
+                base(endpointConfigurationName) {
+        }
+        
+        public InvoiceClient(string endpointConfigurationName, string remoteAddress) : 
+                base(endpointConfigurationName, remoteAddress) {
+        }
+        
+        public InvoiceClient(string endpointConfigurationName, System.ServiceModel.EndpointAddress remoteAddress) : 
+                base(endpointConfigurationName, remoteAddress) {
+        }
+        
+        public InvoiceClient(System.ServiceModel.Channels.Binding binding, System.ServiceModel.EndpointAddress remoteAddress) : 
+                base(binding, remoteAddress) {
+        }
+        
+        public docreminder.InfoShareService.DataTableContract[] ExecuteInvoicePluginCommand(string connectionId, string pluginName, string processId, string commandName, docreminder.InfoShareService.DataTableContract[] options) {
+            return base.Channel.ExecuteInvoicePluginCommand(connectionId, pluginName, processId, commandName, options);
+        }
+        
+        public System.Threading.Tasks.Task<docreminder.InfoShareService.DataTableContract[]> ExecuteInvoicePluginCommandAsync(string connectionId, string pluginName, string processId, string commandName, docreminder.InfoShareService.DataTableContract[] options) {
+            return base.Channel.ExecuteInvoicePluginCommandAsync(connectionId, pluginName, processId, commandName, options);
+        }
+    }
+    
+    [System.CodeDom.Compiler.GeneratedCodeAttribute("System.ServiceModel", "4.0.0.0")]
+    [System.ServiceModel.ServiceContractAttribute(Namespace="http://www.kendox.com/InfoShare", ConfigurationName="InfoShareService.WebDataProvider")]
+    public interface WebDataProvider {
+        
+        [System.ServiceModel.OperationContractAttribute(Action="http://www.kendox.com/InfoShare/WebDataProvider/ProcessDataInit", ReplyAction="http://www.kendox.com/InfoShare/WebDataProvider/ProcessDataInitResponse")]
+        [System.ServiceModel.FaultContractAttribute(typeof(docreminder.InfoShareService.ServiceException), Action="http://www.kendox.com/InfoShare/WebDataProvider/ProcessDataInitServiceExceptionFa" +
+            "ult", Name="ServiceException", Namespace="http://schemas.datacontract.org/2004/07/Com.Kendox.Dcis.SubSystem.Service.Fault")]
+        docreminder.InfoShareService.WDP_ProcessDataInitContract ProcessDataInit(string connectionId, [System.ServiceModel.MessageParameterAttribute(Name="processDataInit")] docreminder.InfoShareService.WDP_ProcessDataInitContract processDataInit1);
+        
+        [System.ServiceModel.OperationContractAttribute(Action="http://www.kendox.com/InfoShare/WebDataProvider/ProcessDataInit", ReplyAction="http://www.kendox.com/InfoShare/WebDataProvider/ProcessDataInitResponse")]
+        System.Threading.Tasks.Task<docreminder.InfoShareService.WDP_ProcessDataInitContract> ProcessDataInitAsync(string connectionId, docreminder.InfoShareService.WDP_ProcessDataInitContract processDataInit);
+        
+        [System.ServiceModel.OperationContractAttribute(Action="http://www.kendox.com/InfoShare/WebDataProvider/ProcessDataAutoComplete", ReplyAction="http://www.kendox.com/InfoShare/WebDataProvider/ProcessDataAutoCompleteResponse")]
+        [System.ServiceModel.FaultContractAttribute(typeof(docreminder.InfoShareService.ServiceException), Action="http://www.kendox.com/InfoShare/WebDataProvider/ProcessDataAutoCompleteServiceExc" +
+            "eptionFault", Name="ServiceException", Namespace="http://schemas.datacontract.org/2004/07/Com.Kendox.Dcis.SubSystem.Service.Fault")]
+        docreminder.InfoShareService.WDP_ProcessDataInitContract ProcessDataAutoComplete(string connectionId, docreminder.InfoShareService.WDP_ProcessDataInitContract processDataInit);
+        
+        [System.ServiceModel.OperationContractAttribute(Action="http://www.kendox.com/InfoShare/WebDataProvider/ProcessDataAutoComplete", ReplyAction="http://www.kendox.com/InfoShare/WebDataProvider/ProcessDataAutoCompleteResponse")]
+        System.Threading.Tasks.Task<docreminder.InfoShareService.WDP_ProcessDataInitContract> ProcessDataAutoCompleteAsync(string connectionId, docreminder.InfoShareService.WDP_ProcessDataInitContract processDataInit);
+        
+        [System.ServiceModel.OperationContractAttribute(Action="http://www.kendox.com/InfoShare/WebDataProvider/ProcessDataValidate", ReplyAction="http://www.kendox.com/InfoShare/WebDataProvider/ProcessDataValidateResponse")]
+        [System.ServiceModel.FaultContractAttribute(typeof(docreminder.InfoShareService.ServiceException), Action="http://www.kendox.com/InfoShare/WebDataProvider/ProcessDataValidateServiceExcepti" +
+            "onFault", Name="ServiceException", Namespace="http://schemas.datacontract.org/2004/07/Com.Kendox.Dcis.SubSystem.Service.Fault")]
+        docreminder.InfoShareService.WDP_ProcessDataValidateContract ProcessDataValidate(string connectionId, [System.ServiceModel.MessageParameterAttribute(Name="processDataValidate")] docreminder.InfoShareService.WDP_ProcessDataValidateContract processDataValidate1);
+        
+        [System.ServiceModel.OperationContractAttribute(Action="http://www.kendox.com/InfoShare/WebDataProvider/ProcessDataValidate", ReplyAction="http://www.kendox.com/InfoShare/WebDataProvider/ProcessDataValidateResponse")]
+        System.Threading.Tasks.Task<docreminder.InfoShareService.WDP_ProcessDataValidateContract> ProcessDataValidateAsync(string connectionId, docreminder.InfoShareService.WDP_ProcessDataValidateContract processDataValidate);
+        
+        [System.ServiceModel.OperationContractAttribute(Action="http://www.kendox.com/InfoShare/WebDataProvider/ProcessDataGetExternalList", ReplyAction="http://www.kendox.com/InfoShare/WebDataProvider/ProcessDataGetExternalListRespons" +
+            "e")]
+        [System.ServiceModel.FaultContractAttribute(typeof(docreminder.InfoShareService.ServiceException), Action="http://www.kendox.com/InfoShare/WebDataProvider/ProcessDataGetExternalListService" +
+            "ExceptionFault", Name="ServiceException", Namespace="http://schemas.datacontract.org/2004/07/Com.Kendox.Dcis.SubSystem.Service.Fault")]
+        docreminder.InfoShareService.WDP_ProcessDataGetExternalListContract ProcessDataGetExternalList(string connectionId, [System.ServiceModel.MessageParameterAttribute(Name="processDataGetExternalList")] docreminder.InfoShareService.WDP_ProcessDataGetExternalListContract processDataGetExternalList1);
+        
+        [System.ServiceModel.OperationContractAttribute(Action="http://www.kendox.com/InfoShare/WebDataProvider/ProcessDataGetExternalList", ReplyAction="http://www.kendox.com/InfoShare/WebDataProvider/ProcessDataGetExternalListRespons" +
+            "e")]
+        System.Threading.Tasks.Task<docreminder.InfoShareService.WDP_ProcessDataGetExternalListContract> ProcessDataGetExternalListAsync(string connectionId, docreminder.InfoShareService.WDP_ProcessDataGetExternalListContract processDataGetExternalList);
+        
+        [System.ServiceModel.OperationContractAttribute(Action="http://www.kendox.com/InfoShare/WebDataProvider/ProcessDataDocumentArchived", ReplyAction="http://www.kendox.com/InfoShare/WebDataProvider/ProcessDataDocumentArchivedRespon" +
+            "se")]
+        [System.ServiceModel.FaultContractAttribute(typeof(docreminder.InfoShareService.ServiceException), Action="http://www.kendox.com/InfoShare/WebDataProvider/ProcessDataDocumentArchivedServic" +
+            "eExceptionFault", Name="ServiceException", Namespace="http://schemas.datacontract.org/2004/07/Com.Kendox.Dcis.SubSystem.Service.Fault")]
+        docreminder.InfoShareService.WDP_ProcessDataDocumentArchivedContract ProcessDataDocumentArchived(string connectionId, [System.ServiceModel.MessageParameterAttribute(Name="processDataDocumentArchived")] docreminder.InfoShareService.WDP_ProcessDataDocumentArchivedContract processDataDocumentArchived1);
+        
+        [System.ServiceModel.OperationContractAttribute(Action="http://www.kendox.com/InfoShare/WebDataProvider/ProcessDataDocumentArchived", ReplyAction="http://www.kendox.com/InfoShare/WebDataProvider/ProcessDataDocumentArchivedRespon" +
+            "se")]
+        System.Threading.Tasks.Task<docreminder.InfoShareService.WDP_ProcessDataDocumentArchivedContract> ProcessDataDocumentArchivedAsync(string connectionId, docreminder.InfoShareService.WDP_ProcessDataDocumentArchivedContract processDataDocumentArchived);
+    }
+    
+    [System.CodeDom.Compiler.GeneratedCodeAttribute("System.ServiceModel", "4.0.0.0")]
+    public interface WebDataProviderChannel : docreminder.InfoShareService.WebDataProvider, System.ServiceModel.IClientChannel {
+    }
+    
+    [System.Diagnostics.DebuggerStepThroughAttribute()]
+    [System.CodeDom.Compiler.GeneratedCodeAttribute("System.ServiceModel", "4.0.0.0")]
+    public partial class WebDataProviderClient : System.ServiceModel.ClientBase<docreminder.InfoShareService.WebDataProvider>, docreminder.InfoShareService.WebDataProvider {
+        
+        public WebDataProviderClient() {
+        }
+        
+        public WebDataProviderClient(string endpointConfigurationName) : 
+                base(endpointConfigurationName) {
+        }
+        
+        public WebDataProviderClient(string endpointConfigurationName, string remoteAddress) : 
+                base(endpointConfigurationName, remoteAddress) {
+        }
+        
+        public WebDataProviderClient(string endpointConfigurationName, System.ServiceModel.EndpointAddress remoteAddress) : 
+                base(endpointConfigurationName, remoteAddress) {
+        }
+        
+        public WebDataProviderClient(System.ServiceModel.Channels.Binding binding, System.ServiceModel.EndpointAddress remoteAddress) : 
+                base(binding, remoteAddress) {
+        }
+        
+        public docreminder.InfoShareService.WDP_ProcessDataInitContract ProcessDataInit(string connectionId, docreminder.InfoShareService.WDP_ProcessDataInitContract processDataInit1) {
+            return base.Channel.ProcessDataInit(connectionId, processDataInit1);
+        }
+        
+        public System.Threading.Tasks.Task<docreminder.InfoShareService.WDP_ProcessDataInitContract> ProcessDataInitAsync(string connectionId, docreminder.InfoShareService.WDP_ProcessDataInitContract processDataInit) {
+            return base.Channel.ProcessDataInitAsync(connectionId, processDataInit);
+        }
+        
+        public docreminder.InfoShareService.WDP_ProcessDataInitContract ProcessDataAutoComplete(string connectionId, docreminder.InfoShareService.WDP_ProcessDataInitContract processDataInit) {
+            return base.Channel.ProcessDataAutoComplete(connectionId, processDataInit);
+        }
+        
+        public System.Threading.Tasks.Task<docreminder.InfoShareService.WDP_ProcessDataInitContract> ProcessDataAutoCompleteAsync(string connectionId, docreminder.InfoShareService.WDP_ProcessDataInitContract processDataInit) {
+            return base.Channel.ProcessDataAutoCompleteAsync(connectionId, processDataInit);
+        }
+        
+        public docreminder.InfoShareService.WDP_ProcessDataValidateContract ProcessDataValidate(string connectionId, docreminder.InfoShareService.WDP_ProcessDataValidateContract processDataValidate1) {
+            return base.Channel.ProcessDataValidate(connectionId, processDataValidate1);
+        }
+        
+        public System.Threading.Tasks.Task<docreminder.InfoShareService.WDP_ProcessDataValidateContract> ProcessDataValidateAsync(string connectionId, docreminder.InfoShareService.WDP_ProcessDataValidateContract processDataValidate) {
+            return base.Channel.ProcessDataValidateAsync(connectionId, processDataValidate);
+        }
+        
+        public docreminder.InfoShareService.WDP_ProcessDataGetExternalListContract ProcessDataGetExternalList(string connectionId, docreminder.InfoShareService.WDP_ProcessDataGetExternalListContract processDataGetExternalList1) {
+            return base.Channel.ProcessDataGetExternalList(connectionId, processDataGetExternalList1);
+        }
+        
+        public System.Threading.Tasks.Task<docreminder.InfoShareService.WDP_ProcessDataGetExternalListContract> ProcessDataGetExternalListAsync(string connectionId, docreminder.InfoShareService.WDP_ProcessDataGetExternalListContract processDataGetExternalList) {
+            return base.Channel.ProcessDataGetExternalListAsync(connectionId, processDataGetExternalList);
+        }
+        
+        public docreminder.InfoShareService.WDP_ProcessDataDocumentArchivedContract ProcessDataDocumentArchived(string connectionId, docreminder.InfoShareService.WDP_ProcessDataDocumentArchivedContract processDataDocumentArchived1) {
+            return base.Channel.ProcessDataDocumentArchived(connectionId, processDataDocumentArchived1);
+        }
+        
+        public System.Threading.Tasks.Task<docreminder.InfoShareService.WDP_ProcessDataDocumentArchivedContract> ProcessDataDocumentArchivedAsync(string connectionId, docreminder.InfoShareService.WDP_ProcessDataDocumentArchivedContract processDataDocumentArchived) {
+            return base.Channel.ProcessDataDocumentArchivedAsync(connectionId, processDataDocumentArchived);
         }
     }
 }

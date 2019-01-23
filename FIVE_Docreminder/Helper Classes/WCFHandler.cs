@@ -22,6 +22,7 @@ namespace docreminder
         public SearchService searchService { get; private set; }
         public FileService fileService { get; private set; }
         public DocumentService documentService { get; private set; }
+        public ProcessService processService { get; private set; }
 
 
         private bool _hasMore = false;
@@ -65,6 +66,7 @@ namespace docreminder
             searchService = new SearchService(new SearchClient("BasicHttpBinding_Search", wcfURL));
             fileService = new FileService(new FileClient("BasicHttpBinding_File", wcfURL));
             documentService = new DocumentService(new DocumentClient("BasicHttpBinding_Document", wcfURL));
+            processService = new ProcessService(new ProcessClient("BasicHttpBinding_Process", wcfURL));
         }
         public void Login()
         {
@@ -152,6 +154,15 @@ namespace docreminder
                 return id;
         }
 
+        public string GetProcessTemplateName(string id)
+        {
+            if (isConnected())
+                return commonService.GetProcessTemplateName(id, Properties.Settings.Default.Culture);
+            else
+                return id;
+        }
+
+
         public string GetPropertyTypeID(string name)
         {
             if (isConnected())
@@ -188,6 +199,14 @@ namespace docreminder
             return lSpropertyNames;
         }
 
+        internal ProcessTemplateContract GetProcessTemplateByName(string processName)
+        {
+            if (isConnected())
+                return commonService.GetProcessTemplateByName(processName, Properties.Settings.Default.Culture);
+            else
+                return null;
+        }
+
         internal IEnumerable<string> GetAllInfoStores()
         {
             List<string> lSInfoStores = new List<string>();
@@ -207,6 +226,26 @@ namespace docreminder
             }
             return lSInfoStores;
         }
+
+        internal IEnumerable<ProcessTemplateContract> GetAllProcessTemplates()
+        {
+            List<ProcessTemplateContract> lSProcessTemplates = new List<ProcessTemplateContract>();
+            return commonService.GetAllProcessTemplates();
+
+            //foreach (ProcessTemplateContract pti in processTemplates)
+            //{
+            //    string name = Utility.GetValue(pti.ProcessName, Properties.Settings.Default.Culture);
+            //    if (name != null)
+            //        lSProcessTemplates.Add(name);
+            //    else
+            //    {
+            //        name = pti.Name.Values.Where(x => x.Text != null).Select(x => x.Text).First();
+            //        lSProcessTemplates.Add(name);
+            //    }
+            //}
+            //return lSProcessTemplates;
+        }
+
         internal DocumentContract GetDocument(string infoShareObjectID)
         {
             return documentService.GetDocument(ConnectionID, infoShareObjectID);
@@ -314,16 +353,44 @@ namespace docreminder
             sDefContract.PageSize = 50;
 
 
-
-
             var resultContract = searchService.SearchDocument(commonService, ConnectionID, sDefContract, null);
 
             return resultContract.Documents;
         }
 
+        internal void StartProcess(ProcessTemplateContract procTemplate, string objectID, string[] userIds)
+        {
+            ProcessContract process = new ProcessContract(); //Create new emtpy ProcessContract
+            process.ProcessTemplateId = procTemplate.Id; //Set processTemplateID
+            process.DocumentIds = new string[1] { objectID };
+            process = processService.CreateProcess(ConnectionID, process); //Create Process
+
+            //If there are custom userids, assign them to the current task.
+            if (userIds.Count() > 0)
+            {
+                //Start the process with assignUsers = false.
+                StartProcessResultContract startResult = processService.StartProcess(ConnectionID, process, false);
+                process = startResult.Process;
+                //Get CurrentTask
+                if (process.CurrentTask != null)
+                {
+                    //Assign new Users to task.
+                    process.CurrentTask.AssignedUserIds = userIds;
+                    //Update the process with assigned users, this will start the task automatically.
+                    processService.UpdateProcess(ConnectionID, process);
+                }
+                else
+                    throw new Exception(string.Format("The process does not contain a task and could not be started!"));
+            }
+            //If there are no special recipients just start the task with assignUsers = true 
+            //and the server will start the task with standard users defined in the ContractTemplate.
+            else
+                processService.StartProcess(ConnectionID, process, true);
+        }
+
         internal byte[] GetDocumentFile(string infoShareObjectID)
         {
-            return fileService.DownloadFileBytesOnly(ConnectionID,infoShareObjectID);
+            return fileService.DownloadFileBytesOnly(ConnectionID, infoShareObjectID);
         }
 
         public List<SearchConditionContract> EvaluateSearchConditions(List<SearchConditionContract> searchConList, DocumentContract doc = null)
@@ -359,6 +426,7 @@ namespace docreminder
             }
             return searchConList;
         }
+
 
     }
 }

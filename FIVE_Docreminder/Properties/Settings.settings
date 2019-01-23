@@ -206,7 +206,7 @@
     <Setting Name="ConsoleEnabled" Provider="docreminder.PortableSettingsProvider" Type="System.Boolean" Scope="User">
       <Value Profile="(Default)">True</Value>
     </Setting>
-    <Setting Name="NEWMarkerProperties" Provider="docreminder.PortableSettingsProvider" Type="System.String" Scope="User">
+    <Setting Name="MarkerProperties" Provider="docreminder.PortableSettingsProvider" Type="System.String" Scope="User">
       <Value Profile="(Default)" />
     </Setting>
     <Setting Name="KendoxSearchProperties" Type="System.String" Scope="User">

@@ -1,3 +1,4 @@
+using System;
 using System.Collections;
 using System.Linq;
 using docreminder.InfoShareService;
@@ -199,13 +200,15 @@ namespace docreminder.BO
             return groupContract;
         }
 
+
+
         /// <summary>
         /// Creates a role contract and sets mandatory and optional fields on the contract.
-	    ///
-	    /// The name of the role contract is passed as an argument.
+        ///
+        /// The name of the role contract is passed as an argument.
         /// Calls the cCeateRole method on an instance of the InfoShareService.CommonClient
-	    /// class and passes the connection id of the administrator, and the role 
-	    /// contract as arguments.
+        /// class and passes the connection id of the administrator, and the role 
+        /// contract as arguments.
         /// </summary>
         /// <param name="connAdminUserID">the connection id of the administrator</param>
         /// <param name="roleName">the role name</param>
@@ -708,6 +711,12 @@ namespace docreminder.BO
             return arrayOfInfoStore;   
         }
 
+        public ProcessTemplateContract[] GetAllProcessTemplates()
+        {
+            ProcessTemplateContract[] arrayOfProcessTemplate = SchemaStore.ProcessTemplates;
+            return arrayOfProcessTemplate;
+        }
+
         public UserStoreContract GetAllUsers(string connAdminUserID)
         {
             UserStoreContract userStore = CommonClient.GetUserStore(connAdminUserID);
@@ -829,6 +838,70 @@ namespace docreminder.BO
 		
 		    return importTemplateContract;
 	    }
+
+        public string GetProcessTemplateName(string processContractId, string schemaCulture)
+        {
+            string processContractName = null;
+
+            foreach (ProcessTemplateContract processContract in this.SchemaStore.ProcessTemplates)
+            {
+                if (processContract.Id == processContractId)
+                {
+                    processContractName = Utility.GetValue(processContract.Name, schemaCulture);
+
+                    //Try in all cultures if not found in correct culture.
+                    if (processContractName == null)
+                    {
+                        var hit = processContract.Name.Values.Where(x => x.Text != null).First();
+                        processContractName = hit.Text;
+                        log.Warn(string.Format("Process name for '{0}' not found in culture '{1}' but in culture '{2}'! Configure '{3}' in all cultures!", processContractId, schemaCulture, hit.Culture, processContractName));
+                    }
+                    break;
+                }
+            }
+
+            if (processContractName == null)
+                throw new NotFoundException(string.Format("Process name for '{0}' not found in culture '{1}'! Check spelling!", processContractId, schemaCulture));
+
+            return processContractName;
+        }
+
+
+        public ProcessTemplateContract GetProcessTemplateByName(string processTemplateName, string schemaCulture)
+        {
+            ProcessTemplateContract ret = null;
+            foreach (ProcessTemplateContract ptc in this.SchemaStore.ProcessTemplates)
+            {
+                if (Utility.StringGlobalContains(ptc.Name, processTemplateName, schemaCulture))
+                {
+                    ret = ptc;
+                    break;
+                }
+            }
+
+
+            //Search in all cultures if not found in given culture.
+            if (ret == null)
+            {
+                foreach (ProcessTemplateContract ptc in this.SchemaStore.ProcessTemplates)
+                {
+                    var hit = ptc.Name.Values.Where(x => x.Text.ToLower() == processTemplateName.ToLower()).FirstOrDefault();
+
+                    if (hit != null)
+                    {
+                        ret = ptc;
+                        log.Warn(string.Format("Process for '{0}' not found in culture '{1}' but in culture '{2}'! Configure '{0}' in all cultures! ", processTemplateName, schemaCulture, hit.Culture));
+                        break;
+                    }
+                }
+
+            }
+            if (ret == null)
+                throw new NotFoundException(string.Format("No process found for name '{0}' with culture '{1}'", processTemplateName, schemaCulture));
+
+            return ret;
+        }
+
 
         /// <summary>
         /// Gets the property type name for the specified property type id.

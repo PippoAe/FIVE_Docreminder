@@ -4,6 +4,7 @@ using System.Drawing;
 using System.Windows.Forms;
 using System.IO;
 using System.Linq;
+using docreminder.InfoShareService;
 
 namespace docreminder
 {
@@ -97,31 +98,43 @@ namespace docreminder
             tBErrorMailSubject.Text = Properties.Settings.Default.ErrorMailSubject;
             cBErrorMailIncludeLog.Checked = Properties.Settings.Default.ErrorMailIncludeLog;
 
+
+
+            //ProcessTemplate
             cBStartProcessActive.Checked = Properties.Settings.Default.StartProcessActive;
             txtBxProcessRecipient.Text = Properties.Settings.Default.ProcessRecipient;
 
+            cBSelectedProcess.DisplayMember = "Text";
+            cBSelectedProcess.ValueMember = "Value";
 
-            //TODO: Not implemented yet
-            //WebServiceHandler.ProcessTemplateItem processTemplateItem = new WebServiceHandler.ProcessTemplateItem
-            //{
+            ProcessTemplateContract processTemplateItem = new ProcessTemplateContract();
 
-            //    //If ProcessTemplate is a string, it has to be evaluated. Else its fixed.
-            //    ProcessName = "Template auswählen..."
-            //};
-            //if (Properties.Settings.Default.ProcessName != "")
-            //{
-            //    try
-            //    {
-            //        processTemplateItem = (WebServiceHandler.ProcessTemplateItem)FileHelper.XmlDeserializeFromString(Properties.Settings.Default.ProcessName, processTemplateItem.GetType());
-            //    }
-            //    catch
-            //    {
-            //        //ProcessTemplateItem seems to be a string and needs to be evaluated on runtime.
-            //        processTemplateItem.ProcessName = Properties.Settings.Default.ProcessName;
-            //    }
-            //} 
+            if (Properties.Settings.Default.ProcessName != "")
+            {
+                //Try to deserialize
+                try
+                {
+                    processTemplateItem = (ProcessTemplateContract)FileHelper.XmlDeserializeFromString(Properties.Settings.Default.ProcessName, processTemplateItem.GetType());
+                    cBSelectedProcess.Items.Add(new { Text = WCFHandler.GetInstance.GetProcessTemplateName(processTemplateItem.Id), Value = processTemplateItem.Id });
+                    cBSelectedProcess.SelectedIndex = 0;
+                }
+                //if it doesn't work, its a string.
+                catch
+                {
+                    cBSelectedProcess.Text = Properties.Settings.Default.ProcessName;
+                }
+            }
+            else
+            {
+                //cBSelectedProcess.Items.Add("Template auswählen...");
+                //cBSelectedProcess.SelectedIndex = 0;
+                cBSelectedProcess.Text = "Template auswählen...";
+            }
 
-            //cBSelectedProcess.Items.Add(processTemplateItem);
+
+            //cBStartProcessActive.Checked = Properties.Settings.Default.StartProcessActive;
+            //txtBxProcessRecipient.Text = Properties.Settings.Default.ProcessRecipient;
+            //cBSelectedProcess.Items.Add(Properties.Settings.Default.ProcessName);
             //cBSelectedProcess.SelectedIndex = 0;
 
 
@@ -189,8 +202,8 @@ namespace docreminder
 
             //MarkerProperites
             List<BO.MarkerProperty> NEWmarkerProperties = new List<BO.MarkerProperty>();
-            if (Properties.Settings.Default.NEWMarkerProperties != "")
-                NEWmarkerProperties = (List<BO.MarkerProperty>)(FileHelper.XmlDeserializeFromString(Properties.Settings.Default.NEWMarkerProperties, NEWmarkerProperties.GetType()));
+            if (Properties.Settings.Default.MarkerProperties != "")
+                NEWmarkerProperties = (List<BO.MarkerProperty>)(FileHelper.XmlDeserializeFromString(Properties.Settings.Default.MarkerProperties, NEWmarkerProperties.GetType()));
 
             //Fill MarkerProperties
             foreach (BO.MarkerProperty markerproperty in NEWmarkerProperties)
@@ -203,51 +216,6 @@ namespace docreminder
                 dGwMarkerProperties.Rows.Add(row);
             }
 
-            //KendoxMarkerProperties
-            //List<KXWS.SDocumentPropertyUpdate> markerProperties = new List<KXWS.SDocumentPropertyUpdate>();
-            //if (Properties.Settings.Default.KendoxMarkerProperties != "")
-            //    markerProperties = (List<KXWS.SDocumentPropertyUpdate>)(FileHelper.XmlDeserializeFromString(Properties.Settings.Default.KendoxMarkerProperties, markerProperties.GetType()));
-
-
-            ////Fill MarkerProperties
-            //foreach (KXWS.SDocumentPropertyUpdate markerProperty in markerProperties)
-            //{
-            //    string updateAction = "UPDATE";
-            //    switch (markerProperty.updateAction)
-            //    {
-            //        case KXWS.UpdateActions.UPDATE:
-            //            updateAction = "UPDATE";
-            //            break;
-            //        case KXWS.UpdateActions.NONE:
-            //            updateAction = "NONE";
-            //            break;
-            //        case KXWS.UpdateActions.DELETE:
-            //            updateAction = "DELETE";
-            //            break;
-            //        case KXWS.UpdateActions.ADD:
-            //            updateAction = "ADD";
-            //            break;
-            //    }
-
-            //    string[] row = { markerProperty.propertyTypeName, string.Join(";", markerProperty.propertyValues), updateAction };
-            //    dGwMarkerProperties.Rows.Add(row);
-            //}
-
-
-            //Custom WS Functions
-            //Decapped
-            //cBCustomWSFunction.Checked = Properties.Settings.Default.CustomWSFunctionsActive;
-            //List<Forms.ExpressionVariablesForm.KeyValuePair<string, string>> customFunctionsList = new List<Forms.ExpressionVariablesForm.KeyValuePair<string, string>>();
-            //if (Properties.Settings.Default.CustomWSFunctions != "")
-            //    customFunctionsList = (List<Forms.ExpressionVariablesForm.KeyValuePair<string, string>>)(FileHelper.XmlDeserializeFromString(Properties.Settings.Default.CustomWSFunctions, customFunctionsList.GetType()));
-
-            //foreach (Forms.ExpressionVariablesForm.KeyValuePair<string, string> kvp in customFunctionsList)
-            //{
-            //    string[] row = { kvp.Key, kvp.Value };
-            //    dgwCustomWSFunction.Rows.Add(row);
-            //}
-
-            //Preload with Serverdata if connection has been made.
             preLoadSettingsData();
         }
 
@@ -317,9 +285,27 @@ namespace docreminder
 
             //Process
             Properties.Settings.Default["StartProcessActive"] = cBStartProcessActive.Checked;
+            //try
+            //{ 
+            //    string processID = (cBSelectedProcess.SelectedItem as dynamic).Value;
+            //    ProcessTemplateContract processTemplate = WCFHandler.GetInstance.GetAllProcessTemplates().Where(x => x.Id == processID).FirstOrDefault();
+            //    Properties.Settings.Default["ProcessName"] = cBSelectedProcess.Text;
+            //}
+
+            //Properties.Settings.Default["ProcessName"] = cBSelectedProcess.Text;
+
+
             //if item = null its a string that needs to be evaluated on runtime.
             if (cBSelectedProcess.SelectedItem != null)
-                Properties.Settings.Default["ProcessName"] = FileHelper.XmlSerializeToString(cBSelectedProcess.SelectedItem);
+            {
+                try
+                {
+                    string processID = (cBSelectedProcess.SelectedItem as dynamic).Value;
+                    ProcessTemplateContract processTemplate = WCFHandler.GetInstance.GetAllProcessTemplates().Where(x => x.Id == processID).FirstOrDefault();
+                    Properties.Settings.Default["ProcessName"] = FileHelper.XmlSerializeToString(processTemplate);
+                }
+                catch { }
+            }
             else
                 Properties.Settings.Default["ProcessName"] = cBSelectedProcess.Text;
 
@@ -329,6 +315,7 @@ namespace docreminder
             Properties.Settings.Default["KendoxWCFURL"] = txtBxKendoxWebserviceURL.Text;
             Properties.Settings.Default["KendoxUsername"] = txtBxKendoxUsername.Text;
             Properties.Settings.Default["isKXPWEncrypted"] = cbEncodePW.Checked;
+            
             //AEPH 12.02.2016 Encrypt Password
             //Password not yet encrypted.
             if (txtBxKendoxPassword.Text.Length < 25 && cbEncodePW.Checked)
@@ -365,12 +352,6 @@ MessageBoxButtons.OK, MessageBoxIcon.Information);
             //AdditionalComputedIdentifier
             Properties.Settings.Default["AdditionalComputedIdentifier"] = txtBxAdditionalComputedIdentifier.Text;
             Properties.Settings.Default["AddCpIdisActive"] = cBAddCpIdisActive.Checked;
-
-
-
-
-
-
 
             //InfoStores
             string selectedStores = "";
@@ -424,11 +405,8 @@ MessageBoxButtons.OK, MessageBoxIcon.Information);
             Properties.Settings.Default["SearchProperties"] = FileHelper.XmlSerializeToString(searchConditions);
 
 
-
-
-
-            //NEWMarkerProperties
-            List<BO.MarkerProperty> NEWmarkerProperties = new List<BO.MarkerProperty>();
+            //MarkerProperties
+            List<BO.MarkerProperty> markerProperties = new List<BO.MarkerProperty>();
             //KendoxMarkerProperties
             foreach (DataGridViewRow row in dGwMarkerProperties.Rows)
             {
@@ -463,11 +441,10 @@ MessageBoxButtons.OK, MessageBoxIcon.Information);
                         }
                     };
 
-                    NEWmarkerProperties.Add(new BO.MarkerProperty(propertyID, values.ToArray(), updateAction));
+                    markerProperties.Add(new BO.MarkerProperty(propertyID, values.ToArray(), updateAction));
                 }
             }
-
-            Properties.Settings.Default["NEWMarkerProperties"] = FileHelper.XmlSerializeToString(NEWmarkerProperties);
+            Properties.Settings.Default["MarkerProperties"] = FileHelper.XmlSerializeToString(markerProperties);
 
 
 
@@ -491,73 +468,8 @@ MessageBoxButtons.OK, MessageBoxIcon.Information);
             //if (variables.Count <= 0)
             //    Properties.Settings.Default["CustomWSFunctionsActive"] = false;
 
-
-            ////MarkerProperties
-            //List<KXWS.SDocumentPropertyUpdate> markerProperties = new List<KXWS.SDocumentPropertyUpdate>();
-
-            ////KendoxMarkerProperties
-            //foreach (DataGridViewRow row in dGwMarkerProperties.Rows)
-            //{
-            //    if (row.Cells.Count > 0 && row.Cells[0].Value != null)
-            //    {
-
-            //        KXWS.SDocumentPropertyUpdate markerProp = new KXWS.SDocumentPropertyUpdate
-            //        {
-            //            propertyTypeName = row.Cells[0].Value.ToString()
-            //        };
-
-            //        if (row.Cells[1].Value != null)
-            //            markerProp.propertyValues = row.Cells[1].Value.ToString().Split(new[] { ";" }, StringSplitOptions.RemoveEmptyEntries);
-            //        else
-            //            markerProp.propertyValues = new string[1] { "" };
-
-            //        markerProp.updateAction = KXWS.UpdateActions.UPDATE;
-            //        if (row.Cells[2].Value != null)
-            //        {
-            //            switch (row.Cells[2].Value.ToString().ToLower())
-            //            {
-            //                case "none":
-            //                    markerProp.updateAction = KXWS.UpdateActions.NONE;
-            //                    break;
-            //                case "update":
-            //                    markerProp.updateAction = KXWS.UpdateActions.UPDATE;
-            //                    break;
-            //                case "add":
-            //                    markerProp.updateAction = KXWS.UpdateActions.ADD;
-            //                    break;
-            //                case "delete":
-            //                    markerProp.updateAction = KXWS.UpdateActions.DELETE;
-            //                    break;
-            //            }
-            //        };
-
-            //        markerProperties.Add(markerProp);
-            //    }
-            //}
-
-            //Properties.Settings.Default["KendoxMarkerProperties"] = FileHelper.XmlSerializeToString(markerProperties);
-
-
             Properties.Settings.Default.Save();
         }
-
-        //private void SearchPropertiesSerialization()
-        //{
-        //    KXWS.SSearchCondition[] sSearchConditions = new KXWS.SSearchCondition[1];
-        //    KXWS.SSearchCondition sSearchCondition = new KXWS.SSearchCondition
-        //    {
-        //        propertyTypeName = "ebillmail",
-        //        operation = "GT",
-        //        propertyValueArray = new string[] { "1" }
-        //    };
-        //    sSearchConditions[0] = sSearchCondition;
-
-        //    Properties.Settings.Default.KendoxSearchProperties = FileHelper.XmlSerializeToString(sSearchConditions);
-
-        //    KXWS.SSearchCondition[] sSearchConditionsTEST = new KXWS.SSearchCondition[1];
-
-        //    sSearchConditionsTEST = (KXWS.SSearchCondition[])FileHelper.XmlDeserializeFromString(Properties.Settings.Default.KendoxSearchProperties, sSearchConditionsTEST.GetType());
-        //}
 
         private void btnTestSMTP_Click(object sender, EventArgs e)
         {
@@ -600,7 +512,6 @@ MessageBoxButtons.OK, MessageBoxIcon.Information);
             if (WCFHandler.GetInstance.isConnected())
             {
                 //Populate InfoStore Checkboxes.
-                //foreach (string storeName in mainform.webserviceHandler.getAllInfoStores())
                 foreach (string storeName in WCFHandler.GetInstance.GetAllInfoStores())
                 {
                     if (lInfoStores.Exists(x => x.Key == storeName))
@@ -616,11 +527,19 @@ MessageBoxButtons.OK, MessageBoxIcon.Information);
                 UpdateInfoStoreList(lInfoStores);
 
                 //Populate ProcessTemplateBox
-                //TODO
-                //foreach (WebServiceHandler.ProcessTemplateItem pti in mainform.webserviceHandler.getAllProcessTemplates())
+                foreach (ProcessTemplateContract pti in WCFHandler.GetInstance.GetAllProcessTemplates())
+                {
+
+                    //cBSelectedProcess.Items.Add(pti);
+                    if (WCFHandler.GetInstance.GetProcessTemplateName(pti.Id) != cBSelectedProcess.Text)
+                        cBSelectedProcess.Items.Add(new { Text = WCFHandler.GetInstance.GetProcessTemplateName(pti.Id), Value = pti.Id });
+                }
+
+                ////Populate ProcessTemplateBox
+                //foreach (string processTemplateName in WCFHandler.GetInstance.GetAllProcessTemplates())
                 //{
-                //    if (pti.ProcessName != cBSelectedProcess.Text)
-                //        cBSelectedProcess.Items.Add(pti);
+                //    if (processTemplateName != cBSelectedProcess.Text)
+                //        cBSelectedProcess.Items.Add(processTemplateName);
                 //}
 
                 //Activate Index Buttons

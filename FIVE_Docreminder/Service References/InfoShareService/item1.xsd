@@ -28,6 +28,8 @@
       <xs:element minOccurs="0" name="IsApplicationLicence" type="xs:boolean" />
       <xs:element minOccurs="0" name="IsConcurrentLicence" type="xs:boolean" />
       <xs:element minOccurs="0" name="IsNamedLicence" type="xs:boolean" />
+      <xs:element minOccurs="0" name="IsVerificationCodeNeeded" type="xs:boolean" />
+      <xs:element minOccurs="0" name="PossibleTwoWayAuthenticationType" nillable="true" type="xs:string" />
     </xs:sequence>
   </xs:complexType>
   <xs:element name="LogonResultContract" nillable="true" type="tns:LogonResultContract" />
@@ -110,6 +112,32 @@
       </xs:sequence>
     </xs:complexType>
   </xs:element>
+  <xs:element name="SendConnectionVerificationCode">
+    <xs:complexType>
+      <xs:sequence>
+        <xs:element minOccurs="0" name="connectionId" nillable="true" type="xs:string" />
+        <xs:element minOccurs="0" name="twoWayAuthenticationType" nillable="true" type="xs:string" />
+      </xs:sequence>
+    </xs:complexType>
+  </xs:element>
+  <xs:element name="SendConnectionVerificationCodeResponse">
+    <xs:complexType>
+      <xs:sequence />
+    </xs:complexType>
+  </xs:element>
+  <xs:element name="SetConnectionVerificationCode">
+    <xs:complexType>
+      <xs:sequence>
+        <xs:element minOccurs="0" name="connectionId" nillable="true" type="xs:string" />
+        <xs:element minOccurs="0" name="verificationCode" nillable="true" type="xs:string" />
+      </xs:sequence>
+    </xs:complexType>
+  </xs:element>
+  <xs:element name="SetConnectionVerificationCodeResponse">
+    <xs:complexType>
+      <xs:sequence />
+    </xs:complexType>
+  </xs:element>
   <xs:element name="Search">
     <xs:complexType>
       <xs:sequence>
@@ -141,6 +169,7 @@
   <xs:complexType name="SearchConditionContract">
     <xs:sequence>
       <xs:element minOccurs="0" name="ComparisonEnum" nillable="true" type="xs:string" />
+      <xs:element minOccurs="0" name="Id" nillable="true" type="xs:string" />
       <xs:element minOccurs="0" name="PlaceHolder" nillable="true" type="xs:string" />
       <xs:element minOccurs="0" name="PropertyTypeId" nillable="true" type="xs:string" />
       <xs:element minOccurs="0" name="RelationEnum" nillable="true" type="xs:string" />
@@ -291,6 +320,56 @@
       </xs:sequence>
     </xs:complexType>
   </xs:element>
+  <xs:element name="SearchProposal">
+    <xs:complexType>
+      <xs:sequence>
+        <xs:element minOccurs="0" name="connectionId" nillable="true" type="xs:string" />
+        <xs:element minOccurs="0" name="searchDefinition" nillable="true" type="tns:SearchDefinitionContract" />
+        <xs:element minOccurs="0" name="propertyTypeId" nillable="true" type="xs:string" />
+        <xs:element minOccurs="0" name="inputValue" nillable="true" type="xs:string" />
+        <xs:element minOccurs="0" name="maxCount" type="xs:int" />
+      </xs:sequence>
+    </xs:complexType>
+  </xs:element>
+  <xs:element name="SearchProposalResponse">
+    <xs:complexType>
+      <xs:sequence>
+        <xs:element xmlns:q7="http://schemas.microsoft.com/2003/10/Serialization/Arrays" minOccurs="0" name="SearchProposalResult" nillable="true" type="q7:ArrayOfstring" />
+      </xs:sequence>
+    </xs:complexType>
+  </xs:element>
+  <xs:element name="SearchProposalGlobal">
+    <xs:complexType>
+      <xs:sequence>
+        <xs:element minOccurs="0" name="connectionId" nillable="true" type="xs:string" />
+        <xs:element minOccurs="0" name="searchDefinition" nillable="true" type="tns:SearchDefinitionContract" />
+        <xs:element minOccurs="0" name="propertyTypeId" nillable="true" type="xs:string" />
+        <xs:element minOccurs="0" name="inputValue" nillable="true" type="xs:string" />
+        <xs:element minOccurs="0" name="maxCount" type="xs:int" />
+        <xs:element minOccurs="0" name="searchCulture" nillable="true" type="xs:string" />
+      </xs:sequence>
+    </xs:complexType>
+  </xs:element>
+  <xs:element name="SearchProposalGlobalResponse">
+    <xs:complexType>
+      <xs:sequence>
+        <xs:element minOccurs="0" name="SearchProposalGlobalResult" nillable="true" type="tns:ArrayOfProposalResultContract" />
+      </xs:sequence>
+    </xs:complexType>
+  </xs:element>
+  <xs:complexType name="ArrayOfProposalResultContract">
+    <xs:sequence>
+      <xs:element minOccurs="0" maxOccurs="unbounded" name="ProposalResultContract" nillable="true" type="tns:ProposalResultContract" />
+    </xs:sequence>
+  </xs:complexType>
+  <xs:element name="ArrayOfProposalResultContract" nillable="true" type="tns:ArrayOfProposalResultContract" />
+  <xs:complexType name="ProposalResultContract">
+    <xs:sequence>
+      <xs:element minOccurs="0" name="Id" nillable="true" type="xs:string" />
+      <xs:element minOccurs="0" name="Values" nillable="true" type="tns:StringGlobalContract" />
+    </xs:sequence>
+  </xs:complexType>
+  <xs:element name="ProposalResultContract" nillable="true" type="tns:ProposalResultContract" />
   <xs:element name="GetInfoStores">
     <xs:complexType>
       <xs:sequence>
@@ -323,8 +402,8 @@
     <xs:sequence>
       <xs:element minOccurs="0" name="AccessLogEnum" nillable="true" type="xs:string" />
       <xs:element minOccurs="0" name="AutoSuggest" type="xs:boolean" />
-      <xs:element xmlns:q7="http://schemas.microsoft.com/2003/10/Serialization/Arrays" minOccurs="0" name="BlobStoreIds" nillable="true" type="q7:ArrayOfstring" />
-      <xs:element xmlns:q8="http://schemas.microsoft.com/2003/10/Serialization/Arrays" minOccurs="0" name="BlobStoreProviderIds" nillable="true" type="q8:ArrayOfstring" />
+      <xs:element xmlns:q8="http://schemas.microsoft.com/2003/10/Serialization/Arrays" minOccurs="0" name="BlobStoreIds" nillable="true" type="q8:ArrayOfstring" />
+      <xs:element xmlns:q9="http://schemas.microsoft.com/2003/10/Serialization/Arrays" minOccurs="0" name="BlobStoreProviderIds" nillable="true" type="q9:ArrayOfstring" />
       <xs:element minOccurs="0" name="BuildThumbnails" type="xs:boolean" />
       <xs:element minOccurs="0" name="DBCompressionEnum" nillable="true" type="xs:string" />
       <xs:element minOccurs="0" name="Encrypted" type="xs:boolean" />
@@ -439,7 +518,7 @@
       <xs:element minOccurs="0" name="Key" nillable="true" type="xs:string" />
       <xs:element minOccurs="0" name="LifeCycleProtections" nillable="true" type="tns:ArrayOfLifeCycleStateProtectionContract" />
       <xs:element minOccurs="0" name="Name" nillable="true" type="tns:StringGlobalContract" />
-      <xs:element xmlns:q9="http://schemas.microsoft.com/2003/10/Serialization/Arrays" minOccurs="0" name="NextAllowedLifeCycleStateIds" nillable="true" type="q9:ArrayOfstring" />
+      <xs:element xmlns:q10="http://schemas.microsoft.com/2003/10/Serialization/Arrays" minOccurs="0" name="NextAllowedLifeCycleStateIds" nillable="true" type="q10:ArrayOfstring" />
       <xs:element minOccurs="0" name="NextAutomaticLifeCycleStateId" nillable="true" type="xs:string" />
       <xs:element minOccurs="0" name="NextCheckOutLifeCycleStateId" nillable="true" type="xs:string" />
       <xs:element minOccurs="0" name="NextInfoStoreId" nillable="true" type="xs:string" />
@@ -529,6 +608,7 @@
       <xs:element minOccurs="0" name="Properties" nillable="true" type="tns:ArrayOfPropertyContract" />
       <xs:element minOccurs="0" name="ProtectionDomainId" nillable="true" type="xs:string" />
       <xs:element minOccurs="0" name="ShowCommentWindow" type="xs:boolean" />
+      <xs:element minOccurs="0" name="StartTaskTemplateId" nillable="true" type="xs:string" />
       <xs:element minOccurs="0" name="TaskTemplateConditions" nillable="true" type="tns:ArrayOfTaskTemplateConditionContract" />
       <xs:element minOccurs="0" name="TaskTemplateWebServices" nillable="true" type="tns:ArrayOfTaskTemplateWebServiceContract" />
       <xs:element minOccurs="0" name="TaskTemplates" nillable="true" type="tns:ArrayOfTaskTemplateContract" />
@@ -538,7 +618,7 @@
   <xs:complexType name="ColumnConfigurationContract">
     <xs:sequence>
       <xs:element minOccurs="0" name="Columns" nillable="true" type="tns:ArrayOfColumnInformationContract" />
-      <xs:element xmlns:q10="http://schemas.microsoft.com/2003/10/Serialization/Arrays" minOccurs="0" name="GroupedColumnIds" nillable="true" type="q10:ArrayOfstring" />
+      <xs:element xmlns:q11="http://schemas.microsoft.com/2003/10/Serialization/Arrays" minOccurs="0" name="GroupedColumnIds" nillable="true" type="q11:ArrayOfstring" />
       <xs:element minOccurs="0" name="InheritProperties" type="xs:boolean" />
       <xs:element minOccurs="0" name="ShowAggregateFunctions" type="xs:boolean" />
       <xs:element minOccurs="0" name="ShowColumnFilters" type="xs:boolean" />
@@ -652,17 +732,17 @@
   <xs:complexType name="TaskTemplateContract">
     <xs:sequence>
       <xs:element minOccurs="0" name="ApplicationExecuteInfos" nillable="true" type="tns:ArrayOfApplicationExecutionInfoContract" />
-      <xs:element xmlns:q11="http://schemas.microsoft.com/2003/10/Serialization/Arrays" minOccurs="0" name="AssignedGroupIds" nillable="true" type="q11:ArrayOfstring" />
-      <xs:element xmlns:q12="http://schemas.microsoft.com/2003/10/Serialization/Arrays" minOccurs="0" name="AssignedUserIds" nillable="true" type="q12:ArrayOfstring" />
+      <xs:element xmlns:q12="http://schemas.microsoft.com/2003/10/Serialization/Arrays" minOccurs="0" name="AssignedGroupIds" nillable="true" type="q12:ArrayOfstring" />
+      <xs:element xmlns:q13="http://schemas.microsoft.com/2003/10/Serialization/Arrays" minOccurs="0" name="AssignedUserIds" nillable="true" type="q13:ArrayOfstring" />
       <xs:element minOccurs="0" name="CanOverrideAssignedUsers" type="xs:boolean" />
       <xs:element minOccurs="0" name="CloseProcessAfterCompletion" type="xs:boolean" />
-      <xs:element xmlns:q13="http://schemas.microsoft.com/2003/10/Serialization/Arrays" minOccurs="0" name="DeactivatedTabs" nillable="true" type="q13:ArrayOfstring" />
+      <xs:element xmlns:q14="http://schemas.microsoft.com/2003/10/Serialization/Arrays" minOccurs="0" name="DeactivatedTabs" nillable="true" type="q14:ArrayOfstring" />
       <xs:element minOccurs="0" name="DelayedNotification" type="xs:boolean" />
       <xs:element minOccurs="0" name="Description" nillable="true" type="tns:StringGlobalContract" />
       <xs:element minOccurs="0" name="DoEscalate" type="xs:boolean" />
       <xs:element minOccurs="0" name="DueDateDays" type="xs:int" />
-      <xs:element xmlns:q14="http://schemas.microsoft.com/2003/10/Serialization/Arrays" minOccurs="0" name="EscalateGroupIds" nillable="true" type="q14:ArrayOfstring" />
-      <xs:element xmlns:q15="http://schemas.microsoft.com/2003/10/Serialization/Arrays" minOccurs="0" name="EscalateUserIds" nillable="true" type="q15:ArrayOfstring" />
+      <xs:element xmlns:q15="http://schemas.microsoft.com/2003/10/Serialization/Arrays" minOccurs="0" name="EscalateGroupIds" nillable="true" type="q15:ArrayOfstring" />
+      <xs:element xmlns:q16="http://schemas.microsoft.com/2003/10/Serialization/Arrays" minOccurs="0" name="EscalateUserIds" nillable="true" type="q16:ArrayOfstring" />
       <xs:element minOccurs="0" name="FreeSelectAssignedUsers" type="xs:boolean" />
       <xs:element minOccurs="0" name="Id" nillable="true" type="xs:string" />
       <xs:element minOccurs="0" name="Name" nillable="true" type="tns:StringGlobalContract" />
@@ -671,9 +751,9 @@
       <xs:element minOccurs="0" name="RequiresAllRecipients" type="xs:boolean" />
       <xs:element minOccurs="0" name="RequiresResponse" type="xs:boolean" />
       <xs:element minOccurs="0" name="ShowCloseTaskDialog" type="xs:boolean" />
-      <xs:element xmlns:q16="http://schemas.microsoft.com/2003/10/Serialization/Arrays" minOccurs="0" name="UIPluginControlFAT" nillable="true" type="q16:ArrayOfstring" />
-      <xs:element xmlns:q17="http://schemas.microsoft.com/2003/10/Serialization/Arrays" minOccurs="0" name="UIPluginControlSilverlight" nillable="true" type="q17:ArrayOfstring" />
-      <xs:element xmlns:q18="http://schemas.microsoft.com/2003/10/Serialization/Arrays" minOccurs="0" name="UIPluginControlWeb" nillable="true" type="q18:ArrayOfstring" />
+      <xs:element xmlns:q17="http://schemas.microsoft.com/2003/10/Serialization/Arrays" minOccurs="0" name="UIPluginControlFAT" nillable="true" type="q17:ArrayOfstring" />
+      <xs:element xmlns:q18="http://schemas.microsoft.com/2003/10/Serialization/Arrays" minOccurs="0" name="UIPluginControlSilverlight" nillable="true" type="q18:ArrayOfstring" />
+      <xs:element xmlns:q19="http://schemas.microsoft.com/2003/10/Serialization/Arrays" minOccurs="0" name="UIPluginControlWeb" nillable="true" type="q19:ArrayOfstring" />
     </xs:sequence>
   </xs:complexType>
   <xs:element name="TaskTemplateContract" nillable="true" type="tns:TaskTemplateContract" />
@@ -787,7 +867,7 @@
   <xs:complexType name="PropertyTypeContract">
     <xs:sequence>
       <xs:element minOccurs="0" name="Active" type="xs:boolean" />
-      <xs:element xmlns:q19="http://schemas.microsoft.com/2003/10/Serialization/Arrays" minOccurs="0" name="ComparisonEnum" nillable="true" type="q19:ArrayOfstring" />
+      <xs:element xmlns:q20="http://schemas.microsoft.com/2003/10/Serialization/Arrays" minOccurs="0" name="ComparisonEnum" nillable="true" type="q20:ArrayOfstring" />
       <xs:element minOccurs="0" name="Configuration" nillable="true" type="tns:PropertyTypeConfigurationContract" />
       <xs:element minOccurs="0" name="Description" nillable="true" type="tns:StringGlobalContract" />
       <xs:element minOccurs="0" name="EditFormatterId" nillable="true" type="xs:string" />
@@ -881,7 +961,7 @@
       <xs:element minOccurs="0" name="Domain" nillable="true" type="xs:string" />
       <xs:element minOccurs="0" name="Id" nillable="true" type="xs:string" />
       <xs:element minOccurs="0" name="Name" nillable="true" type="xs:string" />
-      <xs:element xmlns:q20="http://schemas.microsoft.com/2003/10/Serialization/Arrays" minOccurs="0" name="UserIds" nillable="true" type="q20:ArrayOfstring" />
+      <xs:element xmlns:q21="http://schemas.microsoft.com/2003/10/Serialization/Arrays" minOccurs="0" name="UserIds" nillable="true" type="q21:ArrayOfstring" />
     </xs:sequence>
   </xs:complexType>
   <xs:element name="GroupContract" nillable="true" type="tns:GroupContract" />
@@ -912,6 +992,7 @@
       <xs:element minOccurs="0" name="NamedUser" type="xs:boolean" />
       <xs:element minOccurs="0" name="Obsolete" type="xs:boolean" />
       <xs:element minOccurs="0" name="PhoneNumber" nillable="true" type="xs:string" />
+      <xs:element minOccurs="0" name="PossibleTwoWayAuthenticationType" nillable="true" type="xs:string" />
     </xs:sequence>
   </xs:complexType>
   <xs:element name="UserContract" nillable="true" type="tns:UserContract" />
@@ -963,7 +1044,7 @@
       <xs:element minOccurs="0" name="CategoryId" nillable="true" type="xs:string" />
       <xs:element minOccurs="0" name="Id" nillable="true" type="xs:string" />
       <xs:element minOccurs="0" name="Name" nillable="true" type="tns:StringGlobalContract" />
-      <xs:element xmlns:q21="http://schemas.microsoft.com/2003/10/Serialization/Arrays" minOccurs="0" name="PreconditionIds" nillable="true" type="q21:ArrayOfstring" />
+      <xs:element xmlns:q22="http://schemas.microsoft.com/2003/10/Serialization/Arrays" minOccurs="0" name="PreconditionIds" nillable="true" type="q22:ArrayOfstring" />
     </xs:sequence>
   </xs:complexType>
   <xs:element name="AccessOperationContract" nillable="true" type="tns:AccessOperationContract" />
@@ -989,7 +1070,7 @@
     <xs:sequence>
       <xs:element minOccurs="0" name="Id" nillable="true" type="xs:string" />
       <xs:element minOccurs="0" name="Name" nillable="true" type="tns:StringGlobalContract" />
-      <xs:element xmlns:q22="http://schemas.microsoft.com/2003/10/Serialization/Arrays" minOccurs="0" name="RoleIds" nillable="true" type="q22:ArrayOfstring" />
+      <xs:element xmlns:q23="http://schemas.microsoft.com/2003/10/Serialization/Arrays" minOccurs="0" name="RoleIds" nillable="true" type="q23:ArrayOfstring" />
     </xs:sequence>
   </xs:complexType>
   <xs:element name="ProtectionDomainContract" nillable="true" type="tns:ProtectionDomainContract" />
@@ -1001,11 +1082,11 @@
   <xs:element name="ArrayOfRoleContract" nillable="true" type="tns:ArrayOfRoleContract" />
   <xs:complexType name="RoleContract">
     <xs:sequence>
-      <xs:element xmlns:q23="http://schemas.microsoft.com/2003/10/Serialization/Arrays" minOccurs="0" name="AllowedActionIds" nillable="true" type="q23:ArrayOfstring" />
-      <xs:element xmlns:q24="http://schemas.microsoft.com/2003/10/Serialization/Arrays" minOccurs="0" name="GroupIds" nillable="true" type="q24:ArrayOfstring" />
+      <xs:element xmlns:q24="http://schemas.microsoft.com/2003/10/Serialization/Arrays" minOccurs="0" name="AllowedActionIds" nillable="true" type="q24:ArrayOfstring" />
+      <xs:element xmlns:q25="http://schemas.microsoft.com/2003/10/Serialization/Arrays" minOccurs="0" name="GroupIds" nillable="true" type="q25:ArrayOfstring" />
       <xs:element minOccurs="0" name="Id" nillable="true" type="xs:string" />
       <xs:element minOccurs="0" name="Name" nillable="true" type="xs:string" />
-      <xs:element xmlns:q25="http://schemas.microsoft.com/2003/10/Serialization/Arrays" minOccurs="0" name="UserIds" nillable="true" type="q25:ArrayOfstring" />
+      <xs:element xmlns:q26="http://schemas.microsoft.com/2003/10/Serialization/Arrays" minOccurs="0" name="UserIds" nillable="true" type="q26:ArrayOfstring" />
     </xs:sequence>
   </xs:complexType>
   <xs:element name="RoleContract" nillable="true" type="tns:RoleContract" />
@@ -1597,7 +1678,7 @@
   <xs:element name="ArrayOfFolderSystemContract" nillable="true" type="tns:ArrayOfFolderSystemContract" />
   <xs:complexType name="FolderSystemContract">
     <xs:sequence>
-      <xs:element xmlns:q26="http://schemas.microsoft.com/2003/10/Serialization/Arrays" minOccurs="0" name="AccessRightsEnum" nillable="true" type="q26:ArrayOfstring" />
+      <xs:element xmlns:q27="http://schemas.microsoft.com/2003/10/Serialization/Arrays" minOccurs="0" name="AccessRightsEnum" nillable="true" type="q27:ArrayOfstring" />
       <xs:element minOccurs="0" name="Description" nillable="true" type="tns:StringGlobalContract" />
       <xs:element minOccurs="0" name="Hidden" type="xs:boolean" />
       <xs:element minOccurs="0" name="Id" nillable="true" type="xs:string" />
@@ -1665,7 +1746,7 @@
   <xs:complexType name="SMTPSettingsContract">
     <xs:sequence>
       <xs:element minOccurs="0" name="Password" nillable="true" type="xs:string" />
-      <xs:element xmlns:q27="http://schemas.microsoft.com/2003/10/Serialization/Arrays" minOccurs="0" name="SendTimes" nillable="true" type="q27:ArrayOfstring" />
+      <xs:element xmlns:q28="http://schemas.microsoft.com/2003/10/Serialization/Arrays" minOccurs="0" name="SendTimes" nillable="true" type="q28:ArrayOfstring" />
       <xs:element minOccurs="0" name="SenderMailAdress" nillable="true" type="xs:string" />
       <xs:element minOccurs="0" name="SenderName" nillable="true" type="xs:string" />
       <xs:element minOccurs="0" name="Server" nillable="true" type="xs:string" />
@@ -1740,7 +1821,7 @@
       <xs:element minOccurs="0" name="Body" nillable="true" type="xs:string" />
       <xs:element minOccurs="0" name="BodyIsHTML" type="xs:boolean" />
       <xs:element minOccurs="0" name="MailAttachments" nillable="true" type="tns:ArrayOfMailAttachmentParameterContract" />
-      <xs:element xmlns:q28="http://schemas.microsoft.com/2003/10/Serialization/Arrays" minOccurs="0" name="Recipients" nillable="true" type="q28:ArrayOfstring" />
+      <xs:element xmlns:q29="http://schemas.microsoft.com/2003/10/Serialization/Arrays" minOccurs="0" name="Recipients" nillable="true" type="q29:ArrayOfstring" />
       <xs:element minOccurs="0" name="SenderMail" nillable="true" type="xs:string" />
       <xs:element minOccurs="0" name="SenderName" nillable="true" type="xs:string" />
       <xs:element minOccurs="0" name="SmtpPassword" nillable="true" type="xs:string" />
@@ -1839,6 +1920,7 @@
       <xs:element minOccurs="0" name="PaperBinProtectionDomainId" nillable="true" type="xs:string" />
       <xs:element minOccurs="0" name="ProcessRespectProtectionDomainForUsers" type="xs:boolean" />
       <xs:element minOccurs="0" name="ProcessStoreSearches" nillable="true" type="tns:FolderPathContract" />
+      <xs:element minOccurs="0" name="RespectImportTemplateInEditProperties" type="xs:boolean" />
       <xs:element minOccurs="0" name="ShowTemplateChangeOptionsDialogKey" type="xs:boolean" />
       <xs:element minOccurs="0" name="TemplateFolder" nillable="true" type="tns:FolderPathContract" />
       <xs:element minOccurs="0" name="TextModuleFolder" nillable="true" type="tns:FolderPathContract" />
@@ -1846,6 +1928,7 @@
       <xs:element minOccurs="0" name="UrlPlaceholderDocId" nillable="true" type="xs:string" />
       <xs:element minOccurs="0" name="UrlPlaceholderStoreId" nillable="true" type="xs:string" />
       <xs:element minOccurs="0" name="UsePasswordProtectionForZip" type="xs:boolean" />
+      <xs:element minOccurs="0" name="VerificationCodeMailTemplateId" nillable="true" type="xs:string" />
     </xs:sequence>
   </xs:complexType>
   <xs:element name="GlobalSettingsContract" nillable="true" type="tns:GlobalSettingsContract" />
@@ -1906,7 +1989,7 @@
   <xs:element name="ArrayOfRemoteFolderSystemContract" nillable="true" type="tns:ArrayOfRemoteFolderSystemContract" />
   <xs:complexType name="RemoteFolderSystemContract">
     <xs:sequence>
-      <xs:element xmlns:q29="http://schemas.microsoft.com/2003/10/Serialization/Arrays" minOccurs="0" name="AccessRightsEnum" nillable="true" type="q29:ArrayOfstring" />
+      <xs:element xmlns:q30="http://schemas.microsoft.com/2003/10/Serialization/Arrays" minOccurs="0" name="AccessRightsEnum" nillable="true" type="q30:ArrayOfstring" />
       <xs:element minOccurs="0" name="Description" nillable="true" type="tns:StringGlobalContract" />
       <xs:element minOccurs="0" name="Hidden" type="xs:boolean" />
       <xs:element minOccurs="0" name="Id" nillable="true" type="xs:string" />
@@ -2104,7 +2187,11 @@
   </xs:element>
   <xs:complexType name="UserSettingsContract">
     <xs:sequence>
+      <xs:element minOccurs="0" name="FolderForPrivateSearches" nillable="true" type="tns:FolderPathContract" />
+      <xs:element minOccurs="0" name="FolderForPublicSearches" nillable="true" type="tns:FolderPathContract" />
       <xs:element minOccurs="0" name="LastSelectedFolderPath" nillable="true" type="tns:FolderPathContract" />
+      <xs:element minOccurs="0" name="PossibleTwoWayAuthenticationType" nillable="true" type="xs:string" />
+      <xs:element minOccurs="0" name="ShowSearchOptionButton" type="xs:boolean" />
     </xs:sequence>
   </xs:complexType>
   <xs:element name="UserSettingsContract" nillable="true" type="tns:UserSettingsContract" />
@@ -2133,7 +2220,7 @@
   <xs:element name="GetUserAdminAccessRightsResponse">
     <xs:complexType>
       <xs:sequence>
-        <xs:element xmlns:q30="http://schemas.microsoft.com/2003/10/Serialization/Arrays" minOccurs="0" name="GetUserAdminAccessRightsResult" nillable="true" type="q30:ArrayOfstring" />
+        <xs:element xmlns:q31="http://schemas.microsoft.com/2003/10/Serialization/Arrays" minOccurs="0" name="GetUserAdminAccessRightsResult" nillable="true" type="q31:ArrayOfstring" />
       </xs:sequence>
     </xs:complexType>
   </xs:element>
@@ -2239,7 +2326,7 @@
   <xs:element name="GetAllTenantNamesResponse">
     <xs:complexType>
       <xs:sequence>
-        <xs:element xmlns:q31="http://schemas.microsoft.com/2003/10/Serialization/Arrays" minOccurs="0" name="GetAllTenantNamesResult" nillable="true" type="q31:ArrayOfstring" />
+        <xs:element xmlns:q32="http://schemas.microsoft.com/2003/10/Serialization/Arrays" minOccurs="0" name="GetAllTenantNamesResult" nillable="true" type="q32:ArrayOfstring" />
       </xs:sequence>
     </xs:complexType>
   </xs:element>
@@ -2288,6 +2375,8 @@
   </xs:element>
   <xs:complexType name="SAPConfigContract">
     <xs:sequence>
+      <xs:element minOccurs="0" name="AddAnnotations" type="xs:boolean" />
+      <xs:element minOccurs="0" name="AddOverlays" type="xs:boolean" />
       <xs:element minOccurs="0" name="Culture" nillable="true" type="xs:string" />
       <xs:element minOccurs="0" name="ExtensionMustExist" type="xs:boolean" />
       <xs:element minOccurs="0" name="ImportTemplateId" nillable="true" type="xs:string" />
@@ -2310,6 +2399,7 @@
   <xs:complexType name="SAPIndexDownloadContract">
     <xs:sequence>
       <xs:element minOccurs="0" name="EnableIndexDownload" type="xs:boolean" />
+      <xs:element minOccurs="0" name="Id" nillable="true" type="xs:string" />
       <xs:element minOccurs="0" name="IndexDownloadPlugin" nillable="true" type="xs:string" />
       <xs:element minOccurs="0" name="PropertyMappings" nillable="true" type="tns:ArrayOfSAPPropertyMappingContract" />
       <xs:element minOccurs="0" name="RepositoryName" nillable="true" type="xs:string" />
@@ -2327,6 +2417,7 @@
       <xs:element minOccurs="0" name="DeleteLeadingSpaces" type="xs:boolean" />
       <xs:element minOccurs="0" name="DeleteLeadingZeros" type="xs:boolean" />
       <xs:element minOccurs="0" name="DeleteTerminatingSpaces" type="xs:boolean" />
+      <xs:element minOccurs="0" name="Id" nillable="true" type="xs:string" />
       <xs:element minOccurs="0" name="InfoSharePropertyName" nillable="true" type="xs:string" />
       <xs:element minOccurs="0" name="SAPPropertyName" nillable="true" type="xs:string" />
     </xs:sequence>
@@ -2341,6 +2432,7 @@
   <xs:complexType name="MimeTypeMappingEntryContract">
     <xs:sequence>
       <xs:element minOccurs="0" name="FileExtension" nillable="true" type="xs:string" />
+      <xs:element minOccurs="0" name="Id" nillable="true" type="xs:string" />
       <xs:element minOccurs="0" name="MimeType" nillable="true" type="xs:string" />
     </xs:sequence>
   </xs:complexType>
@@ -2399,7 +2491,7 @@
   <xs:element name="GetPropertyTypeProposalResponse">
     <xs:complexType>
       <xs:sequence>
-        <xs:element xmlns:q32="http://schemas.microsoft.com/2003/10/Serialization/Arrays" minOccurs="0" name="GetPropertyTypeProposalResult" nillable="true" type="q32:ArrayOfstring" />
+        <xs:element xmlns:q33="http://schemas.microsoft.com/2003/10/Serialization/Arrays" minOccurs="0" name="GetPropertyTypeProposalResult" nillable="true" type="q33:ArrayOfstring" />
       </xs:sequence>
     </xs:complexType>
   </xs:element>
@@ -2440,8 +2532,8 @@
   <xs:element name="ArrayOfSecurityHandlerConfigContract" nillable="true" type="tns:ArrayOfSecurityHandlerConfigContract" />
   <xs:complexType name="SecurityHandlerConfigContract">
     <xs:sequence>
-      <xs:element xmlns:q33="http://schemas.microsoft.com/2003/10/Serialization/Arrays" minOccurs="0" name="AllowedAccessOperations" nillable="true" type="q33:ArrayOfstring" />
-      <xs:element xmlns:q34="http://schemas.microsoft.com/2003/10/Serialization/Arrays" minOccurs="0" name="DeniedAccessOperations" nillable="true" type="q34:ArrayOfstring" />
+      <xs:element xmlns:q34="http://schemas.microsoft.com/2003/10/Serialization/Arrays" minOccurs="0" name="AllowedAccessOperations" nillable="true" type="q34:ArrayOfstring" />
+      <xs:element xmlns:q35="http://schemas.microsoft.com/2003/10/Serialization/Arrays" minOccurs="0" name="DeniedAccessOperations" nillable="true" type="q35:ArrayOfstring" />
       <xs:element minOccurs="0" name="EndDate" nillable="true" type="xs:string" />
       <xs:element minOccurs="0" name="HandledObjects" nillable="true" type="tns:ArrayOfSecurityHandlerObjectContract" />
       <xs:element minOccurs="0" name="Id" nillable="true" type="xs:string" />
@@ -2629,9 +2721,11 @@
   </xs:element>
   <xs:complexType name="ImportParameterContract">
     <xs:sequence>
-      <xs:element minOccurs="0" name="DefaultInfoStoreNameSource" nillable="true" type="xs:string" />
-      <xs:element minOccurs="0" name="DefaultInfoStoreNameTarget" nillable="true" type="xs:string" />
+      <xs:element minOccurs="0" name="Folders" type="xs:boolean" />
       <xs:element minOccurs="0" name="GlobalSettings" type="xs:boolean" />
+      <xs:element minOccurs="0" name="ProcessTemplates" type="xs:boolean" />
+      <xs:element minOccurs="0" name="RemoteFolders" type="xs:boolean" />
+      <xs:element minOccurs="0" name="UsersAndGroups" type="xs:boolean" />
     </xs:sequence>
   </xs:complexType>
   <xs:element name="ImportParameterContract" nillable="true" type="tns:ImportParameterContract" />
@@ -2820,6 +2914,150 @@
       <xs:sequence />
     </xs:complexType>
   </xs:element>
+  <xs:element name="GetWorkspace">
+    <xs:complexType>
+      <xs:sequence>
+        <xs:element minOccurs="0" name="connectionId" nillable="true" type="xs:string" />
+        <xs:element minOccurs="0" name="preLoadOptions" nillable="true" type="tns:WorkspacePreloadOptionsContract" />
+      </xs:sequence>
+    </xs:complexType>
+  </xs:element>
+  <xs:complexType name="WorkspacePreloadOptionsContract">
+    <xs:sequence>
+      <xs:element minOccurs="0" name="BlobStoreProviders" type="xs:boolean" />
+      <xs:element minOccurs="0" name="CloudSchemaStore" type="xs:boolean" />
+      <xs:element minOccurs="0" name="CurrentlyAllowedImportTemplatesForCreating" type="xs:boolean" />
+      <xs:element minOccurs="0" name="CurrentlyAllowedInfoStoresForCreating" type="xs:boolean" />
+      <xs:element minOccurs="0" name="CurrentlyAllowedProtectionDomainsForCreating" type="xs:boolean" />
+      <xs:element minOccurs="0" name="DocumentConvertingSettings" type="xs:boolean" />
+      <xs:element minOccurs="0" name="GlobalSettings" type="xs:boolean" />
+      <xs:element minOccurs="0" name="InfoStores" type="xs:boolean" />
+      <xs:element minOccurs="0" name="PreloadAll" type="xs:boolean" />
+      <xs:element minOccurs="0" name="SchemaStore" type="xs:boolean" />
+      <xs:element minOccurs="0" name="SecurityStore" type="xs:boolean" />
+      <xs:element minOccurs="0" name="ServerInfo" type="xs:boolean" />
+      <xs:element minOccurs="0" name="UserAdminAccessRights" type="xs:boolean" />
+      <xs:element minOccurs="0" name="UserStore" type="xs:boolean" />
+    </xs:sequence>
+  </xs:complexType>
+  <xs:element name="WorkspacePreloadOptionsContract" nillable="true" type="tns:WorkspacePreloadOptionsContract" />
+  <xs:element name="GetWorkspaceResponse">
+    <xs:complexType>
+      <xs:sequence>
+        <xs:element minOccurs="0" name="GetWorkspaceResult" nillable="true" type="tns:WorkspaceContract" />
+      </xs:sequence>
+    </xs:complexType>
+  </xs:element>
+  <xs:complexType name="WorkspaceContract">
+    <xs:sequence>
+      <xs:element minOccurs="0" name="BlobStoreProviders" nillable="true" type="tns:ArrayOfBlobStoreProviderContract" />
+      <xs:element minOccurs="0" name="CloudSchemaStore" nillable="true" type="tns:CloudSchemaStoreContract" />
+      <xs:element minOccurs="0" name="CurrentlyAllowedImportTemplatesForCreating" nillable="true" type="tns:ArrayOfImportTemplateContract" />
+      <xs:element minOccurs="0" name="CurrentlyAllowedInfoStoresForCreating" nillable="true" type="tns:ArrayOfInfoStoreContract" />
+      <xs:element minOccurs="0" name="CurrentlyAllowedProtectionDomainsForCreating" nillable="true" type="tns:ArrayOfProtectionDomainContract" />
+      <xs:element minOccurs="0" name="DocumentConvertingSettings" nillable="true" type="tns:ArrayOfDocumentConvertingContract" />
+      <xs:element minOccurs="0" name="GlobalSettings" nillable="true" type="tns:GlobalSettingsContract" />
+      <xs:element minOccurs="0" name="InfoStores" nillable="true" type="tns:ArrayOfInfoStoreContract" />
+      <xs:element minOccurs="0" name="SchemaStore" nillable="true" type="tns:SchemaStoreContract" />
+      <xs:element minOccurs="0" name="SecurityStore" nillable="true" type="tns:SecurityStoreContract" />
+      <xs:element minOccurs="0" name="ServerInfo" nillable="true" type="tns:ServerInfoContract" />
+      <xs:element xmlns:q36="http://schemas.microsoft.com/2003/10/Serialization/Arrays" minOccurs="0" name="UserAdminAccessRights" nillable="true" type="q36:ArrayOfstring" />
+      <xs:element minOccurs="0" name="UserStore" nillable="true" type="tns:UserStoreContract" />
+    </xs:sequence>
+  </xs:complexType>
+  <xs:element name="WorkspaceContract" nillable="true" type="tns:WorkspaceContract" />
+  <xs:complexType name="ArrayOfDocumentConvertingContract">
+    <xs:sequence>
+      <xs:element minOccurs="0" maxOccurs="unbounded" name="DocumentConvertingContract" nillable="true" type="tns:DocumentConvertingContract" />
+    </xs:sequence>
+  </xs:complexType>
+  <xs:element name="ArrayOfDocumentConvertingContract" nillable="true" type="tns:ArrayOfDocumentConvertingContract" />
+  <xs:complexType name="DocumentConvertingContract">
+    <xs:sequence>
+      <xs:element minOccurs="0" name="SourceBaseExtension" nillable="true" type="xs:string" />
+      <xs:element minOccurs="0" name="SourceExtension" nillable="true" type="xs:string" />
+      <xs:element minOccurs="0" name="TargetExtension" nillable="true" type="xs:string" />
+    </xs:sequence>
+  </xs:complexType>
+  <xs:element name="DocumentConvertingContract" nillable="true" type="tns:DocumentConvertingContract" />
+  <xs:complexType name="ServerInfoContract">
+    <xs:sequence>
+      <xs:element minOccurs="0" name="ApplicationUser" nillable="true" type="xs:string" />
+      <xs:element minOccurs="0" name="AvailableSystemMemory" type="xs:long" />
+      <xs:element minOccurs="0" name="Culture" nillable="true" type="xs:string" />
+      <xs:element minOccurs="0" name="FrameworkVersion" nillable="true" type="xs:string" />
+      <xs:element xmlns:q37="http://schemas.microsoft.com/2003/10/Serialization/Arrays" minOccurs="0" name="IP" nillable="true" type="q37:ArrayOfstring" />
+      <xs:element minOccurs="0" name="InstalledMemory" type="xs:long" />
+      <xs:element minOccurs="0" name="Is64BitProcess" type="xs:boolean" />
+      <xs:element minOccurs="0" name="Is64BitSystem" type="xs:boolean" />
+      <xs:element minOccurs="0" name="OperatingSystem" nillable="true" type="xs:string" />
+      <xs:element minOccurs="0" name="ProcessorCores" nillable="true" type="xs:string" />
+      <xs:element minOccurs="0" name="ProcessorName" nillable="true" type="xs:string" />
+      <xs:element minOccurs="0" name="SecuritPluginInfo" nillable="true" type="tns:SecurityPluginInfoContract" />
+      <xs:element minOccurs="0" name="ServerDate" nillable="true" type="xs:string" />
+      <xs:element minOccurs="0" name="ServerDomain" nillable="true" type="xs:string" />
+      <xs:element minOccurs="0" name="ServerName" nillable="true" type="xs:string" />
+      <xs:element minOccurs="0" name="StatisticPlugins" nillable="true" type="tns:ArrayOfAssemblyInfoContract" />
+      <xs:element minOccurs="0" name="TenantInfos" nillable="true" type="tns:ArrayOfTenantInfoContract" />
+      <xs:element minOccurs="0" name="TimeZoneDisplayName" nillable="true" type="xs:string" />
+      <xs:element minOccurs="0" name="TimeZoneUtcOffsetMinutes" type="xs:int" />
+      <xs:element minOccurs="0" name="UICulture" nillable="true" type="xs:string" />
+      <xs:element minOccurs="0" name="UsedMemory" type="xs:long" />
+      <xs:element minOccurs="0" name="Version" nillable="true" type="xs:string" />
+      <xs:element minOccurs="0" name="WCFEndpoints" nillable="true" type="tns:ArrayOfWCFEndpointContract" />
+    </xs:sequence>
+  </xs:complexType>
+  <xs:element name="ServerInfoContract" nillable="true" type="tns:ServerInfoContract" />
+  <xs:complexType name="SecurityPluginInfoContract">
+    <xs:sequence>
+      <xs:element minOccurs="0" name="AssemblyName" nillable="true" type="xs:string" />
+      <xs:element minOccurs="0" name="ClassName" nillable="true" type="xs:string" />
+      <xs:element minOccurs="0" name="DefaultPlugin" type="xs:boolean" />
+      <xs:element minOccurs="0" name="Version" nillable="true" type="xs:string" />
+    </xs:sequence>
+  </xs:complexType>
+  <xs:element name="SecurityPluginInfoContract" nillable="true" type="tns:SecurityPluginInfoContract" />
+  <xs:complexType name="ArrayOfAssemblyInfoContract">
+    <xs:sequence>
+      <xs:element minOccurs="0" maxOccurs="unbounded" name="AssemblyInfoContract" nillable="true" type="tns:AssemblyInfoContract" />
+    </xs:sequence>
+  </xs:complexType>
+  <xs:element name="ArrayOfAssemblyInfoContract" nillable="true" type="tns:ArrayOfAssemblyInfoContract" />
+  <xs:complexType name="AssemblyInfoContract">
+    <xs:sequence>
+      <xs:element minOccurs="0" name="ClassName" nillable="true" type="xs:string" />
+      <xs:element minOccurs="0" name="Name" nillable="true" type="xs:string" />
+      <xs:element minOccurs="0" name="Version" nillable="true" type="xs:string" />
+    </xs:sequence>
+  </xs:complexType>
+  <xs:element name="AssemblyInfoContract" nillable="true" type="tns:AssemblyInfoContract" />
+  <xs:complexType name="ArrayOfTenantInfoContract">
+    <xs:sequence>
+      <xs:element minOccurs="0" maxOccurs="unbounded" name="TenantInfoContract" nillable="true" type="tns:TenantInfoContract" />
+    </xs:sequence>
+  </xs:complexType>
+  <xs:element name="ArrayOfTenantInfoContract" nillable="true" type="tns:ArrayOfTenantInfoContract" />
+  <xs:complexType name="TenantInfoContract">
+    <xs:sequence>
+      <xs:element minOccurs="0" name="Name" nillable="true" type="xs:string" />
+      <xs:element minOccurs="0" name="ServerPort" type="xs:int" />
+    </xs:sequence>
+  </xs:complexType>
+  <xs:element name="TenantInfoContract" nillable="true" type="tns:TenantInfoContract" />
+  <xs:complexType name="ArrayOfWCFEndpointContract">
+    <xs:sequence>
+      <xs:element minOccurs="0" maxOccurs="unbounded" name="WCFEndpointContract" nillable="true" type="tns:WCFEndpointContract" />
+    </xs:sequence>
+  </xs:complexType>
+  <xs:element name="ArrayOfWCFEndpointContract" nillable="true" type="tns:ArrayOfWCFEndpointContract" />
+  <xs:complexType name="WCFEndpointContract">
+    <xs:sequence>
+      <xs:element minOccurs="0" name="RestService" type="xs:boolean" />
+      <xs:element minOccurs="0" name="URL" nillable="true" type="xs:string" />
+      <xs:element minOccurs="0" name="WindowsAuthentication" type="xs:boolean" />
+    </xs:sequence>
+  </xs:complexType>
+  <xs:element name="WCFEndpointContract" nillable="true" type="tns:WCFEndpointContract" />
   <xs:element name="GetDocument">
     <xs:complexType>
       <xs:sequence>
@@ -2838,7 +3076,7 @@
   <xs:complexType name="DocumentContract">
     <xs:sequence>
       <xs:element minOccurs="0" name="Abonnements" nillable="true" type="tns:ArrayOfAbonnementContract" />
-      <xs:element xmlns:q35="http://schemas.microsoft.com/2003/10/Serialization/Arrays" minOccurs="0" name="AccessRightsEnumList" nillable="true" type="q35:ArrayOfstring" />
+      <xs:element xmlns:q38="http://schemas.microsoft.com/2003/10/Serialization/Arrays" minOccurs="0" name="AccessRightsEnumList" nillable="true" type="q38:ArrayOfstring" />
       <xs:element minOccurs="0" name="AnnotationManager" nillable="true" type="tns:AnnotationManagerContract" />
       <xs:element minOccurs="0" name="Blogs" nillable="true" type="tns:ArrayOfBlogContract" />
       <xs:element minOccurs="0" name="CheckOutStateEnum" nillable="true" type="xs:string" />
@@ -3099,7 +3337,7 @@
       <xs:element minOccurs="0" name="LifeCycleStartDate" nillable="true" type="xs:string" />
       <xs:element minOccurs="0" name="LifeCycleStateId" nillable="true" type="xs:string" />
       <xs:element minOccurs="0" name="NextAutomaticLifeCycleStateId" nillable="true" type="xs:string" />
-      <xs:element xmlns:q36="http://schemas.microsoft.com/2003/10/Serialization/Arrays" minOccurs="0" name="NextLifeCycleStates" nillable="true" type="q36:ArrayOfstring" />
+      <xs:element xmlns:q39="http://schemas.microsoft.com/2003/10/Serialization/Arrays" minOccurs="0" name="NextLifeCycleStates" nillable="true" type="q39:ArrayOfstring" />
     </xs:sequence>
   </xs:complexType>
   <xs:element name="LifeCycleManagerContract" nillable="true" type="tns:LifeCycleManagerContract" />
@@ -3116,7 +3354,7 @@
       <xs:element minOccurs="0" name="ProcessTemplateId" nillable="true" type="xs:string" />
       <xs:element minOccurs="0" name="ReminderDate" nillable="true" type="xs:string" />
       <xs:element minOccurs="0" name="ReminderId" nillable="true" type="xs:string" />
-      <xs:element xmlns:q37="http://schemas.microsoft.com/2003/10/Serialization/Arrays" minOccurs="0" name="SubjectIds" nillable="true" type="q37:ArrayOfstring" />
+      <xs:element xmlns:q40="http://schemas.microsoft.com/2003/10/Serialization/Arrays" minOccurs="0" name="SubjectIds" nillable="true" type="q40:ArrayOfstring" />
       <xs:element minOccurs="0" name="UseUserFromProcessTemplate" type="xs:boolean" />
     </xs:sequence>
   </xs:complexType>
@@ -3127,6 +3365,7 @@
         <xs:element minOccurs="0" name="connectionId" nillable="true" type="xs:string" />
         <xs:element minOccurs="0" name="documentId" nillable="true" type="xs:string" />
         <xs:element minOccurs="0" name="ignoreRecycleBin" type="xs:boolean" />
+        <xs:element minOccurs="0" name="doNotDeletePhysicalFiles" type="xs:boolean" />
       </xs:sequence>
     </xs:complexType>
   </xs:element>
@@ -3139,15 +3378,16 @@
     <xs:complexType>
       <xs:sequence>
         <xs:element minOccurs="0" name="connectionId" nillable="true" type="xs:string" />
-        <xs:element xmlns:q38="http://schemas.microsoft.com/2003/10/Serialization/Arrays" minOccurs="0" name="documentIds" nillable="true" type="q38:ArrayOfstring" />
+        <xs:element xmlns:q41="http://schemas.microsoft.com/2003/10/Serialization/Arrays" minOccurs="0" name="documentIds" nillable="true" type="q41:ArrayOfstring" />
         <xs:element minOccurs="0" name="ignoreRecycleBin" type="xs:boolean" />
+        <xs:element minOccurs="0" name="doNotDeletePhysicalFiles" type="xs:boolean" />
       </xs:sequence>
     </xs:complexType>
   </xs:element>
   <xs:element name="DeleteDocumentsResponse">
     <xs:complexType>
       <xs:sequence>
-        <xs:element xmlns:q39="http://schemas.microsoft.com/2003/10/Serialization/Arrays" minOccurs="0" name="DeleteDocumentsResult" nillable="true" type="q39:ArrayOfstring" />
+        <xs:element xmlns:q42="http://schemas.microsoft.com/2003/10/Serialization/Arrays" minOccurs="0" name="DeleteDocumentsResult" nillable="true" type="q42:ArrayOfstring" />
       </xs:sequence>
     </xs:complexType>
   </xs:element>
@@ -3227,8 +3467,10 @@
   <xs:element name="FileParameterContract" nillable="true" type="tns:FileParameterContract" />
   <xs:complexType name="CreateDocumentOptionsContract">
     <xs:sequence>
+      <xs:element minOccurs="0" name="Comment" nillable="true" type="xs:string" />
       <xs:element minOccurs="0" name="CreateAsSAPDocument" type="xs:boolean" />
       <xs:element minOccurs="0" name="MergePropertiesIntoDocument" type="xs:boolean" />
+      <xs:element minOccurs="0" name="Version" nillable="true" type="xs:string" />
     </xs:sequence>
   </xs:complexType>
   <xs:element name="CreateDocumentOptionsContract" nillable="true" type="tns:CreateDocumentOptionsContract" />
@@ -3597,7 +3839,7 @@
     <xs:complexType>
       <xs:sequence>
         <xs:element minOccurs="0" name="connectionId" nillable="true" type="xs:string" />
-        <xs:element xmlns:q40="http://schemas.microsoft.com/2003/10/Serialization/Arrays" minOccurs="0" name="documentIds" nillable="true" type="q40:ArrayOfstring" />
+        <xs:element xmlns:q43="http://schemas.microsoft.com/2003/10/Serialization/Arrays" minOccurs="0" name="documentIds" nillable="true" type="q43:ArrayOfstring" />
       </xs:sequence>
     </xs:complexType>
   </xs:element>
@@ -3620,8 +3862,8 @@
         <xs:element minOccurs="0" name="connectionId" nillable="true" type="xs:string" />
         <xs:element minOccurs="0" name="documentId" nillable="true" type="xs:string" />
         <xs:element minOccurs="0" name="fulltext" nillable="true" type="xs:string" />
-        <xs:element xmlns:q41="http://schemas.microsoft.com/2003/10/Serialization/Arrays" minOccurs="0" name="autoSuggestWords" nillable="true" type="q41:ArrayOfstring" />
-        <xs:element xmlns:q42="http://schemas.microsoft.com/2003/10/Serialization/Arrays" minOccurs="0" name="fulltextPropertyWords" nillable="true" type="q42:ArrayOfstring" />
+        <xs:element xmlns:q44="http://schemas.microsoft.com/2003/10/Serialization/Arrays" minOccurs="0" name="autoSuggestWords" nillable="true" type="q44:ArrayOfstring" />
+        <xs:element xmlns:q45="http://schemas.microsoft.com/2003/10/Serialization/Arrays" minOccurs="0" name="fulltextPropertyWords" nillable="true" type="q45:ArrayOfstring" />
       </xs:sequence>
     </xs:complexType>
   </xs:element>
@@ -3691,7 +3933,7 @@
         <xs:element minOccurs="0" name="connectionId" nillable="true" type="xs:string" />
         <xs:element minOccurs="0" name="documentId" nillable="true" type="xs:string" />
         <xs:element minOccurs="0" name="renditionId" nillable="true" type="xs:string" />
-        <xs:element xmlns:q43="http://schemas.microsoft.com/2003/10/Serialization/Arrays" minOccurs="0" name="fileIds" nillable="true" type="q43:ArrayOfstring" />
+        <xs:element xmlns:q46="http://schemas.microsoft.com/2003/10/Serialization/Arrays" minOccurs="0" name="fileIds" nillable="true" type="q46:ArrayOfstring" />
       </xs:sequence>
     </xs:complexType>
   </xs:element>
@@ -3770,7 +4012,7 @@
   <xs:element name="ArrayOfSecurityHandlerDocumentContract" nillable="true" type="tns:ArrayOfSecurityHandlerDocumentContract" />
   <xs:complexType name="SecurityHandlerDocumentContract">
     <xs:sequence>
-      <xs:element xmlns:q44="http://schemas.microsoft.com/2003/10/Serialization/Arrays" minOccurs="0" name="AllowedAccessOperations" nillable="true" type="q44:ArrayOfstring" />
+      <xs:element xmlns:q47="http://schemas.microsoft.com/2003/10/Serialization/Arrays" minOccurs="0" name="AllowedAccessOperations" nillable="true" type="q47:ArrayOfstring" />
       <xs:element minOccurs="0" name="CreateDate" nillable="true" type="xs:string" />
       <xs:element minOccurs="0" name="CreatorUser" nillable="true" type="xs:string" />
       <xs:element minOccurs="0" name="EndDate" nillable="true" type="xs:string" />
@@ -3900,7 +4142,7 @@
       <xs:sequence>
         <xs:element minOccurs="0" name="connectionId" nillable="true" type="xs:string" />
         <xs:element minOccurs="0" name="documentId" nillable="true" type="xs:string" />
-        <xs:element xmlns:q45="http://schemas.microsoft.com/2003/10/Serialization/Arrays" minOccurs="0" name="userIds" nillable="true" type="q45:ArrayOfstring" />
+        <xs:element xmlns:q48="http://schemas.microsoft.com/2003/10/Serialization/Arrays" minOccurs="0" name="userIds" nillable="true" type="q48:ArrayOfstring" />
       </xs:sequence>
     </xs:complexType>
   </xs:element>
@@ -3914,7 +4156,7 @@
       <xs:sequence>
         <xs:element minOccurs="0" name="connectionId" nillable="true" type="xs:string" />
         <xs:element minOccurs="0" name="documentId" nillable="true" type="xs:string" />
-        <xs:element xmlns:q46="http://schemas.microsoft.com/2003/10/Serialization/Arrays" minOccurs="0" name="userIds" nillable="true" type="q46:ArrayOfstring" />
+        <xs:element xmlns:q49="http://schemas.microsoft.com/2003/10/Serialization/Arrays" minOccurs="0" name="userIds" nillable="true" type="q49:ArrayOfstring" />
       </xs:sequence>
     </xs:complexType>
   </xs:element>
@@ -3982,7 +4224,7 @@
   <xs:element name="DownloadFileResponse">
     <xs:complexType>
       <xs:sequence>
-        <xs:element xmlns:q47="http://schemas.microsoft.com/Message" name="DownloadFileResult" type="q47:StreamBody" />
+        <xs:element xmlns:q50="http://schemas.microsoft.com/Message" name="DownloadFileResult" type="q50:StreamBody" />
       </xs:sequence>
     </xs:complexType>
   </xs:element>
@@ -4040,7 +4282,7 @@
   <xs:element name="DownloadSignatureFileResponse">
     <xs:complexType>
       <xs:sequence>
-        <xs:element xmlns:q48="http://schemas.microsoft.com/Message" name="DownloadSignatureFileResult" type="q48:StreamBody" />
+        <xs:element xmlns:q51="http://schemas.microsoft.com/Message" name="DownloadSignatureFileResult" type="q51:StreamBody" />
       </xs:sequence>
     </xs:complexType>
   </xs:element>
@@ -4080,7 +4322,7 @@
   <xs:element name="DownloadSignatureReportFileResponse">
     <xs:complexType>
       <xs:sequence>
-        <xs:element xmlns:q49="http://schemas.microsoft.com/Message" name="DownloadSignatureReportFileResult" type="q49:StreamBody" />
+        <xs:element xmlns:q52="http://schemas.microsoft.com/Message" name="DownloadSignatureReportFileResult" type="q52:StreamBody" />
       </xs:sequence>
     </xs:complexType>
   </xs:element>
@@ -4132,7 +4374,7 @@
   <xs:element name="DownloadFileConvertedResponse">
     <xs:complexType>
       <xs:sequence>
-        <xs:element xmlns:q50="http://schemas.microsoft.com/Message" name="DownloadFileConvertedResult" type="q50:StreamBody" />
+        <xs:element xmlns:q53="http://schemas.microsoft.com/Message" name="DownloadFileConvertedResult" type="q53:StreamBody" />
       </xs:sequence>
     </xs:complexType>
   </xs:element>
@@ -4190,7 +4432,7 @@
   <xs:element name="DownloadThumbnailResponse">
     <xs:complexType>
       <xs:sequence>
-        <xs:element xmlns:q51="http://schemas.microsoft.com/Message" name="DownloadThumbnailResult" type="q51:StreamBody" />
+        <xs:element xmlns:q54="http://schemas.microsoft.com/Message" name="DownloadThumbnailResult" type="q54:StreamBody" />
       </xs:sequence>
     </xs:complexType>
   </xs:element>
@@ -4209,7 +4451,7 @@
   <xs:element name="DownloadThumbnailsResponse">
     <xs:complexType>
       <xs:sequence>
-        <xs:element xmlns:q52="http://schemas.datacontract.org/2004/07/System.IO" minOccurs="0" name="DownloadThumbnailsResult" nillable="true" type="q52:ArrayOfStream" />
+        <xs:element xmlns:q55="http://schemas.datacontract.org/2004/07/System.IO" minOccurs="0" name="DownloadThumbnailsResult" nillable="true" type="q55:ArrayOfStream" />
       </xs:sequence>
     </xs:complexType>
   </xs:element>
@@ -4243,6 +4485,209 @@
       <xs:sequence />
     </xs:complexType>
   </xs:element>
+  <xs:element name="GetFileFromDocument">
+    <xs:complexType>
+      <xs:sequence>
+        <xs:element minOccurs="0" name="connectionId" nillable="true" type="xs:string" />
+        <xs:element minOccurs="0" name="documentId" nillable="true" type="xs:string" />
+        <xs:element minOccurs="0" name="versionId" nillable="true" type="xs:string" />
+        <xs:element minOccurs="0" name="documentDataId" nillable="true" type="xs:string" />
+        <xs:element minOccurs="0" name="renditionId" nillable="true" type="xs:string" />
+        <xs:element minOccurs="0" name="accessTypeEnum" nillable="true" type="xs:string" />
+      </xs:sequence>
+    </xs:complexType>
+  </xs:element>
+  <xs:element name="GetFileFromDocumentResponse">
+    <xs:complexType>
+      <xs:sequence>
+        <xs:element minOccurs="0" name="GetFileFromDocumentResult" nillable="true" type="xs:string" />
+      </xs:sequence>
+    </xs:complexType>
+  </xs:element>
+  <xs:element name="GetDocumentTransformation">
+    <xs:complexType>
+      <xs:sequence>
+        <xs:element minOccurs="0" name="connectionId" nillable="true" type="xs:string" />
+      </xs:sequence>
+    </xs:complexType>
+  </xs:element>
+  <xs:element name="GetDocumentTransformationResponse">
+    <xs:complexType>
+      <xs:sequence>
+        <xs:element minOccurs="0" name="GetDocumentTransformationResult" nillable="true" type="tns:ArrayOfDocumentTransformationContract" />
+      </xs:sequence>
+    </xs:complexType>
+  </xs:element>
+  <xs:complexType name="ArrayOfDocumentTransformationContract">
+    <xs:sequence>
+      <xs:element minOccurs="0" maxOccurs="unbounded" name="DocumentTransformationContract" nillable="true" type="tns:DocumentTransformationContract" />
+    </xs:sequence>
+  </xs:complexType>
+  <xs:element name="ArrayOfDocumentTransformationContract" nillable="true" type="tns:ArrayOfDocumentTransformationContract" />
+  <xs:complexType name="DocumentTransformationContract">
+    <xs:sequence>
+      <xs:element minOccurs="0" name="SourceExtension" nillable="true" type="xs:string" />
+      <xs:element minOccurs="0" name="TargetExtension" nillable="true" type="xs:string" />
+    </xs:sequence>
+  </xs:complexType>
+  <xs:element name="DocumentTransformationContract" nillable="true" type="tns:DocumentTransformationContract" />
+  <xs:element name="GetDocumentConvertingSettings">
+    <xs:complexType>
+      <xs:sequence>
+        <xs:element minOccurs="0" name="connectionId" nillable="true" type="xs:string" />
+      </xs:sequence>
+    </xs:complexType>
+  </xs:element>
+  <xs:element name="GetDocumentConvertingSettingsResponse">
+    <xs:complexType>
+      <xs:sequence>
+        <xs:element minOccurs="0" name="GetDocumentConvertingSettingsResult" nillable="true" type="tns:ArrayOfDocumentConvertingContract" />
+      </xs:sequence>
+    </xs:complexType>
+  </xs:element>
+  <xs:element name="SetDocumentConvertingSettings">
+    <xs:complexType>
+      <xs:sequence>
+        <xs:element minOccurs="0" name="connectionId" nillable="true" type="xs:string" />
+        <xs:element minOccurs="0" name="documentConvertingList" nillable="true" type="tns:ArrayOfDocumentConvertingContract" />
+      </xs:sequence>
+    </xs:complexType>
+  </xs:element>
+  <xs:element name="SetDocumentConvertingSettingsResponse">
+    <xs:complexType>
+      <xs:sequence />
+    </xs:complexType>
+  </xs:element>
+  <xs:element name="GetFile">
+    <xs:complexType>
+      <xs:sequence>
+        <xs:element minOccurs="0" name="connectionId" nillable="true" type="xs:string" />
+        <xs:element minOccurs="0" name="documentId" nillable="true" type="xs:string" />
+        <xs:element minOccurs="0" name="versionId" nillable="true" type="xs:string" />
+        <xs:element minOccurs="0" name="documentDataId" nillable="true" type="xs:string" />
+        <xs:element minOccurs="0" name="renditionId" nillable="true" type="xs:string" />
+        <xs:element minOccurs="0" name="accessTypeEnum" nillable="true" type="xs:string" />
+        <xs:element minOccurs="0" name="ignoreHashValidation" type="xs:boolean" />
+        <xs:element minOccurs="0" name="contentType" nillable="true" type="xs:string" />
+      </xs:sequence>
+    </xs:complexType>
+  </xs:element>
+  <xs:element name="GetFileResponse">
+    <xs:complexType>
+      <xs:sequence>
+        <xs:element xmlns:q56="http://schemas.microsoft.com/Message" name="GetFileResult" type="q56:StreamBody" />
+      </xs:sequence>
+    </xs:complexType>
+  </xs:element>
+  <xs:element name="GetFileConverted">
+    <xs:complexType>
+      <xs:sequence>
+        <xs:element minOccurs="0" name="connectionId" nillable="true" type="xs:string" />
+        <xs:element minOccurs="0" name="documentId" nillable="true" type="xs:string" />
+        <xs:element minOccurs="0" name="versionId" nillable="true" type="xs:string" />
+        <xs:element minOccurs="0" name="documentDataId" nillable="true" type="xs:string" />
+        <xs:element minOccurs="0" name="renditionId" nillable="true" type="xs:string" />
+        <xs:element minOccurs="0" name="accessTypeEnum" nillable="true" type="xs:string" />
+        <xs:element minOccurs="0" name="targetFormat" nillable="true" type="xs:string" />
+        <xs:element minOccurs="0" name="addAnnotatins" type="xs:boolean" />
+        <xs:element minOccurs="0" name="addOverlay" type="xs:boolean" />
+        <xs:element minOccurs="0" name="contentType" nillable="true" type="xs:string" />
+      </xs:sequence>
+    </xs:complexType>
+  </xs:element>
+  <xs:element name="GetFileConvertedResponse">
+    <xs:complexType>
+      <xs:sequence>
+        <xs:element xmlns:q57="http://schemas.microsoft.com/Message" name="GetFileConvertedResult" type="q57:StreamBody" />
+      </xs:sequence>
+    </xs:complexType>
+  </xs:element>
+  <xs:element name="GetThumbnail">
+    <xs:complexType>
+      <xs:sequence>
+        <xs:element minOccurs="0" name="connectionId" nillable="true" type="xs:string" />
+        <xs:element minOccurs="0" name="documentId" nillable="true" type="xs:string" />
+        <xs:element minOccurs="0" name="documentDataId" nillable="true" type="xs:string" />
+        <xs:element minOccurs="0" name="renditionId" nillable="true" type="xs:string" />
+        <xs:element minOccurs="0" name="pageNumber" type="xs:int" />
+      </xs:sequence>
+    </xs:complexType>
+  </xs:element>
+  <xs:element name="GetThumbnailResponse">
+    <xs:complexType>
+      <xs:sequence>
+        <xs:element xmlns:q58="http://schemas.microsoft.com/Message" name="GetThumbnailResult" type="q58:StreamBody" />
+      </xs:sequence>
+    </xs:complexType>
+  </xs:element>
+  <xs:element name="DownloadTempFileBytes">
+    <xs:complexType>
+      <xs:sequence>
+        <xs:element minOccurs="0" name="connectionId" nillable="true" type="xs:string" />
+        <xs:element minOccurs="0" name="fileId" nillable="true" type="xs:string" />
+        <xs:element minOccurs="0" name="from" type="xs:long" />
+        <xs:element minOccurs="0" name="count" type="xs:int" />
+      </xs:sequence>
+    </xs:complexType>
+  </xs:element>
+  <xs:element name="DownloadTempFileBytesResponse">
+    <xs:complexType>
+      <xs:sequence>
+        <xs:element minOccurs="0" name="DownloadTempFileBytesResult" nillable="true" type="xs:base64Binary" />
+      </xs:sequence>
+    </xs:complexType>
+  </xs:element>
+  <xs:element name="DownloadTempFile">
+    <xs:complexType>
+      <xs:sequence>
+        <xs:element minOccurs="0" name="connectionId" nillable="true" type="xs:string" />
+        <xs:element minOccurs="0" name="fileId" nillable="true" type="xs:string" />
+      </xs:sequence>
+    </xs:complexType>
+  </xs:element>
+  <xs:element name="DownloadTempFileResponse">
+    <xs:complexType>
+      <xs:sequence>
+        <xs:element xmlns:q59="http://schemas.microsoft.com/Message" name="DownloadTempFileResult" type="q59:StreamBody" />
+      </xs:sequence>
+    </xs:complexType>
+  </xs:element>
+  <xs:element name="GetTempFile">
+    <xs:complexType>
+      <xs:sequence>
+        <xs:element minOccurs="0" name="connectionId" nillable="true" type="xs:string" />
+        <xs:element minOccurs="0" name="fileId" nillable="true" type="xs:string" />
+        <xs:element minOccurs="0" name="contentType" nillable="true" type="xs:string" />
+      </xs:sequence>
+    </xs:complexType>
+  </xs:element>
+  <xs:element name="GetTempFileResponse">
+    <xs:complexType>
+      <xs:sequence>
+        <xs:element xmlns:q60="http://schemas.microsoft.com/Message" name="GetTempFileResult" type="q60:StreamBody" />
+      </xs:sequence>
+    </xs:complexType>
+  </xs:element>
+  <xs:element name="GetFileIdFromDocument">
+    <xs:complexType>
+      <xs:sequence>
+        <xs:element minOccurs="0" name="connectionId" nillable="true" type="xs:string" />
+        <xs:element minOccurs="0" name="documentId" nillable="true" type="xs:string" />
+        <xs:element minOccurs="0" name="versionId" nillable="true" type="xs:string" />
+        <xs:element minOccurs="0" name="documentDataId" nillable="true" type="xs:string" />
+        <xs:element minOccurs="0" name="renditionId" nillable="true" type="xs:string" />
+        <xs:element minOccurs="0" name="accessTypeEnum" nillable="true" type="xs:string" />
+        <xs:element minOccurs="0" name="ignoreHashValidation" type="xs:boolean" />
+      </xs:sequence>
+    </xs:complexType>
+  </xs:element>
+  <xs:element name="GetFileIdFromDocumentResponse">
+    <xs:complexType>
+      <xs:sequence>
+        <xs:element minOccurs="0" name="GetFileIdFromDocumentResult" nillable="true" type="xs:string" />
+      </xs:sequence>
+    </xs:complexType>
+  </xs:element>
   <xs:element name="GetProcess">
     <xs:complexType>
       <xs:sequence>
@@ -4260,14 +4705,14 @@
   </xs:element>
   <xs:complexType name="ProcessContract">
     <xs:sequence>
-      <xs:element xmlns:q53="http://schemas.microsoft.com/2003/10/Serialization/Arrays" minOccurs="0" name="AccessRightsEnumList" nillable="true" type="q53:ArrayOfstring" />
+      <xs:element xmlns:q61="http://schemas.microsoft.com/2003/10/Serialization/Arrays" minOccurs="0" name="AccessRightsEnumList" nillable="true" type="q61:ArrayOfstring" />
       <xs:element minOccurs="0" name="Comments" nillable="true" type="tns:ArrayOfCommentContract" />
       <xs:element minOccurs="0" name="CompletedDate" nillable="true" type="xs:string" />
       <xs:element minOccurs="0" name="CompletedTasks" nillable="true" type="tns:ArrayOfTaskContract" />
       <xs:element minOccurs="0" name="CreatedDate" nillable="true" type="xs:string" />
       <xs:element minOccurs="0" name="CurrentTask" nillable="true" type="tns:TaskContract" />
       <xs:element minOccurs="0" name="CustomProperties" nillable="true" type="tns:ArrayOfCustomPropertyContract" />
-      <xs:element xmlns:q54="http://schemas.microsoft.com/2003/10/Serialization/Arrays" minOccurs="0" name="DocumentIds" nillable="true" type="q54:ArrayOfstring" />
+      <xs:element xmlns:q62="http://schemas.microsoft.com/2003/10/Serialization/Arrays" minOccurs="0" name="DocumentIds" nillable="true" type="q62:ArrayOfstring" />
       <xs:element minOccurs="0" name="DueDate" nillable="true" type="xs:string" />
       <xs:element minOccurs="0" name="Id" nillable="true" type="xs:string" />
       <xs:element minOccurs="0" name="Name" nillable="true" type="tns:StringGlobalContract" />
@@ -4304,15 +4749,16 @@
   <xs:complexType name="TaskContract">
     <xs:sequence>
       <xs:element minOccurs="0" name="Action" nillable="true" type="xs:string" />
-      <xs:element xmlns:q55="http://schemas.microsoft.com/2003/10/Serialization/Arrays" minOccurs="0" name="AssignedUserIds" nillable="true" type="q55:ArrayOfstring" />
+      <xs:element xmlns:q63="http://schemas.microsoft.com/2003/10/Serialization/Arrays" minOccurs="0" name="AssignedUserIds" nillable="true" type="q63:ArrayOfstring" />
       <xs:element minOccurs="0" name="Comments" nillable="true" type="tns:ArrayOfCommentContract" />
       <xs:element minOccurs="0" name="CompletedDate" nillable="true" type="xs:string" />
-      <xs:element xmlns:q56="http://schemas.microsoft.com/2003/10/Serialization/Arrays" minOccurs="0" name="CompletedUserIds" nillable="true" type="q56:ArrayOfstring" />
+      <xs:element xmlns:q64="http://schemas.microsoft.com/2003/10/Serialization/Arrays" minOccurs="0" name="CompletedUserIds" nillable="true" type="q64:ArrayOfstring" />
       <xs:element minOccurs="0" name="CreatedDate" nillable="true" type="xs:string" />
       <xs:element minOccurs="0" name="CreatorId" nillable="true" type="xs:string" />
       <xs:element minOccurs="0" name="Description" nillable="true" type="xs:string" />
       <xs:element minOccurs="0" name="DueDate" nillable="true" type="xs:string" />
       <xs:element minOccurs="0" name="Id" nillable="true" type="xs:string" />
+      <xs:element xmlns:q65="http://schemas.microsoft.com/2003/10/Serialization/Arrays" minOccurs="0" name="IntendedUserIds" nillable="true" type="q65:ArrayOfstring" />
       <xs:element minOccurs="0" name="ReminderDate" nillable="true" type="xs:string" />
       <xs:element minOccurs="0" name="RequiresAllRecipients" type="xs:boolean" />
       <xs:element minOccurs="0" name="ShowCloseTaskDialog" type="xs:boolean" />
@@ -4325,7 +4771,7 @@
     <xs:complexType>
       <xs:sequence>
         <xs:element minOccurs="0" name="connectionId" nillable="true" type="xs:string" />
-        <xs:element xmlns:q57="http://schemas.microsoft.com/2003/10/Serialization/Arrays" minOccurs="0" name="processIds" nillable="true" type="q57:ArrayOfstring" />
+        <xs:element xmlns:q66="http://schemas.microsoft.com/2003/10/Serialization/Arrays" minOccurs="0" name="processIds" nillable="true" type="q66:ArrayOfstring" />
       </xs:sequence>
     </xs:complexType>
   </xs:element>
@@ -4359,14 +4805,14 @@
     <xs:complexType>
       <xs:sequence>
         <xs:element minOccurs="0" name="connectionId" nillable="true" type="xs:string" />
-        <xs:element xmlns:q58="http://schemas.microsoft.com/2003/10/Serialization/Arrays" minOccurs="0" name="processIds" nillable="true" type="q58:ArrayOfstring" />
+        <xs:element xmlns:q67="http://schemas.microsoft.com/2003/10/Serialization/Arrays" minOccurs="0" name="processIds" nillable="true" type="q67:ArrayOfstring" />
       </xs:sequence>
     </xs:complexType>
   </xs:element>
   <xs:element name="DeleteProcessesResponse">
     <xs:complexType>
       <xs:sequence>
-        <xs:element xmlns:q59="http://schemas.microsoft.com/2003/10/Serialization/Arrays" minOccurs="0" name="DeleteProcessesResult" nillable="true" type="q59:ArrayOfstring" />
+        <xs:element xmlns:q68="http://schemas.microsoft.com/2003/10/Serialization/Arrays" minOccurs="0" name="DeleteProcessesResult" nillable="true" type="q68:ArrayOfstring" />
       </xs:sequence>
     </xs:complexType>
   </xs:element>
@@ -4375,6 +4821,7 @@
       <xs:sequence>
         <xs:element minOccurs="0" name="connectionId" nillable="true" type="xs:string" />
         <xs:element minOccurs="0" name="process" nillable="true" type="tns:ProcessContract" />
+        <xs:element minOccurs="0" name="startImmediate" type="xs:boolean" />
       </xs:sequence>
     </xs:complexType>
   </xs:element>
@@ -4406,6 +4853,7 @@
         <xs:element minOccurs="0" name="connectionId" nillable="true" type="xs:string" />
         <xs:element minOccurs="0" name="processId" nillable="true" type="xs:string" />
         <xs:element minOccurs="0" name="comment" nillable="true" type="xs:string" />
+        <xs:element minOccurs="0" name="assignUsers" type="xs:boolean" />
       </xs:sequence>
     </xs:complexType>
   </xs:element>
@@ -4468,12 +4916,12 @@
   <xs:complexType name="ProcessUserTaskParameterContract">
     <xs:sequence>
       <xs:element minOccurs="0" name="AreOnlyUserGroupsFromAvailableUserGroupsAllowed" type="xs:boolean" />
-      <xs:element xmlns:q60="http://schemas.microsoft.com/2003/10/Serialization/Arrays" minOccurs="0" name="AssignedGroupIds" nillable="true" type="q60:ArrayOfstring" />
-      <xs:element xmlns:q61="http://schemas.microsoft.com/2003/10/Serialization/Arrays" minOccurs="0" name="AssignedUserIds" nillable="true" type="q61:ArrayOfstring" />
-      <xs:element xmlns:q62="http://schemas.microsoft.com/2003/10/Serialization/Arrays" minOccurs="0" name="AvailableGroupIds" nillable="true" type="q62:ArrayOfstring" />
-      <xs:element xmlns:q63="http://schemas.microsoft.com/2003/10/Serialization/Arrays" minOccurs="0" name="AvailableUserIds" nillable="true" type="q63:ArrayOfstring" />
-      <xs:element xmlns:q64="http://schemas.microsoft.com/2003/10/Serialization/Arrays" minOccurs="0" name="EscalateGroupIds" nillable="true" type="q64:ArrayOfstring" />
-      <xs:element xmlns:q65="http://schemas.microsoft.com/2003/10/Serialization/Arrays" minOccurs="0" name="EscalateUserIds" nillable="true" type="q65:ArrayOfstring" />
+      <xs:element xmlns:q69="http://schemas.microsoft.com/2003/10/Serialization/Arrays" minOccurs="0" name="AssignedGroupIds" nillable="true" type="q69:ArrayOfstring" />
+      <xs:element xmlns:q70="http://schemas.microsoft.com/2003/10/Serialization/Arrays" minOccurs="0" name="AssignedUserIds" nillable="true" type="q70:ArrayOfstring" />
+      <xs:element xmlns:q71="http://schemas.microsoft.com/2003/10/Serialization/Arrays" minOccurs="0" name="AvailableGroupIds" nillable="true" type="q71:ArrayOfstring" />
+      <xs:element xmlns:q72="http://schemas.microsoft.com/2003/10/Serialization/Arrays" minOccurs="0" name="AvailableUserIds" nillable="true" type="q72:ArrayOfstring" />
+      <xs:element xmlns:q73="http://schemas.microsoft.com/2003/10/Serialization/Arrays" minOccurs="0" name="EscalateGroupIds" nillable="true" type="q73:ArrayOfstring" />
+      <xs:element xmlns:q74="http://schemas.microsoft.com/2003/10/Serialization/Arrays" minOccurs="0" name="EscalateUserIds" nillable="true" type="q74:ArrayOfstring" />
       <xs:element minOccurs="0" name="IsChangeOfUsersAllowed" type="xs:boolean" />
       <xs:element minOccurs="0" name="ProcessDueDate" nillable="true" type="xs:string" />
       <xs:element minOccurs="0" name="RequestType" nillable="true" type="xs:string" />
@@ -4486,7 +4934,7 @@
       <xs:sequence>
         <xs:element minOccurs="0" name="connectionId" nillable="true" type="xs:string" />
         <xs:element minOccurs="0" name="processId" nillable="true" type="xs:string" />
-        <xs:element xmlns:q66="http://schemas.microsoft.com/2003/10/Serialization/Arrays" minOccurs="0" name="assignedUserIds" nillable="true" type="q66:ArrayOfstring" />
+        <xs:element xmlns:q75="http://schemas.microsoft.com/2003/10/Serialization/Arrays" minOccurs="0" name="assignedUserIds" nillable="true" type="q75:ArrayOfstring" />
       </xs:sequence>
     </xs:complexType>
   </xs:element>
@@ -4497,6 +4945,29 @@
       </xs:sequence>
     </xs:complexType>
   </xs:element>
+  <xs:element name="StartProcess">
+    <xs:complexType>
+      <xs:sequence>
+        <xs:element minOccurs="0" name="connectionId" nillable="true" type="xs:string" />
+        <xs:element minOccurs="0" name="process" nillable="true" type="tns:ProcessContract" />
+        <xs:element minOccurs="0" name="assignUsers" type="xs:boolean" />
+      </xs:sequence>
+    </xs:complexType>
+  </xs:element>
+  <xs:element name="StartProcessResponse">
+    <xs:complexType>
+      <xs:sequence>
+        <xs:element minOccurs="0" name="StartProcessResult" nillable="true" type="tns:StartProcessResultContract" />
+      </xs:sequence>
+    </xs:complexType>
+  </xs:element>
+  <xs:complexType name="StartProcessResultContract">
+    <xs:sequence>
+      <xs:element minOccurs="0" name="Process" nillable="true" type="tns:ProcessContract" />
+      <xs:element xmlns:q76="http://schemas.microsoft.com/2003/10/Serialization/Arrays" minOccurs="0" name="SubjectIdList" nillable="true" type="q76:ArrayOfstring" />
+    </xs:sequence>
+  </xs:complexType>
+  <xs:element name="StartProcessResultContract" nillable="true" type="tns:StartProcessResultContract" />
   <xs:element name="UserTableExportData">
     <xs:complexType>
       <xs:sequence>
@@ -4508,7 +4979,7 @@
   <xs:element name="UserTableExportDataResponse">
     <xs:complexType>
       <xs:sequence>
-        <xs:element xmlns:q67="http://schemas.microsoft.com/2003/10/Serialization/Arrays" minOccurs="0" name="UserTableExportDataResult" nillable="true" type="q67:ArrayOfArrayOfstring" />
+        <xs:element xmlns:q77="http://schemas.microsoft.com/2003/10/Serialization/Arrays" minOccurs="0" name="UserTableExportDataResult" nillable="true" type="q77:ArrayOfArrayOfstring" />
       </xs:sequence>
     </xs:complexType>
   </xs:element>
@@ -4525,7 +4996,7 @@
   <xs:element name="UserTableGetRecordsResponse">
     <xs:complexType>
       <xs:sequence>
-        <xs:element xmlns:q68="http://schemas.microsoft.com/2003/10/Serialization/Arrays" minOccurs="0" name="UserTableGetRecordsResult" nillable="true" type="q68:ArrayOfArrayOfstring" />
+        <xs:element xmlns:q78="http://schemas.microsoft.com/2003/10/Serialization/Arrays" minOccurs="0" name="UserTableGetRecordsResult" nillable="true" type="q78:ArrayOfArrayOfstring" />
       </xs:sequence>
     </xs:complexType>
   </xs:element>
@@ -4566,7 +5037,7 @@
       <xs:sequence>
         <xs:element minOccurs="0" name="connectionId" nillable="true" type="xs:string" />
         <xs:element minOccurs="0" name="userTable" nillable="true" type="xs:string" />
-        <xs:element xmlns:q69="http://schemas.microsoft.com/2003/10/Serialization/Arrays" minOccurs="0" name="record" nillable="true" type="q69:ArrayOfstring" />
+        <xs:element xmlns:q79="http://schemas.microsoft.com/2003/10/Serialization/Arrays" minOccurs="0" name="record" nillable="true" type="q79:ArrayOfstring" />
       </xs:sequence>
     </xs:complexType>
   </xs:element>
@@ -4580,7 +5051,7 @@
       <xs:sequence>
         <xs:element minOccurs="0" name="connectionId" nillable="true" type="xs:string" />
         <xs:element minOccurs="0" name="userTable" nillable="true" type="xs:string" />
-        <xs:element xmlns:q70="http://schemas.microsoft.com/2003/10/Serialization/Arrays" minOccurs="0" name="values" nillable="true" type="q70:ArrayOfArrayOfstring" />
+        <xs:element xmlns:q80="http://schemas.microsoft.com/2003/10/Serialization/Arrays" minOccurs="0" name="values" nillable="true" type="q80:ArrayOfArrayOfstring" />
       </xs:sequence>
     </xs:complexType>
   </xs:element>
@@ -4599,10 +5070,68 @@
   <xs:element name="UserTableGetAllTableNamesResponse">
     <xs:complexType>
       <xs:sequence>
-        <xs:element xmlns:q71="http://schemas.microsoft.com/2003/10/Serialization/Arrays" minOccurs="0" name="UserTableGetAllTableNamesResult" nillable="true" type="q71:ArrayOfstring" />
+        <xs:element xmlns:q81="http://schemas.microsoft.com/2003/10/Serialization/Arrays" minOccurs="0" name="UserTableGetAllTableNamesResult" nillable="true" type="q81:ArrayOfstring" />
       </xs:sequence>
     </xs:complexType>
   </xs:element>
+  <xs:element name="ExecuteCustomStoredProcedure">
+    <xs:complexType>
+      <xs:sequence>
+        <xs:element minOccurs="0" name="connectionId" nillable="true" type="xs:string" />
+        <xs:element minOccurs="0" name="storedProcedureName" nillable="true" type="xs:string" />
+        <xs:element minOccurs="0" name="parameters" nillable="true" type="tns:ArrayOfDBParameterContract" />
+        <xs:element minOccurs="0" name="commandType" nillable="true" type="xs:string" />
+        <xs:element minOccurs="0" name="addColumnNamesAsFirstRow" type="xs:boolean" />
+      </xs:sequence>
+    </xs:complexType>
+  </xs:element>
+  <xs:complexType name="ArrayOfDBParameterContract">
+    <xs:sequence>
+      <xs:element minOccurs="0" maxOccurs="unbounded" name="DBParameterContract" nillable="true" type="tns:DBParameterContract" />
+    </xs:sequence>
+  </xs:complexType>
+  <xs:element name="ArrayOfDBParameterContract" nillable="true" type="tns:ArrayOfDBParameterContract" />
+  <xs:complexType name="DBParameterContract">
+    <xs:sequence>
+      <xs:element minOccurs="0" name="DataType" nillable="true" type="xs:string" />
+      <xs:element minOccurs="0" name="Direction" nillable="true" type="xs:string" />
+      <xs:element minOccurs="0" name="Name" nillable="true" type="xs:string" />
+      <xs:element minOccurs="0" name="Precision" type="xs:int" />
+      <xs:element minOccurs="0" name="Scale" type="xs:int" />
+      <xs:element minOccurs="0" name="Size" nillable="true" type="xs:string" />
+      <xs:element minOccurs="0" name="Value" nillable="true" type="xs:string" />
+    </xs:sequence>
+  </xs:complexType>
+  <xs:element name="DBParameterContract" nillable="true" type="tns:DBParameterContract" />
+  <xs:element name="ExecuteCustomStoredProcedureResponse">
+    <xs:complexType>
+      <xs:sequence>
+        <xs:element minOccurs="0" name="ExecuteCustomStoredProcedureResult" nillable="true" type="tns:CustomStoredProcedureResultContract" />
+      </xs:sequence>
+    </xs:complexType>
+  </xs:element>
+  <xs:complexType name="CustomStoredProcedureResultContract">
+    <xs:sequence>
+      <xs:element xmlns:q82="http://schemas.microsoft.com/2003/10/Serialization/Arrays" minOccurs="0" name="DataTableResult" nillable="true" type="q82:ArrayOfArrayOfstring" />
+      <xs:element minOccurs="0" name="OutputParameterResult" nillable="true" type="tns:ArrayOfOutputParameterResultContract" />
+      <xs:element minOccurs="0" name="ReturnValue" nillable="true" type="xs:string" />
+      <xs:element minOccurs="0" name="ScalarResult" nillable="true" type="xs:string" />
+    </xs:sequence>
+  </xs:complexType>
+  <xs:element name="CustomStoredProcedureResultContract" nillable="true" type="tns:CustomStoredProcedureResultContract" />
+  <xs:complexType name="ArrayOfOutputParameterResultContract">
+    <xs:sequence>
+      <xs:element minOccurs="0" maxOccurs="unbounded" name="OutputParameterResultContract" nillable="true" type="tns:OutputParameterResultContract" />
+    </xs:sequence>
+  </xs:complexType>
+  <xs:element name="ArrayOfOutputParameterResultContract" nillable="true" type="tns:ArrayOfOutputParameterResultContract" />
+  <xs:complexType name="OutputParameterResultContract">
+    <xs:sequence>
+      <xs:element minOccurs="0" name="Name" nillable="true" type="xs:string" />
+      <xs:element minOccurs="0" name="Value" nillable="true" type="xs:string" />
+    </xs:sequence>
+  </xs:complexType>
+  <xs:element name="OutputParameterResultContract" nillable="true" type="tns:OutputParameterResultContract" />
   <xs:element name="GetFolder">
     <xs:complexType>
       <xs:sequence>
@@ -4620,7 +5149,7 @@
   </xs:element>
   <xs:complexType name="FolderContract">
     <xs:sequence>
-      <xs:element xmlns:q72="http://schemas.microsoft.com/2003/10/Serialization/Arrays" minOccurs="0" name="AccessRightsEnum" nillable="true" type="q72:ArrayOfstring" />
+      <xs:element xmlns:q83="http://schemas.microsoft.com/2003/10/Serialization/Arrays" minOccurs="0" name="AccessRightsEnum" nillable="true" type="q83:ArrayOfstring" />
       <xs:element minOccurs="0" name="ColumnConfiguration" nillable="true" type="tns:ColumnConfigurationContract" />
       <xs:element minOccurs="0" name="ColumnConfigurationResolved" nillable="true" type="tns:ColumnConfigurationContract" />
       <xs:element minOccurs="0" name="Documents" nillable="true" type="tns:ArrayOfDocumentSimpleContract" />
@@ -4793,7 +5322,7 @@
   </xs:element>
   <xs:complexType name="SearchFolderContract">
     <xs:sequence>
-      <xs:element xmlns:q73="http://schemas.microsoft.com/2003/10/Serialization/Arrays" minOccurs="0" name="AccessRightsEnum" nillable="true" type="q73:ArrayOfstring" />
+      <xs:element xmlns:q84="http://schemas.microsoft.com/2003/10/Serialization/Arrays" minOccurs="0" name="AccessRightsEnum" nillable="true" type="q84:ArrayOfstring" />
       <xs:element minOccurs="0" name="ColumnConfiguration" nillable="true" type="tns:ColumnConfigurationContract" />
       <xs:element minOccurs="0" name="ColumnConfigurationResolved" nillable="true" type="tns:ColumnConfigurationContract" />
       <xs:element minOccurs="0" name="Description" nillable="true" type="tns:StringGlobalContract" />
@@ -4965,14 +5494,14 @@
       <xs:sequence>
         <xs:element minOccurs="0" name="connectionId" nillable="true" type="xs:string" />
         <xs:element minOccurs="0" name="folderPath" nillable="true" type="tns:FolderPathContract" />
-        <xs:element xmlns:q74="http://schemas.microsoft.com/2003/10/Serialization/Arrays" minOccurs="0" name="documentIds" nillable="true" type="q74:ArrayOfstring" />
+        <xs:element xmlns:q85="http://schemas.microsoft.com/2003/10/Serialization/Arrays" minOccurs="0" name="documentIds" nillable="true" type="q85:ArrayOfstring" />
       </xs:sequence>
     </xs:complexType>
   </xs:element>
   <xs:element name="AddFolderElementDocumentsResponse">
     <xs:complexType>
       <xs:sequence>
-        <xs:element xmlns:q75="http://schemas.microsoft.com/2003/10/Serialization/Arrays" minOccurs="0" name="AddFolderElementDocumentsResult" nillable="true" type="q75:ArrayOfstring" />
+        <xs:element xmlns:q86="http://schemas.microsoft.com/2003/10/Serialization/Arrays" minOccurs="0" name="AddFolderElementDocumentsResult" nillable="true" type="q86:ArrayOfstring" />
       </xs:sequence>
     </xs:complexType>
   </xs:element>
@@ -4997,14 +5526,14 @@
       <xs:sequence>
         <xs:element minOccurs="0" name="connectionId" nillable="true" type="xs:string" />
         <xs:element minOccurs="0" name="folderPath" nillable="true" type="tns:FolderPathContract" />
-        <xs:element xmlns:q76="http://schemas.microsoft.com/2003/10/Serialization/Arrays" minOccurs="0" name="processIds" nillable="true" type="q76:ArrayOfstring" />
+        <xs:element xmlns:q87="http://schemas.microsoft.com/2003/10/Serialization/Arrays" minOccurs="0" name="processIds" nillable="true" type="q87:ArrayOfstring" />
       </xs:sequence>
     </xs:complexType>
   </xs:element>
   <xs:element name="AddFolderElementProcessesResponse">
     <xs:complexType>
       <xs:sequence>
-        <xs:element xmlns:q77="http://schemas.microsoft.com/2003/10/Serialization/Arrays" minOccurs="0" name="AddFolderElementProcessesResult" nillable="true" type="q77:ArrayOfstring" />
+        <xs:element xmlns:q88="http://schemas.microsoft.com/2003/10/Serialization/Arrays" minOccurs="0" name="AddFolderElementProcessesResult" nillable="true" type="q88:ArrayOfstring" />
       </xs:sequence>
     </xs:complexType>
   </xs:element>
@@ -5063,7 +5592,7 @@
   </xs:element>
   <xs:complexType name="RemoteFolderContract">
     <xs:sequence>
-      <xs:element xmlns:q78="http://schemas.microsoft.com/2003/10/Serialization/Arrays" minOccurs="0" name="AccessRightsEnum" nillable="true" type="q78:ArrayOfstring" />
+      <xs:element xmlns:q89="http://schemas.microsoft.com/2003/10/Serialization/Arrays" minOccurs="0" name="AccessRightsEnum" nillable="true" type="q89:ArrayOfstring" />
       <xs:element minOccurs="0" name="ColumnConfiguration" nillable="true" type="tns:ColumnConfigurationContract" />
       <xs:element minOccurs="0" name="Documents" nillable="true" type="tns:ArrayOfDocumentSimpleContract" />
       <xs:element minOccurs="0" name="Id" nillable="true" type="xs:string" />
@@ -5168,14 +5697,14 @@
       <xs:sequence>
         <xs:element minOccurs="0" name="connectionId" nillable="true" type="xs:string" />
         <xs:element minOccurs="0" name="remoteFolderPath" nillable="true" type="xs:string" />
-        <xs:element xmlns:q79="http://schemas.microsoft.com/2003/10/Serialization/Arrays" minOccurs="0" name="documentIds" nillable="true" type="q79:ArrayOfstring" />
+        <xs:element xmlns:q90="http://schemas.microsoft.com/2003/10/Serialization/Arrays" minOccurs="0" name="documentIds" nillable="true" type="q90:ArrayOfstring" />
       </xs:sequence>
     </xs:complexType>
   </xs:element>
   <xs:element name="AddDocumentListToRemoteFolderResponse">
     <xs:complexType>
       <xs:sequence>
-        <xs:element xmlns:q80="http://schemas.microsoft.com/2003/10/Serialization/Arrays" minOccurs="0" name="AddDocumentListToRemoteFolderResult" nillable="true" type="q80:ArrayOfstring" />
+        <xs:element xmlns:q91="http://schemas.microsoft.com/2003/10/Serialization/Arrays" minOccurs="0" name="AddDocumentListToRemoteFolderResult" nillable="true" type="q91:ArrayOfstring" />
       </xs:sequence>
     </xs:complexType>
   </xs:element>
@@ -5196,7 +5725,7 @@
     <xs:complexType>
       <xs:sequence>
         <xs:element minOccurs="0" name="connectionId" nillable="true" type="xs:string" />
-        <xs:element xmlns:q81="http://schemas.microsoft.com/2003/10/Serialization/Arrays" minOccurs="0" name="remoteFolderElementPaths" nillable="true" type="q81:ArrayOfstring" />
+        <xs:element xmlns:q92="http://schemas.microsoft.com/2003/10/Serialization/Arrays" minOccurs="0" name="remoteFolderElementPaths" nillable="true" type="q92:ArrayOfstring" />
       </xs:sequence>
     </xs:complexType>
   </xs:element>
@@ -5232,7 +5761,7 @@
   <xs:element name="FindRemoteFoldersResponse">
     <xs:complexType>
       <xs:sequence>
-        <xs:element xmlns:q82="http://schemas.microsoft.com/2003/10/Serialization/Arrays" minOccurs="0" name="FindRemoteFoldersResult" nillable="true" type="q82:ArrayOfstring" />
+        <xs:element xmlns:q93="http://schemas.microsoft.com/2003/10/Serialization/Arrays" minOccurs="0" name="FindRemoteFoldersResult" nillable="true" type="q93:ArrayOfstring" />
       </xs:sequence>
     </xs:complexType>
   </xs:element>
@@ -5289,7 +5818,7 @@
   <xs:element name="GetAllRemoteFoldersResponse">
     <xs:complexType>
       <xs:sequence>
-        <xs:element xmlns:q83="http://schemas.microsoft.com/2003/10/Serialization/Arrays" minOccurs="0" name="GetAllRemoteFoldersResult" nillable="true" type="q83:ArrayOfstring" />
+        <xs:element xmlns:q94="http://schemas.microsoft.com/2003/10/Serialization/Arrays" minOccurs="0" name="GetAllRemoteFoldersResult" nillable="true" type="q94:ArrayOfstring" />
       </xs:sequence>
     </xs:complexType>
   </xs:element>
@@ -5352,84 +5881,6 @@
       </xs:sequence>
     </xs:complexType>
   </xs:element>
-  <xs:complexType name="ServerInfoContract">
-    <xs:sequence>
-      <xs:element minOccurs="0" name="ApplicationUser" nillable="true" type="xs:string" />
-      <xs:element minOccurs="0" name="AvailableSystemMemory" type="xs:long" />
-      <xs:element minOccurs="0" name="Culture" nillable="true" type="xs:string" />
-      <xs:element minOccurs="0" name="FrameworkVersion" nillable="true" type="xs:string" />
-      <xs:element xmlns:q84="http://schemas.microsoft.com/2003/10/Serialization/Arrays" minOccurs="0" name="IP" nillable="true" type="q84:ArrayOfstring" />
-      <xs:element minOccurs="0" name="InstalledMemory" type="xs:long" />
-      <xs:element minOccurs="0" name="Is64BitProcess" type="xs:boolean" />
-      <xs:element minOccurs="0" name="Is64BitSystem" type="xs:boolean" />
-      <xs:element minOccurs="0" name="OperatingSystem" nillable="true" type="xs:string" />
-      <xs:element minOccurs="0" name="ProcessorCores" nillable="true" type="xs:string" />
-      <xs:element minOccurs="0" name="ProcessorName" nillable="true" type="xs:string" />
-      <xs:element minOccurs="0" name="SecuritPluginInfo" nillable="true" type="tns:SecurityPluginInfoContract" />
-      <xs:element minOccurs="0" name="ServerDate" nillable="true" type="xs:string" />
-      <xs:element minOccurs="0" name="ServerDomain" nillable="true" type="xs:string" />
-      <xs:element minOccurs="0" name="ServerName" nillable="true" type="xs:string" />
-      <xs:element minOccurs="0" name="StatisticPlugins" nillable="true" type="tns:ArrayOfAssemblyInfoContract" />
-      <xs:element minOccurs="0" name="TenantInfos" nillable="true" type="tns:ArrayOfTenantInfoContract" />
-      <xs:element minOccurs="0" name="TimeZoneDisplayName" nillable="true" type="xs:string" />
-      <xs:element minOccurs="0" name="TimeZoneUtcOffsetMinutes" type="xs:int" />
-      <xs:element minOccurs="0" name="UICulture" nillable="true" type="xs:string" />
-      <xs:element minOccurs="0" name="UsedMemory" type="xs:long" />
-      <xs:element minOccurs="0" name="Version" nillable="true" type="xs:string" />
-      <xs:element minOccurs="0" name="WCFEndpoints" nillable="true" type="tns:ArrayOfWCFEndpointContract" />
-    </xs:sequence>
-  </xs:complexType>
-  <xs:element name="ServerInfoContract" nillable="true" type="tns:ServerInfoContract" />
-  <xs:complexType name="SecurityPluginInfoContract">
-    <xs:sequence>
-      <xs:element minOccurs="0" name="AssemblyName" nillable="true" type="xs:string" />
-      <xs:element minOccurs="0" name="ClassName" nillable="true" type="xs:string" />
-      <xs:element minOccurs="0" name="DefaultPlugin" type="xs:boolean" />
-      <xs:element minOccurs="0" name="Version" nillable="true" type="xs:string" />
-    </xs:sequence>
-  </xs:complexType>
-  <xs:element name="SecurityPluginInfoContract" nillable="true" type="tns:SecurityPluginInfoContract" />
-  <xs:complexType name="ArrayOfAssemblyInfoContract">
-    <xs:sequence>
-      <xs:element minOccurs="0" maxOccurs="unbounded" name="AssemblyInfoContract" nillable="true" type="tns:AssemblyInfoContract" />
-    </xs:sequence>
-  </xs:complexType>
-  <xs:element name="ArrayOfAssemblyInfoContract" nillable="true" type="tns:ArrayOfAssemblyInfoContract" />
-  <xs:complexType name="AssemblyInfoContract">
-    <xs:sequence>
-      <xs:element minOccurs="0" name="ClassName" nillable="true" type="xs:string" />
-      <xs:element minOccurs="0" name="Name" nillable="true" type="xs:string" />
-      <xs:element minOccurs="0" name="Version" nillable="true" type="xs:string" />
-    </xs:sequence>
-  </xs:complexType>
-  <xs:element name="AssemblyInfoContract" nillable="true" type="tns:AssemblyInfoContract" />
-  <xs:complexType name="ArrayOfTenantInfoContract">
-    <xs:sequence>
-      <xs:element minOccurs="0" maxOccurs="unbounded" name="TenantInfoContract" nillable="true" type="tns:TenantInfoContract" />
-    </xs:sequence>
-  </xs:complexType>
-  <xs:element name="ArrayOfTenantInfoContract" nillable="true" type="tns:ArrayOfTenantInfoContract" />
-  <xs:complexType name="TenantInfoContract">
-    <xs:sequence>
-      <xs:element minOccurs="0" name="Name" nillable="true" type="xs:string" />
-      <xs:element minOccurs="0" name="ServerPort" type="xs:int" />
-    </xs:sequence>
-  </xs:complexType>
-  <xs:element name="TenantInfoContract" nillable="true" type="tns:TenantInfoContract" />
-  <xs:complexType name="ArrayOfWCFEndpointContract">
-    <xs:sequence>
-      <xs:element minOccurs="0" maxOccurs="unbounded" name="WCFEndpointContract" nillable="true" type="tns:WCFEndpointContract" />
-    </xs:sequence>
-  </xs:complexType>
-  <xs:element name="ArrayOfWCFEndpointContract" nillable="true" type="tns:ArrayOfWCFEndpointContract" />
-  <xs:complexType name="WCFEndpointContract">
-    <xs:sequence>
-      <xs:element minOccurs="0" name="RestService" type="xs:boolean" />
-      <xs:element minOccurs="0" name="URL" nillable="true" type="xs:string" />
-      <xs:element minOccurs="0" name="WindowsAuthentication" type="xs:boolean" />
-    </xs:sequence>
-  </xs:complexType>
-  <xs:element name="WCFEndpointContract" nillable="true" type="tns:WCFEndpointContract" />
   <xs:element name="GetServerVersion">
     <xs:complexType>
       <xs:sequence />
@@ -5686,7 +6137,7 @@
   <xs:element name="GetFailedAnalyzerDocumentIdsResponse">
     <xs:complexType>
       <xs:sequence>
-        <xs:element xmlns:q85="http://schemas.microsoft.com/2003/10/Serialization/Arrays" minOccurs="0" name="GetFailedAnalyzerDocumentIdsResult" nillable="true" type="q85:ArrayOfstring" />
+        <xs:element xmlns:q95="http://schemas.microsoft.com/2003/10/Serialization/Arrays" minOccurs="0" name="GetFailedAnalyzerDocumentIdsResult" nillable="true" type="q95:ArrayOfstring" />
       </xs:sequence>
     </xs:complexType>
   </xs:element>
@@ -5730,7 +6181,7 @@
   <xs:element name="GetAnalyzerDocumentIdsResponse">
     <xs:complexType>
       <xs:sequence>
-        <xs:element xmlns:q86="http://schemas.microsoft.com/2003/10/Serialization/Arrays" minOccurs="0" name="GetAnalyzerDocumentIdsResult" nillable="true" type="q86:ArrayOfstring" />
+        <xs:element xmlns:q96="http://schemas.microsoft.com/2003/10/Serialization/Arrays" minOccurs="0" name="GetAnalyzerDocumentIdsResult" nillable="true" type="q96:ArrayOfstring" />
       </xs:sequence>
     </xs:complexType>
   </xs:element>
@@ -5822,6 +6273,108 @@
       </xs:sequence>
     </xs:complexType>
   </xs:element>
+  <xs:element name="GetDocumentsToAnalyze">
+    <xs:complexType>
+      <xs:sequence>
+        <xs:element minOccurs="0" name="connectionId" nillable="true" type="xs:string" />
+        <xs:element minOccurs="0" name="resultCount" type="xs:int" />
+      </xs:sequence>
+    </xs:complexType>
+  </xs:element>
+  <xs:element name="GetDocumentsToAnalyzeResponse">
+    <xs:complexType>
+      <xs:sequence>
+        <xs:element minOccurs="0" name="GetDocumentsToAnalyzeResult" nillable="true" type="tns:ArrayOfDocumentToAnalyzeContract" />
+      </xs:sequence>
+    </xs:complexType>
+  </xs:element>
+  <xs:complexType name="ArrayOfDocumentToAnalyzeContract">
+    <xs:sequence>
+      <xs:element minOccurs="0" maxOccurs="unbounded" name="DocumentToAnalyzeContract" nillable="true" type="tns:DocumentToAnalyzeContract" />
+    </xs:sequence>
+  </xs:complexType>
+  <xs:element name="ArrayOfDocumentToAnalyzeContract" nillable="true" type="tns:ArrayOfDocumentToAnalyzeContract" />
+  <xs:complexType name="DocumentToAnalyzeContract">
+    <xs:sequence>
+      <xs:element minOccurs="0" name="AutoSuggest" type="xs:boolean" />
+      <xs:element minOccurs="0" name="EntryDate" nillable="true" type="xs:string" />
+      <xs:element minOccurs="0" name="Fulltext" type="xs:boolean" />
+      <xs:element minOccurs="0" name="FulltextProperties" type="xs:boolean" />
+      <xs:element minOccurs="0" name="Id" nillable="true" type="xs:string" />
+      <xs:element minOccurs="0" name="MailAttributes" type="xs:boolean" />
+      <xs:element minOccurs="0" name="PageCount" type="xs:boolean" />
+      <xs:element minOccurs="0" name="PdfA" type="xs:boolean" />
+      <xs:element minOccurs="0" name="SearchablePdf" type="xs:boolean" />
+      <xs:element minOccurs="0" name="Thumbnail" type="xs:boolean" />
+      <xs:element minOccurs="0" name="ThumbnailBlobStoreId" nillable="true" type="xs:string" />
+      <xs:element minOccurs="0" name="ThumbnailBlobStoreProviderId" nillable="true" type="xs:string" />
+      <xs:element minOccurs="0" name="ThumbnailSize" type="xs:int" />
+      <xs:element minOccurs="0" name="WriteFulltextToProperty" type="xs:boolean" />
+    </xs:sequence>
+  </xs:complexType>
+  <xs:element name="DocumentToAnalyzeContract" nillable="true" type="tns:DocumentToAnalyzeContract" />
+  <xs:element name="GetSystemCultures">
+    <xs:complexType>
+      <xs:sequence />
+    </xs:complexType>
+  </xs:element>
+  <xs:element name="GetSystemCulturesResponse">
+    <xs:complexType>
+      <xs:sequence>
+        <xs:element minOccurs="0" name="GetSystemCulturesResult" nillable="true" type="tns:ArrayOfCultureInfoContract" />
+      </xs:sequence>
+    </xs:complexType>
+  </xs:element>
+  <xs:complexType name="ArrayOfCultureInfoContract">
+    <xs:sequence>
+      <xs:element minOccurs="0" maxOccurs="unbounded" name="CultureInfoContract" nillable="true" type="tns:CultureInfoContract" />
+    </xs:sequence>
+  </xs:complexType>
+  <xs:element name="ArrayOfCultureInfoContract" nillable="true" type="tns:ArrayOfCultureInfoContract" />
+  <xs:complexType name="CultureInfoContract">
+    <xs:sequence>
+      <xs:element minOccurs="0" name="DisplayName" nillable="true" type="xs:string" />
+      <xs:element minOccurs="0" name="Name" nillable="true" type="xs:string" />
+    </xs:sequence>
+  </xs:complexType>
+  <xs:element name="CultureInfoContract" nillable="true" type="tns:CultureInfoContract" />
+  <xs:element name="GetTimeSpanFromTicks">
+    <xs:complexType>
+      <xs:sequence>
+        <xs:element minOccurs="0" name="ticks" type="xs:long" />
+      </xs:sequence>
+    </xs:complexType>
+  </xs:element>
+  <xs:element name="GetTimeSpanFromTicksResponse">
+    <xs:complexType>
+      <xs:sequence>
+        <xs:element minOccurs="0" name="GetTimeSpanFromTicksResult" nillable="true" type="tns:TimeSpanContract" />
+      </xs:sequence>
+    </xs:complexType>
+  </xs:element>
+  <xs:complexType name="TimeSpanContract">
+    <xs:sequence>
+      <xs:element minOccurs="0" name="Ticks" type="xs:long" />
+      <xs:element minOccurs="0" name="TimeInDays" type="xs:double" />
+      <xs:element minOccurs="0" name="TimeInMinutes" type="xs:double" />
+      <xs:element minOccurs="0" name="TimeInYears" type="xs:double" />
+    </xs:sequence>
+  </xs:complexType>
+  <xs:element name="TimeSpanContract" nillable="true" type="tns:TimeSpanContract" />
+  <xs:element name="GetTimeSpanFromTime">
+    <xs:complexType>
+      <xs:sequence>
+        <xs:element minOccurs="0" name="timeSpan" nillable="true" type="tns:TimeSpanContract" />
+      </xs:sequence>
+    </xs:complexType>
+  </xs:element>
+  <xs:element name="GetTimeSpanFromTimeResponse">
+    <xs:complexType>
+      <xs:sequence>
+        <xs:element minOccurs="0" name="GetTimeSpanFromTimeResult" nillable="true" type="tns:TimeSpanContract" />
+      </xs:sequence>
+    </xs:complexType>
+  </xs:element>
   <xs:element name="WriteLogEntry">
     <xs:complexType>
       <xs:sequence>
@@ -5897,7 +6450,6 @@
     <xs:complexType>
       <xs:sequence>
         <xs:element minOccurs="0" name="connectionId" nillable="true" type="xs:string" />
-        <xs:element minOccurs="0" name="tenantName" nillable="true" type="xs:string" />
         <xs:element minOccurs="0" name="userId" nillable="true" type="xs:string" />
         <xs:element minOccurs="0" name="fromDate" nillable="true" type="xs:string" />
         <xs:element minOccurs="0" name="toDate" nillable="true" type="xs:string" />
@@ -5931,7 +6483,6 @@
     <xs:complexType>
       <xs:sequence>
         <xs:element minOccurs="0" name="connectionId" nillable="true" type="xs:string" />
-        <xs:element minOccurs="0" name="tenantName" nillable="true" type="xs:string" />
         <xs:element minOccurs="0" name="userId" nillable="true" type="xs:string" />
         <xs:element minOccurs="0" name="methodName" nillable="true" type="xs:string" />
         <xs:element minOccurs="0" name="fromDate" nillable="true" type="xs:string" />
@@ -5964,13 +6515,118 @@
     </xs:sequence>
   </xs:complexType>
   <xs:element name="AuditAdministrationContract" nillable="true" type="tns:AuditAdministrationContract" />
+  <xs:element name="GetAuditDocumentEntriesFiltered">
+    <xs:complexType>
+      <xs:sequence>
+        <xs:element minOccurs="0" name="connectionId" nillable="true" type="xs:string" />
+        <xs:element minOccurs="0" name="documentId" nillable="true" type="xs:string" />
+        <xs:element minOccurs="0" name="fromDate" nillable="true" type="xs:string" />
+        <xs:element minOccurs="0" name="toDate" nillable="true" type="xs:string" />
+      </xs:sequence>
+    </xs:complexType>
+  </xs:element>
+  <xs:element name="GetAuditDocumentEntriesFilteredResponse">
+    <xs:complexType>
+      <xs:sequence>
+        <xs:element minOccurs="0" name="GetAuditDocumentEntriesFilteredResult" nillable="true" type="tns:ArrayOfAuditDocumentContract" />
+      </xs:sequence>
+    </xs:complexType>
+  </xs:element>
+  <xs:complexType name="ArrayOfAuditDocumentContract">
+    <xs:sequence>
+      <xs:element minOccurs="0" maxOccurs="unbounded" name="AuditDocumentContract" nillable="true" type="tns:AuditDocumentContract" />
+    </xs:sequence>
+  </xs:complexType>
+  <xs:element name="ArrayOfAuditDocumentContract" nillable="true" type="tns:ArrayOfAuditDocumentContract" />
+  <xs:complexType name="AuditDocumentContract">
+    <xs:sequence>
+      <xs:element minOccurs="0" name="DocumentId" nillable="true" type="xs:string" />
+      <xs:element minOccurs="0" name="Id" type="xs:long" />
+      <xs:element minOccurs="0" name="LogDate" nillable="true" type="xs:string" />
+      <xs:element minOccurs="0" name="ModificationCount" type="xs:int" />
+      <xs:element minOccurs="0" name="ModificationType" nillable="true" type="xs:string" />
+      <xs:element minOccurs="0" name="UserId" nillable="true" type="xs:string" />
+      <xs:element minOccurs="0" name="VersionComment" nillable="true" type="xs:string" />
+      <xs:element minOccurs="0" name="VersionNo" type="xs:int" />
+    </xs:sequence>
+  </xs:complexType>
+  <xs:element name="AuditDocumentContract" nillable="true" type="tns:AuditDocumentContract" />
+  <xs:element name="GetAuditDocumentPropertyEntriesFiltered">
+    <xs:complexType>
+      <xs:sequence>
+        <xs:element minOccurs="0" name="connectionId" nillable="true" type="xs:string" />
+        <xs:element minOccurs="0" name="auditDocumentId" type="xs:long" />
+      </xs:sequence>
+    </xs:complexType>
+  </xs:element>
+  <xs:element name="GetAuditDocumentPropertyEntriesFilteredResponse">
+    <xs:complexType>
+      <xs:sequence>
+        <xs:element minOccurs="0" name="GetAuditDocumentPropertyEntriesFilteredResult" nillable="true" type="tns:ArrayOfAuditDocumentPropertyContract" />
+      </xs:sequence>
+    </xs:complexType>
+  </xs:element>
+  <xs:complexType name="ArrayOfAuditDocumentPropertyContract">
+    <xs:sequence>
+      <xs:element minOccurs="0" maxOccurs="unbounded" name="AuditDocumentPropertyContract" nillable="true" type="tns:AuditDocumentPropertyContract" />
+    </xs:sequence>
+  </xs:complexType>
+  <xs:element name="ArrayOfAuditDocumentPropertyContract" nillable="true" type="tns:ArrayOfAuditDocumentPropertyContract" />
+  <xs:complexType name="AuditDocumentPropertyContract">
+    <xs:sequence>
+      <xs:element minOccurs="0" name="AuditDocumentId" type="xs:long" />
+      <xs:element minOccurs="0" name="PropertyTypeId" nillable="true" type="xs:string" />
+      <xs:element minOccurs="0" name="Value" nillable="true" type="xs:string" />
+    </xs:sequence>
+  </xs:complexType>
+  <xs:element name="AuditDocumentPropertyContract" nillable="true" type="tns:AuditDocumentPropertyContract" />
+  <xs:element name="DeleteAuditAdministrationEntries">
+    <xs:complexType>
+      <xs:sequence>
+        <xs:element minOccurs="0" name="connectionId" nillable="true" type="xs:string" />
+        <xs:element minOccurs="0" name="toDate" nillable="true" type="xs:string" />
+      </xs:sequence>
+    </xs:complexType>
+  </xs:element>
+  <xs:element name="DeleteAuditAdministrationEntriesResponse">
+    <xs:complexType>
+      <xs:sequence />
+    </xs:complexType>
+  </xs:element>
+  <xs:element name="DeleteAuditLogonEntries">
+    <xs:complexType>
+      <xs:sequence>
+        <xs:element minOccurs="0" name="connectionId" nillable="true" type="xs:string" />
+        <xs:element minOccurs="0" name="toDate" nillable="true" type="xs:string" />
+      </xs:sequence>
+    </xs:complexType>
+  </xs:element>
+  <xs:element name="DeleteAuditLogonEntriesResponse">
+    <xs:complexType>
+      <xs:sequence />
+    </xs:complexType>
+  </xs:element>
+  <xs:element name="DeleteAuditDocumentEntries">
+    <xs:complexType>
+      <xs:sequence>
+        <xs:element minOccurs="0" name="connectionId" nillable="true" type="xs:string" />
+        <xs:element minOccurs="0" name="toDate" nillable="true" type="xs:string" />
+      </xs:sequence>
+    </xs:complexType>
+  </xs:element>
+  <xs:element name="DeleteAuditDocumentEntriesResponse">
+    <xs:complexType>
+      <xs:sequence />
+    </xs:complexType>
+  </xs:element>
   <xs:element name="CreateFileFromTemplateBytes">
     <xs:complexType>
       <xs:sequence>
         <xs:element minOccurs="0" name="connectionId" nillable="true" type="xs:string" />
         <xs:element minOccurs="0" name="properties" nillable="true" type="tns:ArrayOfListItemContract" />
         <xs:element minOccurs="0" name="templateDocumentId" nillable="true" type="xs:string" />
-        <xs:element xmlns:q87="http://schemas.microsoft.com/2003/10/Serialization/Arrays" minOccurs="0" name="moduleDocumentIds" nillable="true" type="q87:ArrayOfstring" />
+        <xs:element xmlns:q97="http://schemas.microsoft.com/2003/10/Serialization/Arrays" minOccurs="0" name="moduleDocumentIds" nillable="true" type="q97:ArrayOfstring" />
+        <xs:element minOccurs="0" name="dossierDocumentId" nillable="true" type="xs:string" />
       </xs:sequence>
     </xs:complexType>
   </xs:element>
@@ -6008,6 +6664,396 @@
     <xs:complexType>
       <xs:sequence>
         <xs:element minOccurs="0" name="InsertValuesIntoDocumentResult" nillable="true" type="xs:base64Binary" />
+      </xs:sequence>
+    </xs:complexType>
+  </xs:element>
+  <xs:element name="MergeDocuments">
+    <xs:complexType>
+      <xs:sequence>
+        <xs:element minOccurs="0" name="connectionId" nillable="true" type="xs:string" />
+        <xs:element xmlns:q98="http://schemas.microsoft.com/2003/10/Serialization/Arrays" minOccurs="0" name="fileIds" nillable="true" type="q98:ArrayOfstring" />
+      </xs:sequence>
+    </xs:complexType>
+  </xs:element>
+  <xs:element name="MergeDocumentsResponse">
+    <xs:complexType>
+      <xs:sequence>
+        <xs:element minOccurs="0" name="MergeDocumentsResult" nillable="true" type="xs:string" />
+      </xs:sequence>
+    </xs:complexType>
+  </xs:element>
+  <xs:element name="ExecuteInvoicePluginCommand">
+    <xs:complexType>
+      <xs:sequence>
+        <xs:element minOccurs="0" name="connectionId" nillable="true" type="xs:string" />
+        <xs:element minOccurs="0" name="pluginName" nillable="true" type="xs:string" />
+        <xs:element minOccurs="0" name="processId" nillable="true" type="xs:string" />
+        <xs:element minOccurs="0" name="commandName" nillable="true" type="xs:string" />
+        <xs:element minOccurs="0" name="options" nillable="true" type="tns:ArrayOfDataTableContract" />
+      </xs:sequence>
+    </xs:complexType>
+  </xs:element>
+  <xs:complexType name="ArrayOfDataTableContract">
+    <xs:sequence>
+      <xs:element minOccurs="0" maxOccurs="unbounded" name="DataTableContract" nillable="true" type="tns:DataTableContract" />
+    </xs:sequence>
+  </xs:complexType>
+  <xs:element name="ArrayOfDataTableContract" nillable="true" type="tns:ArrayOfDataTableContract" />
+  <xs:complexType name="DataTableContract">
+    <xs:sequence>
+      <xs:element minOccurs="0" name="Key" nillable="true" type="xs:string" />
+      <xs:element minOccurs="0" name="Values" nillable="true" type="tns:ArrayOfKeyValuePairContract" />
+    </xs:sequence>
+  </xs:complexType>
+  <xs:element name="DataTableContract" nillable="true" type="tns:DataTableContract" />
+  <xs:complexType name="ArrayOfKeyValuePairContract">
+    <xs:sequence>
+      <xs:element minOccurs="0" maxOccurs="unbounded" name="KeyValuePairContract" nillable="true" type="tns:KeyValuePairContract" />
+    </xs:sequence>
+  </xs:complexType>
+  <xs:element name="ArrayOfKeyValuePairContract" nillable="true" type="tns:ArrayOfKeyValuePairContract" />
+  <xs:complexType name="KeyValuePairContract">
+    <xs:sequence>
+      <xs:element minOccurs="0" name="Key" nillable="true" type="xs:string" />
+      <xs:element xmlns:q99="http://schemas.microsoft.com/2003/10/Serialization/Arrays" minOccurs="0" name="Values" nillable="true" type="q99:ArrayOfstring" />
+    </xs:sequence>
+  </xs:complexType>
+  <xs:element name="KeyValuePairContract" nillable="true" type="tns:KeyValuePairContract" />
+  <xs:element name="ExecuteInvoicePluginCommandResponse">
+    <xs:complexType>
+      <xs:sequence>
+        <xs:element minOccurs="0" name="ExecuteInvoicePluginCommandResult" nillable="true" type="tns:ArrayOfDataTableContract" />
+      </xs:sequence>
+    </xs:complexType>
+  </xs:element>
+  <xs:element name="ProcessDataInit">
+    <xs:complexType>
+      <xs:sequence>
+        <xs:element minOccurs="0" name="connectionId" nillable="true" type="xs:string" />
+        <xs:element minOccurs="0" name="processDataInit" nillable="true" type="tns:WDP_ProcessDataInitContract" />
+      </xs:sequence>
+    </xs:complexType>
+  </xs:element>
+  <xs:complexType name="WDP_ProcessDataInitContract">
+    <xs:sequence>
+      <xs:element minOccurs="0" name="Action" nillable="true" type="xs:string" />
+      <xs:element minOccurs="0" name="CheckInSettings" nillable="true" type="tns:ArrayOfWDP_ValueContract" />
+      <xs:element minOccurs="0" name="CurrentCulture" nillable="true" type="xs:string" />
+      <xs:element minOccurs="0" name="EnvironmentValues" nillable="true" type="tns:WDP_EnvironmentValuesContract" />
+      <xs:element minOccurs="0" name="Errors" nillable="true" type="tns:ArrayOfWDP_ErrorContract" />
+      <xs:element minOccurs="0" name="ImportValues" nillable="true" type="tns:WDP_ImportValuesContract" />
+      <xs:element minOccurs="0" name="PropertiesForAction" nillable="true" type="tns:WDP_PropertiesForActionContract" />
+      <xs:element minOccurs="0" name="SourceApplication" nillable="true" type="xs:string" />
+      <xs:element minOccurs="0" name="SourceDialog" nillable="true" type="xs:string" />
+      <xs:element minOccurs="0" name="UICulture" nillable="true" type="xs:string" />
+    </xs:sequence>
+  </xs:complexType>
+  <xs:element name="WDP_ProcessDataInitContract" nillable="true" type="tns:WDP_ProcessDataInitContract" />
+  <xs:complexType name="ArrayOfWDP_ValueContract">
+    <xs:sequence>
+      <xs:element minOccurs="0" maxOccurs="unbounded" name="WDP_ValueContract" nillable="true" type="tns:WDP_ValueContract" />
+    </xs:sequence>
+  </xs:complexType>
+  <xs:element name="ArrayOfWDP_ValueContract" nillable="true" type="tns:ArrayOfWDP_ValueContract" />
+  <xs:complexType name="WDP_ValueContract">
+    <xs:sequence>
+      <xs:element minOccurs="0" name="Id" nillable="true" type="xs:string" />
+      <xs:element minOccurs="0" name="IsEnabled" nillable="true" type="xs:string" />
+      <xs:element minOccurs="0" name="IsVisible" nillable="true" type="xs:string" />
+      <xs:element minOccurs="0" name="Name" nillable="true" type="xs:string" />
+      <xs:element minOccurs="0" name="Text" nillable="true" type="xs:string" />
+    </xs:sequence>
+  </xs:complexType>
+  <xs:element name="WDP_ValueContract" nillable="true" type="tns:WDP_ValueContract" />
+  <xs:complexType name="WDP_EnvironmentValuesContract">
+    <xs:sequence>
+      <xs:element minOccurs="0" name="Additional" nillable="true" type="tns:WDP_AdditionalContract" />
+      <xs:element minOccurs="0" name="Common" nillable="true" type="tns:WDP_CommonContract" />
+    </xs:sequence>
+  </xs:complexType>
+  <xs:element name="WDP_EnvironmentValuesContract" nillable="true" type="tns:WDP_EnvironmentValuesContract" />
+  <xs:complexType name="WDP_AdditionalContract">
+    <xs:sequence>
+      <xs:element minOccurs="0" name="FileChangeDate" nillable="true" type="xs:string" />
+      <xs:element minOccurs="0" name="FileCreationDate" nillable="true" type="xs:string" />
+      <xs:element minOccurs="0" name="FileLastAccess" nillable="true" type="xs:string" />
+      <xs:element minOccurs="0" name="FilePath" nillable="true" type="xs:string" />
+      <xs:element minOccurs="0" name="WebServiceSessionID" nillable="true" type="xs:string" />
+      <xs:element minOccurs="0" name="WebServiceURL" nillable="true" type="xs:string" />
+    </xs:sequence>
+  </xs:complexType>
+  <xs:element name="WDP_AdditionalContract" nillable="true" type="tns:WDP_AdditionalContract" />
+  <xs:complexType name="WDP_CommonContract">
+    <xs:sequence>
+      <xs:element minOccurs="0" name="AssignedGroups" nillable="true" type="tns:ArrayOfGroupContract" />
+      <xs:element minOccurs="0" name="ClientIPAddress" nillable="true" type="xs:string" />
+      <xs:element minOccurs="0" name="FileExtension" nillable="true" type="xs:string" />
+      <xs:element minOccurs="0" name="FileName" nillable="true" type="xs:string" />
+      <xs:element minOccurs="0" name="FileSizeInBytes" nillable="true" type="xs:string" />
+      <xs:element minOccurs="0" name="IsFirstDocument" nillable="true" type="xs:string" />
+      <xs:element minOccurs="0" name="LoggedInUserDisplayName" nillable="true" type="xs:string" />
+      <xs:element minOccurs="0" name="LoggedInUserId" nillable="true" type="xs:string" />
+      <xs:element minOccurs="0" name="LoggedInUserName" nillable="true" type="xs:string" />
+      <xs:element minOccurs="0" name="Port" nillable="true" type="xs:string" />
+      <xs:element minOccurs="0" name="ServerName" nillable="true" type="xs:string" />
+      <xs:element minOccurs="0" name="Tenant" nillable="true" type="xs:string" />
+      <xs:element minOccurs="0" name="UsePreviousImportValues" nillable="true" type="xs:string" />
+    </xs:sequence>
+  </xs:complexType>
+  <xs:element name="WDP_CommonContract" nillable="true" type="tns:WDP_CommonContract" />
+  <xs:complexType name="ArrayOfWDP_ErrorContract">
+    <xs:sequence>
+      <xs:element minOccurs="0" maxOccurs="unbounded" name="WDP_ErrorContract" nillable="true" type="tns:WDP_ErrorContract" />
+    </xs:sequence>
+  </xs:complexType>
+  <xs:element name="ArrayOfWDP_ErrorContract" nillable="true" type="tns:ArrayOfWDP_ErrorContract" />
+  <xs:complexType name="WDP_ErrorContract">
+    <xs:sequence>
+      <xs:element minOccurs="0" name="Id" nillable="true" type="xs:string" />
+      <xs:element minOccurs="0" name="Name" nillable="true" type="xs:string" />
+      <xs:element minOccurs="0" name="Text" nillable="true" type="xs:string" />
+    </xs:sequence>
+  </xs:complexType>
+  <xs:element name="WDP_ErrorContract" nillable="true" type="tns:WDP_ErrorContract" />
+  <xs:complexType name="WDP_ImportValuesContract">
+    <xs:sequence>
+      <xs:element minOccurs="0" name="CurrentDocument" nillable="true" type="tns:WDP_CurrentDocumentContract" />
+    </xs:sequence>
+  </xs:complexType>
+  <xs:element name="WDP_ImportValuesContract" nillable="true" type="tns:WDP_ImportValuesContract" />
+  <xs:complexType name="WDP_CurrentDocumentContract">
+    <xs:sequence>
+      <xs:element minOccurs="0" name="CanChangeProperties" nillable="true" type="xs:string" />
+      <xs:element minOccurs="0" name="FilingValues" nillable="true" type="tns:ArrayOfWDP_ValueContract" />
+      <xs:element minOccurs="0" name="Properties" nillable="true" type="tns:ArrayOfPropertyContract" />
+    </xs:sequence>
+  </xs:complexType>
+  <xs:element name="WDP_CurrentDocumentContract" nillable="true" type="tns:WDP_CurrentDocumentContract" />
+  <xs:complexType name="WDP_PropertiesForActionContract">
+    <xs:sequence>
+      <xs:element minOccurs="0" name="Property" nillable="true" type="tns:PropertyContract" />
+    </xs:sequence>
+  </xs:complexType>
+  <xs:element name="WDP_PropertiesForActionContract" nillable="true" type="tns:WDP_PropertiesForActionContract" />
+  <xs:element name="ProcessDataInitResponse">
+    <xs:complexType>
+      <xs:sequence>
+        <xs:element minOccurs="0" name="ProcessDataInitResult" nillable="true" type="tns:WDP_ProcessDataInitContract" />
+      </xs:sequence>
+    </xs:complexType>
+  </xs:element>
+  <xs:element name="ProcessDataAutoComplete">
+    <xs:complexType>
+      <xs:sequence>
+        <xs:element minOccurs="0" name="connectionId" nillable="true" type="xs:string" />
+        <xs:element minOccurs="0" name="processDataInit" nillable="true" type="tns:WDP_ProcessDataInitContract" />
+      </xs:sequence>
+    </xs:complexType>
+  </xs:element>
+  <xs:element name="ProcessDataAutoCompleteResponse">
+    <xs:complexType>
+      <xs:sequence>
+        <xs:element minOccurs="0" name="ProcessDataAutoCompleteResult" nillable="true" type="tns:WDP_ProcessDataInitContract" />
+      </xs:sequence>
+    </xs:complexType>
+  </xs:element>
+  <xs:element name="ProcessDataValidate">
+    <xs:complexType>
+      <xs:sequence>
+        <xs:element minOccurs="0" name="connectionId" nillable="true" type="xs:string" />
+        <xs:element minOccurs="0" name="processDataValidate" nillable="true" type="tns:WDP_ProcessDataValidateContract" />
+      </xs:sequence>
+    </xs:complexType>
+  </xs:element>
+  <xs:complexType name="WDP_ProcessDataValidateContract">
+    <xs:sequence>
+      <xs:element minOccurs="0" name="Action" nillable="true" type="xs:string" />
+      <xs:element minOccurs="0" name="CurrentCulture" nillable="true" type="xs:string" />
+      <xs:element minOccurs="0" name="EnvironmentValues" nillable="true" type="tns:WDP_EnvironmentValuesContract" />
+      <xs:element minOccurs="0" name="Errors" nillable="true" type="tns:ArrayOfWDP_ErrorContract" />
+      <xs:element minOccurs="0" name="ImportValues" nillable="true" type="tns:WDP_ImportValuesContract" />
+      <xs:element minOccurs="0" name="PropertiesForAction" nillable="true" type="tns:WDP_PropertiesForActionContract" />
+      <xs:element minOccurs="0" name="SourceApplication" nillable="true" type="xs:string" />
+      <xs:element minOccurs="0" name="SourceDialog" nillable="true" type="xs:string" />
+      <xs:element minOccurs="0" name="UICulture" nillable="true" type="xs:string" />
+    </xs:sequence>
+  </xs:complexType>
+  <xs:element name="WDP_ProcessDataValidateContract" nillable="true" type="tns:WDP_ProcessDataValidateContract" />
+  <xs:element name="ProcessDataValidateResponse">
+    <xs:complexType>
+      <xs:sequence>
+        <xs:element minOccurs="0" name="ProcessDataValidateResult" nillable="true" type="tns:WDP_ProcessDataValidateContract" />
+      </xs:sequence>
+    </xs:complexType>
+  </xs:element>
+  <xs:element name="ProcessDataGetExternalList">
+    <xs:complexType>
+      <xs:sequence>
+        <xs:element minOccurs="0" name="connectionId" nillable="true" type="xs:string" />
+        <xs:element minOccurs="0" name="processDataGetExternalList" nillable="true" type="tns:WDP_ProcessDataGetExternalListContract" />
+      </xs:sequence>
+    </xs:complexType>
+  </xs:element>
+  <xs:complexType name="WDP_ProcessDataGetExternalListContract">
+    <xs:sequence>
+      <xs:element minOccurs="0" name="Action" nillable="true" type="xs:string" />
+      <xs:element minOccurs="0" name="CurrentCulture" nillable="true" type="xs:string" />
+      <xs:element minOccurs="0" name="EnvironmentValues" nillable="true" type="tns:WDP_EnvironmentValuesContract" />
+      <xs:element minOccurs="0" name="Errors" nillable="true" type="tns:ArrayOfWDP_ErrorContract" />
+      <xs:element minOccurs="0" name="ExternalListContainer" nillable="true" type="tns:WDP_ExternalListContainerContract" />
+      <xs:element minOccurs="0" name="ImportValues" nillable="true" type="tns:WDP_ImportValuesContract" />
+      <xs:element minOccurs="0" name="PropertiesForAction" nillable="true" type="tns:WDP_PropertiesForActionContract" />
+      <xs:element minOccurs="0" name="SourceApplication" nillable="true" type="xs:string" />
+      <xs:element minOccurs="0" name="SourceDialog" nillable="true" type="xs:string" />
+      <xs:element minOccurs="0" name="UICulture" nillable="true" type="xs:string" />
+    </xs:sequence>
+  </xs:complexType>
+  <xs:element name="WDP_ProcessDataGetExternalListContract" nillable="true" type="tns:WDP_ProcessDataGetExternalListContract" />
+  <xs:complexType name="WDP_ExternalListContainerContract">
+    <xs:sequence>
+      <xs:element minOccurs="0" name="Bindings" nillable="true" type="tns:ArrayOfWDP_BindingColumnContract" />
+      <xs:element minOccurs="0" name="Columns" nillable="true" type="tns:ArrayOfWDP_ColumnContract" />
+      <xs:element minOccurs="0" name="Data" nillable="true" type="tns:WDP_DataContract" />
+      <xs:element minOccurs="0" name="DialogTitle" nillable="true" type="tns:WDP_DialogTitleContract" />
+      <xs:element minOccurs="0" name="QueryProperties" nillable="true" type="tns:ArrayOfWDP_QueryPropertyContract" />
+    </xs:sequence>
+  </xs:complexType>
+  <xs:element name="WDP_ExternalListContainerContract" nillable="true" type="tns:WDP_ExternalListContainerContract" />
+  <xs:complexType name="ArrayOfWDP_BindingColumnContract">
+    <xs:sequence>
+      <xs:element minOccurs="0" maxOccurs="unbounded" name="WDP_BindingColumnContract" nillable="true" type="tns:WDP_BindingColumnContract" />
+    </xs:sequence>
+  </xs:complexType>
+  <xs:element name="ArrayOfWDP_BindingColumnContract" nillable="true" type="tns:ArrayOfWDP_BindingColumnContract" />
+  <xs:complexType name="WDP_BindingColumnContract">
+    <xs:sequence>
+      <xs:element minOccurs="0" name="ColumnId" nillable="true" type="xs:string" />
+      <xs:element minOccurs="0" name="Text" nillable="true" type="xs:string" />
+    </xs:sequence>
+  </xs:complexType>
+  <xs:element name="WDP_BindingColumnContract" nillable="true" type="tns:WDP_BindingColumnContract" />
+  <xs:complexType name="ArrayOfWDP_ColumnContract">
+    <xs:sequence>
+      <xs:element minOccurs="0" maxOccurs="unbounded" name="WDP_ColumnContract" nillable="true" type="tns:WDP_ColumnContract" />
+    </xs:sequence>
+  </xs:complexType>
+  <xs:element name="ArrayOfWDP_ColumnContract" nillable="true" type="tns:ArrayOfWDP_ColumnContract" />
+  <xs:complexType name="WDP_ColumnContract">
+    <xs:sequence>
+      <xs:element minOccurs="0" name="Alignment" nillable="true" type="xs:string" />
+      <xs:element minOccurs="0" name="Format" nillable="true" type="xs:string" />
+      <xs:element minOccurs="0" name="Id" nillable="true" type="xs:string" />
+      <xs:element minOccurs="0" name="IsVisible" nillable="true" type="xs:string" />
+      <xs:element minOccurs="0" name="Text" nillable="true" type="xs:string" />
+      <xs:element minOccurs="0" name="Type" nillable="true" type="xs:string" />
+    </xs:sequence>
+  </xs:complexType>
+  <xs:element name="WDP_ColumnContract" nillable="true" type="tns:WDP_ColumnContract" />
+  <xs:complexType name="WDP_DataContract">
+    <xs:sequence>
+      <xs:element minOccurs="0" name="Row" nillable="true" type="tns:ArrayOfWDP_RowContract" />
+    </xs:sequence>
+  </xs:complexType>
+  <xs:element name="WDP_DataContract" nillable="true" type="tns:WDP_DataContract" />
+  <xs:complexType name="ArrayOfWDP_RowContract">
+    <xs:sequence>
+      <xs:element minOccurs="0" maxOccurs="unbounded" name="WDP_RowContract" nillable="true" type="tns:WDP_RowContract" />
+    </xs:sequence>
+  </xs:complexType>
+  <xs:element name="ArrayOfWDP_RowContract" nillable="true" type="tns:ArrayOfWDP_RowContract" />
+  <xs:complexType name="WDP_RowContract">
+    <xs:sequence>
+      <xs:element minOccurs="0" name="Selected" nillable="true" type="xs:string" />
+      <xs:element minOccurs="0" name="Value" nillable="true" type="tns:ArrayOfWDP_RowValueContract" />
+    </xs:sequence>
+  </xs:complexType>
+  <xs:element name="WDP_RowContract" nillable="true" type="tns:WDP_RowContract" />
+  <xs:complexType name="ArrayOfWDP_RowValueContract">
+    <xs:sequence>
+      <xs:element minOccurs="0" maxOccurs="unbounded" name="WDP_RowValueContract" nillable="true" type="tns:WDP_RowValueContract" />
+    </xs:sequence>
+  </xs:complexType>
+  <xs:element name="ArrayOfWDP_RowValueContract" nillable="true" type="tns:ArrayOfWDP_RowValueContract" />
+  <xs:complexType name="WDP_RowValueContract">
+    <xs:sequence>
+      <xs:element minOccurs="0" name="ColumnId" nillable="true" type="xs:string" />
+      <xs:element minOccurs="0" name="Text" nillable="true" type="xs:string" />
+    </xs:sequence>
+  </xs:complexType>
+  <xs:element name="WDP_RowValueContract" nillable="true" type="tns:WDP_RowValueContract" />
+  <xs:complexType name="WDP_DialogTitleContract">
+    <xs:sequence>
+      <xs:element minOccurs="0" name="Text" nillable="true" type="xs:string" />
+    </xs:sequence>
+  </xs:complexType>
+  <xs:element name="WDP_DialogTitleContract" nillable="true" type="tns:WDP_DialogTitleContract" />
+  <xs:complexType name="ArrayOfWDP_QueryPropertyContract">
+    <xs:sequence>
+      <xs:element minOccurs="0" maxOccurs="unbounded" name="WDP_QueryPropertyContract" nillable="true" type="tns:WDP_QueryPropertyContract" />
+    </xs:sequence>
+  </xs:complexType>
+  <xs:element name="ArrayOfWDP_QueryPropertyContract" nillable="true" type="tns:ArrayOfWDP_QueryPropertyContract" />
+  <xs:complexType name="WDP_QueryPropertyContract">
+    <xs:sequence>
+      <xs:element minOccurs="0" name="ColumnId" nillable="true" type="xs:string" />
+      <xs:element minOccurs="0" name="DisplayName" nillable="true" type="xs:string" />
+      <xs:element minOccurs="0" name="Id" nillable="true" type="xs:string" />
+      <xs:element minOccurs="0" name="MaxInputLength" nillable="true" type="xs:string" />
+      <xs:element minOccurs="0" name="Text" nillable="true" type="xs:string" />
+    </xs:sequence>
+  </xs:complexType>
+  <xs:element name="WDP_QueryPropertyContract" nillable="true" type="tns:WDP_QueryPropertyContract" />
+  <xs:element name="ProcessDataGetExternalListResponse">
+    <xs:complexType>
+      <xs:sequence>
+        <xs:element minOccurs="0" name="ProcessDataGetExternalListResult" nillable="true" type="tns:WDP_ProcessDataGetExternalListContract" />
+      </xs:sequence>
+    </xs:complexType>
+  </xs:element>
+  <xs:element name="ProcessDataDocumentArchived">
+    <xs:complexType>
+      <xs:sequence>
+        <xs:element minOccurs="0" name="connectionId" nillable="true" type="xs:string" />
+        <xs:element minOccurs="0" name="processDataDocumentArchived" nillable="true" type="tns:WDP_ProcessDataDocumentArchivedContract" />
+      </xs:sequence>
+    </xs:complexType>
+  </xs:element>
+  <xs:complexType name="WDP_ProcessDataDocumentArchivedContract">
+    <xs:sequence>
+      <xs:element minOccurs="0" name="Action" nillable="true" type="xs:string" />
+      <xs:element minOccurs="0" name="CurrentCulture" nillable="true" type="xs:string" />
+      <xs:element minOccurs="0" name="EnvironmentValues" nillable="true" type="tns:WDP_EnvironmentValuesContract" />
+      <xs:element minOccurs="0" name="FilingInformation" nillable="true" type="tns:WDP_FilingInformationContract" />
+      <xs:element minOccurs="0" name="ImportValues" nillable="true" type="tns:WDP_ImportValuesContract" />
+      <xs:element minOccurs="0" name="SourceApplication" nillable="true" type="xs:string" />
+      <xs:element minOccurs="0" name="SourceDialog" nillable="true" type="xs:string" />
+      <xs:element minOccurs="0" name="UICulture" nillable="true" type="xs:string" />
+    </xs:sequence>
+  </xs:complexType>
+  <xs:element name="WDP_ProcessDataDocumentArchivedContract" nillable="true" type="tns:WDP_ProcessDataDocumentArchivedContract" />
+  <xs:complexType name="WDP_FilingInformationContract">
+    <xs:sequence>
+      <xs:element minOccurs="0" name="DocumentId" nillable="true" type="tns:WDP_DocumentIdContract" />
+      <xs:element minOccurs="0" name="StoreId" nillable="true" type="tns:WDP_StoreIdContract" />
+    </xs:sequence>
+  </xs:complexType>
+  <xs:element name="WDP_FilingInformationContract" nillable="true" type="tns:WDP_FilingInformationContract" />
+  <xs:complexType name="WDP_DocumentIdContract">
+    <xs:sequence>
+      <xs:element minOccurs="0" name="DocumentId" nillable="true" type="xs:string" />
+    </xs:sequence>
+  </xs:complexType>
+  <xs:element name="WDP_DocumentIdContract" nillable="true" type="tns:WDP_DocumentIdContract" />
+  <xs:complexType name="WDP_StoreIdContract">
+    <xs:sequence>
+      <xs:element minOccurs="0" name="StoreId" nillable="true" type="xs:string" />
+    </xs:sequence>
+  </xs:complexType>
+  <xs:element name="WDP_StoreIdContract" nillable="true" type="tns:WDP_StoreIdContract" />
+  <xs:element name="ProcessDataDocumentArchivedResponse">
+    <xs:complexType>
+      <xs:sequence>
+        <xs:element minOccurs="0" name="ProcessDataDocumentArchivedResult" nillable="true" type="tns:WDP_ProcessDataDocumentArchivedContract" />
       </xs:sequence>
     </xs:complexType>
   </xs:element>

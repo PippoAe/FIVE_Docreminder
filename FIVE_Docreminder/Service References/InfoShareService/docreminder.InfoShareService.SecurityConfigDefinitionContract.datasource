@@ -6,5 +6,5 @@
     cause the file to be unrecognizable by the program.
 -->
 <GenericObjectDataSource DisplayName="SecurityConfigDefinitionContract" Version="1.0" xmlns="urn:schemas-microsoft-com:xml-msdatasource">
-   <TypeInfo>docreminder.InfoShareService.SecurityConfigDefinitionContract</TypeInfo>
+   <TypeInfo>docreminder.InfoShareService.SecurityConfigDefinitionContract, FIVE Docreminder, Version=3.0.0.0, Culture=neutral, PublicKeyToken=null</TypeInfo>
 </GenericObjectDataSource>

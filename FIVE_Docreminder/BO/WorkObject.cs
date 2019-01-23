@@ -19,6 +19,10 @@ namespace docreminder.BO
         public List<DocumentContract> allAffectedDocuments = new List<DocumentContract>();
         private List<MarkerProperty> markerProperties = new List<MarkerProperty>();
 
+        //Process
+        ProcessTemplateContract procTemplate;
+        string[] procUserIDS;
+
         public string objectID { get; private set; }
         public bool ready { get; private set; }
         public bool finished { get; private set; }
@@ -139,13 +143,74 @@ namespace docreminder.BO
                     allAffectedDocuments.AddRange(childDocuments);
                 #endregion
 
+                #region Deserialize or Evaluate the Processtemplate
+                if (ready && Properties.Settings.Default.StartProcessActive)
+                {
+                    try
+                    {
+                        //Get ProcessTemplate from settings.
+                        try { procTemplate = (ProcessTemplateContract)FileHelper.XmlDeserializeFromString(Properties.Settings.Default.ProcessName, procTemplate.GetType()); }
+                        catch { }
+
+                        if(procTemplate == null)
+                        { 
+                            try
+                            {
+                                //Get ProcessTemplate from evaluated name value.
+                                string processName = ExpressionsEvaluator.GetInstance.Evaluate(Properties.Settings.Default.ProcessName, this.document);
+                                procTemplate = WCFHandler.GetInstance.GetProcessTemplateByName(processName);
+                            }
+                            catch (Exception e) { throw new Exception(string.Format("Couldn't evaluate processtemplate from property. Msg:'{0}'", e.Message)); }
+                        }
+
+
+                        //Get all userids from recipients-array.
+                        try
+                        {
+                            string[] recipientsInput = Properties.Settings.Default.ProcessRecipient.Split(new[] { ";" }, StringSplitOptions.RemoveEmptyEntries);
+                            for (int i = 0; i < recipientsInput.Length; i++)
+                            {
+                                recipientsInput[i] = ExpressionsEvaluator.GetInstance.Evaluate(recipientsInput[i], this.document);
+                            }
+
+
+                            string[] sUserIDs = new string[recipientsInput.Length];
+
+
+                            //Convert USERID TO GUID!
+                            //if (lUsers == null)
+                            //    lUsers = getAllUsers();
+
+                            UserContract[] lUsers = WCFHandler.GetInstance.GetAllUsers();
+
+                            for (int i = 0; i < recipientsInput.Length; i++)
+                            {
+                                foreach (UserContract uInf in lUsers)
+                                {
+                                    if (uInf.DisplayName.ToLower() == recipientsInput[i].ToLower() || uInf.LoginName.ToLower() == recipientsInput[i].ToLower() || uInf.Email.ToLower() == recipientsInput[i].ToLower())
+                                    {
+                                        sUserIDs[i] = uInf.Id;
+                                        break;
+                                    }
+                                }
+                            }
+                            procUserIDS = sUserIDs;
+                        }
+                        catch (Exception e) { throw new Exception(string.Format("Couldn't prepare process recipients for document. Msg:'{0}'", e.Message)); }
+                    }
+
+                    catch (Exception e) { throw new Exception(string.Format("Couldn't prepare processtemplate for document. Msg:'{0}'", e.Message)); }
+                }
+                #endregion
+
+
                 #region Markerproperties and new DocumentContracts
                 if (ready)
                 {
                     try
                     {
                         //Get Markerproperties from settings.
-                        markerProperties = (List<BO.MarkerProperty>)(FileHelper.XmlDeserializeFromString(Properties.Settings.Default.NEWMarkerProperties, markerProperties.GetType()));
+                        markerProperties = (List<BO.MarkerProperty>)(FileHelper.XmlDeserializeFromString(Properties.Settings.Default.MarkerProperties, markerProperties.GetType()));
 
                         if (markerProperties.Count > 0)
                         { 
@@ -195,15 +260,12 @@ namespace docreminder.BO
                     log4.Info(string.Format("Processing Document. ObjectID:'{0}'", objectID));
                     string mailRecipient = null;
                     string docSafeRecipient = null;
-                    WCFHandler wCFHandler = WCFHandler.GetInstance;
-
-
 
                     #region Checkout all documents needed during processing.
                     //Try to checkout document.
                     try
                     {
-                        wCFHandler.CheckOutDocument(this.objectID);
+                        WCFHandler.GetInstance.CheckOutDocument(this.objectID);
                     }
                     catch (Exception e) { throw new Exception(string.Format("Document could not be checked out. Msg:'{0}'", e.Message)); }
 
@@ -213,7 +275,7 @@ namespace docreminder.BO
                         {
                             foreach (DocumentContract childDoc in childDocuments)
                             {
-                                try { wCFHandler.CheckOutDocument(childDoc.Id); }
+                                try { WCFHandler.GetInstance.CheckOutDocument(childDoc.Id); }
                                 catch (Exception e) { throw new Exception(string.Format("Child-ObjectID:'{0}'. Msg:'{1}'", childDoc.Id, e.Message)); }
                             }
                         }
@@ -249,7 +311,7 @@ namespace docreminder.BO
 
                                 foreach (DocumentContract doc in documentsToSend)
                                 {
-                                    byte[] docBytes = wCFHandler.GetDocumentFile(this.objectID);
+                                    byte[] docBytes = WCFHandler.GetInstance.GetDocumentFile(this.objectID);
 
                                     string fileName = Properties.Settings.Default.AttachmentRenameProperty;
                                     if (fileName != "")
@@ -384,17 +446,6 @@ namespace docreminder.BO
                     }
                     #endregion
 
-                    #region Start Process
-                    if (Properties.Settings.Default.StartProcessActive)
-                    { 
-                        try
-                        {
-
-                        }
-                        catch (Exception e) { throw new Exception("Process could not be started."); }
-                    }
-                    #endregion
-
                     #region Send to DocSafe 
                     if (Properties.Settings.Default.DocSafeActive)
                     {
@@ -403,12 +454,24 @@ namespace docreminder.BO
                             DocSafe.DocSafeHandler dsHandler = new DocSafe.DocSafeHandler();
                             byte[] document = null;
                             //document = WebService.GetDocumentFile(sSessionGuid, Properties.Settings.Default.Culture, Properties.Settings.Default.Culture, docGuid, null, null, KXWS.AccessTypesEnum.ContentExport, out docinfo);
-                            document = wCFHandler.GetDocumentFile(this.objectID);
+                            document = WCFHandler.GetInstance.GetDocumentFile(this.objectID);
                             docSafeRecipient = dsHandler.SendDocumentToDocsafe(document, this.document);
                         }
                         catch (Exception e) { throw new Exception("Document E-Mail could not be sent."); }
                     }
                     #endregion
+
+                    #region Start Process
+                    if (Properties.Settings.Default.StartProcessActive)
+                    {
+                        try
+                        {
+                            WCFHandler.GetInstance.StartProcess(this.procTemplate,this.objectID,this.procUserIDS);
+                        }
+                        catch (Exception e) { throw new Exception(string.Format("Process could not be started. Msg{0}",e.Message)); }
+                    }
+                    #endregion
+
 
                     #region Set Markerproperties
                     try

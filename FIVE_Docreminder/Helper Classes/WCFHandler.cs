@@ -100,6 +100,9 @@ namespace docreminder
                     encrypted = "Password is encrypted, did you maybe change user?";
                 }
                 log4.Error(e.Message + " " + encrypted);
+
+                //Exit with Error-Mail if we're in Automode.
+                Exit();
             }
 
             if(connID != "")
@@ -256,6 +259,28 @@ namespace docreminder
             UserStoreContract usc = commonService.GetAllUsers(ConnectionID);
             return usc.Users;
         }
+
+
+        private void Exit()
+        {
+            if (Program.automode)
+            {
+                if (Properties.Settings.Default.SendErrorMail)
+                {
+                    log4.Info("Sending error-mail...");
+                    MailHandler.GetInstance.SendErrorMail();
+                }
+
+                log4.Info("Application shutting down.");
+#if DEBUG
+                log4.Info("We are running in debug. Waiting for input before shutdown.");
+                Console.ReadLine();
+#endif
+                Environment.Exit(1);
+            }
+        }
+
+
         #endregion
 
         internal DocumentSimpleContract[] SearchForDocuments()

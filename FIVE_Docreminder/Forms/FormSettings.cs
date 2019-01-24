@@ -28,15 +28,15 @@ namespace docreminder
         {
             string sProgramPath = Path.GetDirectoryName(System.Reflection.Assembly.GetExecutingAssembly().Location);
 
-
+            #region Tooltip
             // Create the ToolTip and associate with the Form container.
             ToolTip toolTip1 = new ToolTip
             {
 
                 // Set up the delays for the ToolTip.
                 AutoPopDelay = 20000,
-                InitialDelay = 500,
-                ReshowDelay = 500,
+                InitialDelay = 0,
+                ReshowDelay = 0,
                 // Force the ToolTip text to be displayed whether or not the form is active.
                 ShowAlways = true
             };
@@ -55,8 +55,24 @@ namespace docreminder
             toolTip1.SetToolTip(this.btnInsertAttachmentRenameProperty, "If this is configured, the configured value will be used as the filename of the attachment (also works with grouping).\r\n" +
                                                                         "This field uses the NCALC-Syntax. The Filetype is automatically added depending on the original file.");
 
-
+            
+            #region Archive/Mail
             toolTip1.SetToolTip(this.cbEncodePW, "Save password encrypted.");
+            toolTip1.SetToolTip(this.txtBxKendoxWebserviceURL, "URL to KX WCF-Webservice 'http://SERVER/InfoShare'");
+            #endregion
+
+            #region Process
+            toolTip1.SetToolTip(this.txtBxProcessRecipient, "Recipient(s) (kendox-user) of process. Can be logon-name, display name or e-mail of kendox user.\r\n" +
+                                                            "If left emtpy, process will be sent to standard user(s) defined in process-template.\r\n"+
+                                                            "Example: IDX('Ersteller');'philipp.aeberhard' -> would send to 'Ersteller' AND user 'p.a.'");
+
+
+            toolTip1.SetToolTip(this.cBSelectedProcess, "Process that gets startet with document attached. Select template for fixed process.\r\n" +
+                                                        "Name of template can be dinamically evaluated on runtime.\r\n" +
+                                                        "Example: IDX('Vertragsart') -> Would start process named after the 'Vertragsart' of document.");
+            #endregion
+
+            #endregion
 
 
             //Load All Configuration from Config

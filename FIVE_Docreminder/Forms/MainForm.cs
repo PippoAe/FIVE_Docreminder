@@ -327,17 +327,17 @@ namespace docreminder
             GetDocumentsWorker.ReportProgress(10);
             try
             {
-                InfoShareService.DocumentSimpleContract[] documents;
+                List<BO.WorkObject> workObjects = new List<BO.WorkObject>();
+                DocumentSimpleContract[] documents;
                 if (WCFHandler.GetInstance.isConnected())
                 {
                     GetDocumentsWorker.ReportProgress(10);
                     documents = WCFHandler.GetInstance.SearchForDocuments();
                     GetDocumentsWorker.ReportProgress(20);
 
-
                     //int done = 0;
                     GetDocumentsWorker.ReportProgress(60);
-                    List<BO.WorkObject> workObjects = new List<BO.WorkObject>();
+                    
                     foreach (DocumentSimpleContract siCo in documents)
                     {
                         workObjects.Add(new BO.WorkObject(siCo.Id));
@@ -368,11 +368,9 @@ namespace docreminder
                         DateTime end = DateTime.Now;
                         log4.Debug(string.Format("Checking cross-references for documents took {0}ms.", (end - start).TotalMilliseconds.ToString()));
                     }
-
-                    GetDocumentsWorker.ReportProgress(100);
-
-                    e.Result = workObjects;
+                    GetDocumentsWorker.ReportProgress(100);                  
                 }
+                e.Result = workObjects;
             }
             catch (Exception ex)
             {
